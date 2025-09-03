@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.autoSave": "onWindowChange",
+  "editor.formatOnSave": true,
+  "prettier.configPath": "",
+  "tailwindCSS.experimental.classRegex": [],
+  "editor.wordWrap": "on",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.inlineSuggest.enabled": false
+}

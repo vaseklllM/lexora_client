@@ -7,4 +7,8 @@ export const routes = {
     url: () => "/sign-in",
     path: () => "/sign-in",
   },
+  signUp: {
+    url: () => "/sign-up",
+    path: () => "/sign-up",
+  },
 };

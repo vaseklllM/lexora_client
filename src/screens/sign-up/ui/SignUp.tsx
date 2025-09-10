@@ -2,25 +2,22 @@ import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
-import Image from "next/image";
 
-export function SignIn() {
+export function SignUp() {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <Image
+          {/* <img
             alt="Your Company"
-            src="/logo.svg"
-            className="mx-auto h-20 w-auto"
-            width={300}
-            height={300}
-          />
+            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+            className="mx-auto h-10 w-auto"
+          /> */}
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in
+            Sign up
           </h2>
           <p className="mt-2 text-center text-sm/6 text-gray-500">
-            Enter your email and password to sign in
+            Enter your email and password to sign up
           </p>
         </div>
 
@@ -42,14 +39,22 @@ export function SignIn() {
               autoComplete="current-password"
               label="Password"
             />
+            <InputLabeled
+              id="password-confirmation"
+              name="password-confirmation"
+              type="password"
+              required
+              autoComplete="current-password"
+              label="Password confirmation"
+            />
             <Button className="mt-2 w-full" type="submit">
               Sign in
             </Button>
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don&apos;t have an account?{" "}
-            <Link href={routes.signUp.url()}>Sign up</Link>
+            Already have an account?{" "}
+            <Link href={routes.signIn.url()}>Sign in</Link>
           </p>
         </div>
       </div>

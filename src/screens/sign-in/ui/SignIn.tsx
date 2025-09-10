@@ -37,10 +37,10 @@ export function SignIn() {
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
           Sign in
         </h2>
-        <p className="mt-2 text-center text-sm/6 text-gray-500">
+        <p className="text-base-content/70 mt-2 text-center text-sm/6">
           Enter your email and password to sign in
         </p>
       </div>
@@ -74,7 +74,7 @@ export function SignIn() {
           </Button>
         </form>
 
-        <p className="mt-10 text-center text-sm/6 text-gray-500">
+        <p className="text-base-content/70 mt-10 text-center text-sm/6">
           Don&apos;t have an account?{" "}
           <Link href={routes.signUp.url()}>Sign up</Link>
         </p>

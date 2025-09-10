@@ -1,10 +1,40 @@
+"use client";
+
 import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
+import { emailSchema } from "@/shared/schemas/email.schema";
+import { passwordSchema } from "@/shared/schemas/password.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
+import { valibotResolver } from "@/shared/utils/valibotResolver";
 import Image from "next/image";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as v from "valibot";
+
+const schema = v.object({
+  email: emailSchema(),
+  password: passwordSchema(),
+});
+
+type Inputs = v.InferOutput<typeof schema>;
 
 export function SignIn() {
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: valibotResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    // console.log(data);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -25,20 +55,26 @@ export function SignIn() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <InputLabeled
+              {...register("email", {
+                required: true,
+              })}
               id="email"
               name="email"
+              error={errors.email?.message}
               type="email"
-              required
               autoComplete="email"
               label="Email address"
             />
             <InputLabeled
+              {...register("password", {
+                required: true,
+              })}
               id="password"
               name="password"
+              error={errors.password?.message}
               type="password"
-              required
               autoComplete="current-password"
               label="Password"
             />

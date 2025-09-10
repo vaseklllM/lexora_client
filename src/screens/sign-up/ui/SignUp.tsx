@@ -38,12 +38,12 @@ export function SignUp() {
     formState: { errors },
     register,
   } = useForm<Inputs>({
-    defaultValues: {
-      fullName: "dasd",
-      email: "d12asd@asdw.com",
-      password: "waeq2A",
-      passwordRepeat: "waeq2A",
-    },
+    // defaultValues: {
+    //   fullName: "dasd",
+    //   email: "d12asd@asdw.com",
+    //   password: "waeq2A",
+    //   passwordRepeat: "waeq2A",
+    // },
     resolver: valibotResolver(schema),
   });
 
@@ -73,42 +73,46 @@ export function SignUp() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <InputLabeled
-              {...register("fullName")}
+              {...register("fullName", {
+                required: true,
+              })}
               id="full-name"
               name="fullName"
               error={errors.fullName?.message}
               type="text"
-              required
               autoComplete="fullName"
               label="Full name"
             />
             <InputLabeled
-              {...register("email")}
+              {...register("email", {
+                required: true,
+              })}
               id="email"
               name="email"
               error={errors.email?.message}
               type="email"
-              required
               autoComplete="email"
               label="Email address"
             />
             <InputLabeled
-              {...register("password")}
+              {...register("password", {
+                required: true,
+              })}
               id="password"
               name="password"
               error={errors.password?.message}
               type="password"
-              required
               autoComplete="current-password"
               label="Password"
             />
             <InputLabeled
-              {...register("passwordRepeat")}
+              {...register("passwordRepeat", {
+                required: true,
+              })}
               id="password-repeat"
               name="passwordRepeat"
               error={errors.passwordRepeat?.message}
               type="password"
-              required
               autoComplete="current-password"
               label="Password repeat"
             />

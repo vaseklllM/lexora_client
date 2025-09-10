@@ -36,9 +36,9 @@ export function SignIn() {
               label="Password"
             />
 
-            <div>
-              <Button type="submit">Sign in</Button>
-            </div>
+            <Button className="w-full" type="submit">
+              Sign in
+            </Button>
           </form>
 
           <Checkbox />

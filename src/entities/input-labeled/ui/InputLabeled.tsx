@@ -6,7 +6,7 @@ const classes = tv({
   slots: {
     base: "",
     labelContainer: "",
-    label: "block w-max text-sm/6 font-medium text-gray-900 dark:text-gray-100",
+    label: "block w-max text-sm/6 font-medium",
   },
   variants: {
     rightLabel: {

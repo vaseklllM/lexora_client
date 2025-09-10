@@ -19,10 +19,10 @@ export default function RootLayout({
       </div>
       <div className="flex w-3/5 flex-col items-center justify-center">
         <Image
-          src="/auth_background.avif"
+          src="/auth_background.png"
           alt="auth_background"
-          width={1000}
-          height={1000}
+          width={2000}
+          height={1500}
           className="h-full w-full object-cover"
         />
       </div>

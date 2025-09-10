@@ -19,7 +19,7 @@ export default function RootLayout({
           <div className="w-full max-w-sm flex-shrink-0">{children}</div>
         </div>
       </div>
-      <div className="hidden flex-col items-center justify-center bg-indigo-500 lg:flex lg:w-4/7 xl:w-3/5 dark:bg-indigo-700">
+      <div className="bg-primary hidden flex-col items-center justify-center lg:flex lg:w-4/7 xl:w-3/5">
         <Image
           src="/auth_background.png"
           alt="auth_background"

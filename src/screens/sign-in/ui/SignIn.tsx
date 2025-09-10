@@ -7,7 +7,6 @@ import { passwordSchema } from "@/shared/schemas/password.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibotResolver";
-import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as v from "valibot";
 
@@ -37,57 +36,48 @@ export function SignIn() {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <Image
-            alt="Your Company"
-            src="/logo.svg"
-            className="mx-auto h-20 w-auto"
-            width={100}
-            height={100}
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          Sign in
+        </h2>
+        <p className="mt-2 text-center text-sm/6 text-gray-500">
+          Enter your email and password to sign in
+        </p>
+      </div>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <InputLabeled
+            {...register("email", {
+              required: true,
+            })}
+            id="email"
+            name="email"
+            error={errors.email?.message}
+            type="email"
+            autoComplete="email"
+            label="Email address"
           />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          <InputLabeled
+            {...register("password", {
+              required: true,
+            })}
+            id="password"
+            name="password"
+            error={errors.password?.message}
+            type="password"
+            autoComplete="current-password"
+            label="Password"
+          />
+          <Button className="mt-2 w-full" type="submit">
             Sign in
-          </h2>
-          <p className="mt-2 text-center text-sm/6 text-gray-500">
-            Enter your email and password to sign in
-          </p>
-        </div>
+          </Button>
+        </form>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <InputLabeled
-              {...register("email", {
-                required: true,
-              })}
-              id="email"
-              name="email"
-              error={errors.email?.message}
-              type="email"
-              autoComplete="email"
-              label="Email address"
-            />
-            <InputLabeled
-              {...register("password", {
-                required: true,
-              })}
-              id="password"
-              name="password"
-              error={errors.password?.message}
-              type="password"
-              autoComplete="current-password"
-              label="Password"
-            />
-            <Button className="mt-2 w-full" type="submit">
-              Sign in
-            </Button>
-          </form>
-
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don&apos;t have an account?{" "}
-            <Link href={routes.signUp.url()}>Sign up</Link>
-          </p>
-        </div>
+        <p className="mt-10 text-center text-sm/6 text-gray-500">
+          Don&apos;t have an account?{" "}
+          <Link href={routes.signUp.url()}>Sign up</Link>
+        </p>
       </div>
     </>
   );

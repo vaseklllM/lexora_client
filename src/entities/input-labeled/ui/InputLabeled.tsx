@@ -2,23 +2,45 @@ import { Input } from "@/shared/ui/Input";
 import React, { InputHTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
-const inputLabeled = tv({
-  base: "block text-sm/6 font-medium text-gray-900",
+const classes = tv({
+  slots: {
+    base: "",
+    labelContainer: "",
+    label: "block text-sm/6 font-medium text-gray-900",
+  },
+  variants: {
+    rightLabel: {
+      true: {
+        labelContainer: "flex items-center justify-between",
+      },
+    },
+  },
 });
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   label: string;
+  rightLabel?: React.ReactNode;
 }
 
 export const InputLabeled = (props: Props): React.ReactElement | null => {
+  const { rightLabel, ...inputProps } = props;
+
+  const { base, label, labelContainer } = classes({
+    className: props.className,
+    rightLabel: !!rightLabel,
+  });
+
   return (
-    <div>
-      <label htmlFor={props.id} className={inputLabeled(props)}>
-        {props.label}
-      </label>
+    <div className={base()}>
+      <div className={labelContainer()}>
+        <label htmlFor={props.id} className={label()}>
+          {props.label}
+        </label>
+        {props.rightLabel}
+      </div>
       <div className="mt-2">
-        <Input {...props} />
+        <Input {...inputProps} />
       </div>
     </div>
   );

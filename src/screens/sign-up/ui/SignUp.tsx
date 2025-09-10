@@ -53,10 +53,10 @@ export function SignUp() {
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+        <h2 className="mt-5 text-center text-2xl/9 font-bold tracking-tight">
           Sign up
         </h2>
-        <p className="mt-2 text-center text-sm/6 text-gray-500">
+        <p className="text-base-content/70 mt-2 text-center text-sm/6">
           Enter your email and password to sign up
         </p>
       </div>
@@ -112,7 +112,7 @@ export function SignUp() {
           </Button>
         </form>
 
-        <p className="mt-10 text-center text-sm/6 text-gray-500">
+        <p className="text-base-content/70 mt-10 text-center text-sm/6">
           Already have an account?{" "}
           <Link href={routes.signIn.url()}>Sign in</Link>
         </p>

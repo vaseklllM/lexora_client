@@ -3,7 +3,7 @@ import React from "react";
 import { tv } from "tailwind-variants";
 
 const link = tv({
-  base: "font-semibold text-indigo-600 hover:text-indigo-500",
+  base: "text-primary/80 hover:text-primary/90 font-semibold",
 });
 
 interface Props extends LinkProps {

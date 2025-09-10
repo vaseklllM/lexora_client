@@ -7,23 +7,25 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex h-screen justify-center">
-      <div className="flex flex-col items-center justify-center lg:w-3/7 xl:w-2/5">
-        <Image
-          alt="Your Company"
-          src="/logo.svg"
-          className="mx-auto h-20 w-auto"
-          width={100}
-          height={100}
-        />
-        {children}
+      <div className="overflow-y-auto lg:w-3/7 xl:w-2/5">
+        <div className="flex min-h-full flex-col items-center justify-center px-6 py-12">
+          <Image
+            alt="Your Company"
+            src="/logo.svg"
+            className="mx-auto h-20 w-auto flex-shrink-0"
+            width={100}
+            height={100}
+          />
+          <div className="w-full max-w-sm flex-shrink-0">{children}</div>
+        </div>
       </div>
-      <div className="hidden flex-col items-center justify-center lg:flex lg:w-4/7 xl:w-3/5">
+      <div className="hidden flex-col items-center justify-center bg-indigo-500 lg:flex lg:w-4/7 xl:w-3/5 dark:bg-indigo-700">
         <Image
           src="/auth_background.png"
           alt="auth_background"
-          width={2000}
-          height={1500}
-          className="h-full w-full object-cover"
+          width={2700}
+          height={3000}
+          className="w-2/3"
         />
       </div>
     </div>

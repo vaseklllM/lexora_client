@@ -5,5 +5,7 @@ interface Props {
 }
 
 export const Checkbox = (props: Props): ReactElement => {
-  return <div className={props.className}>Checkbox</div>;
+  return (
+    <input {...props} type="checkbox" defaultChecked className="checkbox" />
+  );
 };

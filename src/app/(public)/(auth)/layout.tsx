@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex h-screen justify-center">
-      <div className="flex w-2/5 flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center lg:w-3/7 xl:w-2/5">
         <Image
           alt="Your Company"
           src="/logo.svg"
@@ -17,7 +17,7 @@ export default function RootLayout({
         />
         {children}
       </div>
-      <div className="flex w-3/5 flex-col items-center justify-center">
+      <div className="hidden flex-col items-center justify-center lg:flex lg:w-4/7 xl:w-3/5">
         <Image
           src="/auth_background.png"
           alt="auth_background"

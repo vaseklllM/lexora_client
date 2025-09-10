@@ -1,3 +1,7 @@
+import { InputLabeled } from "@/entities/input-labeled";
+import { routes } from "@/shared/routes";
+import { Link } from "@/shared/ui/Link";
+
 export function SignIn() {
   return (
     <>
@@ -23,25 +27,14 @@ export function SignIn() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form action="#" method="POST" className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
-            </div>
-
+            <InputLabeled
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              label="Email address"
+            />
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -51,12 +44,7 @@ export function SignIn() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
+                  <Link href={routes.home.url()}>Forgot password?</Link>
                 </div>
               </div>
               <div className="mt-2">

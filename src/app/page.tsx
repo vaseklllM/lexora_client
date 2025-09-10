@@ -1,5 +1,5 @@
 import { routes } from "@/shared/routes";
-import Link from "next/link";
+import { Link } from "@/shared/ui/Link";
 
 export default function Home() {
   return (

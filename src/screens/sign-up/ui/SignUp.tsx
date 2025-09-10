@@ -1,10 +1,56 @@
+"use client";
+
 import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
+import { emailSchema } from "@/shared/schemas/email.schema";
+import { fullNameSchema } from "@/shared/schemas/fullName.schema";
+import { passwordSchema } from "@/shared/schemas/password.schema";
+import { passwordRepeatSchema } from "@/shared/schemas/passwordRepeat.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
+import { valibotResolver } from "@/shared/utils/valibotResolver";
 import Image from "next/image";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as v from "valibot";
+
+const schema = v.pipe(
+  v.object({
+    fullName: fullNameSchema(),
+    email: emailSchema(),
+    password: passwordSchema(),
+    passwordRepeat: passwordRepeatSchema(),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["password"], ["passwordRepeat"]],
+      (input) => input.password === input.passwordRepeat,
+      "The two passwords do not match.",
+    ),
+    ["passwordRepeat"],
+  ),
+);
+
+type Inputs = v.InferOutput<typeof schema>;
 
 export function SignUp() {
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<Inputs>({
+    defaultValues: {
+      fullName: "dasd",
+      email: "d12asd@asdw.com",
+      password: "waeq2A",
+      passwordRepeat: "waeq2A",
+    },
+    resolver: valibotResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    // console.log(data);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -25,38 +71,46 @@ export function SignUp() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <InputLabeled
-              id="nickname"
-              name="nickname"
+              {...register("fullName")}
+              id="full-name"
+              name="fullName"
+              error={errors.fullName?.message}
               type="text"
               required
-              autoComplete="nickname"
-              label="Nickname"
+              autoComplete="fullName"
+              label="Full name"
             />
             <InputLabeled
+              {...register("email")}
               id="email"
               name="email"
+              error={errors.email?.message}
               type="email"
               required
               autoComplete="email"
               label="Email address"
             />
             <InputLabeled
+              {...register("password")}
               id="password"
               name="password"
+              error={errors.password?.message}
               type="password"
               required
               autoComplete="current-password"
               label="Password"
             />
             <InputLabeled
-              id="password-confirmation"
-              name="password-confirmation"
+              {...register("passwordRepeat")}
+              id="password-repeat"
+              name="passwordRepeat"
+              error={errors.passwordRepeat?.message}
               type="password"
               required
               autoComplete="current-password"
-              label="Password confirmation"
+              label="Password repeat"
             />
             <Button className="mt-2 w-full" type="submit">
               Sign in

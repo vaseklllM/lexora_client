@@ -1,5 +1,5 @@
-import { Input } from "@/shared/ui/Input";
-import React, { InputHTMLAttributes } from "react";
+import { Input, InputProps } from "@/shared/ui/Input";
+import React from "react";
 import { tv } from "tailwind-variants";
 
 const classes = tv({
@@ -17,14 +17,16 @@ const classes = tv({
   },
 });
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface InputLabeledProps extends InputProps {
   className?: string;
   label: string;
   rightLabel?: React.ReactNode;
 }
 
-export const InputLabeled = (props: Props): React.ReactElement | null => {
-  const { rightLabel, ...inputProps } = props;
+export const InputLabeled = (
+  props: InputLabeledProps,
+): React.ReactElement | null => {
+  const { rightLabel, label: labelProp, ...inputProps } = props;
 
   const { base, label, labelContainer } = classes({
     className: props.className,
@@ -35,9 +37,9 @@ export const InputLabeled = (props: Props): React.ReactElement | null => {
     <div className={base()}>
       <div className={labelContainer()}>
         <label htmlFor={props.id} className={label()}>
-          {props.label}
+          {labelProp}
         </label>
-        {props.rightLabel}
+        {rightLabel}
       </div>
       <div className="mt-2">
         <Input {...inputProps} />

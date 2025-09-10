@@ -13,8 +13,8 @@ export function SignIn() {
             alt="Your Company"
             src="/logo.svg"
             className="mx-auto h-20 w-auto"
-            width={300}
-            height={300}
+            width={100}
+            height={100}
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
             Sign in

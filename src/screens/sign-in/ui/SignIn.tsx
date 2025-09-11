@@ -75,7 +75,7 @@ export function SignIn() {
           </Button>
         </form>
 
-        <p className="text-base-content/70 mt-10 text-center text-sm/6">
+        <p className="text-base-content/70 mt-5 text-center text-sm/6">
           Don&apos;t have an account?{" "}
           <Link href={routes.signUp.url()}>Sign up</Link>
         </p>

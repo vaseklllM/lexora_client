@@ -131,7 +131,7 @@ export function SignUp() {
           </Button>
         </form>
 
-        <p className="text-base-content/70 mt-10 text-center text-sm/6">
+        <p className="text-base-content/70 mt-5 text-center text-sm/6">
           Already have an account?{" "}
           <Link href={routes.signIn.url()}>Sign in</Link>
         </p>

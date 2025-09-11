@@ -2,52 +2,39 @@
 
 import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
-import { emailSchema } from "@/shared/schemas/email.schema";
-import { fullNameSchema } from "@/shared/schemas/fullName.schema";
-import { passwordSchema } from "@/shared/schemas/password.schema";
-import { passwordRepeatSchema } from "@/shared/schemas/passwordRepeat.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibotResolver";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as v from "valibot";
-
-const schema = v.pipe(
-  v.object({
-    fullName: fullNameSchema(),
-    email: emailSchema(),
-    password: passwordSchema(),
-    passwordRepeat: passwordRepeatSchema(),
-  }),
-  v.forward(
-    v.partialCheck(
-      [["password"], ["passwordRepeat"]],
-      (input) => input.password === input.passwordRepeat,
-      "The two passwords do not match.",
-    ),
-    ["passwordRepeat"],
-  ),
-);
-
-type Inputs = v.InferOutput<typeof schema>;
+// import { signUp } from "../api/sign-up";
+import { signIn } from "next-auth/react";
+import { Fields, fieldsSchema } from "../model/fields-schema";
 
 export function SignUp() {
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
-  } = useForm<Inputs>({
-    // defaultValues: {
-    //   fullName: "dasd",
-    //   email: "d12asd@asdw.com",
-    //   password: "waeq2A",
-    //   passwordRepeat: "waeq2A",
-    // },
-    resolver: valibotResolver(schema),
+  } = useForm<Fields>({
+    defaultValues: {
+      fullName: "dasd",
+      email: "d12asd@asdw.com",
+      password: "waeq2A",
+      passwordRepeat: "waeq2A",
+    },
+    resolver: valibotResolver(fieldsSchema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = () => {
-    // console.log(data);
+  const onSubmit: SubmitHandler<Fields> = async (data) => {
+    await signIn("credentials", {
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
+      passwordRepeat: data.passwordRepeat,
+      redirect: false,
+    });
+
+    // console.log(result);
   };
 
   return (
@@ -107,7 +94,11 @@ export function SignUp() {
             autoComplete="current-password"
             label="Password repeat"
           />
-          <Button className="mt-2 w-full" type="submit">
+          <Button
+            isLoading={isSubmitting}
+            className="mt-2 w-full"
+            type="submit"
+          >
             Sign in
           </Button>
         </form>

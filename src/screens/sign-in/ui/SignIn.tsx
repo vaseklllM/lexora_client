@@ -30,8 +30,9 @@ export function SignIn() {
     resolver: valibotResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = () => {
+  const onSubmit: SubmitHandler<Inputs> = async () => {
     // console.log(data);
+    // await signIn("credentials", {});
   };
 
   return (

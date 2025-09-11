@@ -31,7 +31,7 @@ const handler = NextAuth({
         const data = await result.json();
 
         if (!result.ok) {
-          throw new Error(data.message);
+          throw new Error(JSON.stringify(data));
         }
 
         return {

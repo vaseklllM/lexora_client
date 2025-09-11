@@ -7,6 +7,7 @@ import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibotResolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 // import { signUp } from "../api/sign-up";
+import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -33,6 +34,7 @@ export function SignUp() {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    setError,
   } = useForm<Fields>({
     defaultValues: {
       fullName: "dasd",
@@ -53,7 +55,40 @@ export function SignUp() {
     });
 
     if (!result?.ok && typeof result?.error === "string") {
-      setErrorMessage(result.error);
+      const error = JSON.parse(result.error);
+
+      if (error.errors) {
+        type FiledKeys = "email" | "name" | "password" | "confirmPassword";
+
+        const errorsList: ErrorsType<FiledKeys> = error.errors;
+
+        for (const key in errorsList) {
+          const fieldKey = key as FiledKeys;
+          const errorMessage = errorsList[fieldKey]?.[0];
+
+          if (typeof errorMessage === "string") {
+            switch (fieldKey) {
+              case "email":
+                setError("email", { message: errorMessage });
+                break;
+
+              case "name":
+                setError("fullName", { message: errorMessage });
+                break;
+
+              case "password":
+                setError("password", { message: errorMessage });
+                break;
+
+              case "confirmPassword":
+                setError("passwordRepeat", { message: errorMessage });
+                break;
+            }
+          }
+        }
+      }
+
+      setErrorMessage(error.message[0]);
     }
   };
 

@@ -37,15 +37,17 @@ export function SignUp() {
     setError,
   } = useForm<Fields>({
     defaultValues: {
-      fullName: "dasd",
-      email: "d12asd@asdw.com",
-      password: "waeq2A",
-      passwordRepeat: "waeq2A",
+      fullName: "John Doe",
+      email: "user@example.com",
+      password: "Password123!",
+      passwordRepeat: "Password123!",
     },
     resolver: valibotResolver(fieldsSchema),
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
+    setErrorMessage(undefined);
+
     const result = await signIn("credentials", {
       fullName: data.fullName,
       email: data.email,
@@ -86,9 +88,9 @@ export function SignUp() {
             }
           }
         }
+      } else {
+        setErrorMessage(error.message);
       }
-
-      setErrorMessage(error.message[0]);
     }
   };
 

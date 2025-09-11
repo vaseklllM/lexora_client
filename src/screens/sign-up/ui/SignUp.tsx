@@ -54,6 +54,7 @@ export function SignUp() {
       password: data.password,
       passwordRepeat: data.passwordRepeat,
       redirect: false,
+      type: "register",
     });
 
     if (!result?.ok && typeof result?.error === "string") {

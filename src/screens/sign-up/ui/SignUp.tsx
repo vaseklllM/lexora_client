@@ -7,10 +7,28 @@ import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibotResolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 // import { signUp } from "../api/sign-up";
+import { Alert } from "@/shared/ui/Alert";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { tv } from "tailwind-variants";
 import { Fields, fieldsSchema } from "../model/fields-schema";
 
+const classesSlots = tv({
+  slots: {
+    formWrapper: "mt-10 sm:mx-auto sm:w-full sm:max-w-sm",
+  },
+  variants: {
+    errorMessage: {
+      true: {
+        formWrapper: "mt-5",
+      },
+    },
+  },
+});
+
 export function SignUp() {
+  const [errorMessage, setErrorMessage] = useState<string>();
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -26,7 +44,7 @@ export function SignUp() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       fullName: data.fullName,
       email: data.email,
       password: data.password,
@@ -34,8 +52,14 @@ export function SignUp() {
       redirect: false,
     });
 
-    // console.log(result);
+    if (!result?.ok && typeof result?.error === "string") {
+      setErrorMessage(result.error);
+    }
   };
+
+  const classes = classesSlots({
+    errorMessage: !!errorMessage,
+  });
 
   return (
     <>
@@ -48,7 +72,11 @@ export function SignUp() {
         </p>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {errorMessage && (
+        <Alert type="error" message={errorMessage} className="mt-5" />
+      )}
+
+      <div className={classes.formWrapper()}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <InputLabeled
             {...register("fullName", {
@@ -99,7 +127,7 @@ export function SignUp() {
             className="mt-2 w-full"
             type="submit"
           >
-            Sign in
+            Sign up
           </Button>
         </form>
 

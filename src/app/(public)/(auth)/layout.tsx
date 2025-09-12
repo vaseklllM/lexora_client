@@ -1,3 +1,5 @@
+import { routes } from "@/shared/routes";
+import { Link } from "@/shared/ui/Link";
 import Image from "next/image";
 
 export default function RootLayout({
@@ -16,6 +18,7 @@ export default function RootLayout({
             width={100}
             height={100}
           />
+          <Link href={routes.home.url()}>home</Link>
           <div className="w-full max-w-sm flex-shrink-0">{children}</div>
         </div>
       </div>

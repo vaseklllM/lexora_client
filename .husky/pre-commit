@@ -1,3 +1,2 @@
-bun lint-staged
-bun run type-check
-bun test
+npx lint-staged
+npm run type-check

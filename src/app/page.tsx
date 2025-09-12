@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <div className="p-4">
       <h1>Hello World</h1>
-      <p>{session?.user?.email}</p>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
       <br />
       <Link href={routes.signIn.url()}>Sign In</Link>
       <Test />

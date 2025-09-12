@@ -1,10 +1,10 @@
 const { defineConfig } = require("orval");
 
-// const isDev = process.env.NODE_ENV === "development";
+require("dotenv").config();
 
 module.exports = defineConfig({
   main: {
-    input: "http://localhost:4000/api-yaml",
+    input: process.env.SYSTEM_NEXT_API_URL + process.env.SYSTEM_NEXT_API_YAML,
     // input: "./api.yaml",
     output: {
       target: "./src/generated/api",

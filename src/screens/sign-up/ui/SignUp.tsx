@@ -38,12 +38,6 @@ export function SignUp() {
     register,
     setError,
   } = useForm<Fields>({
-    defaultValues: {
-      fullName: "John Doe",
-      email: "user@example.com",
-      password: "Password123!",
-      passwordRepeat: "Password123!",
-    },
     resolver: valibotResolver(fieldsSchema),
   });
 

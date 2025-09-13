@@ -7,6 +7,8 @@ import { passwordSchema } from "@/shared/schemas/password.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as v from "valibot";
 
@@ -18,6 +20,7 @@ const schema = v.object({
 type Inputs = v.InferOutput<typeof schema>;
 
 export function SignIn() {
+  const router = useRouter();
   const {
     handleSubmit,
     formState: { errors },
@@ -30,9 +33,17 @@ export function SignIn() {
     resolver: valibotResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {
-    // console.log(data);
-    // await signIn("credentials", {});
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+      type: "login",
+    });
+
+    if (result?.ok) {
+      router.push(routes.dashboard.url());
+    }
   };
 
   return (

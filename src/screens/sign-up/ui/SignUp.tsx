@@ -54,7 +54,7 @@ export function SignUp() {
     });
 
     if (result?.ok) {
-      router.push(routes.home.url());
+      router.push(routes.dashboard.url());
     } else if (typeof result?.error === "string") {
       const error = JSON.parse(result.error);
 

@@ -10,7 +10,7 @@ export default async function RootLayout({
   const isAuth = await checkIsAuth();
 
   if (isAuth) {
-    redirect(routes.home.url());
+    redirect(routes.dashboard.url());
   }
 
   return children;

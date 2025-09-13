@@ -11,4 +11,8 @@ export const routes = {
     url: () => "/sign-up",
     path: () => "/sign-up",
   },
+  dashboard: {
+    url: () => "/dashboard",
+    path: () => "/dashboard",
+  },
 };

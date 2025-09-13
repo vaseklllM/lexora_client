@@ -1,6 +1,19 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+type LoginResponse = {
+  token: string;
+  refreshToken: string;
+  expiresIn: number;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -31,18 +44,7 @@ export const authOptions: AuthOptions = {
               },
             );
 
-            const data: {
-              token: string;
-              refreshToken: string;
-              expiresIn: number;
-              user: {
-                id: string;
-                email: string;
-                name: string;
-                createdAt: string;
-                updatedAt: string;
-              };
-            } = await result.json();
+            const data: LoginResponse = await result.json();
 
             if (!result.ok) {
               throw new Error(JSON.stringify(data));
@@ -58,7 +60,33 @@ export const authOptions: AuthOptions = {
           }
 
           case "login": {
-            return null;
+            const result = await fetch(
+              `${process.env.SYSTEM_NEXT_API_URL}auth/login`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: credentials?.email,
+                  password: credentials?.password,
+                }),
+              },
+            );
+
+            const data: LoginResponse = await result.json();
+
+            if (!result.ok) {
+              throw new Error(JSON.stringify(data));
+            }
+
+            return {
+              id: data.user.id,
+              name: data.user.name,
+              email: data.user.email,
+              accessToken: data.token,
+              refreshToken: data.refreshToken,
+            };
           }
 
           default:

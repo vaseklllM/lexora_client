@@ -23,7 +23,7 @@ export function SignIn() {
   const router = useRouter();
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
   } = useForm<Inputs>({
     defaultValues: {
@@ -43,6 +43,9 @@ export function SignIn() {
 
     if (result?.ok) {
       router.push(routes.dashboard.url());
+    } else if (typeof result?.error === "string") {
+      // const error = JSON.parse(result.error);
+      // console.log(error);
     }
   };
 
@@ -81,7 +84,11 @@ export function SignIn() {
             autoComplete="current-password"
             label="Password"
           />
-          <Button className="mt-2 w-full" type="submit">
+          <Button
+            className="mt-2 w-full"
+            type="submit"
+            isLoading={isSubmitting}
+          >
             Sign in
           </Button>
         </form>

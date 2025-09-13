@@ -1,10 +1,15 @@
-import { ButtonHTMLAttributes } from "react";
+import {
+  ButtonHTMLAttributes,
+  MouseEventHandler,
+  useCallback,
+  useState,
+} from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    button: "btn rounded-md",
-    loader: "loading loading-spinner",
+    button: "btn relative rounded-md",
+    loader: "loading loading-spinner absolute",
   },
   variants: {
     btnType: {
@@ -62,19 +67,43 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = (props: ButtonProps) => {
-  const { isLoading, children, btnType = "primary", ...buttonProps } = props;
+  const {
+    isLoading,
+    children,
+    btnType = "primary",
+    onClick,
+    ...buttonProps
+  } = props;
+
+  const [isLoadingState, setIsLoadingState] = useState(false);
 
   const classes = classesSlots({
     btnType,
   });
 
+  const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
+    async (event) => {
+      try {
+        setIsLoadingState(true);
+        await onClick?.(event);
+      } finally {
+        setIsLoadingState(false);
+      }
+    },
+    [onClick, setIsLoadingState],
+  );
+
   return (
     <button
       {...buttonProps}
-      disabled={isLoading || buttonProps.disabled}
+      disabled={isLoading || isLoadingState || buttonProps.disabled}
       className={classes.button({ className: props.className })}
+      onClick={clickHandler}
     >
-      {isLoading ? <span className={classes.loader()}></span> : children}
+      {children}
+      {(isLoading || isLoadingState) && (
+        <span className={classes.loader()}></span>
+      )}
     </button>
   );
 };

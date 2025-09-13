@@ -1,8 +1,7 @@
 "use client";
 
+import { useLogout } from "@/shared/hooks/useLogout";
 import { Button } from "@/shared/ui/Button";
-import { signOut } from "next-auth/react";
-// import { useSession } from "next-auth/react";
 import { ReactElement } from "react";
 
 interface Props {
@@ -10,10 +9,16 @@ interface Props {
 }
 
 export const Test = (props: Props): ReactElement => {
-  //   console.log(useSession());
+  const logout = useLogout();
+
   return (
     <div className={props.className}>
-      <Button onClick={() => signOut({ redirect: false })} className="mt-10">
+      <Button
+        onClick={async () => {
+          await logout();
+        }}
+        className="mt-10"
+      >
         logout
       </Button>
     </div>

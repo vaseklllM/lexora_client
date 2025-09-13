@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/shared/api/authOptions";
+import { authOptions } from "@/shared/api/core/authOptions";
 import { getServerSession } from "next-auth";
 
 export async function loadData() {

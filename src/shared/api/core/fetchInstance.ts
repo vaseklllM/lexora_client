@@ -13,3 +13,5 @@ export async function fetchInstance(url: string, options?: RequestInit) {
     },
   });
 }
+
+export type FetchInstance = typeof fetchInstance;

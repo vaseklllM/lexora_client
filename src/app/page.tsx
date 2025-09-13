@@ -1,4 +1,4 @@
-import { fetchInstance } from "@/shared/api/fetchInstance";
+import { authService } from "@/shared/api/endpoints/auth";
 import { routes } from "@/shared/routes";
 import { Link } from "@/shared/ui/Link";
 import { Test } from "./Test";
@@ -6,9 +6,8 @@ import { loadData } from "./loadData";
 
 export default async function Home() {
   const session = await loadData();
-  const me = await fetchInstance("auth/me");
 
-  const meData = await me.json();
+  const meData = await authService.me.fetch();
 
   return (
     <div className="p-4">

@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import { Fields, fieldsSchema } from "../model/fields-schema";
@@ -29,6 +30,7 @@ const classesSlots = tv({
 
 export function SignUp() {
   const [errorMessage, setErrorMessage] = useState<string>();
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -57,7 +59,9 @@ export function SignUp() {
       type: "register",
     });
 
-    if (!result?.ok && typeof result?.error === "string") {
+    if (result?.ok) {
+      router.push(routes.home.url());
+    } else if (typeof result?.error === "string") {
       const error = JSON.parse(result.error);
 
       if (error.errors) {

@@ -6,7 +6,7 @@ import { emailSchema } from "@/shared/schemas/email.schema";
 import { passwordSchema } from "@/shared/schemas/password.schema";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
-import { valibotResolver } from "@/shared/utils/valibotResolver";
+import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as v from "valibot";
 

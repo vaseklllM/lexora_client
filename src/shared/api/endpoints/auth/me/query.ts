@@ -1,16 +1,14 @@
+import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
 import { revalidateTag } from "next/cache";
 import { FetchInstance } from "../../../core/fetchInstance";
 import { Fetchable } from "../../types/Fetchable";
-
-interface Revalidatable {
-  invalidate: () => void;
-}
+import { Revalidatable } from "../../types/Revalidatable";
 
 export class MeQuery implements Fetchable, Revalidatable {
   constructor(private readonly fetchInstance: FetchInstance) {}
 
   private readonly _url = "auth/me";
-  private readonly _tag = "me";
+  private readonly _tag = `auth-me__${stackQueryKeys.next()}`;
 
   async fetch() {
     const result = await this.fetchInstance(this._url);
@@ -18,7 +16,7 @@ export class MeQuery implements Fetchable, Revalidatable {
     return result.json();
   }
 
-  invalidate() {
+  revalidate() {
     revalidateTag(this._tag);
   }
 }

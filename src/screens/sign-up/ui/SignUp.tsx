@@ -4,7 +4,7 @@ import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
-import { valibotResolver } from "@/shared/utils/valibotResolver";
+import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 // import { signUp } from "../api/sign-up";
 import { ErrorsType } from "@/shared/types/ErrorsType";

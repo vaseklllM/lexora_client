@@ -1,5 +1,5 @@
-import { Deck } from "@/entities/deck";
-import { Folder, IFolder } from "@/entities/folder";
+import { Deck } from "@/features/deck";
+import { Folder, IFolder } from "@/features/folder";
 import { IDeck } from "@/shared/api/endpoints/dashboard";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";

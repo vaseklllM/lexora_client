@@ -12,7 +12,7 @@ export const FolderIcon = (props: Props): ReactElement => {
         viewBox="0 0 24 24"
         width="24px"
         enableBackground="new 0 0 24 24"
-        className="fill-base-content/70"
+        className="fill-base-content/60"
       >
         <g>
           <rect fill="none" height="24" width="24"></rect>

@@ -40,9 +40,6 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     setError,
     reset,
   } = useForm<Inputs>({
-    defaultValues: {
-      name: "",
-    },
     resolver: valibotResolver(schema),
   });
 
@@ -62,7 +59,6 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
 
   return (
     <dialog
-      id="my_modal_1"
       className={classes.base({ className: props.className })}
       open={props.isOpen}
       onClose={() => props.setIsOpen(false)}
@@ -88,10 +84,11 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
           <div className="mt-4 flex w-full justify-end gap-4">
             <Button
               className="btn-soft"
+              type="button"
               disabled={isSubmitting}
               onClick={() => {
-                props.setIsOpen(false);
                 reset();
+                props.setIsOpen(false);
               }}
             >
               Cancel

@@ -6,7 +6,10 @@ export default async function Home() {
 
   return (
     <div className="p-4">
-      <Section title="Folders" folders={dashboardData.childFolders}></Section>
+      <Section
+        folders={dashboardData.childFolders}
+        decks={dashboardData.childDecks}
+      />
     </div>
   );
 }

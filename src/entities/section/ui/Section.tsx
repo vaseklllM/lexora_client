@@ -1,20 +1,25 @@
+import { Deck } from "@/entities/deck";
 import { Folder, IFolder } from "@/entities/folder";
+import { IDeck } from "@/shared/api/endpoints/dashboard";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 rounded-xl p-4 pr-5 pl-5 shadow-md",
-    title: "text-base-content/70 text-2xl font-bold",
+    base: "bg-base-200 rounded-xl p-5 pr-5 pl-5 shadow-md",
+    foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
+      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+    decksTitle: "text-base-content/70 mt-4 text-xl font-bold",
+    decks:
       "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
   },
 });
 
 interface Props {
   className?: string;
-  title: string;
   folders?: IFolder[];
+  decks?: IDeck[];
 }
 
 export const Section = (props: Props): ReactElement => {
@@ -22,11 +27,19 @@ export const Section = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <h1 className={classes.title()}>{props.title}</h1>
+      <h3 className={classes.foldersTitle()}>Folders</h3>
       {props.folders && (
         <div className={classes.folders()}>
           {props.folders.map((folder) => (
             <Folder key={folder.id} folder={folder} />
+          ))}
+        </div>
+      )}
+      <h3 className={classes.decksTitle()}>Decks</h3>
+      {props.decks && (
+        <div className={classes.decks()}>
+          {props.decks.map((deck) => (
+            <Deck key={deck.id} deck={deck} />
           ))}
         </div>
       )}

@@ -1,4 +1,4 @@
-import { dashboardQuery } from "./get-dashboard/query";
+import { dashboardQuery } from "./get-dashboard";
 
 class DashboardService {
   public readonly dashboard = dashboardQuery;

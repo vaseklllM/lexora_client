@@ -8,6 +8,20 @@ import * as v from "valibot";
 import { Fetchable } from "../../types/Fetchable";
 import { Revalidatable } from "../../types/Revalidatable";
 
+const deckSchema = v.object({
+  id: idSchema(),
+  name: v.string(),
+  numberOfNewCards: v.number(),
+  numberOfCardsInProgress: v.number(),
+  numberOfCardsNeedToReview: v.number(),
+  numberOfCards: v.number(),
+  numberOfCardsLearned: v.number(),
+  languageWhatIKnow: languageSchema(),
+  languageWhatILearn: languageSchema(),
+});
+
+export type IDeck = v.InferOutput<typeof deckSchema>;
+
 class DashboardQuery implements Fetchable, Revalidatable {
   constructor(private readonly fetchInstance: FetchCustomType) {}
 
@@ -21,19 +35,7 @@ class DashboardQuery implements Fetchable, Revalidatable {
         numberOfCards: v.number(),
       }),
     ),
-    childDecks: v.array(
-      v.object({
-        id: idSchema(),
-        name: v.string(),
-        numberOfNewCards: v.number(),
-        numberOfCardsInProgress: v.number(),
-        numberOfCardsNeedToReview: v.number(),
-        numberOfCards: v.number(),
-        numberOfCardsLearned: v.number(),
-        languageWhatIKnow: languageSchema(),
-        languageWhatILearn: languageSchema(),
-      }),
-    ),
+    childDecks: v.array(deckSchema),
   });
 
   private readonly _url = "dashboard";

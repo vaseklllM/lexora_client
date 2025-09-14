@@ -1,9 +1,11 @@
+import { UserIcon } from "@/entities/user-icon";
 import { tv } from "tailwind-variants";
 import { ButtonLogout } from "./ButtonLogout";
 
 const classesSlots = tv({
   slots: {
     header: "flex items-center justify-between p-4",
+    user: "flex items-center gap-2",
   },
 });
 
@@ -16,7 +18,10 @@ export const Header = (props: Props) => {
 
   return (
     <div className={classes.header()}>
-      <p className="text-base-content/90">{props.userName}</p>
+      <div className={classes.user()}>
+        <UserIcon userName={props.userName} />
+        <p className="text-base-content/90">{props.userName}</p>
+      </div>
       <ButtonLogout />
     </div>
   );

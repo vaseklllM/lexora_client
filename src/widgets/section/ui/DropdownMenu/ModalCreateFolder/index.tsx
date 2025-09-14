@@ -16,7 +16,7 @@ const classesSlots = tv({
 });
 
 const schema = v.object({
-  name: v.pipe(
+  new_folder_name: v.pipe(
     v.string(),
     v.nonEmpty("Name is required"),
     noOnlySpacesStringSchema("Name cannot be only spaces"),
@@ -48,13 +48,13 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await createFolder({
-        name: data.name,
+        name: data.new_folder_name,
       });
       props.setIsOpen(false);
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        setError("name", { message: error.message });
+        setError("new_folder_name", { message: error.message });
       }
     }
   };
@@ -71,7 +71,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     }
   }, [props.isOpen]);
 
-  const nameRegister = register("name", {
+  const nameRegister = register("new_folder_name", {
     required: true,
   });
 
@@ -90,9 +90,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
           <InputLabeled
             {...nameRegister}
             ref={assignRef(nameRegister.ref, nameFieldRef)}
-            id="name"
-            name="name"
-            error={errors.name?.message}
+            error={errors.new_folder_name?.message}
             type="text"
             autoComplete="name"
             autoFocus={props.isOpen}

@@ -1,4 +1,5 @@
 import { InputLabeled } from "@/entities/input-labeled";
+import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { ReactElement } from "react";
@@ -13,7 +14,11 @@ const classesSlots = tv({
 });
 
 const schema = v.object({
-  name: v.pipe(v.string(), v.nonEmpty("Name is required")),
+  name: v.pipe(
+    v.string(),
+    v.nonEmpty("Name is required"),
+    noOnlySpacesStringSchema("Name cannot be only spaces"),
+  ),
 });
 
 type Inputs = v.InferOutput<typeof schema>;
@@ -38,7 +43,9 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     resolver: valibotResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {};
+  const onSubmit: SubmitHandler<Inputs> = async () => {
+    // console.log(data);
+  };
 
   return (
     <dialog
@@ -73,14 +80,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
             >
               Cancel
             </Button>
-            <Button
-              className="btn-primary"
-              isLoading={isSubmitting}
-              onClick={(e) => {
-                e.preventDefault();
-                // Add your create folder logic here
-              }}
-            >
+            <Button className="btn-primary" isLoading={isSubmitting}>
               Create
             </Button>
           </div>

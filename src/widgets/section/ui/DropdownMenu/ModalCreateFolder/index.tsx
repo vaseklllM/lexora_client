@@ -71,6 +71,10 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     }
   }, [props.isOpen]);
 
+  const nameRegister = register("name", {
+    required: true,
+  });
+
   return (
     <dialog
       className={classes.base({ className: props.className })}
@@ -84,10 +88,8 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
           className="modal-action flex flex-col gap-4"
         >
           <InputLabeled
-            {...register("name", {
-              required: true,
-            })}
-            ref={assignRef(register("name").ref, nameFieldRef)}
+            {...nameRegister}
+            ref={assignRef(nameRegister.ref, nameFieldRef)}
             id="name"
             name="name"
             error={errors.name?.message}

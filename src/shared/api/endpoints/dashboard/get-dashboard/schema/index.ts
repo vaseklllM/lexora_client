@@ -1,6 +1,6 @@
 import * as v from "valibot";
-import { deckSchema } from "./deck.schema";
-import { folderSchema } from "./folder.schema";
+import { deckSchema } from "../../../schemas/deck.schema";
+import { folderSchema } from "../../../schemas/folder.schema";
 
 export const dashboardSchema = v.object({
   childFolders: v.array(folderSchema),

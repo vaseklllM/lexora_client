@@ -1,5 +1,5 @@
 import { Folder as FolderEntity } from "@/entities/folder";
-import { IFolder } from "@/shared/api/endpoints/dashboard";
+import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { ReactElement } from "react";
 
 interface Props {

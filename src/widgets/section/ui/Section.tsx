@@ -1,6 +1,7 @@
 import { Deck } from "@/features/deck";
 import { Folder } from "@/features/folder";
-import { IDeck, IFolder } from "@/shared/api/endpoints/dashboard";
+import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
+import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { DropdownMenu } from "./DropdownMenu";

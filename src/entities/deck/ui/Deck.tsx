@@ -1,4 +1,4 @@
-import { IDeck } from "@/shared/api/endpoints/dashboard";
+import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { countOf } from "@/shared/utils/count-of";
 import { PercentMath } from "@/shared/utils/percent-math";
 import { ReactElement } from "react";

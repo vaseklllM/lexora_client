@@ -1,4 +1,4 @@
-import { IFolder } from "@/shared/api/endpoints/dashboard";
+import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
 import { ReactElement } from "react";

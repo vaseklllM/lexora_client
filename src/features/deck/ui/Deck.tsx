@@ -1,5 +1,5 @@
 import { Deck as DeckEntity } from "@/entities/deck";
-import { IDeck } from "@/shared/api/endpoints/dashboard";
+import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { ReactElement } from "react";
 
 interface Props {

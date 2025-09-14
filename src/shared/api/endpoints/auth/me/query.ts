@@ -28,11 +28,7 @@ class MeQuery implements Fetchable, Revalidatable {
     const result = await fetchCustom(this._url);
     const data = await result.json();
 
-    return {
-      ...data,
-    };
-
-    // return v.parse(this._responseSchema, data);
+    return v.parse(this._responseSchema, data);
   }
 
   revalidate() {

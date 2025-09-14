@@ -1,3 +1,4 @@
+import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
@@ -25,11 +26,14 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Folder</h3>
-        <p className="py-4">Press ESC key or click the button below to close</p>
         <div className="modal-action">
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
+            <div className="flex gap-2">
+              <Button className="">Cancel</Button>
+              <Button btnType="primary" className="">
+                Create
+              </Button>
+            </div>
           </form>
         </div>
       </div>

@@ -45,24 +45,24 @@ export const DropdownMenu = (props: Props): ReactElement => {
         style={{ positionAnchor: "--anchor-1" } as React.CSSProperties}
       >
         <li>
-          <a
+          <button
             onClick={() => {
               setIsOpenModalCreateFolder(true);
               popoverListRef.current?.hidePopover();
             }}
           >
             Folder
-          </a>
+          </button>
         </li>
         <li>
-          <a
+          <button
             onClick={() => {
               setIsOpenModalCreateDesc(true);
               popoverListRef.current?.hidePopover();
             }}
           >
             Deck
-          </a>
+          </button>
         </li>
       </ul>
       <ModalCreateFolder

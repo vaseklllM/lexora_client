@@ -67,13 +67,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = (props: ButtonProps) => {
-  const {
-    isLoading,
-    children,
-    btnType = "primary",
-    onClick,
-    ...buttonProps
-  } = props;
+  const { isLoading, children, btnType, onClick, ...buttonProps } = props;
 
   const [isLoadingState, setIsLoadingState] = useState(false);
 

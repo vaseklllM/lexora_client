@@ -9,7 +9,6 @@ const classesSlots = tv({
   slots: {
     base: "bg-base-200 relative rounded-xl p-5 pr-5 pl-5 shadow-md",
     dropdownMenu: "absolute right-3 bottom-3",
-    // header: "flex items-center justify-between",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
       "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",

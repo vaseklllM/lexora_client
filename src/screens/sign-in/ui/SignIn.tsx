@@ -4,13 +4,29 @@ import { InputLabeled } from "@/entities/input-labeled";
 import { routes } from "@/shared/routes";
 import { emailSchema } from "@/shared/schemas/email.schema";
 import { passwordSchema } from "@/shared/schemas/password.schema";
+import { Alert } from "@/shared/ui/Alert";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { tv } from "tailwind-variants";
 import * as v from "valibot";
+
+const classesSlots = tv({
+  slots: {
+    formWrapper: "mt-10 sm:mx-auto sm:w-full sm:max-w-sm",
+  },
+  variants: {
+    errorMessage: {
+      true: {
+        formWrapper: "mt-5",
+      },
+    },
+  },
+});
 
 const schema = v.object({
   email: emailSchema(),
@@ -21,13 +37,14 @@ type Inputs = v.InferOutput<typeof schema>;
 
 export function SignIn() {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string>();
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
   } = useForm<Inputs>({
     defaultValues: {
-      email: "user@example.com",
+      email: "user@example.co",
       password: "Password123!",
     },
     resolver: valibotResolver(schema),
@@ -44,10 +61,16 @@ export function SignIn() {
     if (result?.ok) {
       router.push(routes.dashboard.url());
     } else if (typeof result?.error === "string") {
-      // const error = JSON.parse(result.error);
-      // console.log(error);
+      const error = JSON.parse(result.error);
+      if (typeof error.message === "string") {
+        setErrorMessage(error.message);
+      }
     }
   };
+
+  const classes = classesSlots({
+    errorMessage: !!errorMessage,
+  });
 
   return (
     <>
@@ -60,7 +83,11 @@ export function SignIn() {
         </p>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {errorMessage && (
+        <Alert type="error" message={errorMessage} className="mt-5" />
+      )}
+
+      <div className={classes.formWrapper()}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <InputLabeled
             {...register("email", {

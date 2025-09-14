@@ -3,16 +3,19 @@ import { Folder, IFolder } from "@/entities/folder";
 import { IDeck } from "@/shared/api/endpoints/dashboard";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { DropdownMenu } from "./DropdownMenu";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 rounded-xl p-5 pr-5 pl-5 shadow-md",
+    base: "bg-base-200 relative rounded-xl p-5 pr-5 pl-5 shadow-md",
+    dropdownMenu: "absolute right-3 bottom-3",
+    // header: "flex items-center justify-between",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
-      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
-    decksTitle: "text-base-content/70 mt-4 text-xl font-bold",
+      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
+    decksTitle: "text-base-content/70 mt-6 text-xl font-bold",
     decks:
-      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
   },
 });
 
@@ -27,7 +30,10 @@ export const Section = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
+      <DropdownMenu className={classes.dropdownMenu()} />
+      {/* <div className={classes.header()}> */}
       <h3 className={classes.foldersTitle()}>Folders</h3>
+      {/* </div> */}
       {props.folders && (
         <div className={classes.folders()}>
           {props.folders.map((folder) => (

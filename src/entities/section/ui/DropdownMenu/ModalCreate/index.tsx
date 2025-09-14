@@ -10,7 +10,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 export const ModalCreate = (props: Props): ReactElement => {
@@ -21,7 +21,7 @@ export const ModalCreate = (props: Props): ReactElement => {
       id="my_modal_1"
       className={classes.base({ className: props.className })}
       open={props.isOpen}
-      onClose={props.onClose}
+      onClose={() => props.setIsOpen(false)}
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Hello!</h3>

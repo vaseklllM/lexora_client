@@ -1,6 +1,9 @@
+"use client";
+
 import { Plus } from "@/shared/icons/Plus";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { tv } from "tailwind-variants";
+import { ModalCreate } from "./ModalCreate";
 
 const classesSlots = tv({
   slots: {
@@ -16,6 +19,7 @@ interface Props {
 
 export const DropdownMenu = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const [isOpenModalCreateFolder, setIsOpenModalCreateFolder] = useState(false);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -34,12 +38,16 @@ export const DropdownMenu = (props: Props): ReactElement => {
         style={{ positionAnchor: "--anchor-1" } as React.CSSProperties}
       >
         <li>
-          <a>Folder</a>
+          <a onClick={() => setIsOpenModalCreateFolder(true)}>Folder</a>
         </li>
         <li>
           <a>Deck</a>
         </li>
       </ul>
+      <ModalCreate
+        isOpen={isOpenModalCreateFolder}
+        setIsOpen={setIsOpenModalCreateFolder}
+      />
     </div>
   );
 };

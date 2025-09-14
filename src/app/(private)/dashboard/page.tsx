@@ -1,4 +1,4 @@
-import { Section } from "@/entities/section";
+import { Section } from "@/widgets/section";
 import { dashboardService } from "@/shared/api/endpoints/dashboard";
 
 export default async function Home() {

@@ -31,9 +31,7 @@ export const Section = (props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <DropdownMenu className={classes.dropdownMenu()} />
-      {/* <div className={classes.header()}> */}
       <h3 className={classes.foldersTitle()}>Folders</h3>
-      {/* </div> */}
       {props.folders && (
         <div className={classes.folders()}>
           {props.folders.map((folder) => (

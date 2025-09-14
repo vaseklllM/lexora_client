@@ -11,69 +11,67 @@ const classesSlots = tv({
     button: "btn relative rounded-md",
     loader: "loading loading-spinner absolute",
   },
-  variants: {
-    btnType: {
-      primary: {
-        button: "btn-primary",
-        loader: "text-primary",
-      },
-      secondary: {
-        button: "btn-secondary",
-        loader: "text-secondary",
-      },
-      accent: {
-        button: "btn-accent",
-        loader: "text-accent",
-      },
-      neutral: {
-        button: "btn-neutral",
-        loader: "text-neutral",
-      },
-      info: {
-        button: "btn-info",
-        loader: "text-info",
-      },
-      success: {
-        button: "btn-success",
-        loader: "text-success",
-      },
-      warning: {
-        button: "btn-warning",
-        loader: "text-warning",
-      },
-      error: {
-        button: "btn-error",
-        loader: "text-error",
-      },
-    },
-  },
+  // variants: {
+  //   btnType: {
+  //     primary: {
+  //       button: "btn-primary",
+  //       loader: "text-primary",
+  //     },
+  //     secondary: {
+  //       button: "btn-secondary",
+  //       loader: "text-secondary",
+  //     },
+  //     accent: {
+  //       button: "btn-accent",
+  //       loader: "text-accent",
+  //     },
+  //     neutral: {
+  //       button: "btn-neutral",
+  //       loader: "text-neutral",
+  //     },
+  //     info: {
+  //       button: "btn-info",
+  //       loader: "text-info",
+  //     },
+  //     success: {
+  //       button: "btn-success",
+  //       loader: "text-success",
+  //     },
+  //     warning: {
+  //       button: "btn-warning",
+  //       loader: "text-warning",
+  //     },
+  //     error: {
+  //       button: "btn-error",
+  //       loader: "text-error",
+  //     },
+  //   },
+  // },
 });
 
-type ButtonType =
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "neutral"
-  | "info"
-  | "success"
-  | "warning"
-  | "error";
+// type ButtonType =
+//   | "primary"
+//   | "secondary"
+//   | "accent"
+//   | "neutral"
+//   | "info"
+//   | "success"
+//   | "warning"
+//   | "error";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   isLoading?: boolean;
   children?: React.ReactNode;
-  btnType?: ButtonType;
+  // btnType?: ButtonType;
 }
 
 export const Button = (props: ButtonProps) => {
-  const { isLoading, children, btnType, onClick, ...buttonProps } = props;
+  const { isLoading, children, onClick, ...buttonProps } = props;
 
   const [isLoadingState, setIsLoadingState] = useState(false);
 
-  const classes = classesSlots({
-    btnType,
-  });
+  const classes = classesSlots();
 
   const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
     async (event) => {

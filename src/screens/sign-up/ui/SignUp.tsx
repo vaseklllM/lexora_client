@@ -160,9 +160,8 @@ export function SignUp() {
           />
           <Button
             isLoading={isSubmitting}
-            className="mt-2 w-full"
+            className="btn-primary mt-2 w-full"
             type="submit"
-            btnType="primary"
           >
             Sign up
           </Button>

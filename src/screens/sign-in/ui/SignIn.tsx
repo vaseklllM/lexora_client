@@ -114,10 +114,9 @@ export function SignIn() {
             label="Password"
           />
           <Button
-            className="mt-2 w-full"
+            className="btn-primary mt-2 w-full"
             type="submit"
             isLoading={isSubmitting}
-            btnType="primary"
           >
             Sign in
           </Button>

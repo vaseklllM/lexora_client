@@ -50,9 +50,9 @@ export const Folder = (props: Props): ReactElement => {
         >
           {countOf(props.folder.numberOfCards, "card")}
         </p>
-        <p className={classes.numberOfCardsProgress()}>45%</p>
+        {/* <p className={classes.numberOfCardsProgress()}>45%</p> */}
       </div>
-      <progress className={classes.progress()} value="45" max="100"></progress>
+      {/* <progress className={classes.progress()} value="45" max="100"></progress> */}
     </div>
   );
 };

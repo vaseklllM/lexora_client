@@ -1,8 +1,7 @@
-import { fetchInstance } from "../../core/fetchInstance";
-import { MeQuery } from "./me";
+import { meQuery } from "./me";
 
 class AuthService {
-  public readonly me = new MeQuery(fetchInstance);
+  public readonly me = meQuery;
 }
 
 export const authService = new AuthService();

@@ -1,1 +1,1 @@
-export { MeQuery } from "./query";
+export { meQuery } from "./query";

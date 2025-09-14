@@ -5,11 +5,11 @@ import { fullNameSchema } from "@/shared/schemas/fullName.schema";
 import { idSchema } from "@/shared/schemas/id.schema";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
-import { FetchInstance } from "../../../core/fetchInstance";
+import { fetchInstance, FetchInstance } from "../../../core/fetchInstance";
 import { Fetchable } from "../../types/Fetchable";
 import { Revalidatable } from "../../types/Revalidatable";
 
-export class MeQuery implements Fetchable, Revalidatable {
+class MeQuery implements Fetchable, Revalidatable {
   constructor(private readonly fetchInstance: FetchInstance) {}
 
   private readonly _responseSchema = v.object({
@@ -42,3 +42,5 @@ export class MeQuery implements Fetchable, Revalidatable {
     revalidateTag(this._tag);
   }
 }
+
+export const meQuery = new MeQuery(fetchInstance);

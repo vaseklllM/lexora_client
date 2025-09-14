@@ -8,34 +8,28 @@ type Response = {
   expiresIn: number;
 };
 
-export async function refreshToken(refreshToken: string): Promise<Response> {
-  if (inFlightRefresh) return inFlightRefresh;
-
-  inFlightRefresh = (async () => {
-    const result = await fetch(
-      `${process.env.SYSTEM_NEXT_API_URL}auth/refresh`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          refreshToken,
-        }),
-      },
-    );
-
-    // console.log("REFRESH TOKEN RESULT: ", result);
-
-    return result.json();
-  })();
-
+export async function refreshOnce(refreshToken: string): Promise<Response> {
   try {
-    const result = await inFlightRefresh;
-    return result;
-  } catch (error) {
-    // console.log("ERROR refreshToken: ", error);
-    throw error;
+    if (inFlightRefresh) return inFlightRefresh;
+
+    inFlightRefresh = (async () => {
+      const result = await fetch(
+        `${process.env.SYSTEM_NEXT_API_URL}auth/refresh`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            refreshToken,
+          }),
+        },
+      );
+
+      return await result.json();
+    })();
+
+    return await inFlightRefresh;
   } finally {
     inFlightRefresh = null;
   }

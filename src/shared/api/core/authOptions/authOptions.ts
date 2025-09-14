@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { refreshToken } from "./refreshToken";
+import { refreshOnce } from "./refreshToken";
 
 type LoginResponse = {
   token: string;
@@ -107,28 +107,20 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user) {
+    jwt: async ({ token, user, account }) => {
+      if (user && account) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.tokenExp = user.tokenExp;
+
         return token;
       }
 
       const accessTokenExpires: number = token.tokenExp! * 1000;
 
-      // console.log(
-      //   "LAST TOKEN TIME: ",
-      //   (accessTokenExpires - Date.now()) / 1000,
-      // );
+      if (Date.now() < accessTokenExpires) return token;
 
-      if (Date.now() < accessTokenExpires) {
-        return token;
-      }
-
-      const result = await refreshToken(token.refreshToken as string);
-
-      // console.log("REFRESHED TOKEN RESULT: ", result);
+      const result = await refreshOnce(token.refreshToken as string);
 
       const decodedToken = jwtDecode(result.token);
 
@@ -140,6 +132,7 @@ export const authOptions: AuthOptions = {
     },
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
       return session;
     },
   },

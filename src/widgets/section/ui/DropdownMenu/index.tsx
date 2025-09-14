@@ -34,7 +34,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         popoverTarget={popoverId}
         style={{ anchorName: "--anchor-1" } as React.CSSProperties}
       >
-        <Plus className="stroke-base-100" />
+        <Plus className="stroke-neutral-content" />
       </button>
 
       <ul

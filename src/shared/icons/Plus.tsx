@@ -8,7 +8,6 @@ export const Plus = (props: Props): ReactElement => {
   return (
     <svg
       version="1.1"
-      id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
       width="30px"
       height="30px"
@@ -18,6 +17,7 @@ export const Plus = (props: Props): ReactElement => {
     >
       <line
         fill="none"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         x1="25"
@@ -27,6 +27,7 @@ export const Plus = (props: Props): ReactElement => {
       />
       <line
         fill="none"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         x1="39.5"

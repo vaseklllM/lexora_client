@@ -1,5 +1,7 @@
 import { checkIsAuth } from "@/shared/api/core/checkIsAuth";
+import { authService } from "@/shared/api/endpoints/auth";
 import { routes } from "@/shared/routes";
+import { Header } from "@/widgets/header";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -13,5 +15,12 @@ export default async function RootLayout({
     redirect(routes.signIn.url());
   }
 
-  return children;
+  const me = await authService.me.fetch();
+
+  return (
+    <div>
+      <Header userName={me.name} />
+      {children}
+    </div>
+  );
 }

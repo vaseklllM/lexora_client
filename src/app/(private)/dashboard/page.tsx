@@ -1,7 +1,5 @@
 import { authService } from "@/shared/api/endpoints/auth";
 import { dashboardService } from "@/shared/api/endpoints/dashboard";
-import { routes } from "@/shared/routes";
-import { Link } from "@/shared/ui/Link";
 import { Test } from "./Test";
 
 export default async function Home() {
@@ -14,7 +12,6 @@ export default async function Home() {
       <pre>{JSON.stringify(meData, null, 2)}</pre>
       <pre>{JSON.stringify(dashboardData, null, 2)}</pre>
       <br />
-      <Link href={routes.signIn.url()}>Sign In</Link>
       <Test />
     </div>
   );

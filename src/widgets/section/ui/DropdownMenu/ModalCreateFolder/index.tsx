@@ -18,6 +18,7 @@ const classesSlots = tv({
 const schema = v.object({
   new_folder_name: v.pipe(
     v.string(),
+    v.transform((input) => input.trim()),
     v.nonEmpty("Name is required"),
     noOnlySpacesStringSchema("Name cannot be only spaces"),
   ),

@@ -59,10 +59,7 @@ export const Deck = (props: Props): ReactElement => {
           {countOf(props.deck.numberOfCards, "card")}
         </p>
         <p className={classes.numberOfCardsProgress()}>
-          {PercentMath.calculateProgress(
-            props.deck.numberOfCards,
-            props.deck.numberOfCardsLearned,
-          )}
+          {numberOfCardsProgress}%
         </p>
       </div>
       <progress

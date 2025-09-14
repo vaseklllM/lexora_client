@@ -27,14 +27,21 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Folder</h3>
         <div className="modal-action">
-          <form method="dialog">
-            <div className="flex gap-2">
-              <Button className="">Cancel</Button>
-              <Button btnType="primary" className="">
-                Create
-              </Button>
-            </div>
-          </form>
+          <div className="flex gap-2">
+            <Button className="" onClick={() => props.setIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              btnType="primary"
+              className=""
+              onClick={(e) => {
+                e.preventDefault();
+                // Add your create folder logic here
+              }}
+            >
+              Create
+            </Button>
+          </div>
         </div>
       </div>
     </dialog>

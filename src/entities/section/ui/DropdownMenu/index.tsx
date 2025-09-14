@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "@/shared/icons/Plus";
-import { ReactElement, useState } from "react";
+import { ReactElement, useId, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ModalCreate } from "./ModalCreate";
 
@@ -18,6 +18,10 @@ interface Props {
 }
 
 export const DropdownMenu = (props: Props): ReactElement => {
+  const id = useId();
+  const popoverId = `popover-${id}`;
+  const popoverListRef = useRef<HTMLUListElement>(null);
+
   const classes = classesSlots();
   const [isOpenModalCreateFolder, setIsOpenModalCreateFolder] = useState(false);
 
@@ -25,20 +29,28 @@ export const DropdownMenu = (props: Props): ReactElement => {
     <div className={classes.base({ className: props.className })}>
       <button
         className={classes.button()}
-        popoverTarget="popover-1"
+        popoverTarget={popoverId}
         style={{ anchorName: "--anchor-1" } as React.CSSProperties}
       >
         <Plus className="stroke-base-100" />
       </button>
 
       <ul
+        ref={popoverListRef}
         className={classes.list()}
         popover="auto"
-        id="popover-1"
+        id={popoverId}
         style={{ positionAnchor: "--anchor-1" } as React.CSSProperties}
       >
         <li>
-          <a onClick={() => setIsOpenModalCreateFolder(true)}>Folder</a>
+          <a
+            onClick={() => {
+              setIsOpenModalCreateFolder(true);
+              popoverListRef.current?.hidePopover();
+            }}
+          >
+            Folder
+          </a>
         </li>
         <li>
           <a>Deck</a>

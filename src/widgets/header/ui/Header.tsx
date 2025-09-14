@@ -1,8 +1,5 @@
-"use client";
-
-import { useLogout } from "@/shared/hooks/useLogout";
-import { Button } from "@/shared/ui/Button";
 import { tv } from "tailwind-variants";
+import { ButtonLogout } from "./ButtonLogout";
 
 const classesSlots = tv({
   slots: {
@@ -16,20 +13,11 @@ interface Props {
 
 export const Header = (props: Props) => {
   const classes = classesSlots();
-  const logout = useLogout();
 
   return (
     <div className={classes.header()}>
       <p className="text-base-content/90">{props.userName}</p>
-      <Button
-        onClick={async () => {
-          await logout();
-        }}
-        className="btn-sm"
-        btnType="neutral"
-      >
-        Logout
-      </Button>
+      <ButtonLogout />
     </div>
   );
 };

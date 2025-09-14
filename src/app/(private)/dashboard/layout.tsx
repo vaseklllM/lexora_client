@@ -18,7 +18,7 @@ export default async function RootLayout({
   const me = await authService.me.fetch();
 
   return (
-    <div className="bg-base-300 h-screen">
+    <div className="bg-base-300 min-h-screen">
       <Header userName={me.name} />
       {children}
     </div>

@@ -1,7 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { authService } from "@/shared/api/endpoints/auth";
 
 export async function logout() {
-  revalidatePath("/");
+  await authService.logout.fetch();
 }

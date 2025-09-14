@@ -13,7 +13,7 @@ interface Props {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export const ModalCreate = (props: Props): ReactElement => {
+export const ModalCreateDesc = (props: Props): ReactElement => {
   const classes = classesSlots();
 
   return (
@@ -24,7 +24,7 @@ export const ModalCreate = (props: Props): ReactElement => {
       onClose={() => props.setIsOpen(false)}
     >
       <div className="modal-box">
-        <h3 className="text-lg font-bold">Hello!</h3>
+        <h3 className="text-lg font-bold">Create Deck</h3>
         <p className="py-4">Press ESC key or click the button below to close</p>
         <div className="modal-action">
           <form method="dialog">

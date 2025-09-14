@@ -3,7 +3,8 @@
 import { Plus } from "@/shared/icons/Plus";
 import { ReactElement, useId, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
-import { ModalCreate } from "./ModalCreate";
+import { ModalCreateDesc } from "./ModalCreateDesc";
+import { ModalCreateFolder } from "./ModalCreateFolder";
 
 const classesSlots = tv({
   slots: {
@@ -24,6 +25,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
 
   const classes = classesSlots();
   const [isOpenModalCreateFolder, setIsOpenModalCreateFolder] = useState(false);
+  const [isOpenModalCreateDesc, setIsOpenModalCreateDesc] = useState(false);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -53,12 +55,23 @@ export const DropdownMenu = (props: Props): ReactElement => {
           </a>
         </li>
         <li>
-          <a>Deck</a>
+          <a
+            onClick={() => {
+              setIsOpenModalCreateDesc(true);
+              popoverListRef.current?.hidePopover();
+            }}
+          >
+            Deck
+          </a>
         </li>
       </ul>
-      <ModalCreate
+      <ModalCreateFolder
         isOpen={isOpenModalCreateFolder}
         setIsOpen={setIsOpenModalCreateFolder}
+      />
+      <ModalCreateDesc
+        isOpen={isOpenModalCreateDesc}
+        setIsOpen={setIsOpenModalCreateDesc}
       />
     </div>
   );

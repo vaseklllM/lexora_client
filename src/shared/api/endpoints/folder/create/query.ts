@@ -20,6 +20,10 @@ class CreateFolderQuery implements Fetchable {
     });
     const data = await result.json();
 
+    if (!result.ok) {
+      throw new Error(data.message);
+    }
+
     return v.parse(createFolderSchema, data);
   }
 }

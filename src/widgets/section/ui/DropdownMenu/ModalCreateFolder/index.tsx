@@ -6,6 +6,7 @@ import { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
+import { createFolder } from "./createFolder";
 
 const classesSlots = tv({
   slots: {
@@ -36,6 +37,8 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    setError,
+    reset,
   } = useForm<Inputs>({
     defaultValues: {
       name: "",
@@ -43,8 +46,18 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     resolver: valibotResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {
-    // console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await createFolder({
+        name: data.name,
+      });
+      props.setIsOpen(false);
+      reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        setError("name", { message: error.message });
+      }
+    }
   };
 
   return (
@@ -72,11 +85,14 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
             label="Name"
           />
 
-          <div className="mt-4 flex w-full justify-end gap-2">
+          <div className="mt-4 flex w-full justify-end gap-4">
             <Button
               className="btn-soft"
-              isLoading={isSubmitting}
-              onClick={() => props.setIsOpen(false)}
+              disabled={isSubmitting}
+              onClick={() => {
+                props.setIsOpen(false);
+                reset();
+              }}
             >
               Cancel
             </Button>

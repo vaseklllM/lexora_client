@@ -8,12 +8,22 @@ export default function Error(props: {
   reset: () => void;
 }) {
   const { error } = props;
+
+  switch (error.name) {
+    case "TooManyRequestsError":
+      return <TooManyRequestsError message={error.message} />;
+
+    default:
+      throw error;
+  }
+}
+
+function TooManyRequestsError(props: { message: string }) {
   const { seconds } = useTimer({
     expiryTimestamp: new Date(Date.now() + 1000 * 10),
     onExpire: () => {
       window.location.reload();
     },
-    interval: 20,
   });
 
   return (
@@ -21,7 +31,7 @@ export default function Error(props: {
       <Alert
         message={
           <>
-            <strong>Oops:</strong> {error.message}
+            <strong>Oops:</strong> {props.message}
           </>
         }
         type="error"

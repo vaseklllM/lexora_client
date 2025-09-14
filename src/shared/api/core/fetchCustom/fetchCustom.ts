@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../authOptions/authOptions";
 import { ErrorStatus } from "../errorStatus";
+import { TooManyRequestsError } from "./TooManyRequestsError";
 import { Options } from "./types";
 
 export async function fetchCustom(url: string, options?: Options) {
@@ -15,7 +16,7 @@ export async function fetchCustom(url: string, options?: Options) {
 
   if (!result.ok) {
     if (result.status === ErrorStatus.TOO_MANY_REQUESTS) {
-      throw new Error(result.statusText);
+      throw new TooManyRequestsError(result.statusText);
     }
   }
 

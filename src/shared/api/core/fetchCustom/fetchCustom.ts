@@ -1,17 +1,28 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "./authOptions/authOptions";
+import { authOptions } from "../authOptions/authOptions";
+import { ErrorStatus } from "../errorStatus";
+import { Options } from "./types";
 
-type Options = Omit<RequestInit, "body"> & { body?: object };
-
-export async function fetchInstance(url: string, options?: Options) {
+export async function fetchCustom(url: string, options?: Options) {
   const session = await getServerSession(authOptions);
 
-  return customFetch(url, { ...options, accessToken: session?.accessToken });
+  const result = await modifyFetch(url, {
+    ...options,
+    accessToken: session?.accessToken,
+  });
+
+  if (!result.ok) {
+    if (result.status === ErrorStatus.TOO_MANY_REQUESTS) {
+      throw new Error(result.statusText);
+    }
+  }
+
+  return result;
 }
 
-function customFetch(
+function modifyFetch(
   url: string,
   options?: Options & { accessToken?: string },
 ) {
@@ -32,4 +43,4 @@ function customFetch(
   return fetch(process.env.SYSTEM_NEXT_API_URL! + url, requestOptions);
 }
 
-export type FetchInstance = typeof fetchInstance;
+export type FetchCustomType = typeof fetchCustom;

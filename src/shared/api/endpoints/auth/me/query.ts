@@ -1,3 +1,4 @@
+import { fetchCustom, FetchCustomType } from "@/shared/api/core/fetchCustom";
 import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
 import { dateSchema } from "@/shared/schemas/date.schema";
 import { emailSchema } from "@/shared/schemas/email.schema";
@@ -5,12 +6,11 @@ import { fullNameSchema } from "@/shared/schemas/fullName.schema";
 import { idSchema } from "@/shared/schemas/id.schema";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
-import { fetchInstance, FetchInstance } from "../../../core/fetchInstance";
 import { Fetchable } from "../../types/Fetchable";
 import { Revalidatable } from "../../types/Revalidatable";
 
 class MeQuery implements Fetchable, Revalidatable {
-  constructor(private readonly fetchInstance: FetchInstance) {}
+  constructor(private readonly fetchInstance: FetchCustomType) {}
 
   private readonly _responseSchema = v.object({
     id: idSchema(),
@@ -25,11 +25,8 @@ class MeQuery implements Fetchable, Revalidatable {
   private readonly _tag = `auth-me__${stackQueryKeys.next()}`;
 
   async fetch() {
-    // console.log("FETCHING ME");
-    const result = await this.fetchInstance(this._url);
+    const result = await fetchCustom(this._url);
     const data = await result.json();
-
-    // console.log(data);
 
     return {
       ...data,
@@ -43,4 +40,4 @@ class MeQuery implements Fetchable, Revalidatable {
   }
 }
 
-export const meQuery = new MeQuery(fetchInstance);
+export const meQuery = new MeQuery(fetchCustom);

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -29,7 +29,7 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
-  message: string;
+  message: ReactNode;
   type?: "error" | "success" | "warning" | "info" | "neutral";
 }
 

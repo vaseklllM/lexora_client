@@ -51,6 +51,8 @@ export function SignIn() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setErrorMessage(undefined);
+
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,

@@ -117,6 +117,7 @@ export function SignIn() {
             className="mt-2 w-full"
             type="submit"
             isLoading={isSubmitting}
+            btnType="primary"
           >
             Sign in
           </Button>

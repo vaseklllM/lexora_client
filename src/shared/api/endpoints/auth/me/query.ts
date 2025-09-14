@@ -25,10 +25,17 @@ export class MeQuery implements Fetchable, Revalidatable {
   private readonly _tag = `auth-me__${stackQueryKeys.next()}`;
 
   async fetch() {
+    // console.log("FETCHING ME");
     const result = await this.fetchInstance(this._url);
     const data = await result.json();
 
-    return v.parse(this._responseSchema, data);
+    // console.log(data);
+
+    return {
+      ...data,
+    };
+
+    // return v.parse(this._responseSchema, data);
   }
 
   revalidate() {

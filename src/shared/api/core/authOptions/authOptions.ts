@@ -1,5 +1,7 @@
+import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { refreshToken } from "./refreshToken";
 
 type LoginResponse = {
   token: string;
@@ -50,12 +52,15 @@ export const authOptions: AuthOptions = {
               throw new Error(JSON.stringify(data));
             }
 
+            const decodedToken = jwtDecode(data.token);
+
             return {
               id: data.user.id,
               name: data.user.name,
               email: data.user.email,
               accessToken: data.token,
               refreshToken: data.refreshToken,
+              tokenExp: decodedToken.exp,
             };
           }
 
@@ -80,12 +85,15 @@ export const authOptions: AuthOptions = {
               throw new Error(JSON.stringify(data));
             }
 
+            const decodedToken = jwtDecode(data.token);
+
             return {
               id: data.user.id,
               name: data.user.name,
               email: data.user.email,
               accessToken: data.token,
               refreshToken: data.refreshToken,
+              tokenExp: decodedToken.exp,
             };
           }
 
@@ -103,13 +111,37 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.tokenExp = user.tokenExp;
+        return token;
       }
+
+      const accessTokenExpires: number = token.tokenExp! * 1000;
+
+      // console.log(
+      //   "LAST TOKEN TIME: ",
+      //   (accessTokenExpires - Date.now()) / 1000,
+      // );
+
+      if (Date.now() < accessTokenExpires) {
+        return token;
+      }
+
+      const result = await refreshToken(token.refreshToken as string);
+
+      // console.log("REFRESHED TOKEN RESULT: ", result);
+
+      const decodedToken = jwtDecode(result.token);
+
+      token.accessToken = result.token;
+      token.refreshToken = result.refreshToken;
+      token.tokenExp = decodedToken.exp;
+
       return token;
     },
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
       return session;
     },
   },
+  debug: process.env.NODE_ENV === "development",
 };

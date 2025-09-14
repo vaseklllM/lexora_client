@@ -3,7 +3,7 @@ import { ButtonLogout } from "./ButtonLogout";
 
 const classesSlots = tv({
   slots: {
-    header: "bg-base-300 flex items-center justify-between p-4",
+    header: "flex items-center justify-between p-4",
   },
 });
 

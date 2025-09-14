@@ -1,8 +1,9 @@
 import { InputLabeled } from "@/entities/input-labeled";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
+import { assignRef } from "@/shared/utils/assign-ref";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
@@ -32,6 +33,7 @@ interface Props {
 
 export const ModalCreateFolder = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const nameFieldRef = useRef<HTMLInputElement>(null);
 
   const {
     handleSubmit,
@@ -57,6 +59,18 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     }
   };
 
+  useEffect(() => {
+    if (props.isOpen) {
+      const timer = setTimeout(() => {
+        if (nameFieldRef.current) {
+          nameFieldRef.current.focus();
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [props.isOpen]);
+
   return (
     <dialog
       className={classes.base({ className: props.className })}
@@ -73,11 +87,14 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
             {...register("name", {
               required: true,
             })}
+            ref={assignRef(register("name").ref, nameFieldRef)}
             id="name"
             name="name"
             error={errors.name?.message}
             type="text"
             autoComplete="name"
+            autoFocus={props.isOpen}
+            tabIndex={-1}
             label="Name"
           />
 

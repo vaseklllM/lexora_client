@@ -22,8 +22,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-export const Input = (props: InputProps): React.ReactElement | null => {
-  const { error, className, ...inputProps } = props;
+export const Input = (
+  props: InputProps & { ref?: React.Ref<HTMLInputElement> },
+): React.ReactElement | null => {
+  const { error, className, ref, ...inputProps } = props;
 
   const { base, inputField, errorMessage } = input({
     error: !!error,
@@ -32,7 +34,7 @@ export const Input = (props: InputProps): React.ReactElement | null => {
 
   return (
     <div className={base()}>
-      <input {...inputProps} className={inputField()} />
+      <input {...inputProps} ref={ref} className={inputField()} />
       {error && <p className={errorMessage()}>{error}</p>}
     </div>
   );

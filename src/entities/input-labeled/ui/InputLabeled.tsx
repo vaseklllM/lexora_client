@@ -21,12 +21,13 @@ interface InputLabeledProps extends InputProps {
   className?: string;
   label: string;
   rightLabel?: React.ReactNode;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 export const InputLabeled = (
   props: InputLabeledProps,
 ): React.ReactElement | null => {
-  const { rightLabel, label: labelProp, ...inputProps } = props;
+  const { rightLabel, label: labelProp, ref, ...inputProps } = props;
 
   const { base, label, labelContainer } = classes({
     className: props.className,
@@ -42,7 +43,7 @@ export const InputLabeled = (
         {rightLabel}
       </div>
       <div className="mt-2">
-        <Input {...inputProps} />
+        <Input {...inputProps} ref={ref} />
       </div>
     </div>
   );

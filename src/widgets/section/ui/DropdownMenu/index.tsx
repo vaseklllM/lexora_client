@@ -3,7 +3,7 @@
 import {
   DropdownItem,
   DropdownMenu as DropdownMenuComponent,
-} from "@/entities/DropdownMenu";
+} from "@/entities/dropdown-menu";
 import { ReactElement, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ModalCreateDesc } from "./ModalCreateDesc";

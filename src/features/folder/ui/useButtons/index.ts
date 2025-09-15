@@ -1,4 +1,4 @@
-import { DropdownItem } from "@/entities/DropdownMenu";
+import { DropdownItem } from "@/entities/dropdown-menu";
 import { useMemo } from "react";
 
 const enum Button {

@@ -1,7 +1,4 @@
-import {
-  DottedDropdownButton,
-  DropdownItem,
-} from "@/entities/DottedDropdownButton";
+import { DropdownButton, DropdownItem } from "@/entities/DropdownButton";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
@@ -44,7 +41,7 @@ export const Folder = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <DottedDropdownButton
+      <DropdownButton
         items={props.dottedDropdownButtons}
         className={classes.dottedButton()}
       />

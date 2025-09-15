@@ -19,7 +19,7 @@ interface Props {
   items: DropdownItem[];
 }
 
-export const DottedDropdownButton = (props: Props): ReactElement => {
+export const DropdownButton = (props: Props): ReactElement => {
   const id = useId();
   const popoverId = `popover-${id}`;
   const anchorName = `--anchor-${id}`;

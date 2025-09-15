@@ -1,4 +1,5 @@
 import { InputLabeled } from "@/entities/input-labeled";
+import { deckService } from "@/shared/api/endpoints/deck/deck.service";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -34,6 +35,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  ownerFolderId?: string;
 }
 
 export const ModalCreateDeck = (props: Props): ReactElement => {
@@ -53,9 +55,14 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     resolver: valibotResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // console.log(data);
+      await deckService.create.fetch({
+        name: data.deck_name,
+        languageWhatIKnowCode: "en",
+        languageWhatILearnCode: "uk",
+        folderId: props.ownerFolderId,
+      });
     } catch (error) {
       if (error instanceof Error) {
         setError("deck_name", { message: error.message });

@@ -93,6 +93,9 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Folder</h3>
+        <p className="text-base-content/70 mt-4">
+          A folder is used to group decks of cards and other folders.
+        </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="modal-action flex flex-col gap-4"

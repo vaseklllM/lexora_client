@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -16,12 +16,16 @@ interface Props {
 export const ModalCreateDeck = (props: Props): ReactElement => {
   const classes = classesSlots();
 
+  const closeHandler = useCallback(() => {
+    props.setIsOpen(false);
+  }, [props.setIsOpen]);
+
   return (
     <dialog
       id="my_modal_1"
       className={classes.base({ className: props.className })}
       open={props.isOpen}
-      onClose={() => props.setIsOpen(false)}
+      onClose={closeHandler}
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Deck</h3>
@@ -29,7 +33,9 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
+            <button type="button" className="btn" onClick={closeHandler}>
+              Close
+            </button>
           </form>
         </div>
       </div>

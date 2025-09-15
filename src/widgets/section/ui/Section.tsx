@@ -2,6 +2,7 @@ import { Deck } from "@/features/deck";
 import { Folder } from "@/features/folder";
 import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
+import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { DropdownMenu } from "./DropdownMenu";
@@ -23,6 +24,7 @@ interface Props {
   className?: string;
   folders?: IFolder[];
   decks?: IDeck[];
+  allLanguages: Language[];
 }
 
 export const Section = (props: Props): ReactElement => {

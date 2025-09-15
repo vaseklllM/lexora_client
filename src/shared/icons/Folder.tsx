@@ -7,15 +7,17 @@ const iconClasses = tv({
 
 interface Props {
   className?: string;
+  height?: string;
+  width?: string;
 }
 
 export const FolderIcon = (props: Props): ReactElement => {
   return (
     <svg
       className={iconClasses(props)}
-      height="24px"
+      height={props.height || "24px"}
+      width={props.width || "24px"}
       viewBox="0 0 24 24"
-      width="24px"
       enableBackground="new 0 0 24 24"
     >
       <g>

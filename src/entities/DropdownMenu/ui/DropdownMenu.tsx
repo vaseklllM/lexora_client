@@ -104,13 +104,6 @@ export const DropdownMenu = (props: Props): ReactElement => {
 
 const iconClasses = tv({
   base: "fill-base-content/80 duration-200 group-active:fill-white/90",
-  variants: {
-    icon: {
-      folder: {
-        base: "h-5 w-5",
-      },
-    },
-  },
 });
 
 function Icon(props: { icon: IconType }) {
@@ -122,10 +115,12 @@ function Icon(props: { icon: IconType }) {
       return <DeleteIcon className={iconClasses()} />;
 
     case "folder":
-      return <FolderIcon className={iconClasses({ icon: "folder" })} />;
+      return (
+        <FolderIcon className={iconClasses()} height="19px" width="19px" />
+      );
 
     case "deck":
-      return <div>Deck</div>;
+      return <div>D</div>;
 
     default: {
       const _check: never = props.icon;

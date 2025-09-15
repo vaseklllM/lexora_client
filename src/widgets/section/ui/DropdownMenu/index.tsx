@@ -45,7 +45,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         id: Button.CREATE_DECK,
         type: "button",
         label: "Deck",
-        icon: "deck",
+        icon: "edit",
         onClick: ({ closePopover }) => {
           setIsOpenModalCreateDesc(true);
           closePopover();

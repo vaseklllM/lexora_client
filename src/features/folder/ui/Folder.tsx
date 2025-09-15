@@ -21,8 +21,8 @@ export const Folder = (props: Props): ReactElement => {
   });
 
   const onDelete = useCallback<ModalAgreeOnAgree>(async ({ closeModal }) => {
-    await deleteFolder(props.folder.id);
     closeModal();
+    await deleteFolder(props.folder.id);
   }, []);
 
   return (

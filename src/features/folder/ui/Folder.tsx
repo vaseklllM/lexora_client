@@ -3,8 +3,8 @@
 import { Folder as FolderEntity } from "@/entities/folder";
 import { ModalAgree, ModalAgreeOnAgree } from "@/entities/modal-agree";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
-import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
+import { deleteFolder } from "./deleteFolder";
 import { useButtons } from "./useButtons";
 
 interface Props {
@@ -21,7 +21,7 @@ export const Folder = (props: Props): ReactElement => {
   });
 
   const onDelete = useCallback<ModalAgreeOnAgree>(async ({ closeModal }) => {
-    await sleep(1000);
+    await deleteFolder(props.folder.id);
     closeModal();
   }, []);
 

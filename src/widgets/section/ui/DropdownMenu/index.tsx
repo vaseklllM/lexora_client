@@ -6,7 +6,7 @@ import {
 } from "@/entities/dropdown-menu";
 import { ReactElement, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
-import { ModalCreateDesc } from "./ModalCreateDesc";
+import { ModalCreateDeck } from "@/features/modal-create-deck";
 import { ModalCreateFolder } from "@/features/modal-create-folder";
 
 const enum Button {
@@ -66,7 +66,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         isOpen={isOpenModalCreateFolder}
         setIsOpen={setIsOpenModalCreateFolder}
       />
-      <ModalCreateDesc
+      <ModalCreateDeck
         isOpen={isOpenModalCreateDesc}
         setIsOpen={setIsOpenModalCreateDesc}
       />

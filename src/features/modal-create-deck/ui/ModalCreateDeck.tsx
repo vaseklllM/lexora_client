@@ -13,7 +13,7 @@ interface Props {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export const ModalCreateDesc = (props: Props): ReactElement => {
+export const ModalCreateDeck = (props: Props): ReactElement => {
   const classes = classesSlots();
 
   return (

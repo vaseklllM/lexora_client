@@ -49,7 +49,7 @@ export const Folder = (props: Props): ReactElement => {
         listClassName="mt-1"
       />
       <div className={classes.header()}>
-        <FolderIcon />
+        <FolderIcon className="min-h-6 min-w-6" />
         <p className={classes.headerName()}>{props.folder.name}</p>
       </div>
       <div className={classes.content()}>

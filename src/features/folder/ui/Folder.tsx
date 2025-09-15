@@ -25,7 +25,7 @@ export const Folder = (props: Props): ReactElement => {
       <ModalAgree
         isOpen={isOpenModalDeleteAgree}
         setIsOpen={setIsOpenModalDeleteAgree}
-        title={`Delete Folder "${props.folder.name}"?`}
+        title={`Delete Folder "${props.folder.name}"`}
         description="Are you sure you want to delete this folder?"
         cancelButtonText="Cancel"
         agreeButtonText="Delete"

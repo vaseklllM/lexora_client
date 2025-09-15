@@ -1,8 +1,9 @@
 import { Button } from "@/shared/ui/Button";
+import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback } from "react";
 
 export type ModalAgreeOnAgree = (args: {
-  closeModal: () => void;
+  closeModal: () => Promise<void>;
 }) => void | Promise<void>;
 
 interface ModalAgreeProps {
@@ -22,7 +23,12 @@ export const ModalAgree = (props: ModalAgreeProps): ReactElement => {
   }, [props.setIsOpen]);
 
   const agreeHandler = useCallback(async () => {
-    await props.onAgree?.({ closeModal: closeHandler });
+    await props.onAgree?.({
+      closeModal: async () => {
+        closeHandler();
+        await sleep(200);
+      },
+    });
   }, [props.onAgree, closeHandler]);
 
   return (

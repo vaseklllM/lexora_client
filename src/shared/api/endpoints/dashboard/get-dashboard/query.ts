@@ -1,9 +1,9 @@
 import { fetchCustom, FetchCustomType } from "@/shared/api/core/fetchCustom";
 import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
+import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { Fetchable } from "../../types/Fetchable";
 import { Revalidatable } from "../../types/Revalidatable";
-import { revalidateDashboard } from "./revalidate";
 import { dashboardSchema } from "./schema";
 
 class DashboardQuery implements Fetchable, Revalidatable {
@@ -24,7 +24,7 @@ class DashboardQuery implements Fetchable, Revalidatable {
   }
 
   revalidate() {
-    revalidateDashboard(this._tag);
+    revalidateTag(this._tag);
   }
 }
 

@@ -1,5 +1,5 @@
-import { Section } from "@/widgets/section";
 import { dashboardService } from "@/shared/api/endpoints/dashboard";
+import { Section } from "@/widgets/section";
 
 export default async function Home() {
   const dashboardData = await dashboardService.dashboard.fetch();

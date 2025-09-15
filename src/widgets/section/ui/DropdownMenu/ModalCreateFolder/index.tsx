@@ -3,12 +3,14 @@ import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
+import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { ReactElement, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
 import { createFolder } from "./createFolder";
+import { revalidate } from "./revalidate";
 
 const classesSlots = tv({
   slots: {
@@ -57,6 +59,8 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
         name: data.new_folder_name,
       });
       props.setIsOpen(false);
+      await sleep(200);
+      revalidate();
       reset();
     } catch (error) {
       if (error instanceof Error) {

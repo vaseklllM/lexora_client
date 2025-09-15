@@ -26,6 +26,10 @@ export async function refreshOnce(refreshToken: string): Promise<Response> {
         },
       );
 
+      if (!result.ok) {
+        throw new Error(`Refresh token failed: ${result.status}`);
+      }
+
       return await result.json();
     })();
 

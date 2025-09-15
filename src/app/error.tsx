@@ -1,5 +1,6 @@
 "use client";
 
+import { UnauthorizedError } from "@/shared/api/core/fetchCustom/UnauthorizedError";
 import { Alert } from "@/shared/ui/Alert";
 import { useTimer } from "react-timer-hook";
 
@@ -10,8 +11,11 @@ export default function Error(props: {
   const { error } = props;
 
   switch (error.name) {
-    case "TooManyRequestsError":
+    case TooManyRequestsError.name:
       return <TooManyRequestsError message={error.message} />;
+
+    case UnauthorizedError.name:
+      return <div>Unauthorized</div>;
 
     default:
       throw error;

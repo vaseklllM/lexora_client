@@ -119,20 +119,29 @@ export const authOptions: AuthOptions = {
       const accessTokenExpires: number = token.tokenExp! * 1000;
 
       if (Date.now() < accessTokenExpires) return token;
+      else {
+        throw new Error("No refresh token");
+      }
 
-      const result = await refreshOnce(token.refreshToken as string);
+      try {
+        const result = await refreshOnce(token.refreshToken as string);
 
-      const decodedToken = jwtDecode(result.token);
+        const decodedToken = jwtDecode(result.token);
 
-      token.accessToken = result.token;
-      token.refreshToken = result.refreshToken;
-      token.tokenExp = decodedToken.exp;
+        token.accessToken = result.token;
+        token.refreshToken = result.refreshToken;
+        token.tokenExp = decodedToken.exp;
 
-      return token;
+        return token;
+      } catch {
+        // If refresh token fails, throw error to invalidate the session
+        throw new Error("Refresh token failed");
+      }
     },
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
+
       return session;
     },
   },

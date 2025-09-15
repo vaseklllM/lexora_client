@@ -15,4 +15,8 @@ export const routes = {
     url: () => "/dashboard",
     path: () => "/dashboard",
   },
+  logout: {
+    url: () => "/logout",
+    path: () => "/logout",
+  },
 };

@@ -1,9 +1,10 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { authOptions } from "./authOptions/authOptions";
 
 export async function checkIsAuth() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
-  return !!session;
+  return !!(session && session.accessToken);
 }

@@ -1,0 +1,1 @@
+export { deleteDeckQuery } from "./query";

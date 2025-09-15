@@ -1,5 +1,5 @@
 import { createFolderQuery } from "./create";
-import { deleteFolderQuery } from "./delete/query";
+import { deleteFolderQuery } from "./delete";
 import { renameFolderQuery } from "./rename";
 
 export class FolderService {

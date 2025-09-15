@@ -6,7 +6,11 @@ const enum Button {
   DELETE,
 }
 
-export function useButtons(): DropdownItem[] {
+interface Props {
+  onDelete: () => void;
+}
+
+export function useButtons(props: Props): DropdownItem[] {
   return useMemo((): DropdownItem[] => {
     return [
       {
@@ -24,10 +28,11 @@ export function useButtons(): DropdownItem[] {
         type: "button",
         label: "Delete",
         icon: "delete",
-        onClick: () => {
-          // console.log("Delete");
+        onClick: ({ closePopover }) => {
+          closePopover();
+          props.onDelete();
         },
       },
     ];
-  }, []);
+  }, [props.onDelete]);
 }

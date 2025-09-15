@@ -1,8 +1,9 @@
 "use client";
 
 import { Folder as FolderEntity } from "@/entities/folder";
+import { ModalAgree } from "@/entities/modal-agree";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useButtons } from "./useButtons";
 
 interface Props {
@@ -11,6 +12,24 @@ interface Props {
 }
 
 export const Folder = (props: Props): ReactElement => {
-  const buttons = useButtons();
-  return <FolderEntity {...props} dottedDropdownButtons={buttons} />;
+  const [isOpenModalDeleteAgree, setIsOpenModalDeleteAgree] = useState(false);
+  const buttons = useButtons({
+    onDelete() {
+      setIsOpenModalDeleteAgree(true);
+    },
+  });
+
+  return (
+    <>
+      <FolderEntity {...props} dottedDropdownButtons={buttons} />
+      <ModalAgree
+        isOpen={isOpenModalDeleteAgree}
+        setIsOpen={setIsOpenModalDeleteAgree}
+        title={`Delete Folder "${props.folder.name}"?`}
+        description="Are you sure you want to delete this folder?"
+        cancelButtonText="Cancel"
+        agreeButtonText="Delete"
+      />
+    </>
+  );
 };

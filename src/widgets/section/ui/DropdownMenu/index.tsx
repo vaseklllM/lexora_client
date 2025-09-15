@@ -10,7 +10,7 @@ const classesSlots = tv({
   slots: {
     base: "",
     button: "btn btn-primary h-10 w-10 rounded-full p-0 shadow-md",
-    list: "dropdown dropdown-end dropdown-top menu rounded-box bg-base-100 mb-2 w-30 shadow-sm",
+    list: "dropdown dropdown-end dropdown-top menu rounded-box bg-base-100 mb-2 shadow-sm",
   },
 });
 
@@ -21,6 +21,7 @@ interface Props {
 export const DropdownMenu = (props: Props): ReactElement => {
   const id = useId();
   const popoverId = `popover-${id}`;
+  const anchorName = `--anchor-${id}`;
   const popoverListRef = useRef<HTMLUListElement>(null);
 
   const classes = classesSlots();
@@ -32,7 +33,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
       <button
         className={classes.button()}
         popoverTarget={popoverId}
-        style={{ anchorName: "--anchor-1" } as React.CSSProperties}
+        style={{ anchorName: anchorName } as React.CSSProperties}
       >
         <Plus className="stroke-neutral-content" />
       </button>
@@ -42,7 +43,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         className={classes.list()}
         popover="auto"
         id={popoverId}
-        style={{ positionAnchor: "--anchor-1" } as React.CSSProperties}
+        style={{ positionAnchor: anchorName } as React.CSSProperties}
       >
         <li>
           <button

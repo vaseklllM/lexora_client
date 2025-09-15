@@ -1,3 +1,7 @@
+import {
+  DottedDropdownButton,
+  DropdownItem,
+} from "@/entities/DottedDropdownButton";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
@@ -6,8 +10,9 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 hover:bg-base-content/15 flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
+    base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
     header: "flex items-center gap-2",
+    dottedButton: "absolute top-2 right-2",
     headerName: "text-base-content/100 text-sm font-medium",
     content: "flex items-center justify-between gap-2",
     numberOfCards: "text-sm font-medium",
@@ -31,6 +36,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   folder: IFolder;
+  dottedDropdownButtons: DropdownItem[];
 }
 
 export const Folder = (props: Props): ReactElement => {
@@ -38,6 +44,10 @@ export const Folder = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
+      <DottedDropdownButton
+        items={props.dottedDropdownButtons}
+        className={classes.dottedButton()}
+      />
       <div className={classes.header()}>
         <FolderIcon />
         <p className={classes.headerName()}>{props.folder.name}</p>

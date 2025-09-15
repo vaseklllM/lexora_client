@@ -1,6 +1,9 @@
+"use client";
+
 import { Folder as FolderEntity } from "@/entities/folder";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { ReactElement } from "react";
+import { useButtons } from "./useButtons";
 
 interface Props {
   className?: string;
@@ -8,5 +11,6 @@ interface Props {
 }
 
 export const Folder = (props: Props): ReactElement => {
-  return <FolderEntity {...props} />;
+  const buttons = useButtons();
+  return <FolderEntity {...props} dottedDropdownButtons={buttons} />;
 };

@@ -8,6 +8,7 @@ import { ReactElement, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ModalCreateDeck } from "@/features/modal-create-deck";
 import { ModalCreateFolder } from "@/features/modal-create-folder";
+import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 
 const enum Button {
   CREATE_FOLDER,
@@ -22,6 +23,7 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
+  allLanguages: Language[];
 }
 
 export const DropdownMenu = (props: Props): ReactElement => {
@@ -69,6 +71,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
       <ModalCreateDeck
         isOpen={isOpenModalCreateDesc}
         setIsOpen={setIsOpenModalCreateDesc}
+        allLanguages={props.allLanguages}
       />
     </div>
   );

@@ -1,5 +1,7 @@
 import { InputLabeled } from "@/entities/input-labeled";
+import { LanguagesSelect } from "@/entities/languages-select";
 import { deckService } from "@/shared/api/endpoints/deck/deck.service";
+import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -36,6 +38,7 @@ interface Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   ownerFolderId?: string;
+  allLanguages: Language[];
 }
 
 export const ModalCreateDeck = (props: Props): ReactElement => {
@@ -116,6 +119,8 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             tabIndex={-1}
             label="Name"
           />
+
+          <LanguagesSelect languages={props.allLanguages} />
 
           <div className="mt-4 flex w-full justify-end gap-4">
             <Button

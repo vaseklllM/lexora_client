@@ -32,7 +32,10 @@ export const Section = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <DropdownMenu className={classes.dropdownMenu()} />
+      <DropdownMenu
+        className={classes.dropdownMenu()}
+        allLanguages={props.allLanguages}
+      />
       <h3 className={classes.foldersTitle()}>Folders</h3>
       {props.folders && (
         <div className={classes.folders()}>

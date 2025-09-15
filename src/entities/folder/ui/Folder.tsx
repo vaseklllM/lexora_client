@@ -44,6 +44,7 @@ export const Folder = (props: Props): ReactElement => {
       <DropdownButton
         items={props.dottedDropdownButtons}
         className={classes.dottedButton()}
+        buttonType="dotted"
       />
       <div className={classes.header()}>
         <FolderIcon />

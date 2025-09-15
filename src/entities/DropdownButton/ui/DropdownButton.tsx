@@ -1,8 +1,10 @@
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
-import { ReactElement, useId } from "react";
+import { ReactElement, useId, useMemo } from "react";
 import { tv } from "tailwind-variants";
+
+export type DropdownButtonType = "dotted";
 
 type IconType = "edit" | "delete";
 
@@ -17,6 +19,7 @@ export type DropdownItem = {
 interface Props {
   className?: string;
   items: DropdownItem[];
+  buttonType: DropdownButtonType;
 }
 
 export const DropdownButton = (props: Props): ReactElement => {
@@ -24,13 +27,23 @@ export const DropdownButton = (props: Props): ReactElement => {
   const popoverId = `popover-${id}`;
   const anchorName = `--anchor-${id}`;
 
+  const button = useMemo(() => {
+    switch (props.buttonType) {
+      case "dotted": {
+        return (
+          <DottedButtonComponent
+            className="btn"
+            popoverTarget={popoverId}
+            anchorName={anchorName}
+          />
+        );
+      }
+    }
+  }, [props.buttonType, anchorName, popoverId]);
+
   return (
     <div className={props.className}>
-      <DottedButtonComponent
-        className="btn"
-        popoverTarget={popoverId}
-        anchorName={anchorName}
-      />
+      {button}
       <ul
         className="dropdown dropdown-end menu rounded-box bg-base-100 shadow-sm"
         popover="auto"

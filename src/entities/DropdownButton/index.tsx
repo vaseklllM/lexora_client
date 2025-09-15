@@ -1,1 +1,5 @@
-export { DropdownButton, type DropdownItem } from "./ui/DropdownButton";
+export {
+  DropdownButton,
+  type DropdownButtonType,
+  type DropdownItem,
+} from "./ui/DropdownButton";

@@ -1,3 +1,4 @@
+import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
 import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { countOf } from "@/shared/utils/count-of";
 import { PercentMath } from "@/shared/utils/percent-math";
@@ -6,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 hover:bg-base-content/15 flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
+    base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
     header: "flex items-center gap-2",
     headerIcon: "text-2xl",
     headerName: "text-base-content/100 text-sm font-medium",
@@ -14,6 +15,7 @@ const classesSlots = tv({
     numberOfCards: "text-sm font-medium",
     progress: "progress progress-primary opacity-80",
     numberOfCardsProgress: "text-sm font-medium",
+    dottedButton: "absolute top-2 right-2",
   },
   variants: {
     isNumberOfCards: {
@@ -32,6 +34,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   deck: IDeck;
+  dottedDropdownButtons: DropdownItem[];
 }
 
 export const Deck = (props: Props): ReactElement => {
@@ -44,6 +47,13 @@ export const Deck = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
+      <DropdownMenu
+        items={props.dottedDropdownButtons}
+        className={classes.dottedButton()}
+        buttonType="dotted"
+        listPosition="end"
+        listClassName="mt-1"
+      />
       <div className={classes.header()}>
         <span className={classes.headerIcon()}>
           {props.deck.languageWhatILearn.iconSymbol}

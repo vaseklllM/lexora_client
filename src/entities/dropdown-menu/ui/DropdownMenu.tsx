@@ -1,3 +1,5 @@
+"use client";
+
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
 import { FolderIcon } from "@/shared/icons/Folder";

@@ -119,9 +119,6 @@ export const authOptions: AuthOptions = {
       const accessTokenExpires: number = token.tokenExp! * 1000;
 
       if (Date.now() < accessTokenExpires) return token;
-      else {
-        throw new Error("No refresh token");
-      }
 
       try {
         const result = await refreshOnce(token.refreshToken as string);

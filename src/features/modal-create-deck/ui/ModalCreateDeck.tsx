@@ -29,7 +29,9 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Deck</h3>
-        <p className="py-4">Press ESC key or click the button below to close</p>
+        <p className="text-base-content/70 mt-4">
+          A deck is used to store word cards and study them
+        </p>
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}

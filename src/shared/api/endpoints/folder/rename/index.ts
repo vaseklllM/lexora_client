@@ -1,0 +1,1 @@
+export { renameFolderQuery } from "./query";

@@ -62,7 +62,8 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await renameFolder({
-        name: data.folder_name,
+        name: data.folder_name.trim(),
+        folderId: props.folderId,
       });
       props.setIsOpen(false);
       await sleep(200);

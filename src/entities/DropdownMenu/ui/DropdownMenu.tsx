@@ -1,6 +1,7 @@
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
 import { FolderIcon } from "@/shared/icons/Folder";
+import { LogoIcon } from "@/shared/icons/Logo";
 import { Plus } from "@/shared/icons/Plus";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
 import { ReactElement, useId, useMemo, useRef } from "react";
@@ -9,6 +10,7 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     list: "dropdown menu rounded-box bg-base-100 shadow-sm",
+    icon: "flex h-5 w-5 items-center justify-center",
   },
   variants: {
     listPosition: {
@@ -92,7 +94,11 @@ export const DropdownMenu = (props: Props): ReactElement => {
                 })
               }
             >
-              {item.icon && <Icon icon={item.icon} />}
+              {item.icon && (
+                <div className={classes.icon()}>
+                  <Icon icon={item.icon} />
+                </div>
+              )}
               {item.label}
             </button>
           </li>
@@ -120,7 +126,7 @@ function Icon(props: { icon: IconType }) {
       );
 
     case "deck":
-      return <div>D</div>;
+      return <LogoIcon className={iconClasses()} height="16px" width="16px" />;
 
     default: {
       const _check: never = props.icon;

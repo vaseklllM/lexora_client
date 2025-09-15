@@ -1,6 +1,5 @@
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
-import { deckService } from "@/shared/api/endpoints/deck/deck.service";
 import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
@@ -11,6 +10,9 @@ import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
+import { createDeck } from "./createDeck";
+import { sleep } from "@/shared/utils/sleep";
+import { revalidate } from "./revalidate";
 
 const schema = v.object({
   deck_name: v.pipe(
@@ -27,7 +29,7 @@ const schema = v.object({
   languageWhatILearnCode: v.string(),
 });
 
-type Inputs = v.InferOutput<typeof schema>;
+export type Inputs = v.InferOutput<typeof schema>;
 
 const classesSlots = tv({
   slots: {
@@ -65,12 +67,11 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await deckService.create.fetch({
-        name: data.deck_name,
-        languageWhatIKnowCode: "en",
-        languageWhatILearnCode: "uk",
-        folderId: props.ownerFolderId,
-      });
+      await createDeck(data, props.ownerFolderId);
+      props.setIsOpen(false);
+      await sleep(200);
+      revalidate();
+      reset();
     } catch (error) {
       if (error instanceof Error) {
         setError("deck_name", { message: error.message });

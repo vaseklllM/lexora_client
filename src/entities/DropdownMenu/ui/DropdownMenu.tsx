@@ -1,5 +1,6 @@
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
+import { FolderIcon } from "@/shared/icons/Folder";
 import { Plus } from "@/shared/icons/Plus";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
 import { ReactElement, useId, useMemo, useRef } from "react";
@@ -19,7 +20,7 @@ const classesSlots = tv({
 
 type DropdownButtonType = "dotted" | "plus";
 
-type IconType = "edit" | "delete";
+type IconType = "edit" | "delete" | "folder" | "deck";
 
 export type DropdownItem = {
   type: "button";
@@ -103,6 +104,13 @@ export const DropdownMenu = (props: Props): ReactElement => {
 
 const iconClasses = tv({
   base: "fill-base-content/80 duration-200 group-active:fill-white/90",
+  variants: {
+    icon: {
+      folder: {
+        base: "h-5 w-5",
+      },
+    },
+  },
 });
 
 function Icon(props: { icon: IconType }) {
@@ -112,5 +120,16 @@ function Icon(props: { icon: IconType }) {
 
     case "delete":
       return <DeleteIcon className={iconClasses()} />;
+
+    case "folder":
+      return <FolderIcon className={iconClasses({ icon: "folder" })} />;
+
+    case "deck":
+      return <div>Deck</div>;
+
+    default: {
+      const _check: never = props.icon;
+      throw new Error(`Unhandled icon type: ${_check}`);
+    }
   }
 }

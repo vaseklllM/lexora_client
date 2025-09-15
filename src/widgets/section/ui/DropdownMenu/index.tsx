@@ -35,7 +35,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         id: Button.CREATE_FOLDER,
         type: "button",
         label: "Folder",
-        // icon: "folder",
+        icon: "folder",
         onClick: ({ closePopover }) => {
           setIsOpenModalCreateFolder(true);
           closePopover();
@@ -45,7 +45,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         id: Button.CREATE_DECK,
         type: "button",
         label: "Deck",
-        // icon: "deck",
+        icon: "deck",
         onClick: ({ closePopover }) => {
           setIsOpenModalCreateDesc(true);
           closePopover();

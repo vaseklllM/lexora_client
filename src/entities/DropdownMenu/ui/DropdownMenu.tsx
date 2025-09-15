@@ -1,10 +1,23 @@
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
+import { Plus } from "@/shared/icons/Plus";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
-import { ReactElement, useId, useMemo } from "react";
+import { ReactElement, useId, useMemo, useRef } from "react";
 import { tv } from "tailwind-variants";
 
-export type DropdownButtonType = "dotted";
+const classesSlots = tv({
+  slots: {
+    list: "dropdown menu rounded-box bg-base-100 shadow-sm",
+  },
+  variants: {
+    listPosition: {
+      end: { list: "dropdown-end" },
+      "end-top": { list: "dropdown-end dropdown-top" },
+    },
+  },
+});
+
+type DropdownButtonType = "dotted" | "plus";
 
 type IconType = "edit" | "delete";
 
@@ -12,7 +25,7 @@ export type DropdownItem = {
   type: "button";
   id: number | string;
   label: string;
-  onClick: () => void;
+  onClick: (args: { closePopover: () => void }) => void;
   icon?: IconType;
 };
 
@@ -20,12 +33,17 @@ interface Props {
   className?: string;
   items: DropdownItem[];
   buttonType: DropdownButtonType;
+  listPosition?: "end" | "end-top";
+  listClassName?: string;
 }
 
-export const DropdownButton = (props: Props): ReactElement => {
+export const DropdownMenu = (props: Props): ReactElement => {
   const id = useId();
   const popoverId = `popover-${id}`;
   const anchorName = `--anchor-${id}`;
+  const popoverListRef = useRef<HTMLUListElement>(null);
+
+  const classes = classesSlots(props);
 
   const button = useMemo(() => {
     switch (props.buttonType) {
@@ -38,6 +56,18 @@ export const DropdownButton = (props: Props): ReactElement => {
           />
         );
       }
+
+      case "plus": {
+        return (
+          <button
+            className="btn btn-primary h-10 w-10 rounded-full p-0 shadow-md"
+            popoverTarget={popoverId}
+            style={{ anchorName: anchorName } as React.CSSProperties}
+          >
+            <Plus className="stroke-neutral-content" />
+          </button>
+        );
+      }
     }
   }, [props.buttonType, anchorName, popoverId]);
 
@@ -45,14 +75,22 @@ export const DropdownButton = (props: Props): ReactElement => {
     <div className={props.className}>
       {button}
       <ul
-        className="dropdown dropdown-end menu rounded-box bg-base-100 shadow-sm"
+        ref={popoverListRef}
+        className={classes.list({ className: props.listClassName })}
         popover="auto"
         id={popoverId}
         style={{ positionAnchor: anchorName } as React.CSSProperties}
       >
         {props.items.map((item) => (
           <li key={item.id}>
-            <button className="group" onClick={item.onClick}>
+            <button
+              className="group"
+              onClick={() =>
+                item.onClick({
+                  closePopover: () => popoverListRef.current?.hidePopover(),
+                })
+              }
+            >
               {item.icon && <Icon icon={item.icon} />}
               {item.label}
             </button>

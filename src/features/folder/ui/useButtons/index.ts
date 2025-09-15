@@ -1,4 +1,4 @@
-import { DropdownItem } from "@/entities/DropdownButton";
+import { DropdownItem } from "@/entities/DropdownMenu";
 import { useMemo } from "react";
 
 const enum Button {
@@ -14,8 +14,9 @@ export function useButtons(): DropdownItem[] {
         type: "button",
         label: "Rename",
         icon: "edit",
-        onClick: () => {
+        onClick: ({ closePopover }) => {
           // console.log("Rename");
+          closePopover();
         },
       },
       {

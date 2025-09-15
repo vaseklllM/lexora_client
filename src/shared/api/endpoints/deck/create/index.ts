@@ -1,0 +1,1 @@
+export { createDeckQuery } from "./query";

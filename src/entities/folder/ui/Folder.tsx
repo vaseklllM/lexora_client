@@ -9,8 +9,9 @@ const classesSlots = tv({
   slots: {
     base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
     header: "flex items-center gap-2",
+    folderIcon: "min-h-6 min-w-6",
     dottedButton: "absolute top-2 right-2",
-    headerName: "text-base-content/100 text-sm font-medium",
+    headerName: "text-base-content/100 w-[calc(100%-55px)] text-sm font-medium",
     content: "flex items-center justify-between gap-2",
     numberOfCards: "text-sm font-medium",
     progress: "progress progress-primary opacity-80",
@@ -49,7 +50,7 @@ export const Folder = (props: Props): ReactElement => {
         listClassName="mt-1"
       />
       <div className={classes.header()}>
-        <FolderIcon className="min-h-6 min-w-6" />
+        <FolderIcon className={classes.folderIcon()} />
         <p className={classes.headerName()}>{props.folder.name}</p>
       </div>
       <div className={classes.content()}>

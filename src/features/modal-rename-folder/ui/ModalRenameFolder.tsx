@@ -50,14 +50,26 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
     formState: { errors, isSubmitting },
     register,
     setError,
-    reset,
+    clearErrors,
     watch,
+    setValue,
   } = useForm<Inputs>({
     defaultValues: {
-      folder_name: props.folderName,
+      folder_name: "",
     },
     resolver: valibotResolver(schema),
   });
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setValue("folder_name", props.folderName);
+    }
+  }, [props.folderName, props.isOpen]);
+
+  const reset = () => {
+    clearErrors();
+    setValue("folder_name", props.folderName);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -123,8 +135,10 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                reset();
                 props.setIsOpen(false);
+                sleep(200).then(() => {
+                  reset();
+                });
               }}
             >
               Cancel

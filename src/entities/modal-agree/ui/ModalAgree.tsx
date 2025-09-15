@@ -1,20 +1,29 @@
 import { Button } from "@/shared/ui/Button";
 import { ReactElement, useCallback } from "react";
 
-interface Props {
+export type ModalAgreeOnAgree = (args: {
+  closeModal: () => void;
+}) => void | Promise<void>;
+
+interface ModalAgreeProps {
   className?: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   cancelButtonText?: string;
   agreeButtonText?: string;
+  onAgree?: ModalAgreeOnAgree;
 }
 
-export const ModalAgree = (props: Props): ReactElement => {
+export const ModalAgree = (props: ModalAgreeProps): ReactElement => {
   const closeHandler = useCallback(() => {
     props.setIsOpen(false);
   }, [props.setIsOpen]);
+
+  const agreeHandler = useCallback(async () => {
+    await props.onAgree?.({ closeModal: closeHandler });
+  }, [props.onAgree, closeHandler]);
 
   return (
     <dialog className="modal" open={props.isOpen} onClose={closeHandler}>
@@ -25,7 +34,9 @@ export const ModalAgree = (props: Props): ReactElement => {
           <Button className="btn-soft" onClick={closeHandler}>
             {props.cancelButtonText}
           </Button>
-          <Button className="btn-error">{props.agreeButtonText}</Button>
+          <Button className="btn-error" onClick={agreeHandler}>
+            {props.agreeButtonText}
+          </Button>
         </div>
       </div>
       <form method="dialog" className="modal-backdrop">

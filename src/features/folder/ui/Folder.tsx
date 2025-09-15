@@ -1,9 +1,10 @@
 "use client";
 
 import { Folder as FolderEntity } from "@/entities/folder";
-import { ModalAgree } from "@/entities/modal-agree";
+import { ModalAgree, ModalAgreeOnAgree } from "@/entities/modal-agree";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
-import { ReactElement, useState } from "react";
+import { sleep } from "@/shared/utils/sleep";
+import { ReactElement, useCallback, useState } from "react";
 import { useButtons } from "./useButtons";
 
 interface Props {
@@ -19,6 +20,11 @@ export const Folder = (props: Props): ReactElement => {
     },
   });
 
+  const onDelete = useCallback<ModalAgreeOnAgree>(async ({ closeModal }) => {
+    await sleep(1000);
+    closeModal();
+  }, []);
+
   return (
     <>
       <FolderEntity {...props} dottedDropdownButtons={buttons} />
@@ -29,6 +35,7 @@ export const Folder = (props: Props): ReactElement => {
         description="Are you sure you want to delete this folder?"
         cancelButtonText="Cancel"
         agreeButtonText="Delete"
+        onAgree={onDelete}
       />
     </>
   );

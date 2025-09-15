@@ -3,6 +3,7 @@
 import { UnauthorizedError } from "@/shared/api/core/fetchCustom/UnauthorizedError";
 import { Alert } from "@/shared/ui/Alert";
 import { useTimer } from "react-timer-hook";
+import LogoutPage from "./logout/page";
 
 export default function Error(props: {
   error: Error & { digest?: string };
@@ -15,7 +16,7 @@ export default function Error(props: {
       return <TooManyRequestsError message={error.message} />;
 
     case UnauthorizedError.name:
-      return <div>Unauthorized</div>;
+      return <LogoutPage />;
 
     default:
       throw error;

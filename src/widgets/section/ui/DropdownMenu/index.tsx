@@ -52,7 +52,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
         },
       },
     ];
-  }, []);
+  }, [setIsOpenModalCreateFolder, setIsOpenModalCreateDesc]);
 
   return (
     <div className={classes.base({ className: props.className })}>

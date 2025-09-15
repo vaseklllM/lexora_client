@@ -7,7 +7,8 @@ const enum Button {
 }
 
 interface Props {
-  onDelete: () => void;
+  setIsOpenModalDeleteAgree: (isOpen: boolean) => void;
+  setIsOpenModalRenameFolder: (isOpen: boolean) => void;
 }
 
 export function useButtons(props: Props): DropdownItem[] {
@@ -19,8 +20,8 @@ export function useButtons(props: Props): DropdownItem[] {
         label: "Rename",
         icon: "edit",
         onClick: ({ closePopover }) => {
-          // console.log("Rename");
           closePopover();
+          props.setIsOpenModalRenameFolder(true);
         },
       },
       {
@@ -30,9 +31,9 @@ export function useButtons(props: Props): DropdownItem[] {
         icon: "delete",
         onClick: ({ closePopover }) => {
           closePopover();
-          props.onDelete();
+          props.setIsOpenModalDeleteAgree(true);
         },
       },
     ];
-  }, [props.onDelete]);
+  }, [props.setIsOpenModalDeleteAgree, props.setIsOpenModalRenameFolder]);
 }

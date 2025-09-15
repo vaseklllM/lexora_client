@@ -2,6 +2,7 @@
 
 import { Folder as FolderEntity } from "@/entities/folder";
 import { ModalAgree } from "@/entities/modal-agree";
+import { ModalRenameFolder } from "@/features/modal-rename-folder";
 import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { ReactElement, useState } from "react";
 import { useButtons } from "./useButtons";
@@ -14,10 +15,11 @@ interface Props {
 
 export const Folder = (props: Props): ReactElement => {
   const [isOpenModalDeleteAgree, setIsOpenModalDeleteAgree] = useState(false);
+  const [isOpenModalRenameFolder, setIsOpenModalRenameFolder] = useState(false);
+
   const buttons = useButtons({
-    onDelete() {
-      setIsOpenModalDeleteAgree(true);
-    },
+    setIsOpenModalDeleteAgree,
+    setIsOpenModalRenameFolder,
   });
 
   const onDelete = useDeleteFolder(props.folder.id);
@@ -33,6 +35,12 @@ export const Folder = (props: Props): ReactElement => {
         cancelButtonText="Cancel"
         agreeButtonText="Delete"
         onAgree={onDelete}
+      />
+      <ModalRenameFolder
+        isOpen={isOpenModalRenameFolder}
+        setIsOpen={setIsOpenModalRenameFolder}
+        folderId={props.folder.id}
+        folderName={props.folder.name}
       />
     </>
   );

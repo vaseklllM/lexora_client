@@ -7,7 +7,7 @@ import {
 import { ReactElement, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ModalCreateDesc } from "./ModalCreateDesc";
-import { ModalCreateFolder } from "./ModalCreateFolder";
+import { ModalCreateFolder } from "@/features/modal-create-folder";
 
 const enum Button {
   CREATE_FOLDER,

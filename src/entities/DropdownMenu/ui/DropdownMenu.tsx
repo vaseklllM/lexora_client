@@ -116,7 +116,7 @@ function Icon(props: { icon: IconType }) {
 
     case "folder":
       return (
-        <FolderIcon className={iconClasses()} height="19px" width="19px" />
+        <FolderIcon className={iconClasses()} height="18px" width="18px" />
       );
 
     case "deck":

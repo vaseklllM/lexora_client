@@ -7,7 +7,7 @@ import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.sc
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
@@ -23,6 +23,8 @@ const schema = v.object({
       `Name cannot be longer than ${MAX_DECK_NAME_LENGTH} characters`,
     ),
   ),
+  languageWhatIKnowCode: v.string(),
+  languageWhatILearnCode: v.string(),
 });
 
 type Inputs = v.InferOutput<typeof schema>;
@@ -51,9 +53,12 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     register,
     setError,
     reset,
+    watch,
   } = useForm<Inputs>({
     defaultValues: {
       deck_name: "",
+      languageWhatIKnowCode: props.allLanguages[0].code,
+      languageWhatILearnCode: props.allLanguages[1].code,
     },
     resolver: valibotResolver(schema),
   });
@@ -93,6 +98,17 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     required: true,
   });
 
+  const languageWhatIKnow = watch("languageWhatIKnowCode");
+  const languageWhatILearn = watch("languageWhatILearnCode");
+
+  const disabledLanguagesWhatIKnow = useMemo(() => {
+    return [languageWhatILearn];
+  }, [languageWhatILearn]);
+
+  const disabledLanguagesWhatILearn = useMemo(() => {
+    return [languageWhatIKnow];
+  }, [languageWhatIKnow]);
+
   return (
     <dialog
       id="my_modal_1"
@@ -120,7 +136,21 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             label="Name"
           />
 
-          <LanguagesSelect languages={props.allLanguages} />
+          <LanguagesSelect
+            {...register("languageWhatIKnowCode")}
+            label="Language I know"
+            languages={props.allLanguages}
+            className="w-full"
+            disabledLanguages={disabledLanguagesWhatIKnow}
+          />
+
+          <LanguagesSelect
+            {...register("languageWhatILearnCode")}
+            languages={props.allLanguages}
+            className="w-full"
+            label="Language I learn"
+            disabledLanguages={disabledLanguagesWhatILearn}
+          />
 
           <div className="mt-4 flex w-full justify-end gap-4">
             <Button

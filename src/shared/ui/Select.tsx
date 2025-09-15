@@ -10,29 +10,54 @@ const classesSlots = tv({
 export type SelectOption = {
   label: string;
   value: string;
+  disabled?: boolean;
 };
 
-interface SelectProps {
-  className?: string;
+export interface SelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: SelectOption[];
-  value: string;
-  onChange: (value: string) => void;
+  label?: string;
+  ref?: React.Ref<HTMLSelectElement>;
+  onChangeValue?: (value: string) => void;
 }
 
 export const Select = (props: SelectProps): ReactElement => {
+  const { options, label, ref, onChangeValue, ...selectProps } = props;
   const classes = classesSlots();
 
-  return (
+  const select = (
     <select
-      defaultValue={props.value}
+      {...selectProps}
+      value={props.value}
       className={classes.select({ className: props.className })}
-      onChange={(e) => props.onChange(e.target.value)}
+      onChange={(e) => {
+        props.onChange?.(e);
+        onChangeValue?.(e.target.value);
+      }}
+      onBlur={props.onBlur}
+      onFocus={props.onFocus}
+      ref={ref}
     >
-      {props.options.map((option) => (
-        <option key={option.value} value={option.value}>
+      {options.map((option) => (
+        <option
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}
+        >
           {option.label}
         </option>
       ))}
     </select>
   );
+
+  if (label) {
+    return (
+      <div>
+        <label className="mb-2 block text-sm/6 font-medium">{label}</label>
+        {select}
+      </div>
+    );
+  }
+
+  return select;
 };

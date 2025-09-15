@@ -1,21 +1,29 @@
 import { Language } from "@/shared/api/endpoints/schemas/language.schema";
-import { Select } from "@/shared/ui/Select";
-import { ReactElement, useMemo, useState } from "react";
+import { Select, SelectProps } from "@/shared/ui/Select";
+import { ReactElement, useMemo } from "react";
 
-interface Props {
+interface Props extends Omit<SelectProps, "options"> {
   className?: string;
   languages: Language[];
+  disabledLanguages?: string[];
 }
 
 export const LanguagesSelect = (props: Props): ReactElement => {
-  const [value, setValue] = useState(props.languages[0].code);
+  const { languages, disabledLanguages, ...selectProps } = props;
 
-  const languages = useMemo(() => {
-    return props.languages.map((language) => ({
+  const languagesOptions = useMemo(() => {
+    return languages.map((language) => ({
       label: `${language.iconSymbol} ${language.name} (${language.code})`,
       value: language.code,
+      disabled: disabledLanguages?.includes(language.code),
     }));
-  }, [props.languages]);
+  }, [languages, disabledLanguages]);
 
-  return <Select options={languages} value={value} onChange={setValue} />;
+  return (
+    <Select
+      {...selectProps}
+      options={languagesOptions}
+      className={props.className}
+    />
+  );
 };

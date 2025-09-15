@@ -22,6 +22,7 @@ export function useButtons(): DropdownItem[] {
         id: Button.DELETE,
         type: "button",
         label: "Delete",
+        icon: "delete",
         onClick: () => {
           // console.log("Delete");
         },

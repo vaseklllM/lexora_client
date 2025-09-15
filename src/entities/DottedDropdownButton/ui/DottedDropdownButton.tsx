@@ -1,9 +1,10 @@
+import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
 import { ReactElement, useId } from "react";
 import { tv } from "tailwind-variants";
 
-type IconType = "edit";
+type IconType = "edit" | "delete";
 
 export type DropdownItem = {
   type: "button";
@@ -57,5 +58,8 @@ function Icon(props: { icon: IconType }) {
   switch (props.icon) {
     case "edit":
       return <EditIcon className={iconClasses()} />;
+
+    case "delete":
+      return <DeleteIcon className={iconClasses()} />;
   }
 }

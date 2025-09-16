@@ -90,11 +90,12 @@ export const DropdownMenu = (props: Props): ReactElement => {
           <li key={item.id}>
             <button
               className="group"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 item.onClick({
                   closePopover: () => popoverListRef.current?.hidePopover(),
-                })
-              }
+                });
+              }}
             >
               {item.icon && (
                 <div className={classes.icon()}>

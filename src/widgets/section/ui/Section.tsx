@@ -3,7 +3,7 @@ import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { Deck, DecksProvider } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
-import { Button } from "@/shared/ui/Button";
+import { ButtonBack } from "@/shared/ui/ButtonBack";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { DropdownMenu } from "./DropdownMenu";
@@ -51,7 +51,7 @@ export const Section = (props: Props): ReactElement => {
           {isFolder && (
             <div className={classes.header()}>
               <div className={classes.headerButtons()}>
-                <Button className={classes.buttonBack()}>back</Button>
+                <ButtonBack className={classes.buttonBack()} />
               </div>
               <div className={classes.breadcrumbs()}>breadcrumbs</div>
             </div>

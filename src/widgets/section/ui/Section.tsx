@@ -10,6 +10,7 @@ import { DropdownMenu } from "./DropdownMenu";
 const classesSlots = tv({
   slots: {
     base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
+    emptyText: "text-base-content/50 text-md text-center",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
@@ -17,6 +18,13 @@ const classesSlots = tv({
     decksTitle: "text-base-content/70 mt-6 text-xl font-bold",
     decks:
       "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
+  },
+  variants: {
+    isEmpty: {
+      true: {
+        base: "pt-10",
+      },
+    },
   },
 });
 
@@ -29,7 +37,12 @@ interface Props {
 }
 
 export const Section = (props: Props): ReactElement => {
-  const classes = classesSlots();
+  const isFolders = props.folders && props.folders.length > 0;
+  const isDecks = props.decks && props.decks.length > 0;
+
+  const isEmpty = !isFolders && !isDecks;
+
+  const classes = classesSlots({ isEmpty });
 
   return (
     <FoldersProvider>
@@ -40,21 +53,35 @@ export const Section = (props: Props): ReactElement => {
             allLanguages={props.allLanguages}
             folderId={props.folderId}
           />
-          <h3 className={classes.foldersTitle()}>Folders</h3>
-          {props.folders && (
-            <div className={classes.folders()}>
-              {props.folders.map((folder) => (
-                <Folder key={folder.id} folder={folder} />
-              ))}
-            </div>
+          {isEmpty && (
+            <p className={classes.emptyText()}>
+              You don&apos;t have any folders or decks. <br />
+              You can create a new folder or deck by clicking the plus button.
+            </p>
           )}
-          <h3 className={classes.decksTitle()}>Decks</h3>
-          {props.decks && (
-            <div className={classes.decks()}>
-              {props.decks.map((deck) => (
-                <Deck key={deck.id} deck={deck} />
-              ))}
-            </div>
+          {isFolders && (
+            <>
+              <h3 className={classes.foldersTitle()}>Folders</h3>
+              {props.folders && (
+                <div className={classes.folders()}>
+                  {props.folders.map((folder) => (
+                    <Folder key={folder.id} folder={folder} />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+          {isDecks && (
+            <>
+              <h3 className={classes.decksTitle()}>Decks</h3>
+              {props.decks && (
+                <div className={classes.decks()}>
+                  {props.decks.map((deck) => (
+                    <Deck key={deck.id} deck={deck} />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </DecksProvider>

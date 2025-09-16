@@ -1,7 +1,7 @@
 "use server";
 
-import { fetchCustom } from "@/shared/api/core/fetchCustom";
-import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
+import { fetchCustom } from "@/shared/api-core/fetchCustom";
+import { stackQueryKeys } from "@/shared/api-core/stackQueryKeys";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { deckSchema } from "../schemas/deck.schema";

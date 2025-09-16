@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchCustom } from "@/shared/api/core/fetchCustom";
+import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import { dateSchema } from "@/shared/schemas/date.schema";
 import * as v from "valibot";
 

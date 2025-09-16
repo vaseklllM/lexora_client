@@ -1,7 +1,7 @@
 "use server";
 
-import { fetchCustom } from "@/shared/api/core/fetchCustom";
-import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
+import { fetchCustom } from "@/shared/api-core/fetchCustom";
+import { stackQueryKeys } from "@/shared/api-core/stackQueryKeys";
 import { dateSchema } from "@/shared/schemas/date.schema";
 import { emailSchema } from "@/shared/schemas/email.schema";
 import { fullNameSchema } from "@/shared/schemas/fullName.schema";

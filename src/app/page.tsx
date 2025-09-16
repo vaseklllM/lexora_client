@@ -1,4 +1,4 @@
-import { checkIsAuth } from "@/shared/api/core/checkIsAuth";
+import { checkIsAuth } from "@/shared/api-core/checkIsAuth";
 import { routes } from "@/shared/routes";
 import { redirect } from "next/navigation";
 

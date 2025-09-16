@@ -1,6 +1,6 @@
 "use client";
 
-import { UnauthorizedError } from "@/shared/api/core/fetchCustom/UnauthorizedError";
+import { UnauthorizedError } from "@/shared/api-core/fetchCustom/UnauthorizedError";
 import { Alert } from "@/shared/ui/Alert";
 import { useTimer } from "react-timer-hook";
 import LogoutPage from "./logout/page";

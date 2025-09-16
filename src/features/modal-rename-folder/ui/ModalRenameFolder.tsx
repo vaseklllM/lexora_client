@@ -1,4 +1,5 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
+import { renameFolder } from "@/api/folder/rename-folder";
 import { InputLabeled } from "@/entities/input-labeled";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
@@ -10,7 +11,6 @@ import { ReactElement, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
-import { renameFolder } from "./renameFolder";
 
 const classesSlots = tv({
   slots: {
@@ -74,8 +74,8 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await renameFolder({
-        name: data.folder_name.trim(),
-        folderId: props.folderId,
+        newName: data.folder_name.trim(),
+        id: props.folderId,
       });
       props.setIsOpen(false);
       await sleep(200);

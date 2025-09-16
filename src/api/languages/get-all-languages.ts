@@ -2,9 +2,9 @@
 
 import { fetchCustom } from "@/shared/api/core/fetchCustom";
 import { stackQueryKeys } from "@/shared/api/core/stackQueryKeys";
-import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { languageSchema } from "../schemas/language.schema";
+// import { revalidateTag } from "next/cache";
 
 const resultSchema = v.object({
   data: v.array(languageSchema),
@@ -23,6 +23,6 @@ export async function getAllLanguages() {
   return v.parse(resultSchema, data);
 }
 
-export async function revalidateGetAllLanguages() {
-  revalidateTag(tag);
-}
+// export async function revalidateGetAllLanguages() {
+//   revalidateTag(tag);
+// }

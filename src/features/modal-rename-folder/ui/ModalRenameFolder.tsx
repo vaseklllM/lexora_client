@@ -2,6 +2,7 @@ import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { renameFolder } from "@/api/folder/rename-folder";
 import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
 import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { ReactElement, useCallback } from "react";
 
 interface Props {
@@ -46,8 +47,8 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
       onClose={props.onClose}
       onSave={saveHandler}
       name={props.folderName}
-      title="Rename Deck"
-      maxNameLength={200}
+      title="Rename Folder"
+      maxNameLength={MAX_FOLDER_NAME_LENGTH}
     />
   );
 };

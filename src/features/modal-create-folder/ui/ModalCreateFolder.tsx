@@ -2,6 +2,7 @@ import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { createFolder } from "@/api/folder/create-folder";
 import { InputLabeled } from "@/entities/input-labeled";
 import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
@@ -24,10 +25,10 @@ const schema = v.object({
     v.transform((input) => input.trim()),
     v.nonEmpty("Name is required"),
     noOnlySpacesStringSchema("Name cannot be only spaces"),
-    // v.maxLength(
-    //   MAX_FOLDER_NAME_LENGTH,
-    //   `Name cannot be longer than ${MAX_FOLDER_NAME_LENGTH} characters`,
-    // ),
+    v.maxLength(
+      MAX_FOLDER_NAME_LENGTH,
+      `Name cannot be longer than ${MAX_FOLDER_NAME_LENGTH} characters`,
+    ),
   ),
 });
 

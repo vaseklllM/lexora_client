@@ -75,7 +75,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       });
       props.setIsOpen(false);
       await sleep(200);
-      revalidateGetDashboard();
+      await revalidateGetDashboard();
       reset();
     } catch (error) {
       if (error instanceof Error) {

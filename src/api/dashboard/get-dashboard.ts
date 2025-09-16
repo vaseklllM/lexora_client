@@ -20,6 +20,7 @@ export async function getDashboard(): Promise<Result> {
   const result = await fetchCustom("dashboard", {
     next: {
       tags: [tag],
+      revalidate: Infinity,
     },
   });
   const data = await result.json();

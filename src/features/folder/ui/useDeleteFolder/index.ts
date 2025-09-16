@@ -8,7 +8,7 @@ export function useDeleteFolder(folderId: string) {
     async ({ closeModal }) => {
       await deleteFolder(folderId);
       await closeModal();
-      revalidateGetDashboard();
+      await revalidateGetDashboard();
     },
     [folderId],
   );

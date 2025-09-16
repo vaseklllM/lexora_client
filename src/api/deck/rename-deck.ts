@@ -21,5 +21,9 @@ export const renameDeck = async (args: Args): Promise<Result> => {
 
   const data = await result.json();
 
+  if (!result.ok) {
+    throw new Error(JSON.stringify(data));
+  }
+
   return v.parse(resultSchema, data);
 };

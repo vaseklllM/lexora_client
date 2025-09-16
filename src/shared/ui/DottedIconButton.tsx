@@ -21,6 +21,9 @@ export const DottedIconButton = (props: Props): ReactElement => {
       className={classes.button({ className: props.className })}
       popoverTarget={props.popoverTarget}
       style={{ anchorName: props.anchorName } as React.CSSProperties}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <svg
         className="fill-base-content/60"

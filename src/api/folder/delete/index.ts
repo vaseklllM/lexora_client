@@ -1,1 +1,0 @@
-export { deleteFolderQuery } from "./query";

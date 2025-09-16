@@ -1,7 +1,7 @@
 "use client";
 
+import { IDeck } from "@/api/schemas/deck.schema";
 import { Deck as DeckEntity } from "@/entities/deck";
-import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { ReactElement, useState } from "react";
 import { useButtons } from "./useButtons";
 

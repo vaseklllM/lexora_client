@@ -1,9 +1,9 @@
 "use client";
 
+import { IFolder } from "@/api/schemas/folder.schema";
 import { Folder as FolderEntity } from "@/entities/folder";
 import { ModalAgree } from "@/entities/modal-agree";
 import { ModalRenameFolder } from "@/features/modal-rename-folder";
-import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { ReactElement, useState } from "react";
 import { useButtons } from "./useButtons";
 import { useDeleteFolder } from "./useDeleteFolder";

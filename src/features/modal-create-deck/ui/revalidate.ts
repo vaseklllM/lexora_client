@@ -1,6 +1,6 @@
 "use server";
 
-import { dashboardService } from "@/shared/api/endpoints/dashboard";
+import { dashboardService } from "@/api/dashboard";
 
 export const revalidate = async () => {
   dashboardService.dashboard.revalidate();

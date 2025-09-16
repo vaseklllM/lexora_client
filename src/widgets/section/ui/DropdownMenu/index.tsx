@@ -1,14 +1,14 @@
 "use client";
 
+import { Language } from "@/api/schemas/language.schema";
 import {
   DropdownItem,
   DropdownMenu as DropdownMenuComponent,
 } from "@/entities/dropdown-menu";
-import { ReactElement, useMemo, useState } from "react";
-import { tv } from "tailwind-variants";
 import { ModalCreateDeck } from "@/features/modal-create-deck";
 import { ModalCreateFolder } from "@/features/modal-create-folder";
-import { Language } from "@/shared/api/endpoints/schemas/language.schema";
+import { ReactElement, useMemo, useState } from "react";
+import { tv } from "tailwind-variants";
 
 const enum Button {
   CREATE_FOLDER,

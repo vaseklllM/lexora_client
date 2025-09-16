@@ -1,8 +1,8 @@
+import { IDeck } from "@/api/schemas/deck.schema";
+import { IFolder } from "@/api/schemas/folder.schema";
+import { Language } from "@/api/schemas/language.schema";
 import { Deck } from "@/features/deck";
 import { Folder } from "@/features/folder";
-import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
-import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
-import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { DropdownMenu } from "./DropdownMenu";

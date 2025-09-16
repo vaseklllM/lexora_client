@@ -1,5 +1,5 @@
+import { IDeck } from "@/api/schemas/deck.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
-import { IDeck } from "@/shared/api/endpoints/schemas/deck.schema";
 import { countOf } from "@/shared/utils/count-of";
 import { PercentMath } from "@/shared/utils/percent-math";
 import { ReactElement } from "react";

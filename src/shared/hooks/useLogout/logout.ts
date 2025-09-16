@@ -1,6 +1,6 @@
 "use server";
 
-import { authService } from "@/shared/api/endpoints/auth";
+import { authService } from "@/api/auth";
 
 export async function logout() {
   await authService.logout.fetch();

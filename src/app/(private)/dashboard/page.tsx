@@ -1,5 +1,5 @@
-import { dashboardService } from "@/shared/api/endpoints/dashboard";
-import { languagesService } from "@/shared/api/endpoints/languages";
+import { dashboardService } from "@/api/dashboard";
+import { languagesService } from "@/api/languages";
 import { Section } from "@/widgets/section";
 
 export default async function Home() {

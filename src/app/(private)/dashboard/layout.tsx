@@ -1,5 +1,5 @@
+import { authService } from "@/api/auth";
 import { checkIsAuth } from "@/shared/api/core/checkIsAuth";
-import { authService } from "@/shared/api/endpoints/auth";
 import { routes } from "@/shared/routes";
 import { Header } from "@/widgets/header";
 import { redirect } from "next/navigation";

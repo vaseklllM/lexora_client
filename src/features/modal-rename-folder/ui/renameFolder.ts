@@ -1,6 +1,6 @@
 "use server";
 
-import { folderService } from "@/shared/api/endpoints/folder";
+import { folderService } from "@/api/folder";
 
 export const renameFolder = async (args: {
   name: string;

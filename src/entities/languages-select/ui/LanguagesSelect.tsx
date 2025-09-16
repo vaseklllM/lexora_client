@@ -1,4 +1,4 @@
-import { Language } from "@/shared/api/endpoints/schemas/language.schema";
+import { Language } from "@/api/schemas/language.schema";
 import { Select, SelectProps } from "@/shared/ui/Select";
 import { ReactElement, useMemo } from "react";
 

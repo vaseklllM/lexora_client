@@ -1,17 +1,18 @@
+import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
-import { Language } from "@/shared/api/endpoints/schemas/language.schema";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
+import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
-import { createDeck } from "./createDeck";
-import { sleep } from "@/shared/utils/sleep";
+// import { createDeck } from "./createDeck";
+import { createDeck } from "@/api/deck/createDeck";
 import { revalidate } from "./revalidate";
 
 const schema = v.object({
@@ -67,7 +68,13 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await createDeck(data, props.ownerFolderId);
+      // await createDeck(data, props.ownerFolderId);
+      await createDeck({
+        name: data.deck_name,
+        languageWhatIKnowCode: data.languageWhatIKnowCode,
+        languageWhatILearnCode: data.languageWhatILearnCode,
+        folderId: props.ownerFolderId,
+      });
       props.setIsOpen(false);
       await sleep(200);
       revalidate();

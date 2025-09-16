@@ -1,5 +1,5 @@
+import { IFolder } from "@/api/schemas/folder.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
-import { IFolder } from "@/shared/api/endpoints/schemas/folder.schema";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
 import { ReactElement } from "react";

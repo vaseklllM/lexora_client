@@ -9,7 +9,7 @@ import { DropdownMenu } from "./DropdownMenu";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 pr-5 pl-5 shadow-md",
+    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:

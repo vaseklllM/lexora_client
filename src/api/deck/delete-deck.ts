@@ -9,7 +9,7 @@ const resultSchema = v.object({
 
 type Result = v.InferOutput<typeof resultSchema>;
 
-export const createDeck = async (deckId: string): Promise<Result> => {
+export const deleteDeck = async (deckId: string): Promise<Result> => {
   const result = await fetchCustom("deck/delete", {
     method: "DELETE",
     body: { deckId },

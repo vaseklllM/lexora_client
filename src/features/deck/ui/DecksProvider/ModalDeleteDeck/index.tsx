@@ -1,6 +1,7 @@
 "use client";
 
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
+import { deleteDeck } from "@/api/deck/delete-deck";
 import { ModalAgree, ModalAgreeOnAgree } from "@/entities/modal-agree";
 import { useDeckStore } from "@/features/deck/model/store";
 import { ReactElement, useCallback } from "react";
@@ -14,7 +15,7 @@ export const ModalDeleteDeck = (): ReactElement => {
     const store = useDeckStore.getState();
     const deckId = store.modalDeleteDeck.deck?.id;
     if (typeof deckId === "string") {
-      // await deleteDeck(deckId);
+      await deleteDeck(deckId);
       await closeModal();
       await revalidateGetDashboard();
     }

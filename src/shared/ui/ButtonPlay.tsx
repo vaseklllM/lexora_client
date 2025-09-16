@@ -11,13 +11,17 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
+  disabled?: boolean;
 }
 
 export const ButtonPlay = (props: Props): ReactElement => {
   const classes = classesSlots();
 
   return (
-    <button className={classes.button({ className: props.className })}>
+    <button
+      className={classes.button({ className: props.className })}
+      disabled={props.disabled}
+    >
       <PlayIcon className={classes.icon()} />
     </button>
   );

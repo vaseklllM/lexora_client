@@ -19,17 +19,17 @@ const classesSlots = tv({
     progress: "progress progress-primary opacity-80",
     numberOfCardsProgress: "text-sm font-medium",
     dottedButton: "absolute top-2 right-2",
-    playButton: "",
   },
   variants: {
-    isNumberOfCards: {
+    isCards: {
       true: {
-        numberOfCards: "text-base-content/60",
+        numberOfCards: "text-base-content/80",
         numberOfCardsProgress: "text-base-content/60",
       },
       false: {
-        numberOfCards: "text-base-content/30",
-        numberOfCardsProgress: "text-base-content/30",
+        numberOfCards: "text-base-content/20",
+        numberOfCardsProgress: "text-base-content/20",
+        progress: "bg-base-content/10",
       },
     },
   },
@@ -42,7 +42,9 @@ interface Props {
 }
 
 export const Deck = (props: Props): ReactElement => {
-  const classes = classesSlots();
+  const classes = classesSlots({
+    isCards: props.deck.numberOfCards > 0,
+  });
 
   const numberOfCardsProgress = PercentMath.calculate(
     props.deck.numberOfCards,
@@ -67,11 +69,7 @@ export const Deck = (props: Props): ReactElement => {
       <div className={classes.content()}>
         <div className={classes.progressContent()}>
           <div className={classes.progressContentText()}>
-            <p
-              className={classes.numberOfCards({
-                isNumberOfCards: props.deck.numberOfCards > 0,
-              })}
-            >
+            <p className={classes.numberOfCards()}>
               {countOf(props.deck.numberOfCards, "card")}
             </p>
             <p className={classes.numberOfCardsProgress()}>
@@ -84,7 +82,7 @@ export const Deck = (props: Props): ReactElement => {
             max="100"
           ></progress>
         </div>
-        <ButtonPlay className={classes.playButton()} />
+        <ButtonPlay disabled={props.deck.numberOfCards === 0} />
       </div>
     </div>
   );

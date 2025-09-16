@@ -18,7 +18,7 @@ export const ModalDeleteFolder = (): ReactElement => {
     <ModalAgree
       isOpen={isOpen}
       onCloseModal={closeHandler}
-      title={`Delete Folder "${folderName}"`}
+      title={`Delete folder '${folderName}'`}
       description="Are you sure you want to delete this folder?"
       cancelButtonText="Cancel"
       agreeButtonText="Delete"

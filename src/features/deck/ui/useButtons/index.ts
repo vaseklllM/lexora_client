@@ -1,17 +1,21 @@
 import { DropdownItem } from "@/entities/dropdown-menu";
 import { useMemo } from "react";
+import { useDeckStore } from "../../model/store";
+import { DeckProps } from "../Deck";
 
 const enum Button {
   RENAME,
   DELETE,
 }
 
-interface Props {
-  setIsOpenModalDeleteAgree: (isOpen: boolean) => void;
-  setIsOpenModalRenameFolder: (isOpen: boolean) => void;
-}
+export function useButtons(props: DeckProps): DropdownItem[] {
+  const openModalRenameDeck = useDeckStore(
+    (state) => state.openModalRenameDeck,
+  );
+  const openModalDeleteDeck = useDeckStore(
+    (state) => state.openModalDeleteDeck,
+  );
 
-export function useButtons(props: Props): DropdownItem[] {
   return useMemo((): DropdownItem[] => {
     return [
       {
@@ -21,7 +25,10 @@ export function useButtons(props: Props): DropdownItem[] {
         icon: "edit",
         onClick: ({ closePopover }) => {
           closePopover();
-          props.setIsOpenModalRenameFolder(true);
+          openModalRenameDeck({
+            id: props.deck.id,
+            name: props.deck.name,
+          });
         },
       },
       {
@@ -31,9 +38,17 @@ export function useButtons(props: Props): DropdownItem[] {
         icon: "delete",
         onClick: ({ closePopover }) => {
           closePopover();
-          props.setIsOpenModalDeleteAgree(true);
+          openModalDeleteDeck({
+            id: props.deck.id,
+            name: props.deck.name,
+          });
         },
       },
     ];
-  }, [props.setIsOpenModalDeleteAgree, props.setIsOpenModalRenameFolder]);
+  }, [
+    props.deck.id,
+    props.deck.name,
+    openModalDeleteDeck,
+    openModalRenameDeck,
+  ]);
 }

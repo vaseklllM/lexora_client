@@ -1,7 +1,7 @@
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
-import { Deck } from "@/features/deck";
+import { Deck, DecksProvider } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
@@ -32,28 +32,30 @@ export const Section = (props: Props): ReactElement => {
 
   return (
     <FoldersProvider>
-      <div className={classes.base({ className: props.className })}>
-        <DropdownMenu
-          className={classes.dropdownMenu()}
-          allLanguages={props.allLanguages}
-        />
-        <h3 className={classes.foldersTitle()}>Folders</h3>
-        {props.folders && (
-          <div className={classes.folders()}>
-            {props.folders.map((folder) => (
-              <Folder key={folder.id} folder={folder} />
-            ))}
-          </div>
-        )}
-        <h3 className={classes.decksTitle()}>Decks</h3>
-        {props.decks && (
-          <div className={classes.decks()}>
-            {props.decks.map((deck) => (
-              <Deck key={deck.id} deck={deck} />
-            ))}
-          </div>
-        )}
-      </div>
+      <DecksProvider>
+        <div className={classes.base({ className: props.className })}>
+          <DropdownMenu
+            className={classes.dropdownMenu()}
+            allLanguages={props.allLanguages}
+          />
+          <h3 className={classes.foldersTitle()}>Folders</h3>
+          {props.folders && (
+            <div className={classes.folders()}>
+              {props.folders.map((folder) => (
+                <Folder key={folder.id} folder={folder} />
+              ))}
+            </div>
+          )}
+          <h3 className={classes.decksTitle()}>Decks</h3>
+          {props.decks && (
+            <div className={classes.decks()}>
+              {props.decks.map((deck) => (
+                <Deck key={deck.id} deck={deck} />
+              ))}
+            </div>
+          )}
+        </div>
+      </DecksProvider>
     </FoldersProvider>
   );
 };

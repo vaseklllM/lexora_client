@@ -11,7 +11,7 @@ const classesSlots = tv({
     header: "flex items-center gap-2",
     folderIcon: "min-h-6 min-w-6",
     dottedButton: "absolute top-2 right-2",
-    headerName: "text-base-content/100 w-[calc(100%-55px)] text-sm font-medium",
+    name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
     content: "flex items-center justify-between gap-2",
     numberOfCards: "text-sm font-medium",
     progress: "progress progress-primary opacity-80",
@@ -51,7 +51,7 @@ export const Folder = (props: Props): ReactElement => {
       />
       <div className={classes.header()}>
         <FolderIcon className={classes.folderIcon()} />
-        <p className={classes.headerName()}>{props.folder.name}</p>
+        <p className={classes.name()}>{props.folder.name}</p>
       </div>
       <div className={classes.content()}>
         <p

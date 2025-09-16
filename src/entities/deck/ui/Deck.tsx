@@ -9,8 +9,8 @@ const classesSlots = tv({
   slots: {
     base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
     header: "flex items-center gap-2",
-    headerIcon: "text-2xl",
-    headerName: "text-base-content/100 text-sm font-medium",
+    languageIcon: "text-2xl",
+    name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
     content: "flex items-center justify-between gap-2",
     numberOfCards: "text-sm font-medium",
     progress: "progress progress-primary opacity-80",
@@ -55,10 +55,10 @@ export const Deck = (props: Props): ReactElement => {
         listClassName="mt-1"
       />
       <div className={classes.header()}>
-        <span className={classes.headerIcon()}>
+        <span className={classes.languageIcon()}>
           {props.deck.languageWhatILearn.iconSymbol}
         </span>
-        <p className={classes.headerName()}>{props.deck.name}</p>
+        <p className={classes.name()}>{props.deck.name}</p>
       </div>
       <div className={classes.content()}>
         <p

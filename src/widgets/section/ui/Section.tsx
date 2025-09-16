@@ -38,6 +38,7 @@ export const Section = (props: Props): ReactElement => {
           <DropdownMenu
             className={classes.dropdownMenu()}
             allLanguages={props.allLanguages}
+            folderId={props.folderId}
           />
           <h3 className={classes.foldersTitle()}>Folders</h3>
           {props.folders && (

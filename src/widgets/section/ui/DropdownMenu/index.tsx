@@ -24,6 +24,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   allLanguages: Language[];
+  folderId?: string;
 }
 
 export const DropdownMenu = (props: Props): ReactElement => {
@@ -67,11 +68,13 @@ export const DropdownMenu = (props: Props): ReactElement => {
       <ModalCreateFolder
         isOpen={isOpenModalCreateFolder}
         setIsOpen={setIsOpenModalCreateFolder}
+        folderId={props.folderId}
       />
       <ModalCreateDeck
         isOpen={isOpenModalCreateDesc}
         setIsOpen={setIsOpenModalCreateDesc}
         allLanguages={props.allLanguages}
+        folderId={props.folderId}
       />
     </div>
   );

@@ -42,7 +42,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  ownerFolderId?: string;
+  folderId?: string;
   allLanguages: Language[];
 }
 
@@ -72,7 +72,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
         name: data.name,
         languageWhatIKnowCode: data.languageWhatIKnowCode,
         languageWhatILearnCode: data.languageWhatILearnCode,
-        folderId: props.ownerFolderId,
+        folderId: props.folderId,
       });
       props.setIsOpen(false);
       await sleep(200);

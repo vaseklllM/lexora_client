@@ -38,6 +38,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  folderId?: string;
 }
 
 export const ModalCreateFolder = (props: Props): ReactElement => {
@@ -58,6 +59,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
     try {
       await createFolder({
         name: data.new_folder_name,
+        parentFolderId: props.folderId,
       });
       props.setIsOpen(false);
       await sleep(200);

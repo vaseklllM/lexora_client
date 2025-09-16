@@ -8,7 +8,7 @@ const resultSchema = v.object({
 });
 
 interface Args {
-  newName: string;
+  name: string;
   id: string;
 }
 

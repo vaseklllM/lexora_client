@@ -3,6 +3,7 @@ import { createDeck } from "@/api/deck/create-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
+import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -15,7 +16,7 @@ import { tv } from "tailwind-variants";
 import * as v from "valibot";
 
 const schema = v.object({
-  deck_name: v.pipe(
+  name: v.pipe(
     v.string(),
     v.transform((input) => input.trim()),
     v.nonEmpty("Name is required"),
@@ -58,7 +59,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     watch,
   } = useForm<Inputs>({
     defaultValues: {
-      deck_name: "",
+      name: "",
       languageWhatIKnowCode: props.allLanguages[0].code,
       languageWhatILearnCode: props.allLanguages[1].code,
     },
@@ -68,7 +69,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await createDeck({
-        name: data.deck_name,
+        name: data.name,
         languageWhatIKnowCode: data.languageWhatIKnowCode,
         languageWhatILearnCode: data.languageWhatILearnCode,
         folderId: props.ownerFolderId,
@@ -79,7 +80,14 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        setError("deck_name", { message: error.message });
+        parseBadRequestError<"name">(error, ({ field, firstError }) => {
+          switch (field) {
+            case "name": {
+              setError("name", { message: firstError });
+              break;
+            }
+          }
+        });
       }
     }
   };
@@ -100,7 +108,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     props.setIsOpen(false);
   }, [props.setIsOpen]);
 
-  const nameRegister = register("deck_name", {
+  const nameRegister = register("name", {
     required: true,
   });
 
@@ -134,7 +142,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
           <InputLabeled
             {...nameRegister}
             ref={assignRef(nameRegister.ref, nameFieldRef)}
-            error={errors.deck_name?.message}
+            error={errors.name?.message}
             type="text"
             autoComplete="name"
             autoFocus={props.isOpen}

@@ -19,15 +19,10 @@ const resultSchema = v.object({
 type Result = v.InferOutput<typeof resultSchema>;
 
 export const createDeck = async (args: Args): Promise<Result> => {
-  const result = await fetchCustom("deck/create", {
+  const data = await fetchCustom("deck/create", {
     method: "POST",
     body: args,
   });
-  const data = await result.json();
-
-  if (!result.ok) {
-    throw new Error(data.message);
-  }
 
   return v.parse(resultSchema, data);
 };

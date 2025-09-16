@@ -1,7 +1,7 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { createFolder } from "@/api/folder/create-folder";
 import { InputLabeled } from "@/entities/input-labeled";
-import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
+import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
@@ -24,10 +24,10 @@ const schema = v.object({
     v.transform((input) => input.trim()),
     v.nonEmpty("Name is required"),
     noOnlySpacesStringSchema("Name cannot be only spaces"),
-    v.maxLength(
-      MAX_FOLDER_NAME_LENGTH,
-      `Name cannot be longer than ${MAX_FOLDER_NAME_LENGTH} characters`,
-    ),
+    // v.maxLength(
+    //   MAX_FOLDER_NAME_LENGTH,
+    //   `Name cannot be longer than ${MAX_FOLDER_NAME_LENGTH} characters`,
+    // ),
   ),
 });
 
@@ -64,7 +64,14 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        setError("new_folder_name", { message: error.message });
+        parseBadRequestError<"name">(error, ({ field, firstError }) => {
+          switch (field) {
+            case "name": {
+              setError("new_folder_name", { message: firstError });
+              break;
+            }
+          }
+        });
       }
     }
   };

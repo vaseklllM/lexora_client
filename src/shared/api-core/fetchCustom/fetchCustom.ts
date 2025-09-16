@@ -9,13 +9,18 @@ import { TooManyRequestsError } from "./TooManyRequestsError";
 import { Options } from "./types";
 import { UnauthorizedError } from "./UnauthorizedError";
 
-export async function fetchCustom(url: string, options?: Options) {
+export async function fetchCustom<R>(
+  url: string,
+  options?: Options,
+): Promise<R> {
   const session = await getServerSession(authOptions);
 
   const result = await modifyFetch(url, {
     ...options,
     accessToken: session?.accessToken,
   });
+
+  const data = await result.json();
 
   if (!result.ok) {
     switch (result.status) {
@@ -26,10 +31,14 @@ export async function fetchCustom(url: string, options?: Options) {
         redirect(routes.logout.url());
         throw new UnauthorizedError(result.statusText);
       }
+
+      case ErrorStatus.BAD_REQUEST: {
+        throw new Error(JSON.stringify(data));
+      }
     }
   }
 
-  return result;
+  return data;
 }
 
 function modifyFetch(

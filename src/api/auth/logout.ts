@@ -10,10 +10,9 @@ const responseSchema = v.object({
 });
 
 export async function logout() {
-  const result = await fetchCustom("auth/logout", {
+  const data = await fetchCustom("auth/logout", {
     method: "POST",
   });
-  const data = await result.json();
 
   return v.parse(responseSchema, data);
 }

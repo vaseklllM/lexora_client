@@ -13,12 +13,11 @@ const resultSchema = v.object({
 const tag = `languages-all__${stackQueryKeys.next()}`;
 
 export async function getAllLanguages() {
-  const result = await fetchCustom("languages/all", {
+  const data = await fetchCustom("languages/all", {
     next: {
       tags: [tag],
     },
   });
-  const data = await result.json();
 
   return v.parse(resultSchema, data);
 }

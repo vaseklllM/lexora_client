@@ -17,12 +17,11 @@ type Result = v.InferOutput<typeof resultSchema>;
 const tag = `dashboard__${stackQueryKeys.next()}`;
 
 export async function getDashboard(): Promise<Result> {
-  const result = await fetchCustom("dashboard", {
+  const data = await fetchCustom("dashboard", {
     next: {
       tags: [tag],
     },
   });
-  const data = await result.json();
 
   return v.parse(resultSchema, data);
 }

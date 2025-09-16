@@ -15,15 +15,10 @@ interface Args {
 }
 
 export async function createFolder(args: Args) {
-  const result = await fetchCustom("folder/create", {
+  const data = await fetchCustom("folder/create", {
     method: "POST",
     body: args,
   });
-  const data = await result.json();
-
-  if (!result.ok) {
-    throw new Error(data.message);
-  }
 
   return v.parse(resultSchema, data);
 }

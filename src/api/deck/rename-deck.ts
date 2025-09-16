@@ -7,6 +7,7 @@ const resultSchema = v.object({
   message: v.string(),
 });
 
+type Response = v.InferInput<typeof resultSchema>;
 type Result = v.InferOutput<typeof resultSchema>;
 
 interface Args {
@@ -14,16 +15,10 @@ interface Args {
   deckId: string;
 }
 export const renameDeck = async (args: Args): Promise<Result> => {
-  const result = await fetchCustom("deck/rename", {
+  const data = await fetchCustom<Response>("deck/rename", {
     method: "PATCH",
     body: args,
   });
-
-  const data = await result.json();
-
-  if (!result.ok) {
-    throw new Error(JSON.stringify(data));
-  }
 
   return v.parse(resultSchema, data);
 };

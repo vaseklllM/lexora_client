@@ -13,15 +13,10 @@ interface Args {
 }
 
 export async function renameFolder(args: Args) {
-  const result = await fetchCustom("folder/rename", {
+  const data = await fetchCustom("folder/rename", {
     method: "PATCH",
     body: args,
   });
-  const data = await result.json();
-
-  if (!result.ok) {
-    throw new Error(data.message);
-  }
 
   return v.parse(resultSchema, data);
 }

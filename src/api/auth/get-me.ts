@@ -21,12 +21,11 @@ const responseSchema = v.object({
 });
 
 export async function getMe() {
-  const result = await fetchCustom("auth/me", {
+  const data = await fetchCustom("auth/me", {
     next: {
       tags: [tag],
     },
   });
-  const data = await result.json();
 
   return v.parse(responseSchema, data);
 }

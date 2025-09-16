@@ -25,6 +25,7 @@ interface Props {
   folders?: IFolder[];
   decks?: IDeck[];
   allLanguages: Language[];
+  folderId?: string;
 }
 
 export const Section = (props: Props): ReactElement => {

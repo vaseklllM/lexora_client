@@ -17,7 +17,7 @@ const classesSlots = tv({
     headerButtons: "",
     buttonBack: "",
     breadcrumbs: "",
-    emptyText: "text-base-content/50 text-md mt-15 mb-20 text-center",
+    emptyText: "text-base-content/50 text-md mt-16 mb-20 text-center",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:

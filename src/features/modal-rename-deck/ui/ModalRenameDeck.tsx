@@ -28,7 +28,7 @@ export const ModalRenameDeck = (props: Props): ReactElement => {
         } catch (error) {
           if (error instanceof Error) {
             const data = JSON.parse(error.message);
-            if (data.errors.name) {
+            if (data?.errors?.name) {
               setNameError(data.errors.name[0]);
             }
           }

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { ModalDeleteDeck } from "./ModalDeleteDeck";
+import { ModalRenameDeck } from "./ModalRenameDeck";
 
 interface Props {
   children?: ReactElement;
@@ -10,6 +11,7 @@ export const DecksProvider = (props: Props): ReactElement => {
     <>
       {props.children}
       <ModalDeleteDeck />
+      <ModalRenameDeck />
     </>
   );
 };

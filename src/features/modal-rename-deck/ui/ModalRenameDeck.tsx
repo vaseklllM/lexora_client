@@ -1,5 +1,7 @@
+"use client";
+
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
-import { renameFolder } from "@/api/folder/rename-folder";
+import { renameDeck } from "@/api/deck/rename-deck";
 import { InputLabeled } from "@/entities/input-labeled";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
@@ -37,11 +39,11 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onClose: () => void;
-  folderId?: string;
-  folderName?: string;
+  deckId?: string;
+  deckName?: string;
 }
 
-export const ModalRenameFolder = (props: Props): ReactElement => {
+export const ModalRenameDeck = (props: Props): ReactElement => {
   const classes = classesSlots();
   const nameFieldRef = useRef<HTMLInputElement>(null);
 
@@ -61,24 +63,24 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
   });
 
   useEffect(() => {
-    if (props.isOpen && props.folderName) {
-      setValue("folder_name", props.folderName);
+    if (props.isOpen && props.deckName) {
+      setValue("folder_name", props.deckName);
     }
-  }, [props.folderName, props.isOpen]);
+  }, [props.deckName, props.isOpen]);
 
   const reset = () => {
     clearErrors();
-    if (props.folderName) {
-      setValue("folder_name", props.folderName);
+    if (props.deckName) {
+      setValue("folder_name", props.deckName);
     }
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      if (props.folderId) {
-        await renameFolder({
-          newName: data.folder_name.trim(),
-          id: props.folderId,
+      if (props.deckId) {
+        await renameDeck({
+          name: data.folder_name.trim(),
+          deckId: props.deckId,
         });
         props.onClose();
         await sleep(200);
@@ -108,7 +110,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
     required: true,
   });
 
-  const isNameChanged = watch("folder_name").trim() !== props.folderName;
+  const isNameChanged = watch("folder_name").trim() !== props.deckName;
 
   return (
     <dialog
@@ -117,7 +119,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
       onClose={() => props.onClose()}
     >
       <div className="modal-box">
-        <h3 className="text-lg font-bold">Rename Folder</h3>
+        <h3 className="text-lg font-bold">Rename Deck</h3>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="modal-action flex flex-col gap-4"

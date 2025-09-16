@@ -20,7 +20,6 @@ export async function getDashboard(): Promise<Result> {
   const result = await fetchCustom("dashboard", {
     next: {
       tags: [tag],
-      revalidate: Infinity,
     },
   });
   const data = await result.json();
@@ -29,6 +28,5 @@ export async function getDashboard(): Promise<Result> {
 }
 
 export async function revalidateGetDashboard() {
-  // revalidateTag(tag);
-  revalidateTag("random_tag");
+  revalidateTag(tag);
 }

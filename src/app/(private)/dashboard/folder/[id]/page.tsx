@@ -1,13 +1,14 @@
 import { getAllLanguages } from "@/api/languages/get-all-languages";
 import { Section } from "@/widgets/section";
+import { ReactElement } from "react";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default async function FolderPage(props: Props) {
+export default async function FolderPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
   const allLanguages = await getAllLanguages();
 

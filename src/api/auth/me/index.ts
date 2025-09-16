@@ -1,1 +1,0 @@
-export { meQuery } from "./query";

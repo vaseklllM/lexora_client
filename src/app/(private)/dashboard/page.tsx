@@ -1,9 +1,9 @@
-import { dashboardService } from "@/api/dashboard";
+import { getDashboard } from "@/api/dashboard/get-dashboard";
 import { languagesService } from "@/api/languages";
 import { Section } from "@/widgets/section";
 
 export default async function Home() {
-  const dashboardData = await dashboardService.dashboard.fetch();
+  const dashboardData = await getDashboard();
   const languages = await languagesService.all.fetch();
 
   return (

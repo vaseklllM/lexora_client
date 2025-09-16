@@ -1,3 +1,5 @@
+import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
+import { createDeck } from "@/api/deck/create-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
@@ -11,9 +13,6 @@ import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
-// import { createDeck } from "./createDeck";
-import { createDeck } from "@/api/deck/createDeck";
-import { revalidate } from "./revalidate";
 
 const schema = v.object({
   deck_name: v.pipe(
@@ -76,7 +75,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       });
       props.setIsOpen(false);
       await sleep(200);
-      revalidate();
+      revalidateGetDashboard();
       reset();
     } catch (error) {
       if (error instanceof Error) {

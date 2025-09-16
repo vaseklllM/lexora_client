@@ -1,3 +1,4 @@
+import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { InputLabeled } from "@/entities/input-labeled";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
@@ -10,7 +11,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
 import { createFolder } from "./createFolder";
-import { revalidate } from "./revalidate";
 
 const classesSlots = tv({
   slots: {
@@ -60,7 +60,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
       });
       props.setIsOpen(false);
       await sleep(200);
-      revalidate();
+      revalidateGetDashboard();
       reset();
     } catch (error) {
       if (error instanceof Error) {

@@ -1,4 +1,5 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
+import { createFolder } from "@/api/folder/create-folder";
 import { InputLabeled } from "@/entities/input-labeled";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
@@ -10,7 +11,6 @@ import { ReactElement, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
-import { createFolder } from "./createFolder";
 
 const classesSlots = tv({
   slots: {

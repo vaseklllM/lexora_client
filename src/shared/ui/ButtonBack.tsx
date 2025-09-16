@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { ArrowIcon } from "../icons/Arrow";
+import Link from "next/link";
 
 const classesSlots = tv({
   slots: {
@@ -12,15 +13,25 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
+  href?: string;
 }
 
 export const ButtonBack = (props: Props): ReactElement => {
   const classes = classesSlots();
 
-  return (
+  return props.href ? (
+    <Link
+      href={props.href}
+      className={classes.button({ className: props.className })}
+    >
+      <ArrowIcon />
+    </Link>
+  ) : (
     <button
       className={classes.button({ className: props.className })}
       disabled={props.disabled}
+      onClick={props.onClick}
     >
       <ArrowIcon />
     </button>

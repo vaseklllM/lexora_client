@@ -3,6 +3,7 @@ import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { Deck, DecksProvider } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
+import { routes } from "@/shared/routes";
 import { Breadcrumb, Breadcrumbs } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
 import { ReactElement, useMemo } from "react";
@@ -81,7 +82,10 @@ export const Section = (props: Props): ReactElement => {
           {isFolder && (
             <div className={classes.header()}>
               <div className={classes.headerButtons()}>
-                <ButtonBack className={classes.buttonBack()} />
+                <ButtonBack
+                  href={routes.dashboard.url()}
+                  className={classes.buttonBack()}
+                />
               </div>
               <Breadcrumbs
                 className={classes.breadcrumbs()}

@@ -68,7 +68,6 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // await createDeck(data, props.ownerFolderId);
       await createDeck({
         name: data.deck_name,
         languageWhatIKnowCode: data.languageWhatIKnowCode,

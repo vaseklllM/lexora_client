@@ -9,7 +9,7 @@ export type ModalAgreeOnAgree = (args: {
 interface ModalAgreeProps {
   className?: string;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  onCloseModal: () => void;
   title?: string;
   description?: string;
   cancelButtonText?: string;
@@ -18,26 +18,22 @@ interface ModalAgreeProps {
 }
 
 export const ModalAgree = (props: ModalAgreeProps): ReactElement => {
-  const closeHandler = useCallback(() => {
-    props.setIsOpen(false);
-  }, [props.setIsOpen]);
-
   const agreeHandler = useCallback(async () => {
     await props.onAgree?.({
       closeModal: async () => {
-        closeHandler();
+        props.onCloseModal();
         await sleep(200);
       },
     });
-  }, [props.onAgree, closeHandler]);
+  }, [props.onAgree, props.onCloseModal]);
 
   return (
-    <dialog className="modal" open={props.isOpen} onClose={closeHandler}>
+    <dialog className="modal" open={props.isOpen} onClose={props.onCloseModal}>
       <div className="modal-box">
         <h3 className="text-lg font-bold">{props.title}</h3>
         <p className="py-4">{props.description}</p>
         <div className="flex justify-end gap-4">
-          <Button className="btn-soft" onClick={closeHandler}>
+          <Button className="btn-soft" onClick={props.onCloseModal}>
             {props.cancelButtonText}
           </Button>
           <Button className="btn-error" onClick={agreeHandler}>
@@ -46,7 +42,7 @@ export const ModalAgree = (props: ModalAgreeProps): ReactElement => {
         </div>
       </div>
       <form method="dialog" className="modal-backdrop">
-        <button onClick={closeHandler}>close</button>
+        <button onClick={props.onCloseModal}>close</button>
       </form>
     </dialog>
   );

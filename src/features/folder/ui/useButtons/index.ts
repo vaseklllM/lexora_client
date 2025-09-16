@@ -1,17 +1,21 @@
 import { DropdownItem } from "@/entities/dropdown-menu";
 import { useMemo } from "react";
+import { useFolderStore } from "../../model/store";
+import { FolderProps } from "../Folder";
 
 const enum Button {
   RENAME,
   DELETE,
 }
 
-interface Props {
-  setIsOpenModalDeleteAgree: (isOpen: boolean) => void;
-  setIsOpenModalRenameFolder: (isOpen: boolean) => void;
-}
+export function useButtons(props: FolderProps): DropdownItem[] {
+  const openModalDeleteFolder = useFolderStore(
+    (state) => state.openModalDeleteFolder,
+  );
+  const openModalRenameFolder = useFolderStore(
+    (state) => state.openModalRenameFolder,
+  );
 
-export function useButtons(props: Props): DropdownItem[] {
   return useMemo((): DropdownItem[] => {
     return [
       {
@@ -21,7 +25,10 @@ export function useButtons(props: Props): DropdownItem[] {
         icon: "edit",
         onClick: ({ closePopover }) => {
           closePopover();
-          props.setIsOpenModalRenameFolder(true);
+          openModalRenameFolder({
+            id: props.folder.id,
+            name: props.folder.name,
+          });
         },
       },
       {
@@ -31,9 +38,17 @@ export function useButtons(props: Props): DropdownItem[] {
         icon: "delete",
         onClick: ({ closePopover }) => {
           closePopover();
-          props.setIsOpenModalDeleteAgree(true);
+          openModalDeleteFolder({
+            id: props.folder.id,
+            name: props.folder.name,
+          });
         },
       },
     ];
-  }, [props.setIsOpenModalDeleteAgree, props.setIsOpenModalRenameFolder]);
+  }, [
+    props.folder.id,
+    props.folder.name,
+    openModalDeleteFolder,
+    openModalRenameFolder,
+  ]);
 }

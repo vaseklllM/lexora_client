@@ -36,9 +36,9 @@ type Inputs = v.InferOutput<typeof schema>;
 interface Props {
   className?: string;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  folderId: string;
-  folderName: string;
+  onClose: () => void;
+  folderId?: string;
+  folderName?: string;
 }
 
 export const ModalRenameFolder = (props: Props): ReactElement => {
@@ -61,26 +61,30 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
   });
 
   useEffect(() => {
-    if (props.isOpen) {
+    if (props.isOpen && props.folderName) {
       setValue("folder_name", props.folderName);
     }
-  }, [props.folderName, props.isOpen]);
+  }, [props.folderName, props.folderName, props.isOpen]);
 
   const reset = () => {
     clearErrors();
-    setValue("folder_name", props.folderName);
+    if (props.folderName) {
+      setValue("folder_name", props.folderName);
+    }
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await renameFolder({
-        newName: data.folder_name.trim(),
-        id: props.folderId,
-      });
-      props.setIsOpen(false);
-      await sleep(200);
-      await revalidateGetDashboard();
-      reset();
+      if (props.folderId) {
+        await renameFolder({
+          newName: data.folder_name.trim(),
+          id: props.folderId,
+        });
+        props.onClose();
+        await sleep(200);
+        await revalidateGetDashboard();
+        reset();
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError("folder_name", { message: error.message });
@@ -110,7 +114,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
     <dialog
       className={classes.base({ className: props.className })}
       open={props.isOpen}
-      onClose={() => props.setIsOpen(false)}
+      onClose={() => props.onClose()}
     >
       <div className="modal-box">
         <h3 className="text-lg font-bold">Create Folder</h3>
@@ -135,7 +139,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                props.setIsOpen(false);
+                props.onClose();
                 sleep(200).then(() => {
                   reset();
                 });

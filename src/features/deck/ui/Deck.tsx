@@ -2,7 +2,7 @@
 
 import { IDeck } from "@/api/schemas/deck.schema";
 import { Deck as DeckEntity } from "@/entities/deck";
-import { ReactElement } from "react";
+import { memo, ReactElement } from "react";
 import { useButtons } from "./useButtons";
 
 export interface DeckProps {
@@ -10,8 +10,10 @@ export interface DeckProps {
   deck: IDeck;
 }
 
-export const Deck = (props: DeckProps): ReactElement => {
+export const Deck = memo((props: DeckProps): ReactElement => {
   const buttons = useButtons(props);
 
   return <DeckEntity {...props} dottedDropdownButtons={buttons} />;
-};
+});
+
+Deck.displayName = "Deck";

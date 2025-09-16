@@ -35,13 +35,17 @@ interface Props {
   className?: string;
   folder: IFolder;
   dottedDropdownButtons: DropdownItem[];
+  onClick?: () => void;
 }
 
 export const Folder = (props: Props): ReactElement => {
   const classes = classesSlots();
 
   return (
-    <div className={classes.base({ className: props.className })}>
+    <div
+      className={classes.base({ className: props.className })}
+      onClick={props.onClick}
+    >
       <DropdownMenu
         items={props.dottedDropdownButtons}
         className={classes.dottedButton()}

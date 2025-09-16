@@ -2,7 +2,9 @@
 
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Folder as FolderEntity } from "@/entities/folder";
-import { ReactElement } from "react";
+import { routes } from "@/shared/routes";
+import { useRouter } from "next/navigation";
+import { memo, ReactElement, useCallback } from "react";
 import { useButtons } from "./useButtons";
 
 export interface FolderProps {
@@ -10,8 +12,21 @@ export interface FolderProps {
   folder: IFolder;
 }
 
-export const Folder = (props: FolderProps): ReactElement => {
+export const Folder = memo((props: FolderProps): ReactElement => {
   const buttons = useButtons(props);
+  const router = useRouter();
 
-  return <FolderEntity {...props} dottedDropdownButtons={buttons} />;
-};
+  const clickHandler = useCallback(() => {
+    router.push(routes.folder.url(props.folder.id));
+  }, [props.folder.id]);
+
+  return (
+    <FolderEntity
+      {...props}
+      dottedDropdownButtons={buttons}
+      onClick={clickHandler}
+    />
+  );
+});
+
+Folder.displayName = "Folder";

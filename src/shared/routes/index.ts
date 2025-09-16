@@ -15,6 +15,10 @@ export const routes = {
     url: () => "/dashboard",
     path: () => "/dashboard",
   },
+  folder: {
+    url: (id: string) => `/dashboard/folder/${id}`,
+    path: () => "/dashboard/folder/:id",
+  },
   logout: {
     url: () => "/logout",
     path: () => "/logout",

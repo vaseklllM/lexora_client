@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { refreshOnce } from "./refreshToken";
 
 type LoginResponse = {
@@ -18,6 +19,11 @@ type LoginResponse = {
 
 export const authOptions: AuthOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env
+        .SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_SECRET as string,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {

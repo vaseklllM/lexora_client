@@ -45,8 +45,8 @@ export function SignIn() {
     register,
   } = useForm<Inputs>({
     defaultValues: {
-      email: "user@example.com",
-      password: "Password123!",
+      email: "",
+      password: "",
     },
     resolver: valibotResolver(schema),
   });

@@ -124,23 +124,23 @@ export function SignIn() {
           </Button>
         </form>
 
-        <p className="text-base-content/70 mt-5 text-sm/6">
+        <p className="text-base-content/70 mt-6 text-sm/6">
           Don&apos;t have an account?{" "}
           <Link href={routes.signUp.url()}>Sign up</Link>
         </p>
-        <div className="divider mt-4">
+        <div className="divider mt-6">
           <p className="text-base-content/70 text-sm">Or continue with</p>
         </div>
         <div className="grid grid-cols-2 items-center justify-center gap-6">
           <Button
-            className="btn-primary mt-2 w-full"
+            className="btn-soft text-base-content/70 mt-2 w-full"
             type="button"
             onClick={() => signIn("google")}
           >
             <GoogleIcon /> Google
           </Button>
           <Button
-            className="btn-primary mt-2 w-full"
+            className="btn-soft text-base-content/70 mt-2 w-full"
             type="button"
             onClick={() => signIn("apple")}
           >

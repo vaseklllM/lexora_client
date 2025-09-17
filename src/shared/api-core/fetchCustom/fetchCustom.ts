@@ -32,6 +32,7 @@ export async function fetchCustom<R>(
         throw new UnauthorizedError(result.statusText);
       }
 
+      case ErrorStatus.CONFLICT:
       case ErrorStatus.BAD_REQUEST: {
         throw new Error(JSON.stringify(data));
       }

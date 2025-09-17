@@ -1,7 +1,7 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { createFolder } from "@/api/folder/create-folder";
 import { InputLabeled } from "@/entities/input-labeled";
-import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { parseError } from "@/shared/api-core/parseError";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -67,7 +67,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        parseBadRequestError<"name">(error, ({ field, firstError }) => {
+        const data = parseError<"name">(error, ({ field, firstError }) => {
           switch (field) {
             case "name": {
               setError("new_folder_name", { message: firstError });
@@ -75,6 +75,10 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
             }
           }
         });
+
+        if (!data.errors) {
+          setError("new_folder_name", { message: data.message });
+        }
       }
     }
   };

@@ -3,11 +3,12 @@ import { ErrorStatus } from "./errorStatus";
 type ErrorMessage<T extends string> = {
   statusCode: ErrorStatus.BAD_REQUEST;
   error: string;
-  message: string[];
+  messages: string[];
+  message: string;
   errors?: { [key in T]?: string[] };
 };
 
-export function parseBadRequestError<T extends string>(
+export function parseError<T extends string>(
   error: Error,
   callback?: (args: { field: T; firstError: string; errors: string[] }) => void,
 ): ErrorMessage<T> {
@@ -23,5 +24,12 @@ export function parseBadRequestError<T extends string>(
     }
   }
 
-  return JSON.parse(error.message);
+  if (Array.isArray(data.message)) {
+    data.messages = data.message;
+    data.message = data.message[0];
+  } else {
+    data.messages = [data.message];
+  }
+
+  return data;
 }

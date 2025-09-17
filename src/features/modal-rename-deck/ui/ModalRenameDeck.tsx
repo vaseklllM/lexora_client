@@ -3,7 +3,7 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { renameDeck } from "@/api/deck/rename-deck";
 import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
-import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { parseError } from "@/shared/api-core/parseError";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { ReactElement, useCallback } from "react";
 
@@ -29,7 +29,7 @@ export const ModalRenameDeck = (props: Props): ReactElement => {
         await revalidateGetDashboard();
       } catch (error) {
         if (error instanceof Error) {
-          parseBadRequestError<"name">(error, ({ field, firstError }) => {
+          parseError<"name">(error, ({ field, firstError }) => {
             switch (field) {
               case "name": {
                 setNameError(firstError);

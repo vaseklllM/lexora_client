@@ -1,7 +1,7 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { renameFolder } from "@/api/folder/rename-folder";
 import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
-import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { parseError } from "@/shared/api-core/parseError";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { ReactElement, useCallback } from "react";
 
@@ -27,7 +27,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
         await revalidateGetDashboard();
       } catch (error) {
         if (error instanceof Error) {
-          parseBadRequestError<"name">(error, ({ field, firstError }) => {
+          const data = parseError<"name">(error, ({ field, firstError }) => {
             switch (field) {
               case "name": {
                 setNameError(firstError);
@@ -35,6 +35,10 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
               }
             }
           });
+
+          if (!data.errors) {
+            setNameError(data.message);
+          }
         }
       }
     },

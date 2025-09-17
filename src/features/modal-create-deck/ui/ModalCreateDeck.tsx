@@ -3,7 +3,7 @@ import { createDeck } from "@/api/deck/create-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
-import { parseBadRequestError } from "@/shared/api-core/parseBadRequestError";
+import { parseError } from "@/shared/api-core/parseError";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -80,7 +80,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        parseBadRequestError<"name">(error, ({ field, firstError }) => {
+        parseError<"name">(error, ({ field, firstError }) => {
           switch (field) {
             case "name": {
               setError("name", { message: firstError });

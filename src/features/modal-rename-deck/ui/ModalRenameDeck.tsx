@@ -29,7 +29,7 @@ export const ModalRenameDeck = (props: Props): ReactElement => {
         await revalidateGetDashboard();
       } catch (error) {
         if (error instanceof Error) {
-          parseError<"name">(error, ({ field, firstError }) => {
+          const data = parseError<"name">(error, ({ field, firstError }) => {
             switch (field) {
               case "name": {
                 setNameError(firstError);
@@ -37,6 +37,10 @@ export const ModalRenameDeck = (props: Props): ReactElement => {
               }
             }
           });
+
+          if (!data.errors) {
+            setNameError(data.message);
+          }
         }
       }
     },

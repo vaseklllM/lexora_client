@@ -80,7 +80,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       reset();
     } catch (error) {
       if (error instanceof Error) {
-        parseError<"name">(error, ({ field, firstError }) => {
+        const data = parseError<"name">(error, ({ field, firstError }) => {
           switch (field) {
             case "name": {
               setError("name", { message: firstError });
@@ -88,6 +88,10 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             }
           }
         });
+
+        if (!data.errors) {
+          setError("name", { message: data.message });
+        }
       }
     }
   };

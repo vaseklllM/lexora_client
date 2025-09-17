@@ -18,13 +18,13 @@ const resultSchema = v.object({
 const tag = `folder__${stackQueryKeys.next()}`;
 
 export async function getFolder(folderId: string) {
-  const data = await fetchCustom(`folder/${folderId}`, {
+  const result = await fetchCustom(`folder/${folderId}`, {
     next: {
       tags: [tag],
     },
   });
 
-  return v.parse(resultSchema, data);
+  return v.parse(resultSchema, result.data);
 }
 
 export async function revalidateGetFolder() {

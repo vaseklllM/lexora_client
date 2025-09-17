@@ -12,7 +12,7 @@ import { UnauthorizedError } from "./UnauthorizedError";
 export async function fetchCustom<R>(
   url: string,
   options?: Options,
-): Promise<R> {
+): Promise<{ ok: boolean; data: R }> {
   const session = await getServerSession(authOptions);
 
   const result = await modifyFetch(url, {
@@ -31,15 +31,13 @@ export async function fetchCustom<R>(
         redirect(routes.logout.url());
         throw new UnauthorizedError(result.statusText);
       }
-
-      case ErrorStatus.CONFLICT:
-      case ErrorStatus.BAD_REQUEST: {
-        throw new Error(JSON.stringify(data));
-      }
     }
   }
 
-  return data;
+  return {
+    ok: result.ok,
+    data,
+  };
 }
 
 function modifyFetch(

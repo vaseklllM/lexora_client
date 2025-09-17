@@ -1,7 +1,8 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { renameFolder } from "@/api/folder/rename-folder";
 import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
-import { parseError } from "@/shared/api-core/parseError";
+import { ErrorStatus } from "@/shared/api-core/errorStatus";
+import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
 import { ReactElement, useCallback } from "react";
 
@@ -18,26 +19,34 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
     async ({ name, close, setNameError }) => {
       if (!props.folderId) return;
 
-      try {
-        await renameFolder({
-          name,
-          id: props.folderId,
-        });
+      const result = await renameFolder({
+        name,
+        id: props.folderId,
+      });
+
+      if (result.ok) {
         await close();
         await revalidateGetDashboard();
-      } catch (error) {
-        if (error instanceof Error) {
-          const data = parseError<"name">(error, ({ field, firstError }) => {
-            switch (field) {
-              case "name": {
-                setNameError(firstError);
-                break;
-              }
-            }
-          });
+      } else {
+        switch (result.data.statusCode) {
+          case ErrorStatus.BAD_REQUEST: {
+            parseBadRequestErrors(
+              result.data.errors,
+              ({ field, firstError }) => {
+                switch (field) {
+                  case "name": {
+                    setNameError(firstError);
+                    break;
+                  }
+                }
+              },
+            );
+            break;
+          }
 
-          if (!data.errors) {
-            setNameError(data.message);
+          case ErrorStatus.CONFLICT: {
+            setNameError(result.data.message);
+            break;
           }
         }
       }

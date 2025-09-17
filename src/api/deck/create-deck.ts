@@ -19,10 +19,10 @@ const resultSchema = v.object({
 type Result = v.InferOutput<typeof resultSchema>;
 
 export const createDeck = async (args: Args): Promise<Result> => {
-  const data = await fetchCustom("deck/create", {
+  const result = await fetchCustom("deck/create", {
     method: "POST",
     body: args,
   });
 
-  return v.parse(resultSchema, data);
+  return v.parse(resultSchema, result.data);
 };

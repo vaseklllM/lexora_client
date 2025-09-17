@@ -8,10 +8,10 @@ const resultSchema = v.object({
 });
 
 export async function deleteFolder(folderId: string) {
-  const data = await fetchCustom("folder/delete", {
+  const result = await fetchCustom("folder/delete", {
     method: "DELETE",
     body: { id: folderId },
   });
 
-  return v.parse(resultSchema, data);
+  return v.parse(resultSchema, result.data);
 }

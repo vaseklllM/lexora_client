@@ -15,10 +15,10 @@ interface Args {
   deckId: string;
 }
 export const renameDeck = async (args: Args): Promise<Result> => {
-  const data = await fetchCustom<Response>("deck/rename", {
+  const result = await fetchCustom<Response>("deck/rename", {
     method: "PATCH",
     body: args,
   });
 
-  return v.parse(resultSchema, data);
+  return v.parse(resultSchema, result.data);
 };

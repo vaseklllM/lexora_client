@@ -21,13 +21,13 @@ const responseSchema = v.object({
 });
 
 export async function getMe() {
-  const data = await fetchCustom("auth/me", {
+  const result = await fetchCustom("auth/me", {
     next: {
       tags: [tag],
     },
   });
 
-  return v.parse(responseSchema, data);
+  return v.parse(responseSchema, result.data);
 }
 
 export async function revalidateGetMe() {

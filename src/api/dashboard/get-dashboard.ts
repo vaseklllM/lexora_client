@@ -17,13 +17,13 @@ type Result = v.InferOutput<typeof resultSchema>;
 const tag = `dashboard__${stackQueryKeys.next()}`;
 
 export async function getDashboard(): Promise<Result> {
-  const data = await fetchCustom("dashboard", {
+  const result = await fetchCustom("dashboard", {
     next: {
       tags: [tag],
     },
   });
 
-  return v.parse(resultSchema, data);
+  return v.parse(resultSchema, result.data);
 }
 
 export async function revalidateGetDashboard() {

@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <div className="flex h-screen justify-center">
       <div className="overflow-y-auto lg:w-3/7 xl:w-2/5">
-        <div className="flex min-h-full flex-col items-center justify-center px-6 py-12">
+        <div className="flex min-h-full flex-col items-center justify-center p-6">
           <Image
             alt="Your Company"
             src="/logo.svg"

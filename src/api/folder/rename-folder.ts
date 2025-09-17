@@ -4,22 +4,14 @@ import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import * as v from "valibot";
 import { badRequestErrorSchema } from "../schemas/errors/bad-request-error.schema";
 import { conflictErrorSchema } from "../schemas/errors/conflict-error.schema";
+import { resultErrorSchema } from "../schemas/errors/result-error.schema";
 
-const resultSchema = v.variant("ok", [
+const resultSchema = resultErrorSchema(
   v.object({
-    ok: v.literal(true),
-    data: v.object({
-      message: v.string(),
-    }),
+    message: v.string(),
   }),
-  v.object({
-    ok: v.literal(false),
-    data: v.variant("statusCode", [
-      conflictErrorSchema,
-      badRequestErrorSchema(["name"]),
-    ]),
-  }),
-]);
+  [conflictErrorSchema, badRequestErrorSchema(["name"])],
+);
 
 interface Args {
   name: string;

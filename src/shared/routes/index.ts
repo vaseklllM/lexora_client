@@ -23,4 +23,13 @@ export const routes = {
     url: () => "/logout",
     path: () => "/logout",
   },
+  tooManyRequest: {
+    url: (backUrl?: string) => {
+      if (!backUrl) {
+        return `/too-many-request`;
+      }
+      return `/too-many-request?backUrl=${backUrl}`;
+    },
+    path: () => "/too-many-request",
+  },
 };

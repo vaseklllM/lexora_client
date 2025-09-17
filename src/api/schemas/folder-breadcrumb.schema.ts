@@ -6,4 +6,4 @@ export const folderBreadcrumbSchema = v.object({
   id: idSchema(),
 });
 
-// export type IFolderBreadcrumb = v.InferOutput<typeof folderBreadcrumbSchema>;
+export type IFolderBreadcrumb = v.InferOutput<typeof folderBreadcrumbSchema>;

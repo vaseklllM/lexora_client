@@ -12,14 +12,17 @@ interface Props {
 export default async function FolderPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
   const allLanguages = await getAllLanguages();
-  const folder = await getFolder(params.id);
+  const { childFolders, childDecks, breadcrumbs, ...folder } = await getFolder(
+    params.id,
+  );
 
   return (
     <Section
       allLanguages={allLanguages.data}
-      folders={folder.childFolders}
-      decks={folder.childDecks}
-      folderId={params.id}
+      folders={childFolders}
+      decks={childDecks}
+      folder={folder}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

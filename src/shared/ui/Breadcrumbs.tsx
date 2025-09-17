@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
@@ -47,10 +48,10 @@ function Breadcrumb(props: Breadcrumb & { isLast: boolean }) {
           {props.title}
         </span>
       ) : (
-        <a>
+        <Link href={props.url}>
           {props.icon && <Icon icon={props.icon} />}
           {props.title}
-        </a>
+        </Link>
       )}
     </li>
   );

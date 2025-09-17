@@ -1,4 +1,5 @@
 import { IDeck } from "@/api/schemas/deck.schema";
+import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { Deck, DecksProvider } from "@/features/deck";
@@ -40,14 +41,15 @@ interface Props {
   folders?: IFolder[];
   decks?: IDeck[];
   allLanguages: Language[];
-  folderId?: string;
+  folder?: IFolder;
+  breadcrumbs?: IFolderBreadcrumb[];
 }
 
 export const Section = (props: Props): ReactElement => {
   const isFolders = props.folders && props.folders.length > 0;
   const isDecks = props.decks && props.decks.length > 0;
 
-  const isFolder = !!props.folderId;
+  const isFolder = !!props.folder?.id;
 
   const isEmpty = !isFolders && !isDecks;
 
@@ -55,25 +57,35 @@ export const Section = (props: Props): ReactElement => {
     isFolder,
   });
 
-  const breadcrumbs = useMemo<Breadcrumb[]>(() => {
-    return [
+  const breadcrumbs = useMemo<Breadcrumb[]>((): Breadcrumb[] => {
+    const crumbs: Breadcrumb[] = [
       {
-        icon: "folder",
+        // icon: "folder",
         title: "Home",
-        url: "/",
-      },
-      {
-        icon: "folder",
-        title: "Documents",
-        url: "/documents",
-      },
-      {
-        icon: "folder",
-        title: "Add Document",
-        url: "/add-document",
+        url: routes.dashboard.url(),
       },
     ];
-  }, []);
+
+    if (!props.breadcrumbs) return crumbs;
+
+    props.breadcrumbs.forEach((breadcrumb) => {
+      crumbs.push({
+        icon: "folder",
+        title: breadcrumb.name,
+        url: routes.folder.url(breadcrumb.id),
+      });
+    });
+
+    if (props.folder) {
+      crumbs.push({
+        icon: "folder",
+        title: props.folder.name,
+        url: routes.folder.url(props.folder.id),
+      });
+    }
+
+    return crumbs;
+  }, [props.breadcrumbs, props.folder]);
 
   return (
     <FoldersProvider>
@@ -96,7 +108,7 @@ export const Section = (props: Props): ReactElement => {
           <DropdownMenu
             className={classes.dropdownMenu()}
             allLanguages={props.allLanguages}
-            folderId={props.folderId}
+            folderId={props.folder?.id}
           />
           {isEmpty && (
             <p className={classes.emptyText()}>

@@ -7,6 +7,7 @@ import { Link } from "@/shared/ui/Link";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 // import { signUp } from "../api/sign-up";
+import { OAuth } from "@/features/oauth";
 import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
 import { signIn } from "next-auth/react";
@@ -171,6 +172,7 @@ export function SignUp() {
           Already have an account?{" "}
           <Link href={routes.signIn.url()}>Sign in</Link>
         </p>
+        <OAuth />
       </div>
     </>
   );

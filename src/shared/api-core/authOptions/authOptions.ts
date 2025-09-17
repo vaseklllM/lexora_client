@@ -115,11 +115,54 @@ export const authOptions: AuthOptions = {
   callbacks: {
     jwt: async ({ token, user, account }) => {
       if (user && account) {
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
-        token.tokenExp = user.tokenExp;
+        switch (account.provider) {
+          case "google": {
+            try {
+              const response = await fetch(
+                `${process.env.SYSTEM_NEXT_API_URL}auth/google`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: user.email,
+                    name: user.name,
+                    googleId: account.providerAccountId,
+                    accessToken: account.access_token,
+                    idToken: account.id_token,
+                  }),
+                },
+              );
 
-        return token;
+              if (response.ok) {
+                const data: LoginResponse = await response.json();
+                const decodedToken = jwtDecode(data.token);
+
+                token.accessToken = data.token;
+                token.refreshToken = data.refreshToken;
+                token.tokenExp = decodedToken.exp;
+                token.id = data.user.id;
+                token.name = data.user.name;
+                token.email = data.user.email;
+
+                return token;
+              } else {
+                throw new Error("Failed to authenticate with Google");
+              }
+            } catch (error) {
+              throw new Error("Google authentication failed", { cause: error });
+            }
+          }
+
+          case "credentials": {
+            token.accessToken = user.accessToken;
+            token.refreshToken = user.refreshToken;
+            token.tokenExp = user.tokenExp;
+
+            return token;
+          }
+        }
       }
 
       const accessTokenExpires: number = token.tokenExp! * 1000;

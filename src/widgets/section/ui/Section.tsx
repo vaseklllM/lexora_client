@@ -29,7 +29,7 @@ const classesSlots = tv({
   variants: {
     isFolder: {
       true: {
-        base: "",
+        foldersTitle: "mt-6",
       },
     },
   },

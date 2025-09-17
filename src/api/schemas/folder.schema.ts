@@ -8,6 +8,7 @@ export const folderSchema = v.object({
   createdAt: dateSchema(),
   updatedAt: dateSchema(),
   numberOfCards: v.number(),
+  parentFolderId: v.optional(idSchema()),
 });
 
 export type IFolder = v.InferOutput<typeof folderSchema>;

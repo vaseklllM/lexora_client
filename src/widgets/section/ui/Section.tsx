@@ -60,7 +60,6 @@ export const Section = (props: Props): ReactElement => {
   const breadcrumbs = useMemo<Breadcrumb[]>((): Breadcrumb[] => {
     const crumbs: Breadcrumb[] = [
       {
-        // icon: "folder",
         title: "Home",
         url: routes.dashboard.url(),
       },
@@ -87,6 +86,13 @@ export const Section = (props: Props): ReactElement => {
     return crumbs;
   }, [props.breadcrumbs, props.folder]);
 
+  const backUrl = useMemo<string>((): string => {
+    if (props.folder?.parentFolderId) {
+      return routes.folder.url(props.folder.parentFolderId);
+    }
+    return routes.dashboard.url();
+  }, [props.folder]);
+
   return (
     <FoldersProvider>
       <DecksProvider>
@@ -94,10 +100,7 @@ export const Section = (props: Props): ReactElement => {
           {isFolder && (
             <div className={classes.header()}>
               <div className={classes.headerButtons()}>
-                <ButtonBack
-                  href={routes.dashboard.url()}
-                  className={classes.buttonBack()}
-                />
+                <ButtonBack href={backUrl} className={classes.buttonBack()} />
               </div>
               <Breadcrumbs
                 className={classes.breadcrumbs()}

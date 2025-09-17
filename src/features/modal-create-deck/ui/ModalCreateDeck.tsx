@@ -3,7 +3,8 @@ import { createDeck } from "@/api/deck/create-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { LanguagesSelect } from "@/entities/languages-select";
-import { parseError } from "@/shared/api-core/parseError";
+import { ErrorStatus } from "@/shared/api-core/errorStatus";
+import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
@@ -67,30 +68,34 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      await createDeck({
-        name: data.name,
-        languageWhatIKnowCode: data.languageWhatIKnowCode,
-        languageWhatILearnCode: data.languageWhatILearnCode,
-        folderId: props.folderId,
-      });
+    const result = await createDeck({
+      name: data.name,
+      languageWhatIKnowCode: data.languageWhatIKnowCode,
+      languageWhatILearnCode: data.languageWhatILearnCode,
+      folderId: props.folderId,
+    });
+    if (result.ok) {
       props.setIsOpen(false);
       await sleep(200);
       await revalidateGetDashboard();
       reset();
-    } catch (error) {
-      if (error instanceof Error) {
-        const data = parseError<"name">(error, ({ field, firstError }) => {
-          switch (field) {
-            case "name": {
-              setError("name", { message: firstError });
-              break;
+    } else {
+      switch (result.data.statusCode) {
+        case ErrorStatus.BAD_REQUEST: {
+          parseBadRequestErrors(result.data.errors, ({ field, firstError }) => {
+            switch (field) {
+              case "name": {
+                setError("name", { message: firstError });
+                break;
+              }
             }
-          }
-        });
+          });
+          break;
+        }
 
-        if (!data.errors) {
-          setError("name", { message: data.message });
+        case ErrorStatus.CONFLICT: {
+          setError("name", { message: result.data.message });
+          break;
         }
       }
     }

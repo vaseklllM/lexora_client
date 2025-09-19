@@ -13,7 +13,7 @@ import * as v from "valibot";
 
 export type ModalRenameSaveHandler = (args: {
   name: string;
-  close: () => void;
+  close: () => Promise<void>;
   setNameError: (error: string) => void;
 }) => Promise<void>;
 

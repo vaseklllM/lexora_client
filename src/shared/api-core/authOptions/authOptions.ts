@@ -128,8 +128,8 @@ export const authOptions: AuthOptions = {
                   body: JSON.stringify({
                     email: user.email,
                     name: user.name,
-                    googleId: account.providerAccountId,
-                    accessToken: account.access_token,
+                    accountId: account.providerAccountId,
+                    // accessToken: account.access_token,
                     idToken: account.id_token,
                   }),
                 },

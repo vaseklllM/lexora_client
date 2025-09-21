@@ -1,19 +1,19 @@
 "use server";
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
-import { idSchema } from "@/shared/schemas/id.schema";
 import * as v from "valibot";
+import { cardSchema } from "../schemas/card.schema";
+import { deckSchema } from "../schemas/deck.schema";
 
 const resultSchema = v.object({
-  id: idSchema(),
+  ...deckSchema.entries,
+  cards: v.array(cardSchema),
 });
 
 type Result = v.InferOutput<typeof resultSchema>;
 
 export const getDeck = async (deckId: string): Promise<Result> => {
   const result = await fetchCustom(`deck/${deckId}`);
-
-  // console.log(result.data);
 
   return v.parse(resultSchema, result.data);
 };

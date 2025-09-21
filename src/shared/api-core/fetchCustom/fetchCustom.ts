@@ -11,7 +11,9 @@ export async function fetchCustom<R>(
   url: string,
   options?: Options,
 ): Promise<{ ok: boolean; data: R }> {
-  const session = await getServerSession(authOptions);
+  const useSession = options?.useSession ?? true;
+
+  const session = useSession ? await getServerSession(authOptions) : undefined;
 
   const result = await modifyFetch(url, {
     ...options,

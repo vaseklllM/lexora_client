@@ -17,7 +17,7 @@ export const Folder = memo((props: FolderProps): ReactElement => {
   const router = useRouter();
 
   const clickHandler = useCallback(() => {
-    router.push(routes.folder.url(props.folder.id));
+    router.push(routes.dashboard.folder.url(props.folder.id));
   }, [props.folder.id]);
 
   return (

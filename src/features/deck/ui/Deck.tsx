@@ -2,7 +2,9 @@
 
 import { IDeck } from "@/api/schemas/deck.schema";
 import { Deck as DeckEntity } from "@/entities/deck";
-import { memo, ReactElement } from "react";
+import { routes } from "@/shared/routes";
+import { useRouter } from "next/navigation";
+import { memo, ReactElement, useCallback } from "react";
 import { useButtons } from "./useButtons";
 
 export interface DeckProps {
@@ -12,8 +14,19 @@ export interface DeckProps {
 
 export const Deck = memo((props: DeckProps): ReactElement => {
   const buttons = useButtons(props);
+  const router = useRouter();
 
-  return <DeckEntity {...props} dottedDropdownButtons={buttons} />;
+  const clickHandler = useCallback(() => {
+    router.push(routes.dashboard.deck.url(props.deck.id));
+  }, [props.deck.id]);
+
+  return (
+    <DeckEntity
+      {...props}
+      dottedDropdownButtons={buttons}
+      onClick={clickHandler}
+    />
+  );
 });
 
 Deck.displayName = "Deck";

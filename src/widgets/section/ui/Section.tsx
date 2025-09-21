@@ -71,7 +71,7 @@ export const Section = (props: Props): ReactElement => {
       crumbs.push({
         icon: "folder",
         title: breadcrumb.name,
-        url: routes.folder.url(breadcrumb.id),
+        url: routes.dashboard.folder.url(breadcrumb.id),
       });
     });
 
@@ -79,7 +79,7 @@ export const Section = (props: Props): ReactElement => {
       crumbs.push({
         icon: "folder",
         title: props.folder.name,
-        url: routes.folder.url(props.folder.id),
+        url: routes.dashboard.folder.url(props.folder.id),
       });
     }
 
@@ -88,7 +88,7 @@ export const Section = (props: Props): ReactElement => {
 
   const backUrl = useMemo<string>((): string => {
     if (props.folder?.parentFolderId) {
-      return routes.folder.url(props.folder.parentFolderId);
+      return routes.dashboard.folder.url(props.folder.parentFolderId);
     }
     return routes.dashboard.url();
   }, [props.folder]);

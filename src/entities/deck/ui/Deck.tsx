@@ -39,6 +39,7 @@ interface Props {
   className?: string;
   deck: IDeck;
   dottedDropdownButtons: DropdownItem[];
+  onClick?: () => void;
 }
 
 export const Deck = (props: Props): ReactElement => {
@@ -52,7 +53,10 @@ export const Deck = (props: Props): ReactElement => {
   );
 
   return (
-    <div className={classes.base({ className: props.className })}>
+    <div
+      className={classes.base({ className: props.className })}
+      onClick={props.onClick}
+    >
       <DropdownMenu
         items={props.dottedDropdownButtons}
         className={classes.dottedButton()}

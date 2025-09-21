@@ -14,10 +14,14 @@ export const routes = {
   dashboard: {
     url: () => "/dashboard",
     path: () => "/dashboard",
-  },
-  folder: {
-    url: (id: string) => `/dashboard/folder/${id}`,
-    path: () => "/dashboard/folder/:id",
+    folder: {
+      url: (id: string) => `${routes.dashboard.url()}/folder/${id}`,
+      path: () => `${routes.dashboard.path()}/folder/:id`,
+    },
+    deck: {
+      url: (id: string) => `${routes.dashboard.url()}/deck/${id}`,
+      path: () => `${routes.dashboard.path()}/deck/:id`,
+    },
   },
   logout: {
     url: () => "/logout",

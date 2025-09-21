@@ -1,4 +1,9 @@
-import { ReactElement } from "react";
+import {
+  ButtonHTMLAttributes,
+  MouseEventHandler,
+  ReactElement,
+  useCallback,
+} from "react";
 import { tv } from "tailwind-variants";
 import { PlayIcon } from "../icons/Play";
 
@@ -9,18 +14,26 @@ const classesSlots = tv({
   },
 });
 
-interface Props {
-  className?: string;
-  disabled?: boolean;
-}
+type Props = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ButtonPlay = (props: Props): ReactElement => {
+  const { onClick, className, ...buttonProps } = props;
+
   const classes = classesSlots();
+
+  const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
+    (event) => {
+      event.stopPropagation();
+      onClick?.(event);
+    },
+    [onClick],
+  );
 
   return (
     <button
-      className={classes.button({ className: props.className })}
-      disabled={props.disabled}
+      {...buttonProps}
+      className={classes.button({ className })}
+      onClick={clickHandler}
     >
       <PlayIcon className={classes.icon()} />
     </button>

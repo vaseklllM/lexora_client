@@ -109,6 +109,7 @@ export const DeckSection = (props: Props): ReactElement => {
         placeholder="Enter deck name"
         onSave={saveDeckName}
       />
+      <div className="divider"></div>
       <p className={classes.language()}>
         <span className="text-base-content/70">I learn:</span>{" "}
         {props.deck.languageWhatILearn.name}{" "}
@@ -119,19 +120,11 @@ export const DeckSection = (props: Props): ReactElement => {
         {props.deck.languageWhatIKnow.name}{" "}
         {props.deck.languageWhatIKnow.iconSymbol}
       </p>
+      <div className="divider"></div>
       <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
         <AddCard />
       </div>
-      {/* {props.cards.length === 0 ? (
-        <div>
-          <p className={classes.emptyCards()}>
-            You don&apos;t have any cards in this deck.
-          </p>
-        </div>
-      ) : (
-        <div></div>
-      )} */}
     </div>
   );
 };

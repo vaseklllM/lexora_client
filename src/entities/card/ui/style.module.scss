@@ -28,15 +28,7 @@
 
     .inner {
       transform: translateY(-50%) translateZ(50px) scale(0.94);
-      top: 50%;
-      position: absolute;
-      left: 0;
-      width: 100%;
-      padding: 2rem;
-      box-sizing: border-box;
-      outline: 1px solid transparent;
       perspective: inherit;
-      z-index: 2;
     }
 
     .front {

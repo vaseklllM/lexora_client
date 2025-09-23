@@ -31,7 +31,8 @@ const classesSlots = tv({
     language: "mt-4",
     cardsTitle: "text-base-content/70 mt-6 text-xl font-bold",
     emptyCards: "text-base-content/50 text-md mt-16 mb-20 text-center",
-    cards: "mt-4",
+    cards:
+      "mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
   },
 });
 
@@ -123,6 +124,11 @@ export const DeckSection = (props: Props): ReactElement => {
       <div className="divider"></div>
       <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
+        <AddCard />
+        <AddCard />
+        <AddCard />
+        <AddCard />
+        <AddCard />
         <AddCard />
       </div>
     </div>

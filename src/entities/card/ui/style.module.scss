@@ -1,15 +1,7 @@
-@mixin switch {
-  .back {
-    transform: rotateY(0deg);
-  }
-
-  .front {
-    transform: rotateY(-180deg);
-  }
-}
-
 .col {
   cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 
   .container {
     transform-style: preserve-3d;
@@ -46,14 +38,40 @@
   &_hover_switch {
     .container {
       &:hover {
-        @include switch;
+        .back {
+          transform: rotateY(0deg);
+        }
+
+        .front {
+          transform: rotateY(-180deg);
+        }
       }
     }
   }
 
   &_view_back {
     .container {
-      @include switch;
+      .back {
+        transform: rotateY(0deg);
+      }
+
+      .front {
+        transform: rotateY(-180deg);
+      }
+    }
+  }
+
+  &_view_hidden {
+    opacity: 0;
+
+    .container {
+      .back {
+        transform: rotateY(90deg);
+      }
+
+      .front {
+        transform: rotateY(-90deg);
+      }
     }
   }
 }

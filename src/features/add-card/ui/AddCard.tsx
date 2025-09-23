@@ -25,6 +25,7 @@ export const AddCard = (props: Props): ReactElement => {
       className={classes.card({ className: props.className })}
       activeSide={activeSide}
       onSideChange={setActiveSide}
+      // defaultSide="hidden"
       front={
         <button
           className={classes.buttonAdd()}

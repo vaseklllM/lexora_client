@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
+import { memo, ReactElement, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import classes from "./style.module.scss";
 
@@ -19,6 +19,9 @@ const classesSlots = tv({
       back: {
         col: `${classes.col_view_back}`,
       },
+      hidden: {
+        col: `${classes.col_view_hidden}`,
+      },
     },
     hoverSwitch: {
       true: {
@@ -28,7 +31,7 @@ const classesSlots = tv({
   },
 });
 
-export type CardSide = "front" | "back";
+export type CardSide = "front" | "back" | "hidden";
 
 interface Props {
   className?: string;
@@ -37,13 +40,24 @@ interface Props {
   hoverSwitch?: boolean;
   front?: ReactElement;
   back?: ReactElement;
+  defaultSide?: CardSide;
 }
 
-export const Card = (props: Props): ReactElement => {
+export const Card = memo((props: Props): ReactElement => {
+  const [activeSide, setActiveSide] = useState<CardSide>(
+    props.defaultSide || "front",
+  );
+
   const classes = classesSlots({
-    activeSide: props.activeSide,
+    activeSide,
     hoverSwitch: props.hoverSwitch,
   });
+
+  useEffect(() => {
+    if (props.activeSide) {
+      setActiveSide(props.activeSide);
+    }
+  }, [props.activeSide]);
 
   return (
     <div className={classes.col()}>
@@ -57,4 +71,6 @@ export const Card = (props: Props): ReactElement => {
       </div>
     </div>
   );
-};
+});
+
+Card.displayName = "Card";

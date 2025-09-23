@@ -38,7 +38,7 @@
     }
 
     .inner {
-      transform: translateY(-50%) translateZ(50px) scale(0.94);
+      transform: translateY(-50%) translateZ(50px) scale(1);
       top: 50%;
       position: absolute;
       left: 0;
@@ -62,7 +62,6 @@
         height: 100%;
         content: "";
         display: block;
-        // opacity: 0.6;
         background-color: var(--color-base-300);
         backface-visibility: hidden;
         border-radius: 10px;

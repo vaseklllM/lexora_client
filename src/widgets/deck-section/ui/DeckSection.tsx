@@ -54,10 +54,10 @@ export const DeckSection = (props: Props): ReactElement => {
   const lastBreadcrumb = useMemo<Breadcrumb>(() => {
     return {
       icon: "deck",
-      title: props.deck.name,
+      title: `${props.deck.name} ${props.deck.languageWhatILearn.iconSymbol}`,
       url: routes.dashboard.deck.url(props.deck.id),
     };
-  }, [parentFolder?.id, props.deck.id, props.deck.name]);
+  }, [props.deck.id, props.deck.name]);
 
   const saveDeckName = useCallback<EditableTextSaveHandler>(async (name) => {
     const result = await renameDeck({

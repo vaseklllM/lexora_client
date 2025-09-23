@@ -9,8 +9,8 @@ const classesSlots = tv({
   slots: {
     col: `${classes.col} max-w-3xs`,
     container: `${classes.container}`,
-    front: `${classes.front}`,
-    back: `${classes.back}`,
+    front: `${classes.front} bg-base-300`,
+    back: `${classes.back} bg-base-300`,
     inner: `${classes.inner}`,
     card: "min-h-80 rounded-xl shadow-md/20",
 

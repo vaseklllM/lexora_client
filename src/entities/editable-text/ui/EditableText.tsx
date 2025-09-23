@@ -72,8 +72,8 @@ export const EditableText = (props: Props): ReactElement => {
       setError(undefined);
       setIsLoading(true);
       await props.onSave?.(text.trim());
-      setIsEditing(false);
       setText(text.trim());
+      setIsEditing(false);
     } catch (error) {
       if (error instanceof EditableTextError) {
         setError(error.message);
@@ -132,7 +132,7 @@ export const EditableText = (props: Props): ReactElement => {
       ) : (
         <>
           <h2 key="name" className={classes.name()}>
-            {props.text}
+            {text}
           </h2>
           <ButtonIcon
             icon="edit"

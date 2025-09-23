@@ -1,5 +1,7 @@
 "use client";
 
+import { revalidateGetDeck } from "@/api/deck/get-deck";
+import { renameDeck } from "@/api/deck/rename-deck";
 import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
@@ -9,10 +11,11 @@ import {
   EditableTextSaveHandler,
 } from "@/entities/editable-text";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
+import { ErrorStatus } from "@/shared/api-core/errorStatus";
+import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
-import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
 
@@ -56,9 +59,31 @@ export const DeckSection = (props: Props): ReactElement => {
     };
   }, [parentFolder?.id, props.deck.id, props.deck.name]);
 
-  const saveDeckName = useCallback<EditableTextSaveHandler>(async () => {
-    await sleep(1000);
-    throw new EditableTextError("Deck name is required");
+  const saveDeckName = useCallback<EditableTextSaveHandler>(async (name) => {
+    const result = await renameDeck({
+      deckId: props.deck.id,
+      name,
+    });
+    if (result.ok) {
+      await revalidateGetDeck(props.deck.id);
+    } else {
+      switch (result.data.statusCode) {
+        case ErrorStatus.BAD_REQUEST: {
+          parseBadRequestErrors(result.data.errors, ({ field, firstError }) => {
+            switch (field) {
+              case "name": {
+                throw new EditableTextError(firstError);
+              }
+            }
+          });
+          break;
+        }
+
+        case ErrorStatus.CONFLICT: {
+          throw new EditableTextError(result.data.message);
+        }
+      }
+    }
   }, []);
 
   return (

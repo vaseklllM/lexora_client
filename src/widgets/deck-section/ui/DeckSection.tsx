@@ -5,6 +5,7 @@ import { renameDeck } from "@/api/deck/rename-deck";
 import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
+import { AddCard } from "@/entities/add-card";
 import {
   EditableText,
   EditableTextError,
@@ -30,6 +31,7 @@ const classesSlots = tv({
     language: "mt-4",
     cardsTitle: "text-base-content/70 mt-6 text-xl font-bold",
     emptyCards: "text-base-content/50 text-md mt-16 mb-20 text-center",
+    cards: "mt-4",
   },
 });
 
@@ -118,7 +120,10 @@ export const DeckSection = (props: Props): ReactElement => {
         {props.deck.languageWhatIKnow.iconSymbol}
       </p>
       <h3 className={classes.cardsTitle()}>Cards</h3>
-      {props.cards.length === 0 ? (
+      <div className={classes.cards()}>
+        <AddCard />
+      </div>
+      {/* {props.cards.length === 0 ? (
         <div>
           <p className={classes.emptyCards()}>
             You don&apos;t have any cards in this deck.
@@ -126,7 +131,7 @@ export const DeckSection = (props: Props): ReactElement => {
         </div>
       ) : (
         <div></div>
-      )}
+      )} */}
     </div>
   );
 };

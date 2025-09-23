@@ -7,10 +7,10 @@ import classes from "./style.module.scss";
 
 const classesSlots = tv({
   slots: {
-    col: `${classes.col} max-w-2xs`,
+    col: `${classes.col} ${classes.col_hover_switch} max-w-2xs`,
     container: `${classes.container}`,
-    front: `${classes.front}`,
-    back: `${classes.back}`,
+    front: `${classes.front} shadow-md/20`,
+    back: `${classes.back} shadow-md/20`,
     inner: `${classes.inner}`,
 
     // base: "bg-base-content/5 relative min-h-80 max-w-2xs rounded-xl p-5 pr-5 pb-5 pl-5 shadow-md/20 duration-250 ease-linear perspective-distant",
@@ -25,7 +25,7 @@ const classesSlots = tv({
         // base: "",
       },
       back: {
-        container: `${classes.containerActive}`,
+        col: `${classes.col_view_back}`,
       },
     },
   },
@@ -63,7 +63,6 @@ export const Card = (props: Props): ReactElement => {
         </div>
       </div>
       <ButtonIcon
-        // className={classes.buttonSwitch()}
         icon="edit"
         onClick={() =>
           props.onSideChange?.(props.activeSide === "front" ? "back" : "front")

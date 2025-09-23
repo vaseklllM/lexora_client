@@ -13,12 +13,10 @@
   }
 
   .back {
-    -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
   }
 
   .front {
-    -webkit-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
   }
 }
@@ -28,54 +26,38 @@
   cursor: pointer;
 
   .container {
-    -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-perspective: 1000px;
     perspective: 1000px;
 
     .front,
     .back {
       background-size: cover;
-      //   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
       border-radius: 10px;
       background-position: center;
-      -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-      transition: -webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-      -o-transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
       transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-      transition:
-        transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1),
-        -webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-      -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       text-align: center;
       min-height: 280px;
       height: auto;
       border-radius: 10px;
-      //   color: #fff;
       font-size: 1.5rem;
-      -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
     }
 
     .inner {
-      -webkit-transform: translateY(-50%) translateZ(60px) scale(0.94);
-      transform: translateY(-50%) translateZ(60px) scale(0.94);
+      transform: translateY(-50%) translateZ(50px) scale(0.94);
       top: 50%;
       position: absolute;
       left: 0;
       width: 100%;
       padding: 2rem;
-      -webkit-box-sizing: border-box;
       box-sizing: border-box;
       outline: 1px solid transparent;
-      -webkit-perspective: inherit;
       perspective: inherit;
       z-index: 2;
     }
 
     .front {
-      -webkit-transform: rotateY(0deg);
       transform: rotateY(0deg);
 
       &:after {
@@ -89,7 +71,6 @@
         display: block;
         // opacity: 0.6;
         background-color: var(--color-base-300);
-        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         border-radius: 10px;
       }
@@ -115,7 +96,6 @@
         }
 
         span {
-          //   color: rgba(255, 255, 255, 0.7);
           font-family: "Montserrat";
           font-weight: 300;
         }
@@ -124,15 +104,11 @@
 
     .back {
       background: #cedce7;
-      background: -webkit-linear-gradient(45deg, #cedce7 0%, #596a72 100%);
-      background: -o-linear-gradient(45deg, #cedce7 0%, #596a72 100%);
       background: linear-gradient(45deg, #cedce7 0%, #596a72 100%);
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-
-      -webkit-transform: rotateY(180deg);
       transform: rotateY(180deg);
     }
   }

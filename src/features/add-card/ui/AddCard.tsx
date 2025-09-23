@@ -22,6 +22,7 @@ export const AddCard = (props: Props): ReactElement => {
             onClick={() =>
               setActiveSide?.(activeSide === "front" ? "back" : "front")
             }
+            disabled={activeSide === "back"}
           />
         </p>
       }
@@ -33,6 +34,7 @@ export const AddCard = (props: Props): ReactElement => {
             onClick={() =>
               setActiveSide?.(activeSide === "front" ? "back" : "front")
             }
+            disabled={activeSide === "front"}
           />
         </p>
       }

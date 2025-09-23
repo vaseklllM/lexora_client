@@ -1,6 +1,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
+import { EditableText } from "@/entities/editable-text";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
@@ -15,6 +16,7 @@ const classesSlots = tv({
     headerButtons: "",
     buttonBack: "",
     breadcrumbs: "",
+    name: "mt-4",
   },
 });
 
@@ -59,6 +61,7 @@ export const DeckSection = (props: Props): ReactElement => {
           lastItem={lastBreadcrumb}
         />
       </div>
+      <EditableText text={props.deck.name} className={classes.name()} />
     </div>
   );
 };

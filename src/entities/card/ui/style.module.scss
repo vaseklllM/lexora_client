@@ -58,8 +58,8 @@
     }
 
     .back {
-      background: #cedce7;
-      background: linear-gradient(45deg, #cedce7 0%, #596a72 100%);
+      background: var(--color-base-300);
+      //   background: linear-gradient(45deg, #cedce7 0%, #596a72 100%);
       position: absolute;
       top: 0;
       left: 0;

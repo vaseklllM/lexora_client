@@ -16,15 +16,10 @@ const classesSlots = tv({
 
     // base: "bg-base-content/5 relative min-h-80 max-w-2xs rounded-xl p-5 pr-5 pb-5 pl-5 shadow-md/20 duration-250 ease-linear perspective-distant",
     // text: "text-base-content/100",
-    // buttonSwitch: "absolute top-3 right-3",
-    // front: "",
-    // back: "",
   },
   variants: {
     activeSide: {
-      front: {
-        // base: "",
-      },
+      front: {},
       back: {
         col: `${classes.col_view_back}`,
       },

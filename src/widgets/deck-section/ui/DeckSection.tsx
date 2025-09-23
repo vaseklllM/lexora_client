@@ -5,7 +5,7 @@ import { renameDeck } from "@/api/deck/rename-deck";
 import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
-import { AddCard } from "@/entities/add-card";
+import { AddCard } from "@/features/add-card";
 import {
   EditableText,
   EditableTextError,

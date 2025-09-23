@@ -6,19 +6,15 @@ import { PlusIcon } from "../icons/Plus";
 
 const classesSlots = tv({
   slots: {
-    button: "btn text-base-content/60 h-8 w-8 rounded-full p-0",
+    button: "btn h-8 w-8 rounded-full p-0",
   },
   variants: {
     icon: {
-      check: {
-        button: "text-accent",
-      },
+      check: {},
       edit: {
         button: "text-base-content/60",
       },
-      cancel: {
-        button: "text-error",
-      },
+      cancel: {},
     },
     disabled: {
       true: {
@@ -36,17 +32,40 @@ const classesSlots = tv({
   },
   compoundVariants: [
     {
+      variant: "ghost",
+      icon: "cancel",
+      class: {
+        button: "text-error",
+      },
+    },
+    {
       variant: "dash",
       icon: "cancel",
       class: {
-        button: "btn-error text-primary-content",
+        button: "btn-error",
+      },
+    },
+    {
+      variant: "ghost",
+      icon: "check",
+      disabled: false,
+      class: {
+        button: "text-accent",
+      },
+    },
+    {
+      variant: "ghost",
+      icon: "check",
+      disabled: true,
+      class: {
+        button: "text-base-content/30",
       },
     },
     {
       variant: "dash",
       icon: "check",
       class: {
-        button: "btn-success text-primary-content",
+        button: "btn-success",
       },
     },
   ],

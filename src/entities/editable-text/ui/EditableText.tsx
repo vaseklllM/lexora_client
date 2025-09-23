@@ -4,10 +4,11 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Input } from "@/shared/ui/Input";
 import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
+import { EditableTextError } from "../model/EditableTextError";
 
 const classesSlots = tv({
   slots: {
-    base: "relative flex w-fit items-center gap-2",
+    base: "relative flex w-fit gap-2",
     name: "text-base-content/100 text-xl font-light",
     nameInput: "",
     buttonEdit: "",
@@ -26,13 +27,25 @@ const classesSlots = tv({
         buttonCheck: "opacity-30",
       },
     },
+    isEditing: {
+      true: {
+        buttonEdit: "mt-[2px]",
+        buttonCancel: "mt-[2px]",
+        buttonCheck: "mt-[2px]",
+      },
+      false: {
+        base: "items-center",
+      },
+    },
   },
 });
+
+export type EditableTextSaveHandler = (text: string) => Promise<void>;
 
 interface Props {
   className?: string;
   text: string;
-  onSave?: (args: { text: string }) => Promise<void>;
+  onSave?: EditableTextSaveHandler;
   placeholder?: string;
 }
 
@@ -40,8 +53,9 @@ export const EditableText = (props: Props): ReactElement => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(props.text);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>();
 
-  const classes = classesSlots({ isLoading });
+  const classes = classesSlots({ isLoading, isEditing });
 
   const startEditing = useCallback(() => {
     setIsEditing(true);
@@ -50,18 +64,34 @@ export const EditableText = (props: Props): ReactElement => {
   const cancelHandler = useCallback(() => {
     setIsEditing(false);
     setText(props.text);
-  }, [setIsEditing, setText, props.text]);
+    setError(undefined);
+  }, [setIsEditing, setText, props.text, setError]);
 
   const saveHandler = useCallback(async () => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await props.onSave?.({ text: text.trim() });
+      await props.onSave?.(text.trim());
       setIsEditing(false);
       setText(text.trim());
+    } catch (error) {
+      if (error instanceof EditableTextError) {
+        setError(error.message);
+      } else {
+        throw error;
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [props.onSave, text, setIsLoading, setIsEditing]);
+  }, [props.onSave, text, setIsLoading, setIsEditing, setError]);
+
+  const changeNameHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setText(e.target.value);
+      setError(undefined);
+    },
+    [setText, setError],
+  );
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -69,11 +99,12 @@ export const EditableText = (props: Props): ReactElement => {
         <>
           <Input
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={changeNameHandler}
             placeholder={props.placeholder}
             disabled={isLoading}
             className={classes.nameInput()}
             key="input"
+            error={error}
           />
           <ButtonIcon
             icon="cancel"

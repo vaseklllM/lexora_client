@@ -1,12 +1,19 @@
+"use client";
+
 import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
-import { EditableText } from "@/entities/editable-text";
+import {
+  EditableText,
+  EditableTextError,
+  EditableTextSaveHandler,
+} from "@/entities/editable-text";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
-import { ReactElement, useMemo } from "react";
+import { sleep } from "@/shared/utils/sleep";
+import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -49,6 +56,11 @@ export const DeckSection = (props: Props): ReactElement => {
     };
   }, [parentFolder?.id, props.deck.id, props.deck.name]);
 
+  const saveDeckName = useCallback<EditableTextSaveHandler>(async () => {
+    await sleep(1000);
+    throw new EditableTextError("Deck name is required");
+  }, []);
+
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.header()}>
@@ -65,6 +77,7 @@ export const DeckSection = (props: Props): ReactElement => {
         text={props.deck.name}
         className={classes.name()}
         placeholder="Enter deck name"
+        onSave={saveDeckName}
       />
     </div>
   );

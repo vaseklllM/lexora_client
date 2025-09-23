@@ -1,3 +1,4 @@
+import { register } from "@/api/auth/register";
 import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -36,27 +37,12 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials) => {
         switch (credentials?.type) {
           case "register": {
-            const result = await fetch(
-              `${process.env.SYSTEM_NEXT_API_URL}auth/register`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: credentials?.email,
-                  name: credentials?.fullName,
-                  password: credentials?.password,
-                  confirmPassword: credentials?.passwordRepeat,
-                }),
-              },
-            );
-
-            const data: LoginResponse = await result.json();
-
-            if (!result.ok) {
-              throw new Error(JSON.stringify(data));
-            }
+            const data = await register({
+              email: credentials?.email,
+              name: credentials?.fullName,
+              password: credentials?.password,
+              confirmPassword: credentials?.passwordRepeat,
+            });
 
             const decodedToken = jwtDecode(data.token);
 

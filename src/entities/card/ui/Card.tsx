@@ -6,7 +6,7 @@ import classes from "./style.module.scss";
 
 const classesSlots = tv({
   slots: {
-    col: `${classes.col} max-w-xl`,
+    col: `${classes.col} max-w-xs`,
     container: `${classes.container}`,
     front: `${classes.front}`,
     back: `${classes.back}`,

@@ -50,9 +50,9 @@ interface Props {
 }
 
 export const EditableText = (props: Props): ReactElement => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(props.text);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [text, setText] = useState<string>(props.text);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
   const classes = classesSlots({ isLoading, isEditing });

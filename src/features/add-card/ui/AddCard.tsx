@@ -13,6 +13,8 @@ export const AddCard = (props: Props): ReactElement => {
       className={props.className}
       activeSide={activeSide}
       onSideChange={setActiveSide}
+      front={<p>Diligord</p>}
+      back={<p>Lorem ipsum</p>}
     />
   );
 };

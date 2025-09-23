@@ -7,11 +7,12 @@ import classes from "./style.module.scss";
 
 const classesSlots = tv({
   slots: {
-    col: `${classes.col} ${classes.col_hover_switch} max-w-2xs`,
+    col: `${classes.col} max-w-3xs`,
     container: `${classes.container}`,
-    front: `${classes.front} shadow-md/20`,
-    back: `${classes.back} shadow-md/20`,
+    front: `${classes.front}`,
+    back: `${classes.back}`,
     inner: `${classes.inner}`,
+    card: "min-h-80 rounded-xl shadow-md/20",
 
     // base: "bg-base-content/5 relative min-h-80 max-w-2xs rounded-xl p-5 pr-5 pb-5 pl-5 shadow-md/20 duration-250 ease-linear perspective-distant",
     // text: "text-base-content/100",
@@ -28,6 +29,11 @@ const classesSlots = tv({
         col: `${classes.col_view_back}`,
       },
     },
+    hoverSwitch: {
+      true: {
+        col: `${classes.col_hover_switch}`,
+      },
+    },
   },
 });
 
@@ -37,28 +43,26 @@ interface Props {
   className?: string;
   activeSide?: CardSide;
   onSideChange?: (side: CardSide) => void;
+  hoverSwitch?: boolean;
+  front?: ReactElement;
+  back?: ReactElement;
 }
 
 export const Card = (props: Props): ReactElement => {
-  const classes = classesSlots({ activeSide: props.activeSide });
+  const classes = classesSlots({
+    activeSide: props.activeSide,
+    hoverSwitch: props.hoverSwitch,
+  });
 
   return (
     <>
       <div className={classes.col()}>
         <div className={classes.container()}>
-          <div className={classes.front()}>
-            <div className={classes.inner()}>
-              <p>Diligord</p>
-              <span>Lorem ipsum</span>
-            </div>
+          <div className={classes.front({ className: classes.card() })}>
+            <div className={classes.inner()}>{props.front}</div>
           </div>
-          <div className={classes.back()}>
-            <div className={classes.inner()}>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias
-                cum repellat velit quae suscipit c.
-              </p>
-            </div>
+          <div className={classes.back({ className: classes.card() })}>
+            <div className={classes.inner()}>{props.back}</div>
           </div>
         </div>
       </div>

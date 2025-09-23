@@ -1,10 +1,4 @@
 @mixin switch {
-  .front,
-  .back {
-    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transform-style: preserve-3d;
-  }
-
   .back {
     transform: rotateY(0deg);
   }
@@ -24,15 +18,10 @@
 
     .front,
     .back {
-      background-size: cover;
-      border-radius: 10px;
-      background-position: center;
-      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
       backface-visibility: hidden;
       text-align: center;
-      min-height: 280px;
       height: auto;
-      border-radius: 10px;
       font-size: 1.5rem;
       transform-style: preserve-3d;
     }
@@ -65,32 +54,6 @@
         background-color: var(--color-base-300);
         backface-visibility: hidden;
         border-radius: 10px;
-      }
-
-      .inner {
-        p {
-          font-size: 2rem;
-          margin-bottom: 2rem;
-          position: relative;
-
-          &:after {
-            content: "";
-            width: 4rem;
-            height: 2px;
-            position: absolute;
-            background: #c6d4df;
-            display: block;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            bottom: -0.75rem;
-          }
-        }
-
-        span {
-          font-family: "Montserrat";
-          font-weight: 300;
-        }
       }
     }
 

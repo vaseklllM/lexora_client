@@ -1,4 +1,5 @@
 import { getDeck } from "@/api/deck/get-deck";
+import { DeckSection } from "@/widgets/deck-section";
 import { ReactElement } from "react";
 
 interface Props {
@@ -11,9 +12,5 @@ export default async function DeckPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
   const deck = await getDeck(params.id);
 
-  return (
-    <div>
-      <pre>{JSON.stringify(deck, null, 2)}</pre>
-    </div>
-  );
+  return <DeckSection foldersBreadcrumbs={deck.foldersBreadcrumbs} />;
 }

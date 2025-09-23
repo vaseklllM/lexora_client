@@ -2,10 +2,11 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
+import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { Deck, DecksProvider } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
 import { routes } from "@/shared/routes";
-import { Breadcrumb, Breadcrumbs } from "@/shared/ui/Breadcrumbs";
+import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
 import { ReactElement, useMemo } from "react";
 import { tv } from "tailwind-variants";
@@ -57,34 +58,15 @@ export const Section = (props: Props): ReactElement => {
     isFolder,
   });
 
-  const breadcrumbs = useMemo<Breadcrumb[]>((): Breadcrumb[] => {
-    const crumbs: Breadcrumb[] = [
-      {
-        title: "Home",
-        url: routes.dashboard.url(),
-      },
-    ];
-
-    if (!props.breadcrumbs) return crumbs;
-
-    props.breadcrumbs.forEach((breadcrumb) => {
-      crumbs.push({
-        icon: "folder",
-        title: breadcrumb.name,
-        url: routes.dashboard.folder.url(breadcrumb.id),
-      });
-    });
-
+  const lastBreadcrumb = useMemo((): Breadcrumb | undefined => {
     if (props.folder) {
-      crumbs.push({
+      return {
         icon: "folder",
         title: props.folder.name,
         url: routes.dashboard.folder.url(props.folder.id),
-      });
+      };
     }
-
-    return crumbs;
-  }, [props.breadcrumbs, props.folder]);
+  }, [props.folder]);
 
   const backUrl = useMemo<string>((): string => {
     if (props.folder?.parentFolderId) {
@@ -102,9 +84,10 @@ export const Section = (props: Props): ReactElement => {
               <div className={classes.headerButtons()}>
                 <ButtonBack href={backUrl} className={classes.buttonBack()} />
               </div>
-              <Breadcrumbs
+              <FolderBreadcrumbs
                 className={classes.breadcrumbs()}
-                breadcrumbs={breadcrumbs}
+                breadcrumbs={props.breadcrumbs}
+                lastItem={lastBreadcrumb}
               />
             </div>
           )}

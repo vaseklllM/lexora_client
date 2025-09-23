@@ -2,15 +2,17 @@ import { ReactElement } from "react";
 
 interface Props {
   className?: string;
+  height?: string;
+  width?: string;
 }
 
-export const Plus = (props: Props): ReactElement => {
+export const PlusIcon = (props: Props): ReactElement => {
   return (
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      width="30px"
-      height="30px"
+      width={props.width || "30px"}
+      height={props.height || "30px"}
       viewBox="0 0 50 50"
       enableBackground="new 0 0 50 50"
       className={props.className}
@@ -20,6 +22,7 @@ export const Plus = (props: Props): ReactElement => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        stroke="currentColor"
         x1="25"
         y1="10.5"
         x2="25"
@@ -30,6 +33,7 @@ export const Plus = (props: Props): ReactElement => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        stroke="currentColor"
         x1="39.5"
         y1="25"
         x2="10.5"

@@ -4,7 +4,7 @@ import { DeleteIcon } from "@/shared/icons/Delete";
 import { EditIcon } from "@/shared/icons/Edit";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { LogoIcon } from "@/shared/icons/Logo";
-import { Plus } from "@/shared/icons/Plus";
+import { PlusIcon } from "@/shared/icons/Plus";
 import { DottedIconButton as DottedButtonComponent } from "@/shared/ui/DottedIconButton";
 import { ReactElement, useId, useMemo, useRef } from "react";
 import { tv } from "tailwind-variants";
@@ -69,7 +69,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
             popoverTarget={popoverId}
             style={{ anchorName: anchorName } as React.CSSProperties}
           >
-            <Plus className="stroke-neutral-content" />
+            <PlusIcon className="text-neutral-content" />
           </button>
         );
       }

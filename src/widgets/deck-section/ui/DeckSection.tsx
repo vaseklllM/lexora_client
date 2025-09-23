@@ -61,7 +61,11 @@ export const DeckSection = (props: Props): ReactElement => {
           lastItem={lastBreadcrumb}
         />
       </div>
-      <EditableText text={props.deck.name} className={classes.name()} />
+      <EditableText
+        text={props.deck.name}
+        className={classes.name()}
+        placeholder="Enter deck name"
+      />
     </div>
   );
 };

@@ -93,6 +93,9 @@ export const EditableText = (props: Props): ReactElement => {
     [setText, setError],
   );
 
+  const isDisabledSaving =
+    text === props.text || text.trim() === "" || isLoading;
+
   return (
     <div className={classes.base({ className: props.className })}>
       {isEditing ? (
@@ -105,6 +108,11 @@ export const EditableText = (props: Props): ReactElement => {
             className={classes.nameInput()}
             key="input"
             error={error}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !isDisabledSaving) {
+                saveHandler();
+              }
+            }}
           />
           <ButtonIcon
             icon="cancel"
@@ -118,7 +126,7 @@ export const EditableText = (props: Props): ReactElement => {
             key="check"
             className={classes.buttonCheck()}
             onClick={saveHandler}
-            disabled={text === props.text || text.trim() === "" || isLoading}
+            disabled={isDisabledSaving}
           />
         </>
       ) : (

@@ -34,7 +34,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
-  const { icon, className, disabled, ...buttonProps } = props;
+  const { icon, className, disabled, type = "button", ...buttonProps } = props;
   const classes = classesSlots({ disabled, icon });
 
   return (
@@ -42,6 +42,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
       {...buttonProps}
       className={classes.button({ className })}
       disabled={disabled}
+      type={type}
     >
       <Icon icon={icon} />
     </button>

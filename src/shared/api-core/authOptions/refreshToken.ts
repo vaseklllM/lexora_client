@@ -1,5 +1,7 @@
 "use server";
 
+import { refresh } from "@/api/auth/refresh";
+
 let inFlightRefresh: Promise<any> | null = null;
 
 type Response = {
@@ -13,24 +15,7 @@ export async function refreshOnce(refreshToken: string): Promise<Response> {
     if (inFlightRefresh) return inFlightRefresh;
 
     inFlightRefresh = (async () => {
-      const result = await fetch(
-        `${process.env.SYSTEM_NEXT_API_URL}auth/refresh`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            refreshToken,
-          }),
-        },
-      );
-
-      if (!result.ok) {
-        throw new Error(`Refresh token failed: ${result.status}`);
-      }
-
-      return await result.json();
+      return await refresh(refreshToken);
     })();
 
     return await inFlightRefresh;

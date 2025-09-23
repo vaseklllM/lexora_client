@@ -7,7 +7,13 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     card: "",
+    front: "flex h-full w-full items-center justify-center",
     buttonAdd: "btn btn-dash btn-primary rounded-full font-light",
+    back: "flex h-full w-full flex-col justify-between",
+    backContent: "",
+    backButtons: "flex justify-between gap-2",
+    backButtonCancel: "btn-dash",
+    backButtonSave: "btn-dash",
   },
 });
 
@@ -25,28 +31,38 @@ export const AddCard = (props: Props): ReactElement => {
       className={classes.card({ className: props.className })}
       activeSide={activeSide}
       onSideChange={setActiveSide}
-      // defaultSide="hidden"
       front={
-        <button
-          className={classes.buttonAdd()}
-          onClick={() => setActiveSide("back")}
-          disabled={activeSide === "back"}
-        >
-          Add Card
-          <PlusIcon />
-        </button>
+        <div className={classes.front()}>
+          <button
+            className={classes.buttonAdd()}
+            onClick={() => setActiveSide("back")}
+            disabled={activeSide === "back"}
+          >
+            Add Card
+            <PlusIcon />
+          </button>
+        </div>
       }
       back={
-        <p>
-          Lorem ipsum
-          <ButtonIcon
-            icon="edit"
-            onClick={() =>
-              setActiveSide?.(activeSide === "front" ? "back" : "front")
-            }
-            disabled={activeSide === "front"}
-          />
-        </p>
+        <div className={classes.back()}>
+          <div className={classes.backContent()}></div>
+          <div className={classes.backButtons()}>
+            <ButtonIcon
+              className={classes.backButtonCancel()}
+              icon="cancel"
+              onClick={() => setActiveSide("front")}
+              disabled={activeSide === "front"}
+              variant="dash"
+            />
+            <ButtonIcon
+              className={classes.backButtonSave()}
+              icon="check"
+              onClick={() => setActiveSide("front")}
+              disabled={activeSide === "front"}
+              variant="dash"
+            />
+          </div>
+        </div>
       }
     />
   );

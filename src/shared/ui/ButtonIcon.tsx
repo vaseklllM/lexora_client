@@ -6,7 +6,7 @@ import { PlusIcon } from "../icons/Plus";
 
 const classesSlots = tv({
   slots: {
-    button: "btn btn-ghost text-base-content/60 h-8 w-8 rounded-full p-0",
+    button: "btn text-base-content/60 h-8 w-8 rounded-full p-0",
   },
   variants: {
     icon: {
@@ -25,17 +25,49 @@ const classesSlots = tv({
         button: "text-base-content/30",
       },
     },
+    variant: {
+      ghost: {
+        button: "btn-ghost",
+      },
+      dash: {
+        button: "btn-dash",
+      },
+    },
   },
+  compoundVariants: [
+    {
+      variant: "dash",
+      icon: "cancel",
+      class: {
+        button: "btn-error text-primary-content",
+      },
+    },
+    {
+      variant: "dash",
+      icon: "check",
+      class: {
+        button: "btn-success text-primary-content",
+      },
+    },
+  ],
 });
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   icon: "edit" | "check" | "cancel";
+  variant?: "ghost" | "dash";
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
-  const { icon, className, disabled, type = "button", ...buttonProps } = props;
-  const classes = classesSlots({ disabled, icon });
+  const {
+    icon,
+    className,
+    disabled,
+    type = "button",
+    variant = "ghost",
+    ...buttonProps
+  } = props;
+  const classes = classesSlots({ disabled, icon, variant });
 
   return (
     <button

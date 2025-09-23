@@ -21,12 +21,15 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
+    base: "bg-base-200 relative rounded-xl p-5 shadow-md",
     header: "flex items-center gap-6",
     headerButtons: "",
     buttonBack: "",
     breadcrumbs: "",
     name: "mt-4",
+    language: "mt-4",
+    cardsTitle: "text-base-content/70 mt-6 text-xl font-bold",
+    emptyCards: "text-base-content/50 text-md mt-16 mb-20 text-center",
   },
 });
 
@@ -104,6 +107,26 @@ export const DeckSection = (props: Props): ReactElement => {
         placeholder="Enter deck name"
         onSave={saveDeckName}
       />
+      <p className={classes.language()}>
+        <span className="text-base-content/70">I learn:</span>{" "}
+        {props.deck.languageWhatILearn.name}{" "}
+        {props.deck.languageWhatILearn.iconSymbol}
+      </p>
+      <p className={classes.language()}>
+        <span className="text-base-content/70">I know:</span>{" "}
+        {props.deck.languageWhatIKnow.name}{" "}
+        {props.deck.languageWhatIKnow.iconSymbol}
+      </p>
+      <h3 className={classes.cardsTitle()}>Cards</h3>
+      {props.cards.length === 0 ? (
+        <div>
+          <p className={classes.emptyCards()}>
+            You don&apos;t have any cards in this deck.
+          </p>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

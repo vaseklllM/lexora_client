@@ -1,22 +1,11 @@
+import { googleAuth } from "@/api/auth/google-auth";
+import { login } from "@/api/auth/login";
 import { register } from "@/api/auth/register";
 import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { refreshOnce } from "./refreshToken";
-
-type LoginResponse = {
-  token: string;
-  refreshToken: string;
-  expiresIn: number;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-};
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -38,10 +27,10 @@ export const authOptions: AuthOptions = {
         switch (credentials?.type) {
           case "register": {
             const data = await register({
-              email: credentials?.email,
-              name: credentials?.fullName,
-              password: credentials?.password,
-              confirmPassword: credentials?.passwordRepeat,
+              email: credentials.email,
+              name: credentials.fullName,
+              password: credentials.password,
+              confirmPassword: credentials.passwordRepeat,
             });
 
             const decodedToken = jwtDecode(data.token);
@@ -57,25 +46,10 @@ export const authOptions: AuthOptions = {
           }
 
           case "login": {
-            const result = await fetch(
-              `${process.env.SYSTEM_NEXT_API_URL}auth/login`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: credentials?.email,
-                  password: credentials?.password,
-                }),
-              },
-            );
-
-            const data: LoginResponse = await result.json();
-
-            if (!result.ok) {
-              throw new Error(JSON.stringify(data));
-            }
+            const data = await login({
+              email: credentials.email,
+              password: credentials.password,
+            });
 
             const decodedToken = jwtDecode(data.token);
 
@@ -104,38 +78,32 @@ export const authOptions: AuthOptions = {
         switch (account.provider) {
           case "google": {
             try {
-              const response = await fetch(
-                `${process.env.SYSTEM_NEXT_API_URL}auth/google`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    email: user.email,
-                    name: user.name,
-                    accountId: account.providerAccountId,
-                    // accessToken: account.access_token,
-                    idToken: account.id_token,
-                  }),
-                },
-              );
-
-              if (response.ok) {
-                const data: LoginResponse = await response.json();
-                const decodedToken = jwtDecode(data.token);
-
-                token.accessToken = data.token;
-                token.refreshToken = data.refreshToken;
-                token.tokenExp = decodedToken.exp;
-                token.id = data.user.id;
-                token.name = data.user.name;
-                token.email = data.user.email;
-
-                return token;
-              } else {
+              if (
+                !user ||
+                !user.email ||
+                !user.name ||
+                !account.providerAccountId ||
+                !account.id_token
+              ) {
                 throw new Error("Failed to authenticate with Google");
               }
+
+              const data = await googleAuth({
+                email: user.email,
+                name: user.name,
+                accountId: account.providerAccountId,
+                idToken: account.id_token,
+              });
+              const decodedToken = jwtDecode(data.token);
+
+              token.accessToken = data.token;
+              token.refreshToken = data.refreshToken;
+              token.tokenExp = decodedToken.exp;
+              token.id = data.user.id;
+              token.name = data.user.name;
+              token.email = data.user.email;
+
+              return token;
             } catch (error) {
               throw new Error("Google authentication failed", { cause: error });
             }

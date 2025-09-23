@@ -6,13 +6,11 @@ import { loginSchema } from "../schemas/login.schema";
 
 type Args = {
   email: string;
-  name: string;
   password: string;
-  confirmPassword: string;
 };
 
-export async function register(args: Args) {
-  const result = await fetchCustom("auth/register", {
+export async function login(args: Args) {
+  const result = await fetchCustom("auth/login", {
     method: "POST",
     useSession: false,
     body: args,

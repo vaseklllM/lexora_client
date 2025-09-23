@@ -7,19 +7,19 @@ import { loginSchema } from "../schemas/login.schema";
 type Args = {
   email: string;
   name: string;
-  password: string;
-  confirmPassword: string;
+  accountId: string;
+  idToken: string;
 };
 
-export async function register(args: Args) {
-  const result = await fetchCustom("auth/register", {
+export async function googleAuth(args: Args) {
+  const result = await fetchCustom("auth/google", {
     method: "POST",
     useSession: false,
     body: args,
   });
 
   if (!result.ok) {
-    throw new Error(JSON.stringify(result.data));
+    throw new Error("Failed to authenticate with Google");
   }
 
   return v.parse(loginSchema, result.data);

@@ -35,11 +35,10 @@ export const Input = (
 
   const classes = classesSlots({
     error: !!error,
-    className,
   });
 
   return (
-    <div className={classes.base()}>
+    <div className={classes.base({ className })}>
       <input
         {...inputProps}
         type={

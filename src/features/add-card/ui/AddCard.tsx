@@ -1,4 +1,5 @@
 import { Card, CardSide } from "@/entities/card";
+import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { ReactElement, useState } from "react";
 
 interface Props {
@@ -13,8 +14,28 @@ export const AddCard = (props: Props): ReactElement => {
       className={props.className}
       activeSide={activeSide}
       onSideChange={setActiveSide}
-      front={<p>Diligord</p>}
-      back={<p>Lorem ipsum</p>}
+      front={
+        <p>
+          Diligord
+          <ButtonIcon
+            icon="edit"
+            onClick={() =>
+              setActiveSide?.(activeSide === "front" ? "back" : "front")
+            }
+          />
+        </p>
+      }
+      back={
+        <p>
+          Lorem ipsum
+          <ButtonIcon
+            icon="edit"
+            onClick={() =>
+              setActiveSide?.(activeSide === "front" ? "back" : "front")
+            }
+          />
+        </p>
+      }
     />
   );
 };

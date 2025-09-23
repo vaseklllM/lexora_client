@@ -1,6 +1,5 @@
 "use client";
 
-import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import classes from "./style.module.scss";
@@ -13,9 +12,6 @@ const classesSlots = tv({
     back: `${classes.back}`,
     inner: `${classes.inner} absolute top-[50%] left-0 z-2 w-full p-2`,
     card: "bg-base-300 min-h-80 rounded-xl shadow-md/20",
-
-    // base: "bg-base-content/5 relative min-h-80 max-w-2xs rounded-xl p-5 pr-5 pb-5 pl-5 shadow-md/20 duration-250 ease-linear perspective-distant",
-    // text: "text-base-content/100",
   },
   variants: {
     activeSide: {
@@ -50,43 +46,15 @@ export const Card = (props: Props): ReactElement => {
   });
 
   return (
-    <>
-      <div className={classes.col()}>
-        <div className={classes.container()}>
-          <div className={classes.front({ className: classes.card() })}>
-            <div className={classes.inner()}>{props.front}</div>
-          </div>
-          <div className={classes.back({ className: classes.card() })}>
-            <div className={classes.inner()}>{props.back}</div>
-          </div>
+    <div className={classes.col()}>
+      <div className={classes.container()}>
+        <div className={classes.front({ className: classes.card() })}>
+          <div className={classes.inner()}>{props.front}</div>
+        </div>
+        <div className={classes.back({ className: classes.card() })}>
+          <div className={classes.inner()}>{props.back}</div>
         </div>
       </div>
-      <ButtonIcon
-        icon="edit"
-        onClick={() =>
-          props.onSideChange?.(props.activeSide === "front" ? "back" : "front")
-        }
-      />
-    </>
+    </div>
   );
-
-  //   return (
-  //     <div className={classes.base({ className: props.className })}>
-  //       <div className={classes.front()}>
-  //         <p className={classes.text()}>Front</p>
-  //         <ButtonIcon
-  //           className={classes.buttonSwitch()}
-  //           icon="edit"
-  //           onClick={() =>
-  //             props.onSideChange?.(
-  //               props.activeSide === "front" ? "back" : "front",
-  //             )
-  //           }
-  //         />
-  //       </div>
-  //       <div className={classes.back()}>
-  //         <p className={classes.text()}>Back</p>
-  //       </div>
-  //     </div>
-  //   );
 };

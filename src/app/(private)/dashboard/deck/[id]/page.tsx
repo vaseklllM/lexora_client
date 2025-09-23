@@ -10,7 +10,13 @@ interface Props {
 
 export default async function DeckPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
-  const deck = await getDeck(params.id);
+  const { cards, foldersBreadcrumbs, ...deck } = await getDeck(params.id);
 
-  return <DeckSection foldersBreadcrumbs={deck.foldersBreadcrumbs} />;
+  return (
+    <DeckSection
+      foldersBreadcrumbs={foldersBreadcrumbs}
+      deck={deck}
+      cards={cards}
+    />
+  );
 }

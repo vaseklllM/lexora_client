@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { LogoIcon } from "../icons/Logo";
 
-type IconType = "folder" | "document";
+type IconType = "folder" | "document" | "deck";
 
 export type Breadcrumb = {
   icon?: IconType;
@@ -92,5 +93,8 @@ function Icon(props: { icon: IconType }) {
           ></path>
         </svg>
       );
+
+    case "deck":
+      return <LogoIcon height="16px" width="16px" />;
   }
 }

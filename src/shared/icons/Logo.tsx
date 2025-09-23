@@ -4,6 +4,7 @@ interface Props {
   className?: string;
   height?: string;
   width?: string;
+  colorMode?: "colored";
 }
 
 export const LogoIcon = (props: Props): ReactElement => {

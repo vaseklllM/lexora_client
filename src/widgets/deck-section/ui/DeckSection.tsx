@@ -53,7 +53,7 @@ export const DeckSection = (props: Props): ReactElement => {
 
   const lastBreadcrumb = useMemo<Breadcrumb>(() => {
     return {
-      icon: "document",
+      icon: "deck",
       title: props.deck.name,
       url: routes.dashboard.deck.url(props.deck.id),
     };

@@ -13,7 +13,8 @@ const classesSlots = tv({
     frontTitleContainer: "flex h-full max-w-full flex-col justify-center",
     frontTitle: "text-xl font-bold break-words",
     frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
-    frontDescriptionContainer: "bg-base-300 flex flex-col gap-2 rounded-xl p-4",
+    frontDescriptionContainer:
+      "bg-base-300 flex flex-col gap-2 rounded-xl p-2 break-words",
     frontDescription: "text-base-content text-sm",
     frontDescriptionTranslation: "text-base-content/60 text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
@@ -25,6 +26,18 @@ const classesSlots = tv({
       },
       false: {
         front: "justify-center",
+      },
+    },
+    isLargeDescription: {
+      true: {
+        frontDescription: "text-xs",
+        frontDescriptionTranslation: "text-xs",
+      },
+    },
+    isLargeWord: {
+      true: {
+        frontTitle: "text-xs",
+        frontTitleTranslation: "text-xs",
       },
     },
   },
@@ -44,8 +57,18 @@ export const ViewCard = memo((props: Props): ReactElement => {
     !!props.card.descriptionInLearningLanguage ||
     !!props.card.descriptionInKnownLanguage;
 
+  const isLargeDescription: boolean =
+    (props.card.descriptionInKnownLanguage?.length ?? 0) > 70 ||
+    (props.card.descriptionInLearningLanguage?.length ?? 0) > 70;
+
+  const isLargeWord: boolean =
+    (props.card.textInKnownLanguage?.length ?? 0) > 40 ||
+    (props.card.textInLearningLanguage?.length ?? 0) > 40;
+
   const classes = classesSlots({
     isDescription,
+    isLargeDescription,
+    isLargeWord,
   });
 
   const deleteHandler = useCallback(() => {

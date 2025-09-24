@@ -7,9 +7,10 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "flex h-full w-full flex-col items-center justify-center gap-8",
-    title: "max-w-full text-2xl font-bold break-words",
-    buttons: "flex w-full justify-evenly",
+    base: "flex h-full w-full flex-col items-center justify-center",
+    title: "max-w-full text-xl font-bold break-words",
+    name: "text-base-content/60 mt-2 max-w-full text-base font-light break-words",
+    buttons: "mt-8 flex w-full justify-evenly",
     buttonCancel: "btn btn-dash btn-primary btn-sm rounded-full font-light",
     plus: "rotate-45",
     buttonDelete: "btn btn-dash btn-error btn-sm rounded-full font-light",
@@ -35,9 +36,10 @@ export const DeleteSide = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <h2 className={classes.title()}>
-        Delete card &quot;{props.card.textInLearningLanguage}&quot;?
-      </h2>
+      <h3 className={classes.title()}>Delete card?</h3>
+      <p className={classes.name()}>
+        &quot;{props.card.textInLearningLanguage}&quot;
+      </p>
       <div className={classes.buttons()}>
         <button className={classes.buttonCancel()} onClick={cancelHandler}>
           Cancel

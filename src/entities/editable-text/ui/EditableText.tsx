@@ -120,6 +120,8 @@ export const EditableText = (props: Props): ReactElement => {
             className={classes.buttonCancel()}
             onClick={cancelHandler}
             disabled={isLoading}
+            variant="soft"
+            color="error"
           />
           <ButtonIcon
             icon="check"
@@ -127,6 +129,8 @@ export const EditableText = (props: Props): ReactElement => {
             className={classes.buttonCheck()}
             onClick={saveHandler}
             disabled={isDisabledSaving}
+            variant="soft"
+            color="success"
           />
         </>
       ) : (
@@ -139,6 +143,8 @@ export const EditableText = (props: Props): ReactElement => {
             key="edit"
             className={classes.buttonEdit()}
             onClick={startEditing}
+            variant="soft"
+            color="primary"
           />
         </>
       )}

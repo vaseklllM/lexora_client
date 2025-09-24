@@ -1,16 +1,18 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { Card, CardSide } from "@/entities/card";
+import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { memo, ReactElement, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
     base: "",
-    front: "flex h-full w-full flex-col items-center",
+    front: "relative flex h-full w-full flex-col items-center",
     frontTitleContainer: "",
     frontTitle: "text-2xl font-bold",
     frontTitleTranslation: "text-base-content/40 mt-2 text-base",
     frontDescription: "text-base-content text-sm",
+    frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
     back: "",
     backTitle: "",
   },
@@ -60,6 +62,10 @@ export const ViewCard = memo((props: Props): ReactElement => {
               {props.card.descriptionInLearningLanguage}
             </p>
           )}
+          <div className={classes.frontIconButtons()}>
+            <ButtonIcon icon="edit" variant="dash" color="primary" />
+            <ButtonIcon icon="delete" variant="dash" color="error" />
+          </div>
         </div>
       }
       back={

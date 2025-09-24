@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { AiIcon } from "../icons/Ai";
 import { CheckIcon } from "../icons/Check";
+import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
 import { PlusIcon } from "../icons/Plus";
 
@@ -12,18 +13,14 @@ const classesSlots = tv({
   variants: {
     icon: {
       check: {},
-      edit: {
-        button: "text-base-content/60",
-      },
+      edit: {},
       cancel: {},
-      ai: {
-        button: "text-primary",
-      },
+      ai: {},
+      delete: {},
     },
     disabled: {
-      true: {
-        button: "text-base-content/30",
-      },
+      true: {},
+      false: {},
     },
     variant: {
       ghost: {
@@ -32,53 +29,90 @@ const classesSlots = tv({
       dash: {
         button: "btn-dash",
       },
+      soft: {
+        button: "btn-soft",
+      },
+      outline: {
+        button: "btn-outline",
+      },
+    },
+    color: {
+      neutral: {
+        button: "btn-neutral",
+      },
+      primary: {
+        button: "btn-primary",
+      },
+      secondary: {
+        button: "btn-secondary",
+      },
+      accent: {
+        button: "btn-accent",
+      },
+      info: {
+        button: "btn-info",
+      },
+      success: {
+        button: "btn-success",
+      },
+      warning: {
+        button: "btn-warning",
+      },
+      error: {
+        button: "btn-error",
+      },
+    },
+    textColor: {
+      primary: {
+        button: "text-primary",
+      },
+      secondary: {
+        button: "text-secondary",
+      },
+      accent: {
+        button: "text-accent",
+      },
+      info: {
+        button: "text-info",
+      },
+      success: {
+        button: "text-success",
+      },
+      warning: {
+        button: "text-warning",
+      },
+      error: {
+        button: "text-error",
+      },
     },
   },
   compoundVariants: [
     {
-      variant: "ghost",
-      icon: "cancel",
-      class: {
-        button: "text-error",
-      },
-    },
-    {
-      variant: "dash",
-      icon: "cancel",
-      class: {
-        button: "btn-error",
-      },
-    },
-    {
-      variant: "ghost",
-      icon: "check",
-      disabled: false,
-      class: {
-        button: "text-accent",
-      },
-    },
-    {
-      variant: "ghost",
-      icon: "check",
       disabled: true,
+      textColor: "primary",
+      variant: "ghost",
       class: {
-        button: "text-base-content/30",
-      },
-    },
-    {
-      variant: "dash",
-      icon: "check",
-      class: {
-        button: "btn-success",
+        button: "text-primary/30",
       },
     },
   ],
 });
 
+type Color =
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "info"
+  | "success"
+  | "warning"
+  | "error";
+
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  icon: "edit" | "check" | "cancel" | "ai";
-  variant?: "ghost" | "dash";
+  icon: "edit" | "check" | "cancel" | "ai" | "delete";
+  variant?: "ghost" | "dash" | "soft" | "outline";
+  color?: "neutral" | Color;
+  textColor?: Color;
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
@@ -87,10 +121,12 @@ export const ButtonIcon = (props: Props): ReactElement => {
     className,
     disabled,
     type = "button",
-    variant = "ghost",
+    variant,
+    color,
+    textColor,
     ...buttonProps
   } = props;
-  const classes = classesSlots({ disabled, icon, variant });
+  const classes = classesSlots({ disabled, icon, variant, color, textColor });
 
   return (
     <button
@@ -115,7 +151,7 @@ function Icon(props: Pick<Props, "icon">) {
 
   switch (props.icon) {
     case "edit":
-      return <EditIcon />;
+      return <EditIcon height="14px" width="14px" />;
 
     case "check":
       return <CheckIcon height="22px" width="22px" />;
@@ -125,5 +161,8 @@ function Icon(props: Pick<Props, "icon">) {
 
     case "ai":
       return <AiIcon height="16px" width="16px" />;
+
+    case "delete":
+      return <DeleteIcon height="14px" width="14px" />;
   }
 }

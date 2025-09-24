@@ -219,6 +219,7 @@ export const AddCard = memo((props: Props): ReactElement => {
                   disabled={
                     activeSide === "front" || !isWordChanged || isSubmitting
                   }
+                  textColor="primary"
                 />
               }
               disabled={activeSide === "front" || isSubmitting}
@@ -241,6 +242,7 @@ export const AddCard = memo((props: Props): ReactElement => {
                     !isTranslationChanged ||
                     isSubmitting
                   }
+                  textColor="primary"
                 />
               }
               disabled={activeSide === "front" || isSubmitting}
@@ -277,6 +279,7 @@ export const AddCard = memo((props: Props): ReactElement => {
               }}
               disabled={activeSide === "front" || isSubmitting}
               variant="dash"
+              color="error"
             />
             <ButtonIcon
               className={classes.backButtonSave()}
@@ -284,6 +287,7 @@ export const AddCard = memo((props: Props): ReactElement => {
               disabled={activeSide === "front" || isSubmitting}
               variant="dash"
               type="submit"
+              color="success"
             />
           </div>
           {isSubmitting && <span className={classes.backLoader()}></span>}

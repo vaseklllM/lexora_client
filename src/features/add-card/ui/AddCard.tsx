@@ -51,12 +51,12 @@ const schema = v.object({
   ),
   translation: v.pipe(
     v.string(),
-    // noOnlySpacesStringSchema("Translation is required"),
-    // v.custom(
-    //   (value): value is string =>
-    //     typeof value === "string" && value.trim().length > 1,
-    //   "Translation is too short",
-    // ),
+    noOnlySpacesStringSchema("Translation is required"),
+    v.custom(
+      (value): value is string =>
+        typeof value === "string" && value.trim().length > 1,
+      "Translation is too short",
+    ),
   ),
   example: v.string(),
   exampleTranslation: v.string(),
@@ -123,6 +123,15 @@ export const AddCard = memo((props: Props): ReactElement => {
                   }
                   case "textInLearningLanguage": {
                     setError("translation", { message: firstError });
+                    break;
+                  }
+
+                  case "descriptionInKnownLanguage": {
+                    setError("example", { message: firstError });
+                    break;
+                  }
+                  case "descriptionInLearningLanguage": {
+                    setError("exampleTranslation", { message: firstError });
                     break;
                   }
                 }

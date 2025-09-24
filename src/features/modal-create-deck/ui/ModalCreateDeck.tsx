@@ -15,6 +15,7 @@ import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
+import { getDifferentLanguages } from "../model/getDifferentLanguages";
 
 const schema = v.object({
   name: v.pipe(
@@ -62,11 +63,8 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
     watch,
   } = useForm<Inputs>({
     defaultValues: {
+      ...getDifferentLanguages(props),
       name: "",
-      languageWhatIKnowCode:
-        props.languagesWhatIKnow[0]?.code || props.allLanguages[0].code,
-      languageWhatILearnCode:
-        props.languagesWhatILearn[0]?.code || props.allLanguages[1].code,
     },
     resolver: valibotResolver(schema),
   });

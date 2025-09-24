@@ -4,6 +4,7 @@ import { InputLabeled } from "@/entities/input-labeled";
 import { PlusIcon } from "@/shared/icons/Plus";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { memo, ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -27,10 +28,23 @@ const classesSlots = tv({
 });
 
 const schema = v.object({
-  word: v.pipe(v.string(), noOnlySpacesStringSchema("Word is required")),
+  word: v.pipe(
+    v.string(),
+    noOnlySpacesStringSchema("Word is required"),
+    v.custom(
+      (value): value is string =>
+        typeof value === "string" && value.trim().length > 1,
+      "Word is too short",
+    ),
+  ),
   translation: v.pipe(
     v.string(),
     noOnlySpacesStringSchema("Translation is required"),
+    v.custom(
+      (value): value is string =>
+        typeof value === "string" && value.trim().length > 1,
+      "Translation is too short",
+    ),
   ),
   example: v.string(),
   exampleTranslation: v.string(),
@@ -53,6 +67,7 @@ export const AddCard = memo((props: Props): ReactElement => {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    reset,
     watch,
   } = useForm<Inputs>({
     defaultValues: {
@@ -71,8 +86,9 @@ export const AddCard = memo((props: Props): ReactElement => {
   const word = watch("word");
   const translation = watch("translation");
 
-  const isWordChanged = word.trim() !== "";
-  const isTranslationChanged = translation.trim() !== "";
+  const isWordChanged = word.trim() !== "" && word.trim().length > 1;
+  const isTranslationChanged =
+    translation.trim() !== "" && translation.trim().length > 1;
 
   return (
     <Card
@@ -155,7 +171,11 @@ export const AddCard = memo((props: Props): ReactElement => {
             <ButtonIcon
               className={classes.backButtonCancel()}
               icon="cancel"
-              onClick={() => setActiveSide("front")}
+              onClick={async () => {
+                setActiveSide("front");
+                await sleep(400);
+                reset();
+              }}
               disabled={activeSide === "front" || isSubmitting}
               variant="dash"
             />

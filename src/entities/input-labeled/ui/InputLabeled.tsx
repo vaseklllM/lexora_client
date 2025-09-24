@@ -8,8 +8,9 @@ const classesSlots = tv({
     labelContainer: "",
     label: "block text-sm/6 font-medium",
     required: "text-error",
-    inputWrapper: "mt-2 flex w-full items-center gap-2",
+    inputWrapper: "mt-2 flex w-full gap-2",
     input: "w-full",
+    actionButton: "mt-[1px] flex items-start",
   },
   variants: {
     rightLabel: {
@@ -69,7 +70,9 @@ export const InputLabeled = (
           {...inputProps}
           className={classes.input({ className: inputClassName })}
         />
-        {actionButton}
+        {actionButton && (
+          <div className={classes.actionButton()}>{actionButton}</div>
+        )}
       </div>
     </div>
   );

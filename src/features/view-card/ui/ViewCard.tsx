@@ -10,9 +10,9 @@ const classesSlots = tv({
   slots: {
     base: "",
     front: "relative flex h-full w-full flex-col items-center",
-    frontTitleContainer: "",
-    frontTitle: "text-2xl font-bold",
-    frontTitleTranslation: "text-base-content/40 mt-2 text-base",
+    frontTitleContainer: "max-w-full",
+    frontTitle: "text-2xl font-bold break-words",
+    frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
     frontDescription: "text-base-content text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
   },
@@ -35,7 +35,7 @@ interface Props {
 
 export const ViewCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
-  const [backSide, setBackSide] = useState<"delete" | "edit">("delete");
+  const [backSide, setBackSide] = useState<"delete" | "edit">();
 
   const classes = classesSlots({
     isDescription:

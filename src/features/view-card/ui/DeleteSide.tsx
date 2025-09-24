@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     base: "flex h-full w-full flex-col items-center justify-center gap-8",
-    title: "text-2xl font-bold",
+    title: "max-w-full text-2xl font-bold break-words",
     buttons: "flex w-full justify-evenly",
     buttonCancel: "btn btn-dash btn-primary btn-sm rounded-full font-light",
     plus: "rotate-45",

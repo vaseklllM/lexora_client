@@ -124,7 +124,10 @@ export const DeckSection = (props: Props): ReactElement => {
       <div className="divider"></div>
       <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
-        <AddCard />
+        <AddCard
+          languageWhatILearn={props.deck.languageWhatILearn}
+          languageWhatIKnow={props.deck.languageWhatIKnow}
+        />
       </div>
     </div>
   );

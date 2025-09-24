@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { AiIcon } from "../icons/Ai";
 import { CheckIcon } from "../icons/Check";
 import { EditIcon } from "../icons/Edit";
 import { PlusIcon } from "../icons/Plus";
@@ -15,6 +16,9 @@ const classesSlots = tv({
         button: "text-base-content/60",
       },
       cancel: {},
+      ai: {
+        button: "text-primary",
+      },
     },
     disabled: {
       true: {
@@ -73,7 +77,7 @@ const classesSlots = tv({
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  icon: "edit" | "check" | "cancel";
+  icon: "edit" | "check" | "cancel" | "ai";
   variant?: "ghost" | "dash";
 }
 
@@ -118,5 +122,8 @@ function Icon(props: Pick<Props, "icon">) {
 
     case "cancel":
       return <PlusIcon className={classes.plus()} height="24px" width="24px" />;
+
+    case "ai":
+      return <AiIcon height="16px" width="16px" />;
   }
 }

@@ -126,8 +126,8 @@ export const AddCard = memo((props: Props): ReactElement => {
         deckId: props.deckId,
         textInKnownLanguage: inputs.translation,
         textInLearningLanguage: inputs.word,
-        descriptionInKnownLanguage: inputs.example,
-        descriptionInLearningLanguage: inputs.exampleTranslation,
+        descriptionInKnownLanguage: inputs.exampleTranslation,
+        descriptionInLearningLanguage: inputs.example,
       });
 
       if (result.ok) {

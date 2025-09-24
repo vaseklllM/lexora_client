@@ -13,7 +13,9 @@ const classesSlots = tv({
     frontTitleContainer: "max-w-full",
     frontTitle: "text-xl font-bold break-words",
     frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
+    frontDescriptionContainer: "flex flex-col gap-2",
     frontDescription: "text-base-content text-sm",
+    frontDescriptionTranslation: "text-base-content/40 text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
   },
   variants: {
@@ -69,11 +71,18 @@ export const ViewCard = memo((props: Props): ReactElement => {
               {props.card.textInKnownLanguage}
             </p>
           </div>
-          {props.card.descriptionInLearningLanguage && (
-            <p className={classes.frontDescription()}>
-              {props.card.descriptionInLearningLanguage}
-            </p>
-          )}
+          <div className={classes.frontDescriptionContainer()}>
+            {props.card.descriptionInLearningLanguage && (
+              <p className={classes.frontDescription()}>
+                {props.card.descriptionInLearningLanguage}
+              </p>
+            )}
+            {props.card.descriptionInKnownLanguage && (
+              <p className={classes.frontDescriptionTranslation()}>
+                {props.card.descriptionInKnownLanguage}
+              </p>
+            )}
+          </div>
           <div className={classes.frontIconButtons()}>
             <ButtonIcon
               icon="edit"

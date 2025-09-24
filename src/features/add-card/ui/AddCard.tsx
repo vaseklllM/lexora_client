@@ -134,8 +134,8 @@ export const AddCard = memo((props: Props): ReactElement => {
         await sleep(1000);
         // setActiveSide("front");
         // await sleep(480);
-        reset();
         await revalidateGetDeck(props.deckId);
+        reset();
       } else {
         switch (result.data.statusCode) {
           case ErrorStatus.BAD_REQUEST: {

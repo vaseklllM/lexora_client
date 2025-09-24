@@ -125,14 +125,14 @@ export const DeckSection = (props: Props): ReactElement => {
       <div className="divider"></div>
       <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
-        {props.cards.map((card) => (
-          <ViewCard key={card.id} card={card} />
-        ))}
         <AddCard
           languageWhatILearn={props.deck.languageWhatILearn}
           languageWhatIKnow={props.deck.languageWhatIKnow}
           deckId={props.deck.id}
         />
+        {props.cards.map((card) => (
+          <ViewCard key={card.id} card={card} />
+        ))}
       </div>
     </div>
   );

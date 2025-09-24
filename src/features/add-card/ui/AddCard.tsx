@@ -3,7 +3,7 @@ import { Card, CardSide } from "@/entities/card";
 import { InputLabeled } from "@/entities/input-labeled";
 import { PlusIcon } from "@/shared/icons/Plus";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { memo, ReactElement, useMemo, useState } from "react";
+import { memo, ReactElement, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -33,51 +33,6 @@ export const AddCard = memo((props: Props): ReactElement => {
 
   const classes = classesSlots();
 
-  const fields = useMemo(() => {
-    return [
-      {
-        label: "Word",
-        placeholder: `${props.languageWhatILearn.name}`,
-        required: true,
-        actionButton: (
-          <ButtonIcon
-            icon="ai"
-            variant="ghost"
-            disabled={activeSide === "front"}
-          />
-        ),
-      },
-      {
-        label: "Translation",
-        placeholder: `${props.languageWhatIKnow.name}`,
-        required: true,
-        actionButton: (
-          <ButtonIcon
-            icon="ai"
-            variant="ghost"
-            disabled={activeSide === "front"}
-          />
-        ),
-      },
-      {
-        label: "Example or description",
-        placeholder: `${props.languageWhatILearn.name} example`,
-      },
-      {
-        label: "Example or description translation",
-        placeholder: `${props.languageWhatIKnow.name} example`,
-      },
-      // {
-      //   label: "Description",
-      //   placeholder: `${props.languageWhatILearn.name} description`,
-      // },
-      // {
-      //   label: "Description translation",
-      //   placeholder: `${props.languageWhatIKnow.name} description`,
-      // },
-    ];
-  }, [props.languageWhatILearn, props.languageWhatIKnow, activeSide]);
-
   return (
     <Card
       className={classes.card({ className: props.className })}
@@ -98,19 +53,54 @@ export const AddCard = memo((props: Props): ReactElement => {
       back={
         <div className={classes.back()}>
           <div className={classes.backContent()}>
-            {fields.map((field) => (
-              <InputLabeled
-                key={field.label}
-                label={field.label}
-                labelClassName={classes.backContentLabel()}
-                placeholder={field.placeholder}
-                inputWrapperClassName={classes.backContentInputWrapper()}
-                inputClassName={classes.backContentInput()}
-                required={field.required}
-                actionButton={field.actionButton}
-                disabled={activeSide === "front"}
-              />
-            ))}
+            <InputLabeled
+              label="Word"
+              labelClassName={classes.backContentLabel()}
+              placeholder={`${props.languageWhatILearn.name}`}
+              inputWrapperClassName={classes.backContentInputWrapper()}
+              inputClassName={classes.backContentInput()}
+              required
+              actionButton={
+                <ButtonIcon
+                  icon="ai"
+                  variant="ghost"
+                  disabled={activeSide === "front"}
+                />
+              }
+              disabled={activeSide === "front"}
+            />
+            <InputLabeled
+              label="Translation"
+              labelClassName={classes.backContentLabel()}
+              placeholder={`${props.languageWhatIKnow.name}`}
+              inputWrapperClassName={classes.backContentInputWrapper()}
+              inputClassName={classes.backContentInput()}
+              required
+              actionButton={
+                <ButtonIcon
+                  icon="ai"
+                  variant="ghost"
+                  disabled={activeSide === "front"}
+                />
+              }
+              disabled={activeSide === "front"}
+            />
+            <InputLabeled
+              label="Example or description"
+              labelClassName={classes.backContentLabel()}
+              placeholder={`${props.languageWhatILearn.name} example`}
+              inputWrapperClassName={classes.backContentInputWrapper()}
+              inputClassName={classes.backContentInput()}
+              disabled={activeSide === "front"}
+            />
+            <InputLabeled
+              label="Example or description translation"
+              labelClassName={classes.backContentLabel()}
+              placeholder={`${props.languageWhatIKnow.name} example`}
+              inputWrapperClassName={classes.backContentInputWrapper()}
+              inputClassName={classes.backContentInput()}
+              disabled={activeSide === "front"}
+            />
           </div>
           <div className={classes.backButtons()}>
             <ButtonIcon

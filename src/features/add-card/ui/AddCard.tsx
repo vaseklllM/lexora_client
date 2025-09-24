@@ -124,16 +124,14 @@ export const AddCard = memo((props: Props): ReactElement => {
     async (inputs) => {
       const result = await createCard({
         deckId: props.deckId,
-        textInKnownLanguage: inputs.word,
-        textInLearningLanguage: inputs.translation,
+        textInKnownLanguage: inputs.translation,
+        textInLearningLanguage: inputs.word,
         descriptionInKnownLanguage: inputs.example,
         descriptionInLearningLanguage: inputs.exampleTranslation,
       });
 
       if (result.ok) {
         await sleep(1000);
-        // setActiveSide("front");
-        // await sleep(480);
         await revalidateGetDeck(props.deckId);
         reset();
       } else {
@@ -165,11 +163,6 @@ export const AddCard = memo((props: Props): ReactElement => {
             );
             break;
           }
-
-          // case ErrorStatus.CONFLICT: {
-          //   setError("word", { message: result.data.message });
-          //   break;
-          // }
         }
       }
     },

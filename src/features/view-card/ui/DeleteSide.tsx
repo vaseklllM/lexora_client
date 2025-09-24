@@ -1,9 +1,12 @@
+"use client";
+
+import { deleteCard } from "@/api/card/delete-card";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { ICard } from "@/api/schemas/card.schema";
 import { CardSide } from "@/entities/card";
 import { DeleteIcon } from "@/shared/icons/Delete";
 import { PlusIcon } from "@/shared/icons/Plus";
-import { ReactElement, useCallback } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -26,6 +29,7 @@ interface Props {
 }
 
 export const DeleteSide = (props: Props): ReactElement => {
+  const [iseLoading, setIsLoading] = useState(false);
   const classes = classesSlots();
 
   const cancelHandler = useCallback(() => {
@@ -33,9 +37,14 @@ export const DeleteSide = (props: Props): ReactElement => {
   }, [props.setActiveSide]);
 
   const deleteHandler = useCallback(async () => {
-    props.setActiveSide("front");
-    await revalidateGetDeck(props.deckId);
-  }, [props.setActiveSide, props.deckId]);
+    try {
+      setIsLoading(true);
+      await deleteCard(props.card.id);
+      await revalidateGetDeck(props.deckId);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [props.deckId, props.card.id, setIsLoading]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -44,11 +53,19 @@ export const DeleteSide = (props: Props): ReactElement => {
         &quot;{props.card.textInLearningLanguage}&quot;
       </p>
       <div className={classes.buttons()}>
-        <button className={classes.buttonCancel()} onClick={cancelHandler}>
+        <button
+          disabled={iseLoading}
+          className={classes.buttonCancel()}
+          onClick={cancelHandler}
+        >
           Cancel
           <PlusIcon className={classes.plus()} height="20px" width="20px" />
         </button>
-        <button className={classes.buttonDelete()} onClick={deleteHandler}>
+        <button
+          disabled={iseLoading}
+          className={classes.buttonDelete()}
+          onClick={deleteHandler}
+        >
           Delete
           <DeleteIcon height="18px" width="18px" />
         </button>

@@ -9,19 +9,19 @@ import { EditSide } from "./EditSide";
 const classesSlots = tv({
   slots: {
     base: "",
-    front: "relative flex h-full w-full flex-col items-center",
-    frontTitleContainer: "max-w-full",
+    front: "relative flex h-full w-full flex-col",
+    frontTitleContainer: "flex h-full max-w-full flex-col justify-center",
     frontTitle: "text-xl font-bold break-words",
     frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
-    frontDescriptionContainer: "flex flex-col gap-2",
+    frontDescriptionContainer: "bg-base-300 flex flex-col gap-2 rounded-xl p-4",
     frontDescription: "text-base-content text-sm",
-    frontDescriptionTranslation: "text-base-content/40 text-sm",
+    frontDescriptionTranslation: "text-base-content/60 text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
   },
   variants: {
     isDescription: {
       true: {
-        front: "justify-evenly",
+        front: "justify-between",
       },
       false: {
         front: "justify-center",
@@ -40,10 +40,12 @@ export const ViewCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
   const [backSide, setBackSide] = useState<"delete" | "edit">();
 
+  const isDescription =
+    !!props.card.descriptionInLearningLanguage ||
+    !!props.card.descriptionInKnownLanguage;
+
   const classes = classesSlots({
-    isDescription:
-      !!props.card.descriptionInLearningLanguage ||
-      !!props.card.descriptionInKnownLanguage,
+    isDescription,
   });
 
   const deleteHandler = useCallback(() => {
@@ -71,18 +73,20 @@ export const ViewCard = memo((props: Props): ReactElement => {
               {props.card.textInKnownLanguage}
             </p>
           </div>
-          <div className={classes.frontDescriptionContainer()}>
-            {props.card.descriptionInLearningLanguage && (
-              <p className={classes.frontDescription()}>
-                {props.card.descriptionInLearningLanguage}
-              </p>
-            )}
-            {props.card.descriptionInKnownLanguage && (
-              <p className={classes.frontDescriptionTranslation()}>
-                {props.card.descriptionInKnownLanguage}
-              </p>
-            )}
-          </div>
+          {isDescription && (
+            <div className={classes.frontDescriptionContainer()}>
+              {props.card.descriptionInLearningLanguage && (
+                <p className={classes.frontDescription()}>
+                  {props.card.descriptionInLearningLanguage}
+                </p>
+              )}
+              {props.card.descriptionInKnownLanguage && (
+                <p className={classes.frontDescriptionTranslation()}>
+                  {props.card.descriptionInKnownLanguage}
+                </p>
+              )}
+            </div>
+          )}
           <div className={classes.frontIconButtons()}>
             <ButtonIcon
               icon="edit"

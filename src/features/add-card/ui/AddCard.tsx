@@ -5,19 +5,14 @@ import { Card, CardSide } from "@/entities/card";
 import { InputLabeled } from "@/entities/input-labeled";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
-import {
-  MAX_CARD_DESCRIPTION_LENGTH,
-  MAX_CARD_WORD_LENGTH,
-} from "@/shared/config";
 import { PlusIcon } from "@/shared/icons/Plus";
-import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { memo, ReactElement, useCallback, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
-import * as v from "valibot";
+import { CardFields, cardFieldsSchema } from "../model/cardFields.schema";
 
 const classesSlots = tv({
   slots: {
@@ -44,51 +39,6 @@ const classesSlots = tv({
   },
 });
 
-const schema = v.object({
-  word: v.pipe(
-    v.string(),
-    noOnlySpacesStringSchema("Word is required"),
-    v.custom(
-      (value): value is string =>
-        typeof value === "string" && value.trim().length > 1,
-      "Word is too short",
-    ),
-    v.maxLength(
-      MAX_CARD_WORD_LENGTH,
-      `Word cannot be longer than ${MAX_CARD_WORD_LENGTH} characters`,
-    ),
-  ),
-  translation: v.pipe(
-    v.string(),
-    noOnlySpacesStringSchema("Translation is required"),
-    v.custom(
-      (value): value is string =>
-        typeof value === "string" && value.trim().length > 1,
-      "Translation is too short",
-    ),
-    v.maxLength(
-      MAX_CARD_WORD_LENGTH,
-      `Translation cannot be longer than ${MAX_CARD_WORD_LENGTH} characters`,
-    ),
-  ),
-  example: v.pipe(
-    v.string(),
-    v.maxLength(
-      MAX_CARD_DESCRIPTION_LENGTH,
-      `Example cannot be longer than ${MAX_CARD_DESCRIPTION_LENGTH} characters`,
-    ),
-  ),
-  exampleTranslation: v.pipe(
-    v.string(),
-    v.maxLength(
-      MAX_CARD_DESCRIPTION_LENGTH,
-      `Example translation cannot be longer than ${MAX_CARD_DESCRIPTION_LENGTH} characters`,
-    ),
-  ),
-});
-
-type Inputs = v.InferOutput<typeof schema>;
-
 interface Props {
   className?: string;
   languageWhatILearn: Language;
@@ -106,21 +56,21 @@ export const AddCard = memo((props: Props): ReactElement => {
     reset,
     watch,
     setError,
-  } = useForm<Inputs>({
+  } = useForm<CardFields>({
     defaultValues: {
       word: "",
       translation: "",
       example: "",
       exampleTranslation: "",
     },
-    resolver: valibotResolver(schema),
+    resolver: valibotResolver(cardFieldsSchema),
   });
 
   const classes = classesSlots({
     isSubmitting,
   });
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback(
+  const onSubmit: SubmitHandler<CardFields> = useCallback(
     async (inputs) => {
       const result = await createCard({
         deckId: props.deckId,

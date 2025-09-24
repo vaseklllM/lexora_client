@@ -10,7 +10,7 @@ const classesSlots = tv({
     base: "flex h-full w-full flex-col items-center justify-center",
     title: "max-w-full text-xl font-bold break-words",
     name: "text-base-content/60 mt-2 max-w-full text-base font-light break-words",
-    buttons: "mt-8 flex w-full justify-evenly",
+    buttons: "mt-8 flex w-full items-center justify-evenly",
     buttonCancel: "btn btn-dash btn-primary btn-sm rounded-full font-light",
     plus: "rotate-45",
     buttonDelete: "btn btn-dash btn-error btn-sm rounded-full font-light",

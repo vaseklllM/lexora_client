@@ -131,7 +131,13 @@ export const DeckSection = (props: Props): ReactElement => {
           deckId={props.deck.id}
         />
         {props.cards.map((card) => (
-          <ViewCard key={card.id} card={card} deckId={props.deck.id} />
+          <ViewCard
+            key={card.id}
+            card={card}
+            deckId={props.deck.id}
+            languageWhatILearn={props.deck.languageWhatILearn}
+            languageWhatIKnow={props.deck.languageWhatIKnow}
+          />
         ))}
       </div>
     </div>

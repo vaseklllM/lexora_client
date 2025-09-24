@@ -5,6 +5,7 @@ import { memo, ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { DeleteSide } from "./DeleteSide";
 import { EditSide } from "./EditSide";
+import { Language } from "@/api/schemas/language.schema";
 
 const classesSlots = tv({
   slots: {
@@ -54,6 +55,8 @@ interface Props {
   className?: string;
   card: ICard;
   deckId: string;
+  languageWhatILearn: Language;
+  languageWhatIKnow: Language;
 }
 
 export const ViewCard = memo((props: Props): ReactElement => {
@@ -88,6 +91,10 @@ export const ViewCard = memo((props: Props): ReactElement => {
     setBackSide("edit");
     setActiveSide("back");
   }, [setBackSide, setActiveSide]);
+
+  const openFrontHandler = useCallback(() => {
+    setActiveSide("front");
+  }, [setActiveSide]);
 
   return (
     <Card
@@ -143,7 +150,14 @@ export const ViewCard = memo((props: Props): ReactElement => {
               card={props.card}
             />
           )}
-          {backSide === "edit" && <EditSide />}
+          {backSide === "edit" && (
+            <EditSide
+              languageWhatILearn={props.languageWhatILearn}
+              languageWhatIKnow={props.languageWhatIKnow}
+              isActiveThisSide={activeSide === "back"}
+              onOpenFront={openFrontHandler}
+            />
+          )}
         </>
       }
     />

@@ -132,8 +132,8 @@ export const AddCard = memo((props: Props): ReactElement => {
 
       if (result.ok) {
         await sleep(1000);
-        setActiveSide("front");
-        await sleep(480);
+        // setActiveSide("front");
+        // await sleep(480);
         reset();
         await revalidateGetDeck(props.deckId);
       } else {

@@ -1,4 +1,5 @@
 import { createCard } from "@/api/card/create-card";
+import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
 import { InputLabeled } from "@/entities/input-labeled";
@@ -132,8 +133,9 @@ export const AddCard = memo((props: Props): ReactElement => {
       if (result.ok) {
         await sleep(1000);
         setActiveSide("front");
-        await sleep(400);
+        await sleep(480);
         reset();
+        await revalidateGetDeck(props.deckId);
       } else {
         switch (result.data.statusCode) {
           case ErrorStatus.BAD_REQUEST: {

@@ -2,40 +2,23 @@ import { createCard } from "@/api/card/create-card";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
-import { InputLabeled } from "@/entities/input-labeled";
+import {
+  CardFieldsSide,
+  CardFieldsSideCancelHandler,
+  CardFieldsSideSubmitHandler,
+} from "@/entities/card-fields-side";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { PlusIcon } from "@/shared/icons/Plus";
-import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
-import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { memo, ReactElement, useCallback, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
-import { CardFields, cardFieldsSchema } from "../model/cardFields.schema";
 
 const classesSlots = tv({
   slots: {
     card: "",
     front: "flex h-full w-full items-center justify-center",
     buttonAdd: "btn btn-dash btn-primary rounded-full font-light",
-    back: "flex h-full w-full flex-col justify-between",
-    backContent: "flex flex-col justify-between gap-4 p-1",
-    backContentLabel: "text-base-content/70 text-left text-xs",
-    backContentInputWrapper: "mt-1",
-    backContentInput: "",
-    backButtons: "flex justify-between gap-2",
-    backButtonCancel: "btn-dash",
-    backButtonSave: "btn-dash",
-    backLoader:
-      "loading loading-spinner text-primary loading-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-  },
-  variants: {
-    isSubmitting: {
-      true: {
-        backContent: "opacity-30",
-      },
-    },
   },
 });
 
@@ -49,29 +32,10 @@ interface Props {
 export const AddCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
 
-  const {
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    register,
-    reset,
-    watch,
-    setError,
-  } = useForm<CardFields>({
-    defaultValues: {
-      word: "",
-      translation: "",
-      example: "",
-      exampleTranslation: "",
-    },
-    resolver: valibotResolver(cardFieldsSchema),
-  });
+  const classes = classesSlots();
 
-  const classes = classesSlots({
-    isSubmitting,
-  });
-
-  const onSubmit: SubmitHandler<CardFields> = useCallback(
-    async (inputs) => {
+  const onSubmit: CardFieldsSideSubmitHandler = useCallback(
+    async ({ inputs, reset, setError }) => {
       const result = await createCard({
         deckId: props.deckId,
         textInKnownLanguage: inputs.translation,
@@ -116,15 +80,17 @@ export const AddCard = memo((props: Props): ReactElement => {
         }
       }
     },
-    [props.deckId, setError],
+    [props.deckId],
   );
 
-  const word = watch("word");
-  const translation = watch("translation");
-
-  const isWordChanged = word.trim() !== "" && word.trim().length > 1;
-  const isTranslationChanged =
-    translation.trim() !== "" && translation.trim().length > 1;
+  const cancelHandler = useCallback<CardFieldsSideCancelHandler>(
+    async ({ reset }) => {
+      setActiveSide("front");
+      await sleep(400);
+      reset();
+    },
+    [setActiveSide],
+  );
 
   return (
     <Card
@@ -144,97 +110,13 @@ export const AddCard = memo((props: Props): ReactElement => {
         </div>
       }
       back={
-        <form onSubmit={handleSubmit(onSubmit)} className={classes.back()}>
-          <div className={classes.backContent()}>
-            <InputLabeled
-              {...register("word")}
-              error={errors.word?.message}
-              label="Word"
-              labelClassName={classes.backContentLabel()}
-              placeholder={`${props.languageWhatILearn.name}`}
-              inputWrapperClassName={classes.backContentInputWrapper()}
-              inputClassName={classes.backContentInput()}
-              required
-              actionButton={
-                <ButtonIcon
-                  icon="ai"
-                  variant="ghost"
-                  disabled={
-                    activeSide === "front" || !isWordChanged || isSubmitting
-                  }
-                  textColor="primary"
-                />
-              }
-              disabled={activeSide === "front" || isSubmitting}
-            />
-            <InputLabeled
-              {...register("translation")}
-              error={errors.translation?.message}
-              label="Translation"
-              labelClassName={classes.backContentLabel()}
-              placeholder={`${props.languageWhatIKnow.name}`}
-              inputWrapperClassName={classes.backContentInputWrapper()}
-              inputClassName={classes.backContentInput()}
-              required
-              actionButton={
-                <ButtonIcon
-                  icon="ai"
-                  variant="ghost"
-                  disabled={
-                    activeSide === "front" ||
-                    !isTranslationChanged ||
-                    isSubmitting
-                  }
-                  textColor="primary"
-                />
-              }
-              disabled={activeSide === "front" || isSubmitting}
-            />
-            <InputLabeled
-              {...register("example")}
-              error={errors.example?.message}
-              label="Example or description"
-              labelClassName={classes.backContentLabel()}
-              placeholder={`${props.languageWhatILearn.name} example`}
-              inputWrapperClassName={classes.backContentInputWrapper()}
-              inputClassName={classes.backContentInput()}
-              disabled={activeSide === "front" || isSubmitting}
-            />
-            <InputLabeled
-              {...register("exampleTranslation")}
-              error={errors.exampleTranslation?.message}
-              label="Example or description translation"
-              labelClassName={classes.backContentLabel()}
-              placeholder={`${props.languageWhatIKnow.name} example`}
-              inputWrapperClassName={classes.backContentInputWrapper()}
-              inputClassName={classes.backContentInput()}
-              disabled={activeSide === "front" || isSubmitting}
-            />
-          </div>
-          <div className={classes.backButtons()}>
-            <ButtonIcon
-              className={classes.backButtonCancel()}
-              icon="cancel"
-              onClick={async () => {
-                setActiveSide("front");
-                await sleep(400);
-                reset();
-              }}
-              disabled={activeSide === "front" || isSubmitting}
-              variant="dash"
-              color="error"
-            />
-            <ButtonIcon
-              className={classes.backButtonSave()}
-              icon="check"
-              disabled={activeSide === "front" || isSubmitting}
-              variant="dash"
-              type="submit"
-              color="success"
-            />
-          </div>
-          {isSubmitting && <span className={classes.backLoader()}></span>}
-        </form>
+        <CardFieldsSide
+          languageWhatILearn={props.languageWhatILearn}
+          languageWhatIKnow={props.languageWhatIKnow}
+          isActiveThisSide={activeSide === "back"}
+          onSubmit={onSubmit}
+          onCancel={cancelHandler}
+        />
       }
     />
   );

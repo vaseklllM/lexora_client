@@ -24,6 +24,15 @@ const classesSlots = tv({
     backButtons: "flex justify-between gap-2",
     backButtonCancel: "btn-dash",
     backButtonSave: "btn-dash",
+    backLoader:
+      "loading loading-spinner text-primary loading-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+  },
+  variants: {
+    isSubmitting: {
+      true: {
+        backContent: "opacity-30",
+      },
+    },
   },
 });
 
@@ -61,11 +70,9 @@ interface Props {
 export const AddCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
 
-  const classes = classesSlots();
-
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
     reset,
     watch,
@@ -79,10 +86,15 @@ export const AddCard = memo((props: Props): ReactElement => {
     resolver: valibotResolver(schema),
   });
 
-  const isSubmitting = true;
+  const classes = classesSlots({
+    isSubmitting,
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
+    await sleep(1000);
     setActiveSide("front");
+    await sleep(400);
+    reset();
   };
 
   const word = watch("word");
@@ -195,6 +207,7 @@ export const AddCard = memo((props: Props): ReactElement => {
               type="submit"
             />
           </div>
+          {isSubmitting && <span className={classes.backLoader()}></span>}
         </form>
       }
     />

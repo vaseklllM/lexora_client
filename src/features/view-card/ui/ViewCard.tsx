@@ -10,9 +10,11 @@ const classesSlots = tv({
   slots: {
     base: "",
     front: "relative flex h-full w-full flex-col",
-    frontTitleContainer: "flex h-full max-w-full flex-col justify-center",
-    frontTitle: "text-xl font-bold break-words",
-    frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
+    frontTitleContainer:
+      "flex h-full max-w-full flex-col items-center justify-center",
+    frontTitle: "max-w-full text-xl font-bold break-words",
+    frontTitleTranslation:
+      "text-base-content/40 mt-2 max-w-full text-base break-words",
     frontDescriptionContainer:
       "bg-base-300 flex flex-col gap-2 rounded-xl p-2 break-words",
     frontDescription: "text-base-content text-sm",
@@ -40,7 +42,21 @@ const classesSlots = tv({
         frontTitleTranslation: "text-xs",
       },
     },
+    isFloatButtons: {
+      true: {
+        frontTitle: "max-w-[calc(100%-70px)]",
+      },
+    },
   },
+  // compoundVariants: [
+  // {
+  //   isLargeWord: true,
+  //   isLargeDescription: true,
+  //   class: {
+  //     frontTitle: "max-w-[calc(100%-70px)]",
+  //   },
+  // },
+  // ],
 });
 
 interface Props {
@@ -69,6 +85,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
     isDescription,
     isLargeDescription,
     isLargeWord,
+    isFloatButtons: isDescription && (isLargeWord || isLargeDescription),
   });
 
   const deleteHandler = useCallback(() => {

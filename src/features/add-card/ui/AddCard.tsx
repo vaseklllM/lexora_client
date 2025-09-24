@@ -196,7 +196,7 @@ export const AddCard = memo((props: Props): ReactElement => {
             disabled={activeSide === "back"}
           >
             Add Card
-            <PlusIcon />
+            <PlusIcon height="22px" width="22px" />
           </button>
         </div>
       }

@@ -153,7 +153,7 @@ function Icon(props: Pick<Props, "icon">) {
 
   switch (props.icon) {
     case "edit":
-      return <EditIcon height="14px" width="14px" />;
+      return <EditIcon height="18px" width="18px" />;
 
     case "check":
       return <CheckIcon height="22px" width="22px" />;

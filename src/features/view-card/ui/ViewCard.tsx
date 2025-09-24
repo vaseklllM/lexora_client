@@ -6,18 +6,18 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     base: "",
-    front: "flex h-full w-full flex-col items-center pt-10 pb-10",
+    front: "flex h-full w-full flex-col items-center",
     frontTitleContainer: "",
     frontTitle: "text-2xl font-bold",
-    frontTitleTranslation: "text-base-content/60 mt-2 text-base",
-    frontDescription: "text-base-content/90 text-sm",
+    frontTitleTranslation: "text-base-content/40 mt-2 text-base",
+    frontDescription: "text-base-content text-sm",
     back: "",
     backTitle: "",
   },
   variants: {
     isDescription: {
       true: {
-        front: "justify-between",
+        front: "justify-evenly",
       },
       false: {
         front: "justify-center",
@@ -52,7 +52,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               {props.card.textInLearningLanguage}
             </h2>
             <p className={classes.frontTitleTranslation()}>
-              ({props.card.textInKnownLanguage})
+              {props.card.textInKnownLanguage}
             </p>
           </div>
           {props.card.descriptionInLearningLanguage && (

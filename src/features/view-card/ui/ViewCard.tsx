@@ -48,15 +48,6 @@ const classesSlots = tv({
       },
     },
   },
-  // compoundVariants: [
-  // {
-  //   isLargeWord: true,
-  //   isLargeDescription: true,
-  //   class: {
-  //     frontTitle: "max-w-[calc(100%-70px)]",
-  //   },
-  // },
-  // ],
 });
 
 interface Props {

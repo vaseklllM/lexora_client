@@ -65,7 +65,7 @@ export const AddCard = memo((props: Props): ReactElement => {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     register,
     reset,
     watch,
@@ -78,6 +78,8 @@ export const AddCard = memo((props: Props): ReactElement => {
     },
     resolver: valibotResolver(schema),
   });
+
+  const isSubmitting = true;
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
     setActiveSide("front");
@@ -123,10 +125,12 @@ export const AddCard = memo((props: Props): ReactElement => {
                 <ButtonIcon
                   icon="ai"
                   variant="ghost"
-                  disabled={activeSide === "front" || !isWordChanged}
+                  disabled={
+                    activeSide === "front" || !isWordChanged || isSubmitting
+                  }
                 />
               }
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
             />
             <InputLabeled
               {...register("translation")}
@@ -141,10 +145,14 @@ export const AddCard = memo((props: Props): ReactElement => {
                 <ButtonIcon
                   icon="ai"
                   variant="ghost"
-                  disabled={activeSide === "front" || !isTranslationChanged}
+                  disabled={
+                    activeSide === "front" ||
+                    !isTranslationChanged ||
+                    isSubmitting
+                  }
                 />
               }
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
             />
             <InputLabeled
               {...register("example")}
@@ -154,7 +162,7 @@ export const AddCard = memo((props: Props): ReactElement => {
               placeholder={`${props.languageWhatILearn.name} example`}
               inputWrapperClassName={classes.backContentInputWrapper()}
               inputClassName={classes.backContentInput()}
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
             />
             <InputLabeled
               {...register("exampleTranslation")}
@@ -164,7 +172,7 @@ export const AddCard = memo((props: Props): ReactElement => {
               placeholder={`${props.languageWhatIKnow.name} example`}
               inputWrapperClassName={classes.backContentInputWrapper()}
               inputClassName={classes.backContentInput()}
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
             />
           </div>
           <div className={classes.backButtons()}>

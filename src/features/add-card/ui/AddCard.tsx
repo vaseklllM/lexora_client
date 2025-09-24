@@ -1,12 +1,15 @@
+import { createCard } from "@/api/card/create-card";
 import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
 import { InputLabeled } from "@/entities/input-labeled";
+import { ErrorStatus } from "@/shared/api-core/errorStatus";
+import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { PlusIcon } from "@/shared/icons/Plus";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { memo, ReactElement, useState } from "react";
+import { memo, ReactElement, useCallback, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
@@ -48,12 +51,12 @@ const schema = v.object({
   ),
   translation: v.pipe(
     v.string(),
-    noOnlySpacesStringSchema("Translation is required"),
-    v.custom(
-      (value): value is string =>
-        typeof value === "string" && value.trim().length > 1,
-      "Translation is too short",
-    ),
+    // noOnlySpacesStringSchema("Translation is required"),
+    // v.custom(
+    //   (value): value is string =>
+    //     typeof value === "string" && value.trim().length > 1,
+    //   "Translation is too short",
+    // ),
   ),
   example: v.string(),
   exampleTranslation: v.string(),
@@ -65,6 +68,7 @@ interface Props {
   className?: string;
   languageWhatILearn: Language;
   languageWhatIKnow: Language;
+  deckId: string;
 }
 
 export const AddCard = memo((props: Props): ReactElement => {
@@ -76,6 +80,7 @@ export const AddCard = memo((props: Props): ReactElement => {
     register,
     reset,
     watch,
+    setError,
   } = useForm<Inputs>({
     defaultValues: {
       word: "",
@@ -90,12 +95,51 @@ export const AddCard = memo((props: Props): ReactElement => {
     isSubmitting,
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {
-    await sleep(1000);
-    setActiveSide("front");
-    await sleep(400);
-    reset();
-  };
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    async (inputs) => {
+      const result = await createCard({
+        deckId: props.deckId,
+        textInKnownLanguage: inputs.word,
+        textInLearningLanguage: inputs.translation,
+        descriptionInKnownLanguage: inputs.example,
+        descriptionInLearningLanguage: inputs.exampleTranslation,
+      });
+
+      if (result.ok) {
+        await sleep(1000);
+        setActiveSide("front");
+        await sleep(400);
+        reset();
+      } else {
+        switch (result.data.statusCode) {
+          case ErrorStatus.BAD_REQUEST: {
+            parseBadRequestErrors(
+              result.data.errors,
+              ({ field, firstError }) => {
+                switch (field) {
+                  case "textInKnownLanguage": {
+                    setError("word", { message: firstError });
+                    break;
+                  }
+                  case "textInLearningLanguage": {
+                    setError("translation", { message: firstError });
+                    break;
+                  }
+                }
+              },
+            );
+            break;
+          }
+
+          // case ErrorStatus.CONFLICT: {
+          //   setError("word", { message: result.data.message });
+          //   break;
+          // }
+        }
+      }
+    },
+    [props.deckId, setError],
+  );
 
   const word = watch("word");
   const translation = watch("translation");

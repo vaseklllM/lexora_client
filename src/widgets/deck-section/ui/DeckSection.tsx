@@ -127,6 +127,7 @@ export const DeckSection = (props: Props): ReactElement => {
         <AddCard
           languageWhatILearn={props.deck.languageWhatILearn}
           languageWhatIKnow={props.deck.languageWhatIKnow}
+          deckId={props.deck.id}
         />
       </div>
     </div>

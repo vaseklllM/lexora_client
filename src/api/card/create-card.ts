@@ -9,7 +9,7 @@ import { resultErrorSchema } from "../schemas/result-error.schema";
 
 const resultSchema = resultErrorSchema(cardSchema, [
   conflictErrorSchema,
-  badRequestErrorSchema(["name"]),
+  badRequestErrorSchema(["textInKnownLanguage", "textInLearningLanguage"]),
 ]);
 
 type Result = v.InferOutput<typeof resultSchema>;

@@ -1,5 +1,6 @@
 import { getFolder } from "@/api/folder/get-folder";
 import { getAllLanguages } from "@/api/languages/get-all-languages";
+import { getMyLanguages } from "@/api/languages/get-my-languages";
 import { Section } from "@/widgets/section";
 import { ReactElement } from "react";
 
@@ -12,6 +13,7 @@ interface Props {
 export default async function FolderPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
   const allLanguages = await getAllLanguages();
+  const myLanguages = await getMyLanguages();
   const { childFolders, childDecks, breadcrumbs, ...folder } = await getFolder(
     params.id,
   );
@@ -23,6 +25,8 @@ export default async function FolderPage(props: Props): Promise<ReactElement> {
       decks={childDecks}
       folder={folder}
       breadcrumbs={breadcrumbs}
+      languagesWhatIKnow={myLanguages.languagesWhatIKnow}
+      languagesWhatILearn={myLanguages.languagesWhatILearn}
     />
   );
 }

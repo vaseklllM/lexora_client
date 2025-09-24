@@ -45,6 +45,8 @@ interface Props {
   setIsOpen: (isOpen: boolean) => void;
   folderId?: string;
   allLanguages: Language[];
+  languagesWhatIKnow: Language[];
+  languagesWhatILearn: Language[];
 }
 
 export const ModalCreateDeck = (props: Props): ReactElement => {
@@ -61,8 +63,10 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
   } = useForm<Inputs>({
     defaultValues: {
       name: "",
-      languageWhatIKnowCode: props.allLanguages[0].code,
-      languageWhatILearnCode: props.allLanguages[1].code,
+      languageWhatIKnowCode:
+        props.languagesWhatIKnow[0]?.code || props.allLanguages[0].code,
+      languageWhatILearnCode:
+        props.languagesWhatILearn[0]?.code || props.allLanguages[1].code,
     },
     resolver: valibotResolver(schema),
   });
@@ -164,6 +168,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             label="Language I know"
             languages={props.allLanguages}
             className="w-full"
+            actualLanguages={props.languagesWhatIKnow}
             disabledLanguages={disabledLanguagesWhatIKnow}
           />
 
@@ -172,6 +177,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             languages={props.allLanguages}
             className="w-full"
             label="Language I learn"
+            actualLanguages={props.languagesWhatILearn}
             disabledLanguages={disabledLanguagesWhatILearn}
           />
 

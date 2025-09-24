@@ -25,6 +25,8 @@ interface Props {
   className?: string;
   allLanguages: Language[];
   folderId?: string;
+  languagesWhatIKnow: Language[];
+  languagesWhatILearn: Language[];
 }
 
 export const DropdownMenu = (props: Props): ReactElement => {
@@ -75,6 +77,8 @@ export const DropdownMenu = (props: Props): ReactElement => {
         setIsOpen={setIsOpenModalCreateDesc}
         allLanguages={props.allLanguages}
         folderId={props.folderId}
+        languagesWhatIKnow={props.languagesWhatIKnow}
+        languagesWhatILearn={props.languagesWhatILearn}
       />
     </div>
   );

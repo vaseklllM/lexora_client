@@ -44,6 +44,8 @@ interface Props {
   allLanguages: Language[];
   folder?: IFolder;
   breadcrumbs?: IFolderBreadcrumb[];
+  languagesWhatIKnow: Language[];
+  languagesWhatILearn: Language[];
 }
 
 export const Section = (props: Props): ReactElement => {
@@ -95,6 +97,8 @@ export const Section = (props: Props): ReactElement => {
             className={classes.dropdownMenu()}
             allLanguages={props.allLanguages}
             folderId={props.folder?.id}
+            languagesWhatIKnow={props.languagesWhatIKnow}
+            languagesWhatILearn={props.languagesWhatILearn}
           />
           {isEmpty && (
             <p className={classes.emptyText()}>

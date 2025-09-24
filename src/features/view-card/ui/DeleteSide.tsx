@@ -1,3 +1,4 @@
+import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { ICard } from "@/api/schemas/card.schema";
 import { CardSide } from "@/entities/card";
 import { DeleteIcon } from "@/shared/icons/Delete";
@@ -21,6 +22,7 @@ interface Props {
   className?: string;
   setActiveSide: (side: CardSide) => void;
   card: ICard;
+  deckId: string;
 }
 
 export const DeleteSide = (props: Props): ReactElement => {
@@ -30,9 +32,10 @@ export const DeleteSide = (props: Props): ReactElement => {
     props.setActiveSide("front");
   }, [props.setActiveSide]);
 
-  const deleteHandler = useCallback(() => {
+  const deleteHandler = useCallback(async () => {
     props.setActiveSide("front");
-  }, [props.setActiveSide]);
+    await revalidateGetDeck(props.deckId);
+  }, [props.setActiveSide, props.deckId]);
 
   return (
     <div className={classes.base({ className: props.className })}>

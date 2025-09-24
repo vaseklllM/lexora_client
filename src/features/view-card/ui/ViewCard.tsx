@@ -11,7 +11,7 @@ const classesSlots = tv({
     base: "",
     front: "relative flex h-full w-full flex-col items-center",
     frontTitleContainer: "max-w-full",
-    frontTitle: "text-2xl font-bold break-words",
+    frontTitle: "text-xl font-bold break-words",
     frontTitleTranslation: "text-base-content/40 mt-2 text-base break-words",
     frontDescription: "text-base-content text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
@@ -31,6 +31,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   card: ICard;
+  deckId: string;
 }
 
 export const ViewCard = memo((props: Props): ReactElement => {
@@ -92,7 +93,11 @@ export const ViewCard = memo((props: Props): ReactElement => {
       back={
         <>
           {backSide === "delete" && (
-            <DeleteSide setActiveSide={setActiveSide} card={props.card} />
+            <DeleteSide
+              deckId={props.deckId}
+              setActiveSide={setActiveSide}
+              card={props.card}
+            />
           )}
           {backSide === "edit" && <EditSide />}
         </>

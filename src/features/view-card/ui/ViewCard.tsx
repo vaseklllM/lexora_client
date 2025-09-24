@@ -1,8 +1,10 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { Card, CardSide } from "@/entities/card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { memo, ReactElement, useState } from "react";
+import { memo, ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
+import { DeleteSide } from "./DeleteSide";
+import { EditSide } from "./EditSide";
 
 const classesSlots = tv({
   slots: {
@@ -13,8 +15,6 @@ const classesSlots = tv({
     frontTitleTranslation: "text-base-content/40 mt-2 text-base",
     frontDescription: "text-base-content text-sm",
     frontIconButtons: "absolute top-0 right-0 flex flex-col gap-2",
-    back: "",
-    backTitle: "",
   },
   variants: {
     isDescription: {
@@ -35,12 +35,23 @@ interface Props {
 
 export const ViewCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
+  const [backSide, setBackSide] = useState<"delete" | "edit">("delete");
 
   const classes = classesSlots({
     isDescription:
       !!props.card.descriptionInLearningLanguage ||
       !!props.card.descriptionInKnownLanguage,
   });
+
+  const deleteHandler = useCallback(() => {
+    setBackSide("delete");
+    setActiveSide("back");
+  }, [setBackSide, setActiveSide]);
+
+  const editHandler = useCallback(() => {
+    setBackSide("edit");
+    setActiveSide("back");
+  }, [setBackSide, setActiveSide]);
 
   return (
     <Card
@@ -63,13 +74,28 @@ export const ViewCard = memo((props: Props): ReactElement => {
             </p>
           )}
           <div className={classes.frontIconButtons()}>
-            <ButtonIcon icon="edit" variant="dash" color="primary" />
-            <ButtonIcon icon="delete" variant="dash" color="error" />
+            <ButtonIcon
+              icon="edit"
+              variant="dash"
+              color="primary"
+              onClick={editHandler}
+            />
+            <ButtonIcon
+              icon="delete"
+              variant="dash"
+              color="error"
+              onClick={deleteHandler}
+            />
           </div>
         </div>
       }
       back={
-        <div className={classes.back()}>{props.card.textInKnownLanguage}</div>
+        <>
+          {backSide === "delete" && (
+            <DeleteSide setActiveSide={setActiveSide} card={props.card} />
+          )}
+          {backSide === "edit" && <EditSide />}
+        </>
       }
     />
   );

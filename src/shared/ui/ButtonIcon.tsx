@@ -124,6 +124,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
     variant,
     color,
     textColor,
+    children,
     ...buttonProps
   } = props;
   const classes = classesSlots({ disabled, icon, variant, color, textColor });
@@ -135,6 +136,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
       disabled={disabled}
       type={type}
     >
+      {children}
       <Icon icon={icon} />
     </button>
   );
@@ -163,6 +165,6 @@ function Icon(props: Pick<Props, "icon">) {
       return <AiIcon height="16px" width="16px" />;
 
     case "delete":
-      return <DeleteIcon height="14px" width="14px" />;
+      return <DeleteIcon height="18px" width="18px" />;
   }
 }

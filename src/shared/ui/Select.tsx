@@ -76,20 +76,6 @@ export const Select = (props: SelectProps): ReactElement => {
           ))}
         </>
       )}
-      {/* <optgroup label="You used before">
-        {[options?.[0], options?.[1]].map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            disabled={option.disabled}
-          >
-            {option.label}
-          </option>
-        ))}
-      </optgroup>
-      <optgroup label="Other languages">
-        
-      </optgroup> */}
     </select>
   );
 

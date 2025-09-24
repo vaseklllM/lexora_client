@@ -38,7 +38,6 @@ export const InputLabeled = (
   const {
     rightLabel,
     label: labelProp,
-    ref,
     labelClassName,
     inputWrapperClassName,
     required,
@@ -68,7 +67,6 @@ export const InputLabeled = (
       >
         <Input
           {...inputProps}
-          ref={ref}
           className={classes.input({ className: inputClassName })}
         />
         {actionButton}

@@ -2,9 +2,13 @@ import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
 import { InputLabeled } from "@/entities/input-labeled";
 import { PlusIcon } from "@/shared/icons/Plus";
+import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { memo, ReactElement, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
+import * as v from "valibot";
 
 const classesSlots = tv({
   slots: {
@@ -22,6 +26,18 @@ const classesSlots = tv({
   },
 });
 
+const schema = v.object({
+  word: v.pipe(v.string(), noOnlySpacesStringSchema("Word is required")),
+  translation: v.pipe(
+    v.string(),
+    noOnlySpacesStringSchema("Translation is required"),
+  ),
+  example: v.string(),
+  exampleTranslation: v.string(),
+});
+
+export type Inputs = v.InferOutput<typeof schema>;
+
 interface Props {
   className?: string;
   languageWhatILearn: Language;
@@ -32,6 +48,31 @@ export const AddCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
 
   const classes = classesSlots();
+
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    register,
+    watch,
+  } = useForm<Inputs>({
+    defaultValues: {
+      word: "",
+      translation: "",
+      example: "",
+      exampleTranslation: "",
+    },
+    resolver: valibotResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async () => {
+    setActiveSide("front");
+  };
+
+  const word = watch("word");
+  const translation = watch("translation");
+
+  const isWordChanged = word.trim() !== "";
+  const isTranslationChanged = translation.trim() !== "";
 
   return (
     <Card
@@ -51,9 +92,11 @@ export const AddCard = memo((props: Props): ReactElement => {
         </div>
       }
       back={
-        <div className={classes.back()}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.back()}>
           <div className={classes.backContent()}>
             <InputLabeled
+              {...register("word")}
+              error={errors.word?.message}
               label="Word"
               labelClassName={classes.backContentLabel()}
               placeholder={`${props.languageWhatILearn.name}`}
@@ -64,12 +107,14 @@ export const AddCard = memo((props: Props): ReactElement => {
                 <ButtonIcon
                   icon="ai"
                   variant="ghost"
-                  disabled={activeSide === "front"}
+                  disabled={activeSide === "front" || !isWordChanged}
                 />
               }
               disabled={activeSide === "front"}
             />
             <InputLabeled
+              {...register("translation")}
+              error={errors.translation?.message}
               label="Translation"
               labelClassName={classes.backContentLabel()}
               placeholder={`${props.languageWhatIKnow.name}`}
@@ -80,12 +125,14 @@ export const AddCard = memo((props: Props): ReactElement => {
                 <ButtonIcon
                   icon="ai"
                   variant="ghost"
-                  disabled={activeSide === "front"}
+                  disabled={activeSide === "front" || !isTranslationChanged}
                 />
               }
               disabled={activeSide === "front"}
             />
             <InputLabeled
+              {...register("example")}
+              error={errors.example?.message}
               label="Example or description"
               labelClassName={classes.backContentLabel()}
               placeholder={`${props.languageWhatILearn.name} example`}
@@ -94,6 +141,8 @@ export const AddCard = memo((props: Props): ReactElement => {
               disabled={activeSide === "front"}
             />
             <InputLabeled
+              {...register("exampleTranslation")}
+              error={errors.exampleTranslation?.message}
               label="Example or description translation"
               labelClassName={classes.backContentLabel()}
               placeholder={`${props.languageWhatIKnow.name} example`}
@@ -107,18 +156,18 @@ export const AddCard = memo((props: Props): ReactElement => {
               className={classes.backButtonCancel()}
               icon="cancel"
               onClick={() => setActiveSide("front")}
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
               variant="dash"
             />
             <ButtonIcon
               className={classes.backButtonSave()}
               icon="check"
-              onClick={() => setActiveSide("front")}
-              disabled={activeSide === "front"}
+              disabled={activeSide === "front" || isSubmitting}
               variant="dash"
+              type="submit"
             />
           </div>
-        </div>
+        </form>
       }
     />
   );

@@ -12,6 +12,7 @@ import {
 } from "@/entities/editable-text";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { AddCard } from "@/features/add-card";
+import { ViewCard } from "@/features/view-card";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { routes } from "@/shared/routes";
@@ -124,6 +125,9 @@ export const DeckSection = (props: Props): ReactElement => {
       <div className="divider"></div>
       <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
+        {props.cards.map((card) => (
+          <ViewCard key={card.id} card={card} />
+        ))}
         <AddCard
           languageWhatILearn={props.deck.languageWhatILearn}
           languageWhatIKnow={props.deck.languageWhatIKnow}

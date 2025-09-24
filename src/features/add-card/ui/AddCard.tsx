@@ -86,7 +86,7 @@ const schema = v.object({
   ),
 });
 
-export type Inputs = v.InferOutput<typeof schema>;
+type Inputs = v.InferOutput<typeof schema>;
 
 interface Props {
   className?: string;

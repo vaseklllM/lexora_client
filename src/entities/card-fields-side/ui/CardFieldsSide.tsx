@@ -1,9 +1,11 @@
+"use client";
+
 import { fillCardData } from "@/api/ai/fill-card-data";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { ReactElement, useCallback } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { useForm, UseFormSetError } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import { CardFields, cardFieldsSchema } from "../model/cardFields.schema";
@@ -25,7 +27,7 @@ const classesSlots = tv({
       "loading loading-spinner text-primary loading-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
   },
   variants: {
-    isSubmitting: {
+    isLoading: {
       true: {
         backContent: "opacity-30",
       },
@@ -53,6 +55,8 @@ export interface CardFieldsSideProps {
 }
 
 export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -72,7 +76,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
   });
 
   const classes = classesSlots({
-    isSubmitting,
+    isLoading: isSubmitting || isLoading,
   });
 
   const word = watch("word");
@@ -94,30 +98,40 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
   }, [props.onCancel, reset]);
 
   const aiWordHandler = useCallback(async () => {
-    const result = await fillCardData({
-      deckId: props.deckId,
-      textInLearningLanguage: word,
-    });
-    if (result.ok) {
-      setValue("word", result.data.textInLearningLanguage);
-      setValue("translation", result.data.textInKnownLanguage);
-      setValue("example", result.data.descriptionInLearningLanguage);
-      setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+    try {
+      setIsLoading(true);
+      const result = await fillCardData({
+        deckId: props.deckId,
+        textInLearningLanguage: word,
+      });
+      if (result.ok) {
+        setValue("word", result.data.textInLearningLanguage);
+        setValue("translation", result.data.textInKnownLanguage);
+        setValue("example", result.data.descriptionInLearningLanguage);
+        setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }, [props.deckId, word]);
+  }, [props.deckId, word, setIsLoading]);
 
   const aiTranslationHandler = useCallback(async () => {
-    const result = await fillCardData({
-      deckId: props.deckId,
-      textInKnownLanguage: translation,
-    });
-    if (result.ok) {
-      setValue("word", result.data.textInLearningLanguage);
-      setValue("translation", result.data.textInKnownLanguage);
-      setValue("example", result.data.descriptionInLearningLanguage);
-      setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+    try {
+      setIsLoading(true);
+      const result = await fillCardData({
+        deckId: props.deckId,
+        textInKnownLanguage: translation,
+      });
+      if (result.ok) {
+        setValue("word", result.data.textInLearningLanguage);
+        setValue("translation", result.data.textInKnownLanguage);
+        setValue("example", result.data.descriptionInLearningLanguage);
+        setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  }, [props.deckId, translation, setIsLoading]);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className={classes.back()}>
@@ -136,14 +150,17 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
               icon="ai"
               variant="ghost"
               disabled={
-                !props.isActiveThisSide || !isWordChanged || isSubmitting
+                !props.isActiveThisSide ||
+                !isWordChanged ||
+                isSubmitting ||
+                isLoading
               }
               textColor="primary"
               tooltip="Generate card"
               onClick={aiWordHandler}
             />
           }
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
         <InputLabeled
           {...register("translation")}
@@ -159,14 +176,17 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
               icon="ai"
               variant="ghost"
               disabled={
-                !props.isActiveThisSide || !isTranslationChanged || isSubmitting
+                !props.isActiveThisSide ||
+                !isTranslationChanged ||
+                isSubmitting ||
+                isLoading
               }
               textColor="primary"
               tooltip="Generate card"
               onClick={aiTranslationHandler}
             />
           }
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
         <InputLabeled
           {...register("example")}
@@ -176,7 +196,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           placeholder={`${props.languageWhatILearn.name} example`}
           inputWrapperClassName={classes.backContentInputWrapper()}
           inputClassName={classes.backContentInput()}
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
         <InputLabeled
           {...register("exampleTranslation")}
@@ -186,7 +206,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           placeholder={`${props.languageWhatIKnow.name} example`}
           inputWrapperClassName={classes.backContentInputWrapper()}
           inputClassName={classes.backContentInput()}
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
       </div>
       <div className={classes.backButtons()}>
@@ -194,20 +214,20 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           className={classes.backButtonCancel()}
           icon="cancel"
           onClick={cancelHandler}
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
           variant="dash"
           color="error"
         />
         <ButtonIcon
           className={classes.backButtonSave()}
           icon="check"
-          disabled={!props.isActiveThisSide || isSubmitting}
+          disabled={!props.isActiveThisSide || isSubmitting || isLoading}
           variant="dash"
           type="submit"
           color="success"
         />
       </div>
-      {isSubmitting && <span className={classes.backLoader()} />}
+      {(isSubmitting || isLoading) && <span className={classes.backLoader()} />}
     </form>
   );
 };

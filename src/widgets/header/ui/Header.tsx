@@ -11,6 +11,7 @@ const classesSlots = tv({
 
 interface Props {
   userName: string;
+  avatarUrl?: string;
 }
 
 export const Header = (props: Props) => {
@@ -19,7 +20,7 @@ export const Header = (props: Props) => {
   return (
     <div className={classes.header()}>
       <div className={classes.user()}>
-        <UserIcon userName={props.userName} />
+        <UserIcon userName={props.userName} avatarUrl={props.avatarUrl} />
         <p className="text-base-content/90">{props.userName}</p>
       </div>
       <ButtonLogout />

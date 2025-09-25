@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
@@ -10,6 +11,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   userName: string;
+  avatarUrl?: string;
 }
 
 export const UserIcon = (props: Props): ReactElement => {
@@ -18,7 +20,16 @@ export const UserIcon = (props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <div className="bg-neutral text-neutral-content w-10 rounded-full">
-        <span className="text-xl">{props.userName.charAt(0)}</span>
+        {props.avatarUrl ? (
+          <Image
+            src={props.avatarUrl}
+            alt={props.userName}
+            width={40}
+            height={40}
+          />
+        ) : (
+          <span className="text-xl">{props.userName.charAt(0)}</span>
+        )}
       </div>
     </div>
   );

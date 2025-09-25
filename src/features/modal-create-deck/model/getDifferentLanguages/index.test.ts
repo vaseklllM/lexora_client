@@ -54,6 +54,60 @@ describe("getDifferentLanguages", () => {
         languageWhatILearnCode: fr.code,
       },
     },
+    {
+      languagesWhatIKnow: [en],
+      languagesWhatILearn: [de],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: en.code,
+        languageWhatILearnCode: de.code,
+      },
+    },
+    {
+      languagesWhatIKnow: [en],
+      languagesWhatILearn: [en, de],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: en.code,
+        languageWhatILearnCode: de.code,
+      },
+    },
+    {
+      languagesWhatIKnow: [fr, de],
+      languagesWhatILearn: [en],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: fr.code,
+        languageWhatILearnCode: en.code,
+      },
+    },
+    {
+      languagesWhatIKnow: [fr, en],
+      languagesWhatILearn: [es],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: fr.code,
+        languageWhatILearnCode: es.code,
+      },
+    },
+    {
+      languagesWhatIKnow: [fr, en],
+      languagesWhatILearn: [fr, es],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: fr.code,
+        languageWhatILearnCode: es.code,
+      },
+    },
+    {
+      languagesWhatIKnow: [fr, en],
+      languagesWhatILearn: [fr],
+      allLanguages: [en, fr, de, es, uk, la],
+      expected: {
+        languageWhatIKnowCode: fr.code,
+        languageWhatILearnCode: en.code,
+      },
+    },
   ])("should return the correct languages", (args) => {
     expect(
       getDifferentLanguages({

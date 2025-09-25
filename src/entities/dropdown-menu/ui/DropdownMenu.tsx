@@ -112,7 +112,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
 };
 
 const iconClasses = tv({
-  base: "fill-base-content/80 duration-200 group-active:fill-white/90",
+  base: "duration-200",
 });
 
 function Icon(props: { icon: IconType }) {

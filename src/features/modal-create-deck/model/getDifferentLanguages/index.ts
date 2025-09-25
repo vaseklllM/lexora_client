@@ -9,9 +9,24 @@ export function getDifferentLanguages(args: {
   languageWhatILearnCode: string;
 } {
   const { languagesWhatIKnow, languagesWhatILearn, allLanguages } = args;
+
+  const languageWhatIKnowCode =
+    languagesWhatIKnow[0]?.code || allLanguages[0].code;
+
   return {
-    languageWhatIKnowCode: languagesWhatIKnow[0]?.code || allLanguages[0].code,
-    languageWhatILearnCode:
-      languagesWhatILearn[0]?.code || allLanguages[1].code,
+    languageWhatIKnowCode,
+    languageWhatILearnCode: ((): string => {
+      const firstUniqueLearnLanguage = languagesWhatILearn.find(
+        ({ code }) => code !== languageWhatIKnowCode,
+      );
+
+      if (firstUniqueLearnLanguage) return firstUniqueLearnLanguage.code;
+
+      const firstUniqueAllLanguage = allLanguages.find(
+        ({ code }) => code !== languageWhatIKnowCode,
+      )!;
+
+      return firstUniqueAllLanguage.code;
+    })(),
   };
 }

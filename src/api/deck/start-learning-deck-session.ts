@@ -21,5 +21,5 @@ export const startLearningDeckSession = async (args: Args): Promise<Result> => {
     params: args,
   });
 
-  return v.parse(resultSchema, result);
+  return v.parse(resultSchema, result.data);
 };

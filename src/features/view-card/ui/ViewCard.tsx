@@ -15,6 +15,8 @@ const classesSlots = tv({
     frontTitleContainer:
       "flex h-full max-w-full flex-col items-center justify-center",
     frontTitle: "max-w-full text-xl font-bold break-words",
+    nativeSounds: "flex items-center gap-2",
+    frontSound: "",
     frontTitleTranslation:
       "text-base-content/40 mt-2 max-w-full text-base break-words",
     frontDescriptionContainer:
@@ -99,6 +101,8 @@ export const ViewCard = memo((props: Props): ReactElement => {
     setBackSide(undefined);
   }, [setActiveSide, setBackSide]);
 
+  const isNativeSound = props.card.nativeSoundUrls.length > 0;
+
   return (
     <Card
       className={classes.base({ className: props.className })}
@@ -106,6 +110,23 @@ export const ViewCard = memo((props: Props): ReactElement => {
       onSideChange={setActiveSide}
       front={
         <div className={classes.front()}>
+          {isNativeSound && (
+            <div className={classes.nativeSounds()}>
+              {props.card.nativeSoundUrls.map((soundUrl) => (
+                <ButtonIcon
+                  key={soundUrl}
+                  icon="sound"
+                  variant="ghost"
+                  color="primary"
+                  onClick={() => {
+                    const audio = new Audio(soundUrl);
+                    audio.play();
+                  }}
+                  className={classes.frontSound()}
+                />
+              ))}
+            </div>
+          )}
           <div className={classes.frontTitleContainer()}>
             <h2 className={classes.frontTitle()}>
               {props.card.textInLearningLanguage}

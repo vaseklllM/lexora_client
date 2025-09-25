@@ -5,6 +5,7 @@ import { CheckIcon } from "../icons/Check";
 import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
 import { PlusIcon } from "../icons/Plus";
+import { SoundIcon } from "../icons/Sound";
 
 const classesSlots = tv({
   slots: {
@@ -12,13 +13,6 @@ const classesSlots = tv({
     tooltip: "tooltip flex",
   },
   variants: {
-    icon: {
-      check: {},
-      edit: {},
-      cancel: {},
-      ai: {},
-      delete: {},
-    },
     disabled: {
       true: {},
       false: {},
@@ -110,7 +104,7 @@ type Color =
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  icon: "edit" | "check" | "cancel" | "ai" | "delete";
+  icon: "edit" | "check" | "cancel" | "ai" | "delete" | "sound";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
@@ -130,7 +124,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
     tooltip,
     ...buttonProps
   } = props;
-  const classes = classesSlots({ disabled, icon, variant, color, textColor });
+  const classes = classesSlots({ disabled, variant, color, textColor });
 
   const button = (
     <button
@@ -179,5 +173,8 @@ function Icon(props: Pick<Props, "icon">) {
 
     case "delete":
       return <DeleteIcon height="18px" width="18px" />;
+
+    case "sound":
+      return <SoundIcon height="18px" width="18px" />;
   }
 }

@@ -16,7 +16,6 @@ const classesSlots = tv({
   slots: {
     base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
     header: "flex items-center gap-6",
-    headerButtons: "",
     buttonBack: "",
     breadcrumbs: "",
     emptyText: "text-base-content/50 text-md mt-16 mb-20 text-center",
@@ -83,9 +82,7 @@ export const Section = (props: Props): ReactElement => {
         <div className={classes.base({ className: props.className })}>
           {isFolder && (
             <div className={classes.header()}>
-              <div className={classes.headerButtons()}>
-                <ButtonBack href={backUrl} className={classes.buttonBack()} />
-              </div>
+              <ButtonBack href={backUrl} className={classes.buttonBack()} />
               <FolderBreadcrumbs
                 className={classes.breadcrumbs()}
                 breadcrumbs={props.breadcrumbs}

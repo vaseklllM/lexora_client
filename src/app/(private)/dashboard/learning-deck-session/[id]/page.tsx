@@ -1,4 +1,6 @@
+import { getDeck } from "@/api/deck/get-deck";
 import { startLearningDeckSession } from "@/api/deck/start-learning-deck-session";
+import { LearningDeckSection } from "@/widgets/learning-deck-section";
 
 type Props = {
   params: Promise<{
@@ -13,9 +15,13 @@ export default async function Page(props: Props) {
     deckId: params.id,
   });
 
+  const { cards, foldersBreadcrumbs, ...deck } = await getDeck(params.id);
+
   return (
-    <div>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
-    </div>
+    <LearningDeckSection
+      cards={result.cards}
+      foldersBreadcrumbs={foldersBreadcrumbs}
+      deck={deck}
+    />
   );
 }

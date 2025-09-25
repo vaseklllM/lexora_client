@@ -160,6 +160,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               isActiveThisSide={activeSide === "back"}
               onOpenFront={openFrontHandler}
               card={props.card}
+              deckId={props.deckId}
             />
           )}
         </>

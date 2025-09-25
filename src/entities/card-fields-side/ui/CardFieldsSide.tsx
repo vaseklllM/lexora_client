@@ -80,8 +80,8 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
     translation.trim() !== "" && translation.trim().length > 1;
 
   const submitHandler = useCallback(
-    (inputs: CardFields) => {
-      props.onSubmit?.({ reset, inputs, setError });
+    async (inputs: CardFields) => {
+      await props.onSubmit?.({ reset, inputs, setError });
     },
     [props.onSubmit, reset, setError],
   );

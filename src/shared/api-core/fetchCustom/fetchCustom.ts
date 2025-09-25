@@ -1,6 +1,7 @@
 "use server";
 
 import { routes } from "@/shared/routes";
+import { toQueryParams } from "@/shared/utils/toQueryParams";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../authOptions/authOptions";
@@ -14,8 +15,9 @@ export async function fetchCustom<R>(
   const useSession = options?.useSession ?? true;
 
   const session = useSession ? await getServerSession(authOptions) : undefined;
+  const params = options?.params ? toQueryParams(options.params) : "";
 
-  const result = await modifyFetch(url, {
+  const result = await modifyFetch(url + params, {
     ...options,
     accessToken: session?.accessToken,
   });

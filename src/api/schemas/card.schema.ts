@@ -13,7 +13,18 @@ export const cardSchema = v.object({
   isNew: v.boolean(),
   descriptionInKnownLanguage: v.optional(v.string()),
   descriptionInLearningLanguage: v.optional(v.string()),
-  nativeSoundUrls: v.array(v.string()),
+  nativeSoundUrls: v.array(
+    v.pipe(
+      v.string(),
+      v.transform((input) => {
+        if (input.startsWith("https://")) {
+          return input;
+        }
+
+        return `${process.env.SYSTEM_NEXT_TTS_URL}/${input}`;
+      }),
+    ),
+  ),
 });
 
 export type ICard = v.InferOutput<typeof cardSchema>;

@@ -1,12 +1,12 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { sleep } from "@/shared/utils/sleep";
 import { memo, ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { DeleteSide } from "./DeleteSide";
 import { EditSide } from "./EditSide";
-import { Language } from "@/api/schemas/language.schema";
-import { sleep } from "@/shared/utils/sleep";
 
 const classesSlots = tv({
   slots: {
@@ -127,6 +127,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               ))}
             </div>
           )}
+          {/* <TTS language={props.languageWhatILearn.code} /> */}
           <div className={classes.frontTitleContainer()}>
             <h2 className={classes.frontTitle()}>
               {props.card.textInLearningLanguage}

@@ -40,16 +40,17 @@ export type CardFieldsSideSubmitHandler = (args: {
 
 export type CardFieldsSideCancelHandler = (args: { reset: () => void }) => void;
 
-interface Props {
+export interface CardFieldsSideProps {
   className?: string;
   languageWhatILearn: Language;
   languageWhatIKnow: Language;
   isActiveThisSide: boolean;
   onSubmit?: CardFieldsSideSubmitHandler;
   onCancel?: CardFieldsSideCancelHandler;
+  defaultValues?: Partial<CardFields>;
 }
 
-export const CardFieldsSide = (props: Props): ReactElement => {
+export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -59,10 +60,10 @@ export const CardFieldsSide = (props: Props): ReactElement => {
     setError,
   } = useForm<CardFields>({
     defaultValues: {
-      word: "",
-      translation: "",
-      example: "",
-      exampleTranslation: "",
+      word: props.defaultValues?.word || "",
+      translation: props.defaultValues?.translation || "",
+      example: props.defaultValues?.example || "",
+      exampleTranslation: props.defaultValues?.exampleTranslation || "",
     },
     resolver: valibotResolver(cardFieldsSchema),
   });
@@ -173,7 +174,7 @@ export const CardFieldsSide = (props: Props): ReactElement => {
           color="success"
         />
       </div>
-      {isSubmitting && <span className={classes.backLoader()}></span>}
+      {isSubmitting && <span className={classes.backLoader()} />}
     </form>
   );
 };

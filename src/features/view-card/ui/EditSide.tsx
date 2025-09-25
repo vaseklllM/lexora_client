@@ -1,11 +1,13 @@
+import { ICard } from "@/api/schemas/card.schema";
 import { Language } from "@/api/schemas/language.schema";
 import {
   CardFieldsSide,
   CardFieldsSideCancelHandler,
+  CardFieldsSideProps,
   CardFieldsSideSubmitHandler,
 } from "@/entities/card-fields-side";
 import { sleep } from "@/shared/utils/sleep";
-import { ReactElement, useCallback } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 
 interface Props {
   className?: string;
@@ -13,6 +15,7 @@ interface Props {
   languageWhatIKnow: Language;
   isActiveThisSide: boolean;
   onOpenFront: () => void;
+  card: ICard;
 }
 
 export const EditSide = (props: Props): ReactElement => {
@@ -29,6 +32,15 @@ export const EditSide = (props: Props): ReactElement => {
     [props.onOpenFront],
   );
 
+  const defaultValues = useMemo((): CardFieldsSideProps["defaultValues"] => {
+    return {
+      word: props.card.textInLearningLanguage,
+      translation: props.card.textInKnownLanguage,
+      example: props.card.descriptionInLearningLanguage,
+      exampleTranslation: props.card.descriptionInKnownLanguage,
+    };
+  }, [props.card]);
+
   return (
     <CardFieldsSide
       languageWhatILearn={props.languageWhatILearn}
@@ -36,6 +48,7 @@ export const EditSide = (props: Props): ReactElement => {
       isActiveThisSide={props.isActiveThisSide}
       onSubmit={onSubmit}
       onCancel={onCancel}
+      defaultValues={defaultValues}
     />
   );
 };

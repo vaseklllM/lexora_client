@@ -6,6 +6,7 @@ import { tv } from "tailwind-variants";
 import { DeleteSide } from "./DeleteSide";
 import { EditSide } from "./EditSide";
 import { Language } from "@/api/schemas/language.schema";
+import { sleep } from "@/shared/utils/sleep";
 
 const classesSlots = tv({
   slots: {
@@ -92,9 +93,11 @@ export const ViewCard = memo((props: Props): ReactElement => {
     setActiveSide("back");
   }, [setBackSide, setActiveSide]);
 
-  const openFrontHandler = useCallback(() => {
+  const openFrontHandler = useCallback(async () => {
     setActiveSide("front");
-  }, [setActiveSide]);
+    await sleep(400);
+    setBackSide(undefined);
+  }, [setActiveSide, setBackSide]);
 
   return (
     <Card
@@ -156,6 +159,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               languageWhatIKnow={props.languageWhatIKnow}
               isActiveThisSide={activeSide === "back"}
               onOpenFront={openFrontHandler}
+              card={props.card}
             />
           )}
         </>

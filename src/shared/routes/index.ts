@@ -22,10 +22,10 @@ export const routes = {
       url: (id: string) => `${routes.dashboard.url()}/deck/${id}`,
       path: () => `${routes.dashboard.path()}/deck/:id`,
     },
-    learningDeckSession: {
+    learningDeck: {
       url: (deckId: string) =>
-        `${routes.dashboard.url()}/learning-deck-session/${deckId}`,
-      path: () => `${routes.dashboard.path()}/learning-deck-session/:id`,
+        `${routes.dashboard.url()}/learning-deck/${deckId}`,
+      path: () => `${routes.dashboard.path()}/learning-deck/:id`,
     },
   },
   logout: {

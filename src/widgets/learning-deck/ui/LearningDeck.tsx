@@ -24,15 +24,21 @@ interface Props {
   deck: IDeck;
 }
 
-export function LearningDeckSection(props: Props) {
+export function LearningDeck(props: Props) {
   const classes = classesSlots();
 
-  const lastBreadcrumb = useMemo<Breadcrumb>(() => {
-    return {
-      icon: "deck",
-      title: `${props.deck.name} ${props.deck.languageWhatILearn.iconSymbol}`,
-      url: routes.dashboard.deck.url(props.deck.id),
-    };
+  const lastBreadcrumb = useMemo<Breadcrumb[]>(() => {
+    return [
+      {
+        icon: "deck",
+        title: `${props.deck.name} ${props.deck.languageWhatILearn.iconSymbol}`,
+        url: routes.dashboard.deck.url(props.deck.id),
+      },
+      {
+        title: "Learning deck",
+        url: routes.dashboard.learningDeck.url(props.deck.id),
+      },
+    ];
   }, [props.deck.id, props.deck.name]);
 
   return (

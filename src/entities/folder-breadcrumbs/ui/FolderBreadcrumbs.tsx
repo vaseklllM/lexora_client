@@ -6,7 +6,7 @@ import { ReactElement, useMemo } from "react";
 interface Props {
   className?: string;
   breadcrumbs?: IFolderBreadcrumb[];
-  lastItem?: Breadcrumb;
+  lastItem?: Breadcrumb | Breadcrumb[];
 }
 
 export const FolderBreadcrumbs = (props: Props): ReactElement => {
@@ -29,11 +29,11 @@ export const FolderBreadcrumbs = (props: Props): ReactElement => {
     });
 
     if (props.lastItem) {
-      crumbs.push({
-        icon: props.lastItem.icon,
-        title: props.lastItem.title,
-        url: props.lastItem.url,
-      });
+      if (Array.isArray(props.lastItem)) {
+        props.lastItem.forEach((item) => crumbs.push(item));
+      } else {
+        crumbs.push(props.lastItem);
+      }
     }
 
     return crumbs;

@@ -9,6 +9,7 @@ import { PlusIcon } from "../icons/Plus";
 const classesSlots = tv({
   slots: {
     button: "btn h-8 w-8 rounded-full p-0",
+    tooltip: "tooltip",
   },
   variants: {
     icon: {
@@ -113,6 +114,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
+  tooltip?: string;
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
@@ -125,11 +127,12 @@ export const ButtonIcon = (props: Props): ReactElement => {
     color,
     textColor,
     children,
+    tooltip,
     ...buttonProps
   } = props;
   const classes = classesSlots({ disabled, icon, variant, color, textColor });
 
-  return (
+  const button = (
     <button
       {...buttonProps}
       className={classes.button({ className })}
@@ -140,6 +143,16 @@ export const ButtonIcon = (props: Props): ReactElement => {
       <Icon icon={icon} />
     </button>
   );
+
+  if (tooltip) {
+    return (
+      <div className={classes.tooltip()} data-tip={tooltip}>
+        {button}
+      </div>
+    );
+  }
+
+  return button;
 };
 
 const iconClasses = tv({

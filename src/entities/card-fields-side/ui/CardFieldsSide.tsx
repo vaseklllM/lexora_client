@@ -110,6 +110,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
                 !props.isActiveThisSide || !isWordChanged || isSubmitting
               }
               textColor="primary"
+              tooltip="Generate card"
             />
           }
           disabled={!props.isActiveThisSide || isSubmitting}
@@ -131,6 +132,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
                 !props.isActiveThisSide || !isTranslationChanged || isSubmitting
               }
               textColor="primary"
+              tooltip="Generate card"
             />
           }
           disabled={!props.isActiveThisSide || isSubmitting}

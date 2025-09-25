@@ -6,6 +6,7 @@ const classesSlots = tv({
   slots: {
     header: "flex items-center justify-between p-4",
     user: "flex items-center gap-2",
+    right: "flex items-center gap-4",
   },
 });
 
@@ -23,7 +24,9 @@ export const Header = (props: Props) => {
         <UserIcon userName={props.userName} avatarUrl={props.avatarUrl} />
         <p className="text-base-content/90">{props.userName}</p>
       </div>
-      <ButtonLogout />
+      <div className={classes.right()}>
+        <ButtonLogout />
+      </div>
     </div>
   );
 };

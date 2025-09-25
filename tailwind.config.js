@@ -8,13 +8,7 @@ module.exports = {
   ],
   darkMode: "class", // or 'media' for system preference
   theme: {
-    extend: {
-      colors: {
-        brand: {
-          purple: "#5D3FD1",
-        },
-      },
-    },
+    extend: {},
   },
   plugins: ["daisyui"],
   daisyui: {

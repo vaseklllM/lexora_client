@@ -40,6 +40,7 @@ interface Props {
   deck: IDeck;
   dottedDropdownButtons: DropdownItem[];
   onClick?: () => void;
+  onPlay?: () => void;
 }
 
 export const Deck = (props: Props): ReactElement => {
@@ -86,7 +87,10 @@ export const Deck = (props: Props): ReactElement => {
             max="100"
           ></progress>
         </div>
-        <ButtonPlay disabled={props.deck.numberOfCards === 0} />
+        <ButtonPlay
+          disabled={props.deck.numberOfCards === 0}
+          onClick={props.onPlay}
+        />
       </div>
     </div>
   );

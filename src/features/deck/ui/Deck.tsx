@@ -20,11 +20,20 @@ export const Deck = memo((props: DeckProps): ReactElement => {
     router.push(routes.dashboard.deck.url(props.deck.id));
   }, [props.deck.id]);
 
+  const clickPlayHandler = useCallback(() => {
+    if (props.deck.numberOfCards <= 0) return;
+
+    if (props.deck.numberOfNewCards === props.deck.numberOfCards) {
+      router.push(routes.dashboard.learningDeckSession.url(props.deck.id));
+    }
+  }, [props.deck, router]);
+
   return (
     <DeckEntity
-      {...props}
+      deck={props.deck}
       dottedDropdownButtons={buttons}
       onClick={clickHandler}
+      onPlay={clickPlayHandler}
     />
   );
 });

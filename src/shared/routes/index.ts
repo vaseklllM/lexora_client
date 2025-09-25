@@ -22,6 +22,11 @@ export const routes = {
       url: (id: string) => `${routes.dashboard.url()}/deck/${id}`,
       path: () => `${routes.dashboard.path()}/deck/:id`,
     },
+    learningDeckSession: {
+      url: (deckId: string) =>
+        `${routes.dashboard.url()}/learning-deck-session/${deckId}`,
+      path: () => `${routes.dashboard.path()}/learning-deck-session/:id`,
+    },
   },
   logout: {
     url: () => "/logout",

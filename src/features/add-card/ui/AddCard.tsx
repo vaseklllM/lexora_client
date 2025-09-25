@@ -116,6 +116,7 @@ export const AddCard = memo((props: Props): ReactElement => {
           isActiveThisSide={activeSide === "back"}
           onSubmit={onSubmit}
           onCancel={cancelHandler}
+          deckId={props.deckId}
         />
       }
     />

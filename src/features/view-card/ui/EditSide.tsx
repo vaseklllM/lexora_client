@@ -115,6 +115,7 @@ export const EditSide = (props: Props): ReactElement => {
       onSubmit={onSubmit}
       onCancel={onCancel}
       defaultValues={defaultValues}
+      deckId={props.deckId}
     />
   );
 };

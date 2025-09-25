@@ -1,3 +1,4 @@
+import { fillCardData } from "@/api/ai/fill-card-data";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
@@ -48,6 +49,7 @@ export interface CardFieldsSideProps {
   onSubmit?: CardFieldsSideSubmitHandler;
   onCancel?: CardFieldsSideCancelHandler;
   defaultValues?: Partial<CardFields>;
+  deckId: string;
 }
 
 export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
@@ -58,6 +60,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
     reset,
     watch,
     setError,
+    setValue,
   } = useForm<CardFields>({
     defaultValues: {
       word: props.defaultValues?.word || "",
@@ -90,6 +93,32 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
     props.onCancel?.({ reset });
   }, [props.onCancel, reset]);
 
+  const aiWordHandler = useCallback(async () => {
+    const result = await fillCardData({
+      deckId: props.deckId,
+      textInLearningLanguage: word,
+    });
+    if (result.ok) {
+      setValue("word", result.data.textInLearningLanguage);
+      setValue("translation", result.data.textInKnownLanguage);
+      setValue("example", result.data.descriptionInLearningLanguage);
+      setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+    }
+  }, [props.deckId, word]);
+
+  const aiTranslationHandler = useCallback(async () => {
+    const result = await fillCardData({
+      deckId: props.deckId,
+      textInKnownLanguage: translation,
+    });
+    if (result.ok) {
+      setValue("word", result.data.textInLearningLanguage);
+      setValue("translation", result.data.textInKnownLanguage);
+      setValue("example", result.data.descriptionInLearningLanguage);
+      setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+    }
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(submitHandler)} className={classes.back()}>
       <div className={classes.backContent()}>
@@ -111,6 +140,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
               }
               textColor="primary"
               tooltip="Generate card"
+              onClick={aiWordHandler}
             />
           }
           disabled={!props.isActiveThisSide || isSubmitting}
@@ -133,6 +163,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
               }
               textColor="primary"
               tooltip="Generate card"
+              onClick={aiTranslationHandler}
             />
           }
           disabled={!props.isActiveThisSide || isSubmitting}

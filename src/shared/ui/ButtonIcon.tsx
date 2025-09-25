@@ -9,7 +9,7 @@ import { PlusIcon } from "../icons/Plus";
 const classesSlots = tv({
   slots: {
     button: "btn h-8 w-8 rounded-full p-0",
-    tooltip: "tooltip",
+    tooltip: "tooltip flex",
   },
   variants: {
     icon: {

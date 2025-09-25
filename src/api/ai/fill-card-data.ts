@@ -9,8 +9,8 @@ const resultSchema = resultErrorSchema(
   v.object({
     textInKnownLanguage: v.string(),
     textInLearningLanguage: v.string(),
-    descriptionInKnownLanguage: v.optional(v.string()),
-    descriptionInLearningLanguage: v.optional(v.string()),
+    descriptionInKnownLanguage: v.string(),
+    descriptionInLearningLanguage: v.string(),
   }),
   [badRequestErrorSchema(["textInKnownLanguage", "textInLearningLanguage"])],
 );

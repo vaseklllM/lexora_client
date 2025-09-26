@@ -101,7 +101,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
     setBackSide(undefined);
   }, [setActiveSide, setBackSide]);
 
-  const isNativeSound = props.card.nativeSoundUrls.length > 0;
+  const isNativeSound = props.card.soundUrls.length > 0;
 
   return (
     <Card
@@ -112,7 +112,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
         <div className={classes.front()}>
           {isNativeSound && (
             <div className={classes.nativeSounds()}>
-              {props.card.nativeSoundUrls.map((soundUrl) => (
+              {props.card.soundUrls.map((soundUrl) => (
                 <ButtonIcon
                   key={soundUrl}
                   icon="sound"

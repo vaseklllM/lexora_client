@@ -13,7 +13,7 @@ export const cardSchema = v.object({
   isNew: v.boolean(),
   descriptionInKnownLanguage: v.optional(v.string()),
   descriptionInLearningLanguage: v.optional(v.string()),
-  nativeSoundUrls: v.array(
+  soundUrls: v.array(
     v.pipe(
       v.string(),
       v.transform((input) => {

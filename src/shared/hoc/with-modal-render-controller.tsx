@@ -19,7 +19,7 @@ export function withModalRenderController<P extends Props>(
         setIsRender(true);
         setTimeout(() => {
           setIsOpenController(true);
-        }, 0);
+        }, 50);
       } else {
         setIsOpenController(false);
         setTimeout(() => {

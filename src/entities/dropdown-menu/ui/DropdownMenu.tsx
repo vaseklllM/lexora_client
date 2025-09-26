@@ -85,6 +85,9 @@ export const DropdownMenu = (props: Props): ReactElement => {
         popover="auto"
         id={popoverId}
         style={{ positionAnchor: anchorName } as React.CSSProperties}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         {props.items.map((item) => (
           <li key={item.id}>

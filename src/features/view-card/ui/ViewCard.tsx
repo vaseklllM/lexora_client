@@ -112,9 +112,9 @@ export const ViewCard = memo((props: Props): ReactElement => {
         <div className={classes.front()}>
           {isNativeSound && (
             <div className={classes.nativeSounds()}>
-              {props.card.soundUrls.map((soundUrl) => (
+              {props.card.soundUrls.map((soundUrl, idx) => (
                 <ButtonIcon
-                  key={soundUrl}
+                  key={idx}
                   icon="sound"
                   variant="ghost"
                   color="primary"

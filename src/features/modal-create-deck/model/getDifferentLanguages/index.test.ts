@@ -6,36 +6,52 @@ const en: Language = {
   name: "English",
   nativeName: "English",
   iconSymbol: "🇺🇸",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
+
 const fr: Language = {
   code: "fr",
   name: "French",
   nativeName: "Français",
   iconSymbol: "🇫🇷",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
+
 const de: Language = {
   code: "de",
   name: "German",
   nativeName: "Deutsch",
   iconSymbol: "🇩🇪",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
 const es: Language = {
   code: "es",
   name: "Spanish",
   nativeName: "Español",
   iconSymbol: "🇪🇸",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
+
 const uk: Language = {
   code: "uk",
   name: "Ukrainian",
   nativeName: "Українська",
   iconSymbol: "🇺🇦",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
+
 const la: Language = {
   code: "la",
   name: "Latin",
   nativeName: "Latin",
   iconSymbol: "🇱🇻",
+  isSupportGoogleTtsVoiceFemaleGender: true,
+  isSupportGoogleTtsVoiceMaleGender: false,
 };
 
 describe("getDifferentLanguages", () => {

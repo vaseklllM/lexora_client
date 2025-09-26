@@ -1,6 +1,12 @@
 "use client";
 
-import { ComponentType, ReactElement, useEffect, useState } from "react";
+import {
+  ComponentType,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface Props {
   isOpen: boolean;
@@ -11,21 +17,38 @@ export function withModalRenderController<P extends Props>(
 ) {
   return function Controller(props: P): ReactElement | null {
     const { isOpen, ...restProps } = props;
-    const [isRender, setIsRender] = useState(isOpen);
-    const [isOpenController, setIsOpenController] = useState<boolean>(isOpen);
+    const [isRender, setIsRender] = useState(false);
+    const [isOpenController, setIsOpenController] = useState<boolean>(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+
       if (isOpen) {
         setIsRender(true);
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setIsOpenController(true);
-        }, 50);
+          timeoutRef.current = null;
+        }, 0);
       } else {
         setIsOpenController(false);
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setIsRender(false);
+          timeoutRef.current = null;
         }, 300);
       }
+
+      // Cleanup function
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+      };
     }, [isOpen]);
 
     if (isRender) {

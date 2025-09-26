@@ -141,7 +141,6 @@ export const ModalCreateDeck = withModalRenderController(
 
     return (
       <dialog
-        id="my_modal_1"
         className={classes.base({ className: props.className })}
         open={props.isOpen}
         onClose={closeHandler}

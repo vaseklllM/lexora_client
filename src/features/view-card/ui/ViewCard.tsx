@@ -127,7 +127,6 @@ export const ViewCard = memo((props: Props): ReactElement => {
               ))}
             </div>
           )}
-          {/* <TTS language={props.languageWhatILearn.code} /> */}
           <div className={classes.frontTitleContainer()}>
             <h2 className={classes.frontTitle()}>
               {props.card.textInLearningLanguage}

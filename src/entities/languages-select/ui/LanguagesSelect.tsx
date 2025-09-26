@@ -28,11 +28,9 @@ export const LanguagesSelect = (props: Props): ReactElement => {
           {
             id: "actual-languages",
             label: "Most used languages",
-            options: actualLanguages.map((language) => ({
-              label: `${language.iconSymbol} ${language.name} (${language.code})`,
-              value: language.code,
-              disabled: disabledLanguages?.includes(language.code),
-            })),
+            options: actualLanguages.map((language) =>
+              convertLanguageToOption(language, { disabledLanguages }),
+            ),
           },
           {
             id: "other-languages",
@@ -44,22 +42,18 @@ export const LanguagesSelect = (props: Props): ReactElement => {
                     (actualLanguage) => actualLanguage.code === language.code,
                   ),
               )
-              .map((language) => ({
-                label: `${language.iconSymbol} ${language.name} (${language.code})`,
-                value: language.code,
-                disabled: disabledLanguages?.includes(language.code),
-              })),
+              .map((language) =>
+                convertLanguageToOption(language, { disabledLanguages }),
+              ),
           },
         ],
       };
     }
 
     return {
-      options: languages.map((language) => ({
-        label: `${language.iconSymbol} ${language.name} (${language.code})`,
-        value: language.code,
-        disabled: disabledLanguages?.includes(language.code),
-      })),
+      options: languages.map((language) =>
+        convertLanguageToOption(language, { disabledLanguages }),
+      ),
     };
   }, [languages, disabledLanguages, actualLanguages]);
 
@@ -72,3 +66,22 @@ export const LanguagesSelect = (props: Props): ReactElement => {
     />
   );
 };
+
+function convertLanguageToOption(
+  language: Language,
+  props: {
+    disabledLanguages?: string[];
+  },
+): SelectOption {
+  // const isSupportVoice =
+  //   language.isSupportGoogleTtsVoiceFemaleGender ||
+  //   language.isSupportGoogleTtsVoiceMaleGender;
+
+  // const supportVoice = isSupportVoice ? "" : " 🔇";
+
+  return {
+    label: `${language.iconSymbol} ${language.name}`,
+    value: language.code,
+    disabled: props.disabledLanguages?.includes(language.code),
+  };
+}

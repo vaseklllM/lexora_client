@@ -22,7 +22,7 @@ export const LanguagesSelect = (props: Props): ReactElement => {
     options?: SelectOption[];
     optgroups?: SelectOptgroup[];
   } => {
-    if (actualLanguages) {
+    if (actualLanguages && actualLanguages.length > 0) {
       return {
         optgroups: [
           {

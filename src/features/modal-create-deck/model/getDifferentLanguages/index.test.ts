@@ -6,8 +6,8 @@ const en: Language = {
   name: "English",
   nativeName: "English",
   iconSymbol: "🇺🇸",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 
 const fr: Language = {
@@ -15,8 +15,8 @@ const fr: Language = {
   name: "French",
   nativeName: "Français",
   iconSymbol: "🇫🇷",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 
 const de: Language = {
@@ -24,16 +24,16 @@ const de: Language = {
   name: "German",
   nativeName: "Deutsch",
   iconSymbol: "🇩🇪",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 const es: Language = {
   code: "es",
   name: "Spanish",
   nativeName: "Español",
   iconSymbol: "🇪🇸",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 
 const uk: Language = {
@@ -41,8 +41,8 @@ const uk: Language = {
   name: "Ukrainian",
   nativeName: "Українська",
   iconSymbol: "🇺🇦",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 
 const la: Language = {
@@ -50,8 +50,8 @@ const la: Language = {
   name: "Latin",
   nativeName: "Latin",
   iconSymbol: "🇱🇻",
-  isSupportGoogleTtsVoiceFemaleGender: true,
-  isSupportGoogleTtsVoiceMaleGender: false,
+  googleTtsVoiceFemaleName: "en-GB-Studio-C",
+  googleTtsVoiceMaleName: "en-AU-Polyglot-1",
 };
 
 describe("getDifferentLanguages", () => {

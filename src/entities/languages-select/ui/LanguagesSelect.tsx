@@ -80,7 +80,7 @@ function convertLanguageToOption(
   // const supportVoice = isSupportVoice ? "" : " 🔇";
 
   return {
-    label: `${language.iconSymbol} ${language.name}`,
+    label: `${language.iconSymbol} ${language.nativeName} (${language.code})`,
     value: language.code,
     disabled: props.disabledLanguages?.includes(language.code),
   };

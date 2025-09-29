@@ -40,6 +40,12 @@ export function SignUp() {
     setError,
   } = useForm<Fields>({
     resolver: valibotResolver(fieldsSchema),
+    defaultValues: {
+      email: "user@example.com",
+      fullName: "John Doe",
+      password: "Password123!",
+      passwordRepeat: "Password123!",
+    },
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {

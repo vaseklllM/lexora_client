@@ -36,10 +36,10 @@ const classesSlots = tv({
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
-      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
+      "mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
     decksTitle: "text-base-content/70 mt-6 text-xl font-bold",
     decks:
-      "mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
+      "mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
   },
   variants: {
     isFolder: {
@@ -170,7 +170,7 @@ export const Section = (props: Props): ReactElement => {
             />
             {(isFolders || isFolder) && (
               <>
-                <h3 className={classes.foldersTitle()}>Folders</h3>
+                {/* <h3 className={classes.foldersTitle()}>Folders</h3> */}
                 {props.folders && (
                   <div className={classes.folders()}>
                     {isFolder && (
@@ -189,7 +189,7 @@ export const Section = (props: Props): ReactElement => {
             )}
             {isDecks && (
               <>
-                <h3 className={classes.decksTitle()}>Decks</h3>
+                {/* <h3 className={classes.decksTitle()}>Decks</h3> */}
                 <div className={classes.decks()}>
                   {decks.map((deck) =>
                     draggingDeckId !== deck.id ? (

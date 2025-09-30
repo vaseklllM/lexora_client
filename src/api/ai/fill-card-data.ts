@@ -2,6 +2,7 @@
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import * as v from "valibot";
+import { Cefr } from "../schemas/card.schema";
 import { badRequestErrorSchema } from "../schemas/errors/bad-request-error.schema";
 import { resultErrorSchema } from "../schemas/result-error.schema";
 
@@ -11,6 +12,7 @@ const resultSchema = resultErrorSchema(
     textInLearningLanguage: v.string(),
     descriptionInKnownLanguage: v.string(),
     descriptionInLearningLanguage: v.string(),
+    cefr: v.enum(Cefr),
   }),
   [badRequestErrorSchema(["textInKnownLanguage", "textInLearningLanguage"])],
 );

@@ -1,6 +1,7 @@
 "use client";
 
 import { fillCardData } from "@/api/ai/fill-card-data";
+import { Cefr } from "@/api/schemas/card.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
@@ -71,6 +72,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
       translation: props.defaultValues?.translation || "",
       example: props.defaultValues?.example || "",
       exampleTranslation: props.defaultValues?.exampleTranslation || "",
+      cefr: props.defaultValues?.cefr || Cefr.A1,
     },
     resolver: valibotResolver(cardFieldsSchema),
   });
@@ -80,11 +82,8 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
   });
 
   const word = watch("word");
-  const translation = watch("translation");
 
   const isWordChanged = word.trim() !== "" && word.trim().length > 1;
-  const isTranslationChanged =
-    translation.trim() !== "" && translation.trim().length > 1;
 
   const submitHandler = useCallback(
     async (inputs: CardFields) => {
@@ -109,29 +108,12 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
         setValue("translation", result.data.textInKnownLanguage);
         setValue("example", result.data.descriptionInLearningLanguage);
         setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
+        setValue("cefr", result.data.cefr);
       }
     } finally {
       setIsLoading(false);
     }
   }, [props.deckId, word, setIsLoading]);
-
-  const aiTranslationHandler = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const result = await fillCardData({
-        deckId: props.deckId,
-        textInKnownLanguage: translation,
-      });
-      if (result.ok) {
-        setValue("word", result.data.textInLearningLanguage);
-        setValue("translation", result.data.textInKnownLanguage);
-        setValue("example", result.data.descriptionInLearningLanguage);
-        setValue("exampleTranslation", result.data.descriptionInKnownLanguage);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, [props.deckId, translation, setIsLoading]);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className={classes.back()}>
@@ -171,23 +153,25 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           inputWrapperClassName={classes.backContentInputWrapper()}
           inputClassName={classes.backContentInput()}
           required
-          actionButton={
-            <ButtonIcon
-              icon="ai"
-              variant="ghost"
-              disabled={
-                !props.isActiveThisSide ||
-                !isTranslationChanged ||
-                isSubmitting ||
-                isLoading
-              }
-              textColor="primary"
-              tooltip="Generate card"
-              onClick={aiTranslationHandler}
-            />
-          }
           disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend text-base-content/70 p-0 pb-1 text-left text-xs font-medium">
+            CEFR
+          </legend>
+          <select
+            {...register("cefr")}
+            defaultValue="Pick a CEFR"
+            className="select"
+          >
+            <option>{Cefr.A1}</option>
+            <option>{Cefr.A2}</option>
+            <option>{Cefr.B1}</option>
+            <option>{Cefr.B2}</option>
+            <option>{Cefr.C1}</option>
+            <option>{Cefr.C2}</option>
+          </select>
+        </fieldset>
         <InputLabeled
           {...register("example")}
           error={errors.example?.message}

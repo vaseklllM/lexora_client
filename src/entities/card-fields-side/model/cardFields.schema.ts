@@ -1,3 +1,4 @@
+import { Cefr } from "@/api/schemas/card.schema";
 import {
   MAX_CARD_DESCRIPTION_LENGTH,
   MAX_CARD_WORD_LENGTH,
@@ -46,6 +47,7 @@ export const cardFieldsSchema = v.object({
       `Example translation cannot be longer than ${MAX_CARD_DESCRIPTION_LENGTH} characters`,
     ),
   ),
+  cefr: v.enum(Cefr),
 });
 
 export type CardFields = v.InferOutput<typeof cardFieldsSchema>;

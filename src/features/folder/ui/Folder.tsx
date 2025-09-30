@@ -11,22 +11,11 @@ import { useButtons } from "./useButtons";
 
 const classes = tv({
   base: "",
-  variants: {
-    isOver: {
-      true: "border-primary",
-      false: "",
-    },
-    isDragging: {
-      true: "",
-      false: "",
-    },
-  },
 });
 
 export interface FolderProps {
   className?: string;
   folder: IFolder;
-  isDragging?: boolean;
 }
 
 export const Folder = memo((props: FolderProps): ReactElement => {
@@ -47,9 +36,8 @@ export const Folder = memo((props: FolderProps): ReactElement => {
       onClick={clickHandler}
       ref={setNodeRef}
       icon="folder"
+      isOver={isOver}
       className={classes({
-        isOver,
-        isDragging: props.isDragging,
         className: props.className,
       })}
     />

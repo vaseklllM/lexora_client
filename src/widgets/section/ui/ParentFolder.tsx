@@ -1,6 +1,7 @@
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Folder } from "@/entities/folder";
 import { routes } from "@/shared/routes";
+import { useDroppable } from "@dnd-kit/core";
 import { useRouter } from "next/navigation";
 import { memo, ReactElement, useCallback, useMemo } from "react";
 
@@ -12,7 +13,7 @@ interface Props {
 export const ParentFolder = memo((props: Props): ReactElement => {
   const router = useRouter();
 
-  const parentFolder = useMemo((): Partial<IFolder> => {
+  const parentFolder = useMemo((): Pick<IFolder, "id" | "name"> => {
     if (props.parentFolder) {
       return {
         id: props.parentFolder.id,
@@ -21,10 +22,14 @@ export const ParentFolder = memo((props: Props): ReactElement => {
     }
 
     return {
-      id: "dashboard",
+      id: "home",
       name: "...",
     };
   }, [props.parentFolder]);
+
+  const { isOver, setNodeRef } = useDroppable({
+    id: parentFolder.id,
+  });
 
   const clickHandler = useCallback(() => {
     if (props.parentFolder?.id) {
@@ -35,7 +40,13 @@ export const ParentFolder = memo((props: Props): ReactElement => {
   }, [props.parentFolder?.id, router]);
 
   return (
-    <Folder folder={parentFolder} icon="arrowBack" onClick={clickHandler} />
+    <Folder
+      ref={setNodeRef}
+      folder={parentFolder}
+      icon="arrowBack"
+      isOver={isOver}
+      onClick={clickHandler}
+    />
   );
 });
 

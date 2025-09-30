@@ -113,7 +113,7 @@ export const Section = (props: Props): ReactElement => {
 
         await moveDeck({
           deckId,
-          toFolderId,
+          toFolderId: toFolderId === "home" ? undefined : toFolderId,
         });
         await revalidateGetDeck(deckId);
         setMovedDeckIds((prev): string[] => [...prev, deckId]);
@@ -180,11 +180,7 @@ export const Section = (props: Props): ReactElement => {
                       <ParentFolder parentFolder={props.parentFolder} />
                     )}
                     {props.folders.map((folder) => (
-                      <Folder
-                        key={folder.id}
-                        folder={folder}
-                        isDragging={!!draggingDeckId}
-                      />
+                      <Folder key={folder.id} folder={folder} />
                     ))}
                   </div>
                 )}

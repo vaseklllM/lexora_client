@@ -30,6 +30,14 @@ const classesSlots = tv({
         numberOfCardsProgress: "text-base-content/30",
       },
     },
+    isOver: {
+      true: {
+        base: "border-primary",
+      },
+      false: {
+        base: "",
+      },
+    },
   },
 });
 
@@ -40,6 +48,7 @@ interface Props {
   onClick?: () => void;
   ref?: Ref<HTMLDivElement>;
   icon?: "folder" | "arrowBack";
+  isOver?: boolean;
 }
 
 export const Folder = (props: Props): ReactElement => {
@@ -47,7 +56,10 @@ export const Folder = (props: Props): ReactElement => {
 
   return (
     <div
-      className={classes.base({ className: props.className })}
+      className={classes.base({
+        className: props.className,
+        isOver: props.isOver,
+      })}
       onClick={props.onClick}
       ref={props.ref}
     >

@@ -196,7 +196,7 @@ export const Section = (props: Props): ReactElement => {
                     draggingDeckId !== deck.id ? (
                       <DraggableDeck key={deck.id} deck={deck} />
                     ) : (
-                      <div key={deck.id} />
+                      <div key={deck.id} className="h-27" />
                     ),
                   )}
                 </div>

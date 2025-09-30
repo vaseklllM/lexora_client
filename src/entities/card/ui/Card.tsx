@@ -6,12 +6,12 @@ import classes from "./style.module.scss";
 
 const classesSlots = tv({
   slots: {
-    col: `${classes.col} max-w-xs`,
+    col: `${classes.col} max-w-2xl`,
     container: `${classes.container}`,
     front: `${classes.front}`,
     back: `${classes.back}`,
     inner: `${classes.inner} absolute top-[50%] left-0 z-2 h-full w-full p-2`,
-    card: "bg-base-100 min-h-96 rounded-xl shadow-lg",
+    card: "bg-base-100 min-h-120 rounded-xl shadow-lg",
   },
   variants: {
     activeSide: {

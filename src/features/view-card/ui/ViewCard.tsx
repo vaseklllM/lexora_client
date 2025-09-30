@@ -43,7 +43,7 @@ const classesSlots = tv({
     },
     isLargeWord: {
       true: {
-        frontTitle: "text-xs",
+        frontTitle: "",
         frontTitleTranslation: "text-xs",
       },
     },

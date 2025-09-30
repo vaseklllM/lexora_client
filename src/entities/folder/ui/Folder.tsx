@@ -11,7 +11,8 @@ const classesSlots = tv({
     base: "border-base-300 bg-base-300 hover:bg-base-content/15 hover:border-base-content/0 transition-border relative flex min-h-20 cursor-pointer flex-col gap-2 rounded-lg border-2 p-3 pr-4 pl-4 duration-150",
     header: "flex items-center gap-2",
     folderIcon: "min-h-6 min-w-6",
-    arrowBackIcon: "text-base-content/60 min-h-6 min-w-6",
+    arrowBackIcon:
+      "text-base-content/60 flex min-h-6 min-w-6 items-center justify-center",
     dottedButton: "absolute top-2 right-2",
     name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
     content: "flex items-center justify-between gap-2",
@@ -77,11 +78,9 @@ export const Folder = (props: Props): ReactElement => {
           <FolderIcon className={classes.folderIcon()} />
         )}
         {props.icon === "arrowBack" && (
-          <ArrowBack
-            className={classes.arrowBackIcon()}
-            height="20px"
-            width="20px"
-          />
+          <div className={classes.arrowBackIcon()}>
+            <ArrowBack height="20px" width="20px" />
+          </div>
         )}
         <p className={classes.name()}>{props.folder.name}</p>
       </div>

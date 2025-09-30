@@ -2,14 +2,14 @@ import { IFolder } from "@/api/schemas/folder.schema";
 import { Folder } from "@/entities/folder";
 import { routes } from "@/shared/routes";
 import { useRouter } from "next/navigation";
-import { ReactElement, useCallback, useMemo } from "react";
+import { memo, ReactElement, useCallback, useMemo } from "react";
 
 interface Props {
   className?: string;
   parentFolder?: IFolder;
 }
 
-export const ParentFolder = (props: Props): ReactElement => {
+export const ParentFolder = memo((props: Props): ReactElement => {
   const router = useRouter();
 
   const parentFolder = useMemo((): Partial<IFolder> => {
@@ -37,4 +37,6 @@ export const ParentFolder = (props: Props): ReactElement => {
   return (
     <Folder folder={parentFolder} icon="arrowBack" onClick={clickHandler} />
   );
-};
+});
+
+ParentFolder.displayName = "ParentFolder";

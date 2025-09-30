@@ -28,10 +28,11 @@ import { ParentFolder } from "./ParentFolder";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
+    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-18 pl-5 shadow-md",
     header: "flex items-center gap-6",
     buttonBack: "",
     breadcrumbs: "",
+    title: "text-base-content/70 text-xl font-bold",
     emptyText: "text-base-content/50 text-md mt-16 mb-20 text-center",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     foldersTitle: "text-base-content/70 text-xl font-bold",
@@ -60,6 +61,7 @@ interface Props {
   breadcrumbs?: IFolderBreadcrumb[];
   languagesWhatIKnow: Language[];
   languagesWhatILearn: Language[];
+  title?: string;
 }
 
 export const Section = (props: Props): ReactElement => {
@@ -151,6 +153,7 @@ export const Section = (props: Props): ReactElement => {
           onDragCancel={dragCancelHandler}
         >
           <div className={classes.base({ className: props.className })}>
+            {props.title && <h3 className={classes.title()}>{props.title}</h3>}
             {isFolder && (
               <div className={classes.header()}>
                 <ButtonBack href={backUrl} className={classes.buttonBack()} />

@@ -15,6 +15,7 @@ export default async function Home() {
       allLanguages={languages.data}
       languagesWhatIKnow={myLanguages.languagesWhatIKnow}
       languagesWhatILearn={myLanguages.languagesWhatILearn}
+      title="Home"
     />
   );
 }

@@ -15,8 +15,9 @@ const classesSlots = tv({
     frontTitleContainer:
       "flex h-full max-w-full flex-col items-center justify-center",
     frontTitle: "max-w-full text-xl font-bold break-words",
-    nativeSounds: "flex items-center gap-2",
+    headerRow: "flex items-center gap-2",
     frontSound: "",
+    cefr: "text-base-content/40 text-sm",
     frontTitleTranslation:
       "text-base-content/40 mt-2 max-w-full text-base break-words",
     frontDescriptionContainer:
@@ -111,7 +112,8 @@ export const ViewCard = memo((props: Props): ReactElement => {
       front={
         <div className={classes.front()}>
           {isNativeSound && (
-            <div className={classes.nativeSounds()}>
+            <div className={classes.headerRow()}>
+              <p className={classes.cefr()}>{props.card.cefr}</p>
               {props.card.soundUrls.map((soundUrl, idx) => (
                 <ButtonIcon
                   key={idx}

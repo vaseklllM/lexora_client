@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4 transition-colors hover:bg-gray-300 dark:hover:bg-gray-700",
+    base: "bg-base-300 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700",
     header: "flex items-center gap-2",
     languageIcon: "text-2xl",
     name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
@@ -33,7 +33,7 @@ const classesSlots = tv({
       },
     },
     hover: {
-      true: "bg-gray-300",
+      true: "bg-gray-200 dark:bg-gray-700",
       false: "",
     },
   },

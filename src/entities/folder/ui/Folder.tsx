@@ -1,5 +1,6 @@
 import { IFolder } from "@/api/schemas/folder.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
+import { ArrowBack } from "@/shared/icons/ArrowBack";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
 import { ReactElement, Ref } from "react";
@@ -7,9 +8,10 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "border-base-300 bg-base-300 hover:bg-base-content/15 hover:border-base-content/0 transition-border relative flex cursor-pointer flex-col gap-2 rounded-lg border-2 p-3 pr-4 pl-4 duration-150",
+    base: "border-base-300 bg-base-300 hover:bg-base-content/15 hover:border-base-content/0 transition-border relative flex min-h-20 cursor-pointer flex-col gap-2 rounded-lg border-2 p-3 pr-4 pl-4 duration-150",
     header: "flex items-center gap-2",
     folderIcon: "min-h-6 min-w-6",
+    arrowBackIcon: "text-base-content/60 min-h-6 min-w-6",
     dottedButton: "absolute top-2 right-2",
     name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
     content: "flex items-center justify-between gap-2",
@@ -33,10 +35,11 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
-  folder: IFolder;
-  dottedDropdownButtons: DropdownItem[];
+  folder: Partial<IFolder>;
+  dottedDropdownButtons?: DropdownItem[];
   onClick?: () => void;
   ref?: Ref<HTMLDivElement>;
+  icon?: "folder" | "arrowBack";
 }
 
 export const Folder = (props: Props): ReactElement => {
@@ -48,27 +51,40 @@ export const Folder = (props: Props): ReactElement => {
       onClick={props.onClick}
       ref={props.ref}
     >
-      <DropdownMenu
-        items={props.dottedDropdownButtons}
-        className={classes.dottedButton()}
-        buttonType="dotted"
-        listPosition="end"
-        listClassName="mt-1"
-      />
+      {props.dottedDropdownButtons && (
+        <DropdownMenu
+          items={props.dottedDropdownButtons}
+          className={classes.dottedButton()}
+          buttonType="dotted"
+          listPosition="end"
+          listClassName="mt-1"
+        />
+      )}
       <div className={classes.header()}>
-        <FolderIcon className={classes.folderIcon()} />
+        {props.icon === "folder" && (
+          <FolderIcon className={classes.folderIcon()} />
+        )}
+        {props.icon === "arrowBack" && (
+          <ArrowBack
+            className={classes.arrowBackIcon()}
+            height="20px"
+            width="20px"
+          />
+        )}
         <p className={classes.name()}>{props.folder.name}</p>
       </div>
-      <div className={classes.content()}>
-        <p
-          className={classes.numberOfCards({
-            isNumberOfCards: props.folder.numberOfCards > 0,
-          })}
-        >
-          {countOf(props.folder.numberOfCards, "card")}
-        </p>
-        {/* <p className={classes.numberOfCardsProgress()}>45%</p> */}
-      </div>
+      {typeof props.folder.numberOfCards === "number" && (
+        <div className={classes.content()}>
+          <p
+            className={classes.numberOfCards({
+              isNumberOfCards: props.folder.numberOfCards > 0,
+            })}
+          >
+            {countOf(props.folder.numberOfCards, "card")}
+          </p>
+          {/* <p className={classes.numberOfCardsProgress()}>45%</p> */}
+        </div>
+      )}
       {/* <progress className={classes.progress()} value="45" max="100"></progress> */}
     </div>
   );

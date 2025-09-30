@@ -10,6 +10,7 @@ import { folderSchema } from "../schemas/folder.schema";
 
 const resultSchema = v.object({
   ...folderSchema.entries,
+  parentFolder: v.optional(folderSchema),
   breadcrumbs: v.array(folderBreadcrumbSchema),
   childFolders: v.array(folderSchema),
   childDecks: v.array(deckSchema),

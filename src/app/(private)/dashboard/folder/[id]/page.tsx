@@ -14,9 +14,8 @@ export default async function FolderPage(props: Props): Promise<ReactElement> {
   const params = await props.params;
   const allLanguages = await getAllLanguages();
   const myLanguages = await getMyLanguages();
-  const { childFolders, childDecks, breadcrumbs, ...folder } = await getFolder(
-    params.id,
-  );
+  const { childFolders, childDecks, breadcrumbs, parentFolder, ...folder } =
+    await getFolder(params.id);
 
   return (
     <Section
@@ -27,6 +26,7 @@ export default async function FolderPage(props: Props): Promise<ReactElement> {
       breadcrumbs={breadcrumbs}
       languagesWhatIKnow={myLanguages.languagesWhatIKnow}
       languagesWhatILearn={myLanguages.languagesWhatILearn}
+      parentFolder={parentFolder}
     />
   );
 }

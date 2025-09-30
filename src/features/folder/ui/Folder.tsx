@@ -46,6 +46,7 @@ export const Folder = memo((props: FolderProps): ReactElement => {
       dottedDropdownButtons={buttons}
       onClick={clickHandler}
       ref={setNodeRef}
+      icon="folder"
       className={classes({
         isOver,
         isDragging: props.isDragging,

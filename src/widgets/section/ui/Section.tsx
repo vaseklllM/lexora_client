@@ -24,6 +24,7 @@ import { ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
 import { DropdownMenu } from "./DropdownMenu";
+import { ParentFolder } from "./ParentFolder";
 
 const classesSlots = tv({
   slots: {
@@ -52,6 +53,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   folders?: IFolder[];
+  parentFolder?: IFolder;
   decks?: IDeck[];
   allLanguages: Language[];
   folder?: IFolder;
@@ -82,8 +84,8 @@ export const Section = (props: Props): ReactElement => {
   }, [props.folder]);
 
   const backUrl = useMemo<string>((): string => {
-    if (props.folder?.parentFolderId) {
-      return routes.dashboard.folder.url(props.folder.parentFolderId);
+    if (props.parentFolder?.id) {
+      return routes.dashboard.folder.url(props.parentFolder.id);
     }
     return routes.dashboard.url();
   }, [props.folder]);
@@ -166,17 +168,14 @@ export const Section = (props: Props): ReactElement => {
               languagesWhatIKnow={props.languagesWhatIKnow}
               languagesWhatILearn={props.languagesWhatILearn}
             />
-            {isEmpty && (
-              <p className={classes.emptyText()}>
-                You don&apos;t have any folders or decks. <br />
-                You can create a new folder or deck by clicking the plus button.
-              </p>
-            )}
-            {isFolders && (
+            {(isFolders || isFolder) && (
               <>
                 <h3 className={classes.foldersTitle()}>Folders</h3>
                 {props.folders && (
                   <div className={classes.folders()}>
+                    {isFolder && (
+                      <ParentFolder parentFolder={props.parentFolder} />
+                    )}
                     {props.folders.map((folder) => (
                       <Folder
                         key={folder.id}
@@ -202,8 +201,13 @@ export const Section = (props: Props): ReactElement => {
                 </div>
               </>
             )}
+            {isEmpty && (
+              <p className={classes.emptyText()}>
+                You don&apos;t have any folders or decks. <br />
+                You can create a new folder or deck by clicking the plus button.
+              </p>
+            )}
           </div>
-
           <DeckDraggableOverlay
             deck={props.decks?.find((deck) => deck.id === draggingDeckId)}
           />

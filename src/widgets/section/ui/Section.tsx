@@ -10,6 +10,7 @@ import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { DecksProvider, DraggableDeck } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
 import { routes } from "@/shared/routes";
+import { Alert } from "@/shared/ui/Alert";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
 import {
@@ -21,6 +22,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { ReactElement, useCallback, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { tv } from "tailwind-variants";
 import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
 import { DropdownMenu } from "./DropdownMenu";
@@ -111,12 +113,18 @@ export const Section = (props: Props): ReactElement => {
         const deckId = args.active.id as string;
         const toFolderId = args.over.id as string;
 
-        await moveDeck({
+        const result = await moveDeck({
           deckId,
           toFolderId: toFolderId === "home" ? undefined : toFolderId,
         });
-        await revalidateGetDeck(deckId);
-        setMovedDeckIds((prev): string[] => [...prev, deckId]);
+        if (result.ok) {
+          await revalidateGetDeck(deckId);
+          setMovedDeckIds((prev): string[] => [...prev, deckId]);
+        } else {
+          toast(<Alert message={result.data.message} type="error" />, {
+            hideProgressBar: true,
+          });
+        }
       }
       setDraggingDeckId(undefined);
     },

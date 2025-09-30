@@ -2,10 +2,15 @@
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import * as v from "valibot";
+import { conflictErrorSchema } from "../schemas/errors/conflict-error.schema";
+import { resultErrorSchema } from "../schemas/result-error.schema";
 
-const resultSchema = v.object({
-  message: v.string(),
-});
+const resultSchema = resultErrorSchema(
+  v.object({
+    message: v.string(),
+  }),
+  [conflictErrorSchema],
+);
 
 type Args = {
   deckId: string;
@@ -18,5 +23,5 @@ export async function moveDeck(args: Args) {
     body: args,
   });
 
-  return v.parse(resultSchema, result.data);
+  return v.parse(resultSchema, result);
 }

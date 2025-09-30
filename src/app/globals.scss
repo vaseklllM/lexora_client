@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+  /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+:root {
+  --toastify-toast-padding: 0px;
+}
+
+.Toastify__toast-container {
+  .Toastify__toast {
+    background-color: transparent;
+  }
+
+  .Toastify__close-button {
+    // color: var(--color-neutral);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .Toastify__toast-container {
+    .Toastify__close-button {
+      color: var(--color-neutral);
+    }
+  }
+}

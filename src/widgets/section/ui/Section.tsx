@@ -1,15 +1,28 @@
+"use client";
+
+import { revalidateGetDeck } from "@/api/deck/get-deck";
+import { moveDeck } from "@/api/deck/move-deck";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { IFolder } from "@/api/schemas/folder.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
-import { Deck, DecksProvider } from "@/features/deck";
+import { DecksProvider, DraggableDeck } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
-import { ReactElement, useMemo } from "react";
+import {
+  DndContext,
+  DragEndEvent,
+  DragStartEvent,
+  MouseSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
+import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
 import { DropdownMenu } from "./DropdownMenu";
 
 const classesSlots = tv({
@@ -48,12 +61,11 @@ interface Props {
 }
 
 export const Section = (props: Props): ReactElement => {
+  const [draggingDeckId, setDraggingDeckId] = useState<string | undefined>();
+  const [movedDeckIds, setMovedDeckIds] = useState<string[]>([]);
   const isFolders = props.folders && props.folders.length > 0;
-  const isDecks = props.decks && props.decks.length > 0;
 
   const isFolder = !!props.folder?.id;
-
-  const isEmpty = !isFolders && !isDecks;
 
   const classes = classesSlots({
     isFolder,
@@ -76,58 +88,126 @@ export const Section = (props: Props): ReactElement => {
     return routes.dashboard.url();
   }, [props.folder]);
 
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      delay: 250,
+      distance: 1,
+      tolerance: 10,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor);
+
+  const dragEndHandler = useCallback(
+    async (args: DragEndEvent) => {
+      if (
+        typeof args.over?.id === "string" &&
+        typeof args.active.id === "string"
+      ) {
+        const deckId = args.active.id as string;
+        const toFolderId = args.over.id as string;
+
+        await moveDeck({
+          deckId,
+          toFolderId,
+        });
+        await revalidateGetDeck(deckId);
+        setMovedDeckIds((prev): string[] => [...prev, deckId]);
+      }
+      setDraggingDeckId(undefined);
+    },
+    [setDraggingDeckId],
+  );
+
+  const dragStartHandler = useCallback(
+    (event: DragStartEvent) => {
+      if (typeof event.active.id === "string") {
+        setDraggingDeckId(event.active.id);
+      }
+    },
+    [setDraggingDeckId],
+  );
+
+  const dragCancelHandler = useCallback(() => {
+    setDraggingDeckId(undefined);
+  }, [setDraggingDeckId]);
+
+  const decks = useMemo((): IDeck[] | undefined => {
+    return props.decks?.filter((deck) => !movedDeckIds.includes(deck.id));
+  }, [props.decks, movedDeckIds]);
+
+  const isDecks = decks && decks.length > 0;
+  const isEmpty = !isFolders && !isDecks;
+
   return (
     <FoldersProvider>
       <DecksProvider>
-        <div className={classes.base({ className: props.className })}>
-          {isFolder && (
-            <div className={classes.header()}>
-              <ButtonBack href={backUrl} className={classes.buttonBack()} />
-              <FolderBreadcrumbs
-                className={classes.breadcrumbs()}
-                breadcrumbs={props.breadcrumbs}
-                lastItem={lastBreadcrumb}
-              />
-            </div>
-          )}
-          <DropdownMenu
-            className={classes.dropdownMenu()}
-            allLanguages={props.allLanguages}
-            folderId={props.folder?.id}
-            languagesWhatIKnow={props.languagesWhatIKnow}
-            languagesWhatILearn={props.languagesWhatILearn}
-          />
-          {isEmpty && (
-            <p className={classes.emptyText()}>
-              You don&apos;t have any folders or decks. <br />
-              You can create a new folder or deck by clicking the plus button.
-            </p>
-          )}
-          {isFolders && (
-            <>
-              <h3 className={classes.foldersTitle()}>Folders</h3>
-              {props.folders && (
-                <div className={classes.folders()}>
-                  {props.folders.map((folder) => (
-                    <Folder key={folder.id} folder={folder} />
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-          {isDecks && (
-            <>
-              <h3 className={classes.decksTitle()}>Decks</h3>
-              {props.decks && (
+        <DndContext
+          sensors={sensors}
+          onDragStart={dragStartHandler}
+          onDragEnd={dragEndHandler}
+          onDragCancel={dragCancelHandler}
+        >
+          <div className={classes.base({ className: props.className })}>
+            {isFolder && (
+              <div className={classes.header()}>
+                <ButtonBack href={backUrl} className={classes.buttonBack()} />
+                <FolderBreadcrumbs
+                  className={classes.breadcrumbs()}
+                  breadcrumbs={props.breadcrumbs}
+                  lastItem={lastBreadcrumb}
+                />
+              </div>
+            )}
+            <DropdownMenu
+              className={classes.dropdownMenu()}
+              allLanguages={props.allLanguages}
+              folderId={props.folder?.id}
+              languagesWhatIKnow={props.languagesWhatIKnow}
+              languagesWhatILearn={props.languagesWhatILearn}
+            />
+            {isEmpty && (
+              <p className={classes.emptyText()}>
+                You don&apos;t have any folders or decks. <br />
+                You can create a new folder or deck by clicking the plus button.
+              </p>
+            )}
+            {isFolders && (
+              <>
+                <h3 className={classes.foldersTitle()}>Folders</h3>
+                {props.folders && (
+                  <div className={classes.folders()}>
+                    {props.folders.map((folder) => (
+                      <Folder
+                        key={folder.id}
+                        folder={folder}
+                        isDragging={!!draggingDeckId}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+            {isDecks && (
+              <>
+                <h3 className={classes.decksTitle()}>Decks</h3>
                 <div className={classes.decks()}>
-                  {props.decks.map((deck) => (
-                    <Deck key={deck.id} deck={deck} />
-                  ))}
+                  {decks.map((deck) =>
+                    draggingDeckId !== deck.id ? (
+                      <DraggableDeck key={deck.id} deck={deck} />
+                    ) : (
+                      <div key={deck.id} />
+                    ),
+                  )}
                 </div>
-              )}
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+
+          <DeckDraggableOverlay
+            deck={props.decks?.find((deck) => deck.id === draggingDeckId)}
+          />
+        </DndContext>
       </DecksProvider>
     </FoldersProvider>
   );

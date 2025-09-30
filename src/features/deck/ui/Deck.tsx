@@ -4,15 +4,36 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { Deck as DeckEntity } from "@/entities/deck";
 import { routes } from "@/shared/routes";
 import { useRouter } from "next/navigation";
-import { memo, ReactElement, useCallback } from "react";
+import { HTMLAttributes, memo, ReactElement, Ref, useCallback } from "react";
+import { tv } from "tailwind-variants";
+import styles from "./style.module.scss";
 import { useButtons } from "./useButtons";
 
-export interface DeckProps {
+const classes = tv({
+  base: "",
+  variants: {
+    isDragging: {
+      true: styles.draggable,
+      false: "",
+    },
+    dragOverlay: {
+      true: "",
+      false: "",
+    },
+  },
+});
+
+export interface DeckProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   deck: IDeck;
+  isDragging?: boolean;
+  dragOverlay?: boolean;
+  ref?: Ref<HTMLDivElement>;
 }
 
 export const Deck = memo((props: DeckProps): ReactElement => {
+  const { deck, className, dragOverlay, isDragging, ...lastProps } = props;
+
   const buttons = useButtons(props);
   const router = useRouter();
 
@@ -30,10 +51,17 @@ export const Deck = memo((props: DeckProps): ReactElement => {
 
   return (
     <DeckEntity
-      deck={props.deck}
+      {...lastProps}
+      className={classes({
+        className,
+        dragOverlay,
+        isDragging,
+      })}
+      deck={deck}
       dottedDropdownButtons={buttons}
       onClick={clickHandler}
       onPlay={clickPlayHandler}
+      hover={isDragging}
     />
   );
 });

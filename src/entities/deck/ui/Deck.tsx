@@ -3,12 +3,12 @@ import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
 import { ButtonPlay } from "@/shared/ui/ButtonPlay";
 import { countOf } from "@/shared/utils/count-of";
 import { PercentMath } from "@/shared/utils/percent-math";
-import { ReactElement } from "react";
+import { HTMLAttributes, ReactElement, Ref } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
+    base: "bg-base-300 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4 transition-colors hover:bg-gray-300 dark:hover:bg-gray-700",
     header: "flex items-center gap-2",
     languageIcon: "text-2xl",
     name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
@@ -32,34 +32,47 @@ const classesSlots = tv({
         progress: "bg-base-content/10",
       },
     },
+    hover: {
+      true: "bg-gray-300",
+      false: "",
+    },
   },
 });
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   deck: IDeck;
   dottedDropdownButtons: DropdownItem[];
   onClick?: () => void;
   onPlay?: () => void;
+  ref?: Ref<HTMLDivElement>;
+  hover?: boolean;
 }
 
 export const Deck = (props: Props): ReactElement => {
+  const {
+    deck,
+    className,
+    dottedDropdownButtons,
+    onPlay,
+    hover,
+    ...lastProps
+  } = props;
+
   const classes = classesSlots({
-    isCards: props.deck.numberOfCards > 0,
+    isCards: deck.numberOfCards > 0,
+    hover,
   });
 
   const numberOfCardsProgress = PercentMath.calculate(
-    props.deck.numberOfCards,
-    props.deck.numberOfCardsLearned,
+    deck.numberOfCards,
+    deck.numberOfCardsLearned,
   );
 
   return (
-    <div
-      className={classes.base({ className: props.className })}
-      onClick={props.onClick}
-    >
+    <div {...lastProps} className={classes.base({ className })}>
       <DropdownMenu
-        items={props.dottedDropdownButtons}
+        items={dottedDropdownButtons}
         className={classes.dottedButton()}
         buttonType="dotted"
         listPosition="end"
@@ -67,15 +80,15 @@ export const Deck = (props: Props): ReactElement => {
       />
       <div className={classes.header()}>
         <span className={classes.languageIcon()}>
-          {props.deck.languageWhatILearn.iconSymbol}
+          {deck.languageWhatILearn.iconSymbol}
         </span>
-        <p className={classes.name()}>{props.deck.name}</p>
+        <p className={classes.name()}>{deck.name}</p>
       </div>
       <div className={classes.content()}>
         <div className={classes.progressContent()}>
           <div className={classes.progressContentText()}>
             <p className={classes.numberOfCards()}>
-              {countOf(props.deck.numberOfCards, "card")}
+              {countOf(deck.numberOfCards, "card")}
             </p>
             <p className={classes.numberOfCardsProgress()}>
               {numberOfCardsProgress}%
@@ -87,10 +100,7 @@ export const Deck = (props: Props): ReactElement => {
             max="100"
           ></progress>
         </div>
-        <ButtonPlay
-          disabled={props.deck.numberOfCards === 0}
-          onClick={props.onPlay}
-        />
+        <ButtonPlay disabled={deck.numberOfCards === 0} onClick={onPlay} />
       </div>
     </div>
   );

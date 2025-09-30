@@ -1,0 +1,17 @@
+.draggable {
+  --box-shadow:
+    -1px 0 15px 0 rgba(34, 33, 81, 0.01), 0px 15px 15px 0 rgba(34, 33, 81, 0.25);
+
+  animation: pop 250ms cubic-bezier(0.18, 0.67, 0.6, 1.22) forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+  100% {
+    transform: scale(1.06);
+    box-shadow: var(--box-shadow);
+  }
+}

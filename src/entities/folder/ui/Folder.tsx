@@ -2,12 +2,12 @@ import { IFolder } from "@/api/schemas/folder.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
-import { ReactElement } from "react";
+import { ReactElement, Ref } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 hover:bg-base-content/15 relative flex cursor-pointer flex-col gap-2 rounded-lg p-3 pr-4 pl-4",
+    base: "border-base-300 bg-base-300 hover:bg-base-content/15 hover:border-base-content/0 transition-border relative flex cursor-pointer flex-col gap-2 rounded-lg border-2 p-3 pr-4 pl-4 duration-150",
     header: "flex items-center gap-2",
     folderIcon: "min-h-6 min-w-6",
     dottedButton: "absolute top-2 right-2",
@@ -36,6 +36,7 @@ interface Props {
   folder: IFolder;
   dottedDropdownButtons: DropdownItem[];
   onClick?: () => void;
+  ref?: Ref<HTMLDivElement>;
 }
 
 export const Folder = (props: Props): ReactElement => {
@@ -45,6 +46,7 @@ export const Folder = (props: Props): ReactElement => {
     <div
       className={classes.base({ className: props.className })}
       onClick={props.onClick}
+      ref={props.ref}
     >
       <DropdownMenu
         items={props.dottedDropdownButtons}

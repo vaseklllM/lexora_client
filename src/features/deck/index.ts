@@ -1,2 +1,3 @@
 export { Deck } from "./ui/Deck";
 export { DecksProvider } from "./ui/DecksProvider";
+export { DraggableDeck } from "./ui/DraggableDeck";

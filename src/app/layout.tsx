@@ -38,30 +38,6 @@ export default function RootLayout(
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          <div className="ball-holder">
-            <div className="ball"></div>
-          </div>
-          <style>
-            {`
-              .ball {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(teal, #000);
-  }
-
-  .ball {
-    display: block;
-    transition: all 2s;
-  }
-
-  .ball-holder:hover .ball {
-    transform: translateX(calc(100vw - 80px)) rotate(360deg);
-  }
-            `}
-          </style>
-        </div>
         <NextAuthProvider>{children}</NextAuthProvider>
         <ToastContainer position="bottom-left" />
       </body>

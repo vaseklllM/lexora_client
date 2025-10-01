@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    cefr: "flex h-8 w-8 items-center justify-center rounded-full border-1 text-sm",
+    cefr: "flex h-8 w-8 items-center justify-center rounded-full border-1 text-sm opacity-80",
   },
 });
 

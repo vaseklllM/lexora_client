@@ -3,6 +3,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 
@@ -26,31 +27,31 @@ const classesSlots = tv({
         card: "",
       },
       cardTwo: {
-        cardOne: "-left-200 opacity-0",
+        cardOne: "-left-150 opacity-0",
         cardTwo: "top-0 left-0 z-4",
         cardThree: "top-1 left-1 z-3",
         cardFour: "top-2 left-2 z-2",
         cardFive: "top-3 left-3 z-1",
       },
       cardThree: {
-        cardOne: "-left-200 opacity-0",
-        cardTwo: "-left-201 opacity-0",
+        cardOne: "-left-150 opacity-0",
+        cardTwo: "-left-151 opacity-0",
         cardThree: "top-0 left-0 z-3",
         cardFour: "top-1 left-1 z-2",
         cardFive: "top-2 left-2 z-1",
       },
       cardFour: {
-        cardOne: "-left-200 opacity-0",
-        cardTwo: "-left-201 opacity-0",
-        cardThree: "-left-202 opacity-0",
+        cardOne: "-left-150 opacity-0",
+        cardTwo: "-left-151 opacity-0",
+        cardThree: "-left-152 opacity-0",
         cardFour: "top-0 left-0 z-2",
         cardFive: "top-1 left-1 z-1",
       },
       cardFive: {
-        cardOne: "-left-200 opacity-0",
-        cardTwo: "-left-201 opacity-0",
-        cardThree: "-left-202 opacity-0",
-        cardFour: "-left-203 opacity-0",
+        cardOne: "-left-150 opacity-0",
+        cardTwo: "-left-151 opacity-0",
+        cardThree: "-left-152 opacity-0",
+        cardFour: "-left-153 opacity-0",
         cardFive: "top-0 left-0 z-1",
       },
     },
@@ -64,19 +65,44 @@ interface Props {
 
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const classes = classesSlots({
     activeCard: getCardEnum(activeCardIdx),
   });
 
   const handlePreviousCard = useCallback(() => {
-    setActiveCardIdx(
-      (prev) => (prev - 1 + props.cards.length) % props.cards.length,
-    );
+    setIsPlaying(true);
+    setActiveCardIdx((prev) => {
+      const prevIdx = (prev - 1 + props.cards.length) % props.cards.length;
+
+      sleep(600).then(() => {
+        const audio = new Audio(props.cards[prevIdx].soundUrls[0]);
+        audio.play();
+        audio.onended = () => {
+          setIsPlaying(false);
+        };
+      });
+
+      return prevIdx;
+    });
   }, [setActiveCardIdx]);
 
   const handleNextCard = useCallback(() => {
-    setActiveCardIdx((prev) => (prev + 1) % props.cards.length);
+    setIsPlaying(true);
+    setActiveCardIdx((prev) => {
+      const nextIdx = (prev + 1) % props.cards.length;
+
+      sleep(600).then(() => {
+        const audio = new Audio(props.cards[nextIdx].soundUrls[0]);
+        audio.play();
+        audio.onended = () => {
+          setIsPlaying(false);
+        };
+      });
+
+      return nextIdx;
+    });
   }, [setActiveCardIdx]);
 
   return (
@@ -88,7 +114,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         className={classes.button({ className: classes.buttonArrowLeft() })}
         iconWidth="24px"
         iconHeight="24px"
-        disabled={activeCardIdx === 0}
+        disabled={activeCardIdx === 0 || isPlaying}
         onClick={handlePreviousCard}
       />
       <div className={classes.cards()}>
@@ -124,7 +150,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         iconWidth="24px"
         iconHeight="24px"
         onClick={handleNextCard}
-        disabled={activeCardIdx === props.cards.length - 1}
+        disabled={activeCardIdx === props.cards.length - 1 || isPlaying}
       />
     </div>
   );

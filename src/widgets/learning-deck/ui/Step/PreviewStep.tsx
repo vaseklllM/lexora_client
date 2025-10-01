@@ -4,7 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -61,49 +61,61 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const classes = classesSlots({
     activeCard: getCardEnum(activeCardIdx),
   });
 
-  const handlePreviousCard = useCallback(() => {
-    setIsPlaying(true);
-    setActiveCardIdx((prev) => {
-      const prevIdx = (prev - 1 + props.cards.length) % props.cards.length;
-
-      sleep(600).then(() => {
-        const audio = new Audio(props.cards[prevIdx].soundUrls[0]);
-        audio.play();
-        audio.onended = () => {
-          setIsPlaying(false);
-        };
-      });
-
-      return prevIdx;
+  useEffect(() => {
+    sleep(600).then(() => {
+      const audio = new Audio(props.cards[0].soundUrls[0]);
+      audio.play();
+      audio.onended = () => {
+        setIsPlaying(false);
+      };
     });
-  }, [setActiveCardIdx]);
+  }, []);
 
-  const handleNextCard = useCallback(() => {
+  const handlePreviousCard = useCallback(async () => {
     setIsPlaying(true);
-    setActiveCardIdx((prev) => {
-      const nextIdx = (prev + 1) % props.cards.length;
+    const prevIdx =
+      (activeCardIdx - 1 + props.cards.length) % props.cards.length;
+    setActiveCardIdx(prevIdx);
 
-      sleep(600).then(() => {
-        const audio = new Audio(props.cards[nextIdx].soundUrls[0]);
-        audio.play();
-        audio.onended = () => {
-          setIsPlaying(false);
-        };
-      });
+    await sleep(600);
 
-      return nextIdx;
-    });
-  }, [setActiveCardIdx]);
+    const audio = new Audio(props.cards[prevIdx].soundUrls[0]);
+    audio.play();
+    audio.onended = () => {
+      setIsPlaying(false);
+    };
+  }, [setActiveCardIdx, activeCardIdx]);
+
+  const handleNextCard = useCallback(async () => {
+    setIsPlaying(true);
+
+    const nextIdx = activeCardIdx + 1;
+
+    if (nextIdx === props.cards.length) {
+      props.onFinish?.();
+      return;
+    }
+
+    setActiveCardIdx(nextIdx);
+
+    await sleep(600);
+    const audio = new Audio(props.cards[nextIdx].soundUrls[0]);
+    audio.play();
+    audio.onended = () => {
+      setIsPlaying(false);
+    };
+  }, [setActiveCardIdx, props.onFinish, activeCardIdx]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -150,7 +162,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         iconWidth="24px"
         iconHeight="24px"
         onClick={handleNextCard}
-        disabled={activeCardIdx === props.cards.length - 1 || isPlaying}
+        disabled={isPlaying}
       />
     </div>
   );

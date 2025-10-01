@@ -14,7 +14,7 @@ type State = {
 
 type Actions = {
   openStep(step: Step): void;
-  resetStep(): void;
+  reset(): void;
 };
 
 type Store = State & Actions;
@@ -24,7 +24,7 @@ export const useLearningDeckStore = create<Store>((set) => ({
   openStep(step: Step) {
     set({ activeStep: step });
   },
-  resetStep() {
+  reset() {
     set({ activeStep: Step.PREVIEW });
   },
 }));

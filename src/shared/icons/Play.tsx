@@ -2,6 +2,8 @@ import { ReactElement } from "react";
 
 interface Props {
   className?: string;
+  width?: string;
+  height?: string;
 }
 
 export const PlayIcon = (props: Props): ReactElement => {
@@ -10,8 +12,8 @@ export const PlayIcon = (props: Props): ReactElement => {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="14px"
-      height="14px"
+      width={props.width || "14px"}
+      height={props.height || "14px"}
       viewBox="0 0 163.861 163.861"
       xmlSpace="preserve"
       className={props.className}

@@ -5,6 +5,7 @@ import { ArrowIcon } from "../icons/Arrow";
 import { CheckIcon } from "../icons/Check";
 import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
+import { PlayIcon } from "../icons/Play";
 import { PlusIcon } from "../icons/Plus";
 import { SoundIcon } from "../icons/Sound";
 
@@ -113,7 +114,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "delete"
     | "sound"
     | "arrow_left"
-    | "arrow_right";
+    | "arrow_right"
+    | "play";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
@@ -168,6 +170,7 @@ const iconClasses = tv({
     arrow: "",
     arrowLeft: "",
     arrowRight: "rotate-180",
+    play: "translate-x-0.5",
   },
 });
 
@@ -205,6 +208,15 @@ function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
                 ? classes.arrowLeft()
                 : classes.arrowRight(),
           })}
+        />
+      );
+
+    case "play":
+      return (
+        <PlayIcon
+          height={props.iconHeight || "14px"}
+          width={props.iconWidth || "14px"}
+          className={classes.play()}
         />
       );
   }

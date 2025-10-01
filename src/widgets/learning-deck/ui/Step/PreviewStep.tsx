@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 flex items-center justify-center gap-6 overflow-hidden rounded-xl p-6",
+    base: "",
     cards: "relative h-124 w-85",
     card: "transition-[left,top, opacity] absolute h-120 w-85 p-4 shadow-md/40 duration-600",
     cardOne: "top-0 left-0 z-5",

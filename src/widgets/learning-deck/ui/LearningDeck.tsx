@@ -15,7 +15,7 @@ const classesSlots = tv({
   slots: {
     base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
     header: "flex items-center gap-6",
-    step: "mt-10",
+    step: "mt-6",
   },
 });
 

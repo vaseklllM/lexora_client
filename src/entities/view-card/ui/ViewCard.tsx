@@ -14,7 +14,7 @@ const classesSlots = tv({
     frontSound: "",
     cefr: "text-base-content/40 text-sm",
     frontTitleTranslation:
-      "text-base-content/40 mt-2 max-w-full text-base break-words",
+      "text-base-content/40 mt-2 max-w-full text-center text-base break-words",
     frontDescriptionContainer:
       "bg-base-300 flex flex-col gap-2 rounded-xl p-2 break-words",
     frontDescription: "text-base-content text-center text-sm",

@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { AiIcon } from "../icons/Ai";
+import { ArrowIcon } from "../icons/Arrow";
 import { CheckIcon } from "../icons/Check";
 import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
@@ -104,11 +105,21 @@ type Color =
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  icon: "edit" | "check" | "cancel" | "ai" | "delete" | "sound";
+  icon:
+    | "edit"
+    | "check"
+    | "cancel"
+    | "ai"
+    | "delete"
+    | "sound"
+    | "arrow_left"
+    | "arrow_right";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
   tooltip?: string;
+  iconWidth?: string;
+  iconHeight?: string;
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
@@ -122,6 +133,8 @@ export const ButtonIcon = (props: Props): ReactElement => {
     textColor,
     children,
     tooltip,
+    iconWidth,
+    iconHeight,
     ...buttonProps
   } = props;
   const classes = classesSlots({ disabled, variant, color, textColor });
@@ -134,7 +147,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
       type={type}
     >
       {children}
-      <Icon icon={icon} />
+      <Icon icon={icon} iconWidth={iconWidth} iconHeight={iconHeight} />
     </button>
   );
 
@@ -152,10 +165,13 @@ export const ButtonIcon = (props: Props): ReactElement => {
 const iconClasses = tv({
   slots: {
     plus: "rotate-45",
+    arrow: "",
+    arrowLeft: "",
+    arrowRight: "rotate-180",
   },
 });
 
-function Icon(props: Pick<Props, "icon">) {
+function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
   const classes = iconClasses();
 
   switch (props.icon) {
@@ -176,5 +192,20 @@ function Icon(props: Pick<Props, "icon">) {
 
     case "sound":
       return <SoundIcon height="18px" width="18px" />;
+
+    case "arrow_left":
+    case "arrow_right":
+      return (
+        <ArrowIcon
+          height={props.iconHeight || "18px"}
+          width={props.iconWidth || "18px"}
+          className={classes.arrow({
+            className:
+              props.icon === "arrow_left"
+                ? classes.arrowLeft()
+                : classes.arrowRight(),
+          })}
+        />
+      );
   }
 }

@@ -2,13 +2,15 @@ import { ReactElement } from "react";
 
 interface Props {
   className?: string;
+  height?: string;
+  width?: string;
 }
 
 export const ArrowIcon = (props: Props): ReactElement => {
   return (
     <svg
-      width="24px"
-      height="24px"
+      width={props.width || "24px"}
+      height={props.height || "24px"}
       className={props.className}
       viewBox="0 0 24 24"
       fill="none"

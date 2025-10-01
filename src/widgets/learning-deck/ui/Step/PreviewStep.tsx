@@ -2,13 +2,42 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
-import { ReactElement } from "react";
+import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { ReactElement, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 flex flex-col items-center gap-4 rounded-xl p-6",
-    card: "h-120 w-85 p-4 shadow-xl",
+    base: "bg-base-300 flex items-center justify-center gap-6 rounded-xl p-6",
+    cards: "relative h-124 w-85",
+    card: "absolute h-120 w-85 p-4 shadow-md/40",
+    cardOne: "top-0 left-0 z-5",
+    cardTwo: "top-1 left-1 z-4",
+    cardThree: "top-2 left-2 z-3",
+    cardFour: "top-3 left-3 z-2",
+    cardFive: "top-4 left-4 z-1",
+    button: "z-6 h-12 w-12 shadow-lg/40",
+    buttonArrowLeft: "",
+    buttonArrowRight: "",
+  },
+  variants: {
+    activeCard: {
+      cardOne: {
+        card: "",
+      },
+      cardTwo: {
+        card: "",
+      },
+      cardThree: {
+        card: "",
+      },
+      cardFour: {
+        card: "",
+      },
+      cardFive: {
+        card: "",
+      },
+    },
   },
 });
 
@@ -18,15 +47,73 @@ interface Props {
 }
 
 export const PreviewStep = (props: Props): ReactElement => {
-  // const [activeId, setActiveId] = useState<string>(props.cards[0].id);
+  const [activeCardIdx, _setActiveCardIdx] = useState<number>(0);
 
-  const classes = classesSlots();
+  const classes = classesSlots({
+    activeCard: getCardEnum(activeCardIdx),
+  });
 
   return (
     <div className={classes.base({ className: props.className })}>
-      {props.cards.map((card) => (
-        <ViewCard key={card.id} card={card} className={classes.card()} />
-      ))}
+      <ButtonIcon
+        icon="arrow_left"
+        variant="soft"
+        color="primary"
+        className={classes.button({ className: classes.buttonArrowLeft() })}
+        iconWidth="24px"
+        iconHeight="24px"
+      />
+      <div className={classes.cards()}>
+        {props.cards.map((card, idx) => (
+          <ViewCard
+            key={card.id}
+            card={card}
+            className={classes.card({
+              className: (() => {
+                switch (idx) {
+                  case 0:
+                    return classes.cardOne();
+                  case 1:
+                    return classes.cardTwo();
+                  case 2:
+                    return classes.cardThree();
+                  case 3:
+                    return classes.cardFour();
+                  case 4:
+                    return classes.cardFive();
+                }
+              })(),
+            })}
+          />
+        ))}
+      </div>
+      <ButtonIcon
+        icon="arrow_right"
+        variant="soft"
+        color="accent"
+        className={classes.button({ className: classes.buttonArrowRight() })}
+        iconWidth="24px"
+        iconHeight="24px"
+      />
     </div>
   );
 };
+
+function getCardEnum(activeCardIdx: number) {
+  switch (activeCardIdx) {
+    case 0:
+      return "cardOne";
+
+    case 1:
+      return "cardTwo";
+
+    case 2:
+      return "cardThree";
+
+    case 3:
+      return "cardFour";
+
+    case 4:
+      return "cardFive";
+  }
+}

@@ -3,10 +3,8 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { ButtonBack } from "@/features/button-back";
-import { routes } from "@/shared/routes";
-import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
-import { useMemo } from "react";
 import { tv } from "tailwind-variants";
+import { useLastBreadcrumbs } from "./useLastBreadcrumbs";
 
 const classesSlots = tv({
   slots: {
@@ -18,28 +16,15 @@ const classesSlots = tv({
   },
 });
 
-interface Props {
+export interface LearningDeckProps {
   cards: ICard[];
   foldersBreadcrumbs: IFolderBreadcrumb[];
   deck: IDeck;
 }
 
-export function LearningDeck(props: Props) {
+export function LearningDeck(props: LearningDeckProps) {
   const classes = classesSlots();
-
-  const lastBreadcrumb = useMemo<Breadcrumb[]>(() => {
-    return [
-      {
-        icon: "deck",
-        title: `${props.deck.name} ${props.deck.languageWhatILearn.iconSymbol}`,
-        url: routes.dashboard.deck.url(props.deck.id),
-      },
-      {
-        title: "Learning deck",
-        url: routes.dashboard.learningDeck.url(props.deck.id),
-      },
-    ];
-  }, [props.deck.id, props.deck.name]);
+  const lastBreadcrumb = useLastBreadcrumbs(props);
 
   return (
     <div className={classes.base()}>

@@ -31,7 +31,12 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const finishFirstStepHandler = useCallback(() => {
+
+  const startHandler = useCallback(() => {
+    openStep(Step.PREVIEW);
+  }, [openStep]);
+
+  const finishReviewStepHandler = useCallback(() => {
     openStep(Step.PAIR_IT);
   }, [openStep]);
 
@@ -49,6 +54,8 @@ export const StepComponent = (props: Props): ReactElement | null => {
           className={classes.buttonStart()}
           iconWidth="48px"
           iconHeight="48px"
+          onClick={startHandler}
+          disabled={props.cards.length === 0}
         />
         <p className={classes.textStart()}>Click to start</p>
       </div>
@@ -61,7 +68,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
         <PreviewStep
           cards={props.cards}
           className={props.className}
-          onFinish={finishFirstStepHandler}
+          onFinish={finishReviewStepHandler}
         />
       );
 

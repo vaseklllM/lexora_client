@@ -2,7 +2,7 @@ export enum ErrorStatus {
   UNAUTHORIZED = 401,
   TOO_MANY_REQUESTS = 429,
   //   FORBIDDEN = 403,
-  //   NOT_FOUND = 404,
+  NOT_FOUND = 404,
   BAD_REQUEST = 400,
   CONFLICT = 409,
   //   INTERNAL_SERVER_ERROR = 500,

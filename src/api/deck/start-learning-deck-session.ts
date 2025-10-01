@@ -3,10 +3,15 @@
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import * as v from "valibot";
 import { cardSchema } from "../schemas/card.schema";
+import { notFoundErrorSchema } from "../schemas/errors/not-found-error.schema";
+import { resultErrorSchema } from "../schemas/result-error.schema";
 
-const resultSchema = v.object({
-  cards: v.array(cardSchema),
-});
+const resultSchema = resultErrorSchema(
+  v.object({
+    cards: v.array(cardSchema),
+  }),
+  [notFoundErrorSchema],
+);
 
 type Result = v.InferOutput<typeof resultSchema>;
 
@@ -21,5 +26,5 @@ export const startLearningDeckSession = async (args: Args): Promise<Result> => {
     params: args,
   });
 
-  return v.parse(resultSchema, result.data);
+  return v.parse(resultSchema, result);
 };

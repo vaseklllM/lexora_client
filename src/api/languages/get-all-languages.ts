@@ -16,6 +16,7 @@ export async function getAllLanguages() {
     next: {
       tags: [tag],
     },
+    cache: "force-cache",
   });
 
   return v.parse(resultSchema, result.data);

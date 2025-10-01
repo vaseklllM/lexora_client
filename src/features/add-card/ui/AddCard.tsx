@@ -47,6 +47,7 @@ export const AddCard = memo((props: Props): ReactElement => {
 
       if (result.ok) {
         await revalidateGetDeck(props.deckId);
+
         reset();
       } else {
         switch (result.data.statusCode) {

@@ -18,7 +18,6 @@ export async function getMyLanguages() {
     next: {
       tags: [tag],
     },
-    cache: "reload",
   });
 
   return v.parse(resultSchema, result.data);

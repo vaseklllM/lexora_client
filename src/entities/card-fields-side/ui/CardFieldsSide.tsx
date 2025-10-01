@@ -83,7 +83,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
 
   const word = watch("word");
 
-  const isWordChanged = word.trim() !== "" && word.trim().length > 1;
+  const isWordChanged = word.trim() !== "" && word.trim().length >= 1;
 
   const submitHandler = useCallback(
     async (inputs: CardFields) => {

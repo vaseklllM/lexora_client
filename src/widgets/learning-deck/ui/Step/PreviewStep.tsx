@@ -8,9 +8,9 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-300 flex items-center justify-center gap-6 rounded-xl p-6",
+    base: "bg-base-300 flex items-center justify-center gap-6 overflow-hidden rounded-xl p-6",
     cards: "relative h-124 w-85",
-    card: "absolute h-120 w-85 p-4 shadow-md/40",
+    card: "transition-[left,top, opacity] absolute h-120 w-85 p-4 shadow-md/40 duration-600",
     cardOne: "top-0 left-0 z-5",
     cardTwo: "top-1 left-1 z-4",
     cardThree: "top-2 left-2 z-3",
@@ -26,16 +26,32 @@ const classesSlots = tv({
         card: "",
       },
       cardTwo: {
-        card: "",
+        cardOne: "-left-200 opacity-0",
+        cardTwo: "top-0 left-0 z-4",
+        cardThree: "top-1 left-1 z-3",
+        cardFour: "top-2 left-2 z-2",
+        cardFive: "top-3 left-3 z-1",
       },
       cardThree: {
-        card: "",
+        cardOne: "-left-200 opacity-0",
+        cardTwo: "-left-201 opacity-0",
+        cardThree: "top-0 left-0 z-3",
+        cardFour: "top-1 left-1 z-2",
+        cardFive: "top-2 left-2 z-1",
       },
       cardFour: {
-        card: "",
+        cardOne: "-left-200 opacity-0",
+        cardTwo: "-left-201 opacity-0",
+        cardThree: "-left-202 opacity-0",
+        cardFour: "top-0 left-0 z-2",
+        cardFive: "top-1 left-1 z-1",
       },
       cardFive: {
-        card: "",
+        cardOne: "-left-200 opacity-0",
+        cardTwo: "-left-201 opacity-0",
+        cardThree: "-left-202 opacity-0",
+        cardFour: "-left-203 opacity-0",
+        cardFive: "top-0 left-0 z-1",
       },
     },
   },

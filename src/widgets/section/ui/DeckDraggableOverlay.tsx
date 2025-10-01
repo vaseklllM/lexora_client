@@ -2,7 +2,7 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { Deck } from "@/features/deck";
 import { DragOverlay, DropAnimation, useDndContext } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { ReactElement } from "react";
+import { memo, ReactElement } from "react";
 
 const dropAnimationConfig: DropAnimation = {
   keyframes({ transform }) {
@@ -67,7 +67,7 @@ interface Props {
   deck?: IDeck;
 }
 
-export const DeckDraggableOverlay = (props: Props): ReactElement => {
+export const DeckDraggableOverlay = memo((props: Props): ReactElement => {
   const { active } = useDndContext();
 
   return (
@@ -75,4 +75,6 @@ export const DeckDraggableOverlay = (props: Props): ReactElement => {
       {active && <Deck deck={props.deck!} isDragging dragOverlay />}
     </DragOverlay>
   );
-};
+});
+
+DeckDraggableOverlay.displayName = "DeckDraggableOverlay";

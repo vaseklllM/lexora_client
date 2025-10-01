@@ -15,7 +15,6 @@ const classes = tv({
       false: "",
     },
     dragOverlay: {
-      // true: "shadow-xl/20",
       true: "",
       false: "",
     },

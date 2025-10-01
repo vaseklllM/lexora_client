@@ -23,7 +23,8 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 shadow-md",
+    base: "bg-base-200 relative shadow-md sm:rounded-xl sm:p-5",
+    headerSection: "px-5 pt-5 sm:p-0 sm:pt-0",
     header: "flex items-center gap-6",
     buttonBack: "",
     breadcrumbs: "",
@@ -32,7 +33,7 @@ const classesSlots = tv({
     cardsTitle: "text-base-content/70 mt-6 text-xl font-bold",
     emptyCards: "text-base-content/50 text-md mt-16 mb-20 text-center",
     cards:
-      "bg-base-300 mt-4 grid grid-cols-1 gap-6 rounded-xl p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
+      "bg-base-300 mt-4 grid grid-cols-1 gap-6 p-5 p-6 sm:rounded-xl md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
   },
 });
 
@@ -83,36 +84,38 @@ export const DeckSection = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <div className={classes.header()}>
-        <ButtonBack
-          foldersBreadcrumbs={props.foldersBreadcrumbs}
-          className={classes.buttonBack()}
+      <div className={classes.headerSection()}>
+        <div className={classes.header()}>
+          <ButtonBack
+            foldersBreadcrumbs={props.foldersBreadcrumbs}
+            className={classes.buttonBack()}
+          />
+          <FolderBreadcrumbs
+            className={classes.breadcrumbs()}
+            breadcrumbs={props.foldersBreadcrumbs}
+            lastItem={lastBreadcrumb}
+          />
+        </div>
+        <EditableText
+          text={props.deck.name}
+          className={classes.name()}
+          placeholder="Enter deck name"
+          onSave={saveDeckName}
         />
-        <FolderBreadcrumbs
-          className={classes.breadcrumbs()}
-          breadcrumbs={props.foldersBreadcrumbs}
-          lastItem={lastBreadcrumb}
-        />
+        <div className="divider"></div>
+        <p className={classes.language()}>
+          <span className="text-base-content/70">I learn:</span>{" "}
+          {props.deck.languageWhatILearn.name}{" "}
+          {props.deck.languageWhatILearn.iconSymbol}
+        </p>
+        <p className={classes.language()}>
+          <span className="text-base-content/70">I know:</span>{" "}
+          {props.deck.languageWhatIKnow.name}{" "}
+          {props.deck.languageWhatIKnow.iconSymbol}
+        </p>
+        <div className="divider"></div>
+        <h3 className={classes.cardsTitle()}>Cards</h3>
       </div>
-      <EditableText
-        text={props.deck.name}
-        className={classes.name()}
-        placeholder="Enter deck name"
-        onSave={saveDeckName}
-      />
-      <div className="divider"></div>
-      <p className={classes.language()}>
-        <span className="text-base-content/70">I learn:</span>{" "}
-        {props.deck.languageWhatILearn.name}{" "}
-        {props.deck.languageWhatILearn.iconSymbol}
-      </p>
-      <p className={classes.language()}>
-        <span className="text-base-content/70">I know:</span>{" "}
-        {props.deck.languageWhatIKnow.name}{" "}
-        {props.deck.languageWhatIKnow.iconSymbol}
-      </p>
-      <div className="divider"></div>
-      <h3 className={classes.cardsTitle()}>Cards</h3>
       <div className={classes.cards()}>
         <AddCard
           languageWhatILearn={props.deck.languageWhatILearn}

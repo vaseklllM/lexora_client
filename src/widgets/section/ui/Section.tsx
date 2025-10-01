@@ -20,7 +20,7 @@ import { ParentFolder } from "./ParentFolder";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-18 pl-5 shadow-md",
+    base: "bg-base-200 relative p-5 pr-5 pb-18 pl-5 shadow-md sm:rounded-xl",
     header: "flex items-center gap-6",
     buttonBack: "",
     breadcrumbs: "",

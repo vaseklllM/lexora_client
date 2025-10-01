@@ -42,6 +42,7 @@ export const AddCard = memo((props: Props): ReactElement => {
         textInLearningLanguage: inputs.word,
         descriptionInKnownLanguage: inputs.exampleTranslation,
         descriptionInLearningLanguage: inputs.example,
+        cefr: inputs.cefr,
       });
 
       if (result.ok) {

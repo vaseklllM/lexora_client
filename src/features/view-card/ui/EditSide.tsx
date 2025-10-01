@@ -30,12 +30,14 @@ export const EditSide = (props: Props): ReactElement => {
       translation: props.card.textInKnownLanguage,
       example: props.card.descriptionInLearningLanguage,
       exampleTranslation: props.card.descriptionInKnownLanguage,
+      cefr: props.card.cefr,
     };
   }, [
     props.card.textInLearningLanguage,
     props.card.textInKnownLanguage,
     props.card.descriptionInLearningLanguage,
     props.card.descriptionInKnownLanguage,
+    props.card.cefr,
   ]);
 
   const onSubmit = useCallback<CardFieldsSideSubmitHandler>(
@@ -44,7 +46,8 @@ export const EditSide = (props: Props): ReactElement => {
         inputs.word === defaultValues?.word &&
         inputs.translation === defaultValues?.translation &&
         inputs.example === defaultValues?.example &&
-        inputs.exampleTranslation === defaultValues?.exampleTranslation
+        inputs.exampleTranslation === defaultValues?.exampleTranslation &&
+        inputs.cefr === defaultValues?.cefr
       ) {
         props.onOpenFront();
         return;
@@ -56,6 +59,7 @@ export const EditSide = (props: Props): ReactElement => {
         textInLearningLanguage: inputs.word,
         descriptionInKnownLanguage: inputs.exampleTranslation,
         descriptionInLearningLanguage: inputs.example,
+        cefr: inputs.cefr,
       });
 
       if (result.ok) {

@@ -2,7 +2,7 @@
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
 import * as v from "valibot";
-import { cardSchema } from "../schemas/card.schema";
+import { cardSchema, Cefr } from "../schemas/card.schema";
 import { badRequestErrorSchema } from "../schemas/errors/bad-request-error.schema";
 import { resultErrorSchema } from "../schemas/result-error.schema";
 
@@ -23,6 +23,7 @@ interface Args {
   textInLearningLanguage: string;
   descriptionInKnownLanguage?: string;
   descriptionInLearningLanguage?: string;
+  cefr: Cefr;
 }
 
 export const createCard = async (args: Args): Promise<Result> => {

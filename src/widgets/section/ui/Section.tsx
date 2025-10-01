@@ -21,7 +21,15 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  memo,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import { tv } from "tailwind-variants";
 import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
@@ -37,19 +45,10 @@ const classesSlots = tv({
     title: "text-base-content/70 text-xl font-bold",
     emptyText: "text-base-content/50 text-md mt-16 mb-20 text-center",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
-    foldersTitle: "text-base-content/70 text-xl font-bold",
     folders:
       "mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
-    decksTitle: "text-base-content/70 mt-6 text-xl font-bold",
     decks:
       "mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
-  },
-  variants: {
-    isFolder: {
-      true: {
-        foldersTitle: "mt-6",
-      },
-    },
   },
 });
 
@@ -73,9 +72,7 @@ export const Section = (props: Props): ReactElement => {
 
   const isFolder = !!props.folder?.id;
 
-  const classes = classesSlots({
-    isFolder,
-  });
+  const classes = classesSlots();
 
   const lastBreadcrumb = useMemo((): Breadcrumb | undefined => {
     if (props.folder) {
@@ -94,60 +91,44 @@ export const Section = (props: Props): ReactElement => {
     return routes.dashboard.url();
   }, [props.parentFolder?.id]);
 
-  const mouseSensor = useSensor(MouseSensor, {
-    activationConstraint: {
-      delay: 250,
-      distance: 1,
-      tolerance: 10,
-    },
-  });
-
-  const sensors = useSensors(mouseSensor);
-
   // Clear moved decks when folder changes to prevent memory leaks
   useEffect(() => {
     setMovedDeckIds([]);
   }, [props.folder?.id]);
 
-  const dragEndHandler = useCallback(
-    async (args: DragEndEvent) => {
-      if (
-        typeof args.over?.id === "string" &&
-        typeof args.active.id === "string"
-      ) {
-        const deckId = args.active.id as string;
-        const toFolderId = args.over.id as string;
+  const dragEndHandler = useCallback(async (args: DragEndEvent) => {
+    if (
+      typeof args.over?.id === "string" &&
+      typeof args.active.id === "string"
+    ) {
+      const deckId = args.active.id as string;
+      const toFolderId = args.over.id as string;
 
-        const result = await moveDeck({
-          deckId,
-          toFolderId: toFolderId === "home" ? undefined : toFolderId,
+      const result = await moveDeck({
+        deckId,
+        toFolderId: toFolderId === "home" ? undefined : toFolderId,
+      });
+      if (result.ok) {
+        await revalidateGetDeck(deckId);
+        setMovedDeckIds((prev): string[] => [...prev, deckId]);
+      } else {
+        toast(<Alert message={result.data.message} type="error" />, {
+          hideProgressBar: true,
         });
-        if (result.ok) {
-          await revalidateGetDeck(deckId);
-          setMovedDeckIds((prev): string[] => [...prev, deckId]);
-        } else {
-          toast(<Alert message={result.data.message} type="error" />, {
-            hideProgressBar: true,
-          });
-        }
       }
-      setDraggingDeckId(undefined);
-    },
-    [setDraggingDeckId],
-  );
+    }
+    setDraggingDeckId(undefined);
+  }, []);
 
-  const dragStartHandler = useCallback(
-    (event: DragStartEvent) => {
-      if (typeof event.active.id === "string") {
-        setDraggingDeckId(event.active.id);
-      }
-    },
-    [setDraggingDeckId],
-  );
+  const dragStartHandler = useCallback((event: DragStartEvent) => {
+    if (typeof event.active.id === "string") {
+      setDraggingDeckId(event.active.id);
+    }
+  }, []);
 
   const dragCancelHandler = useCallback(() => {
     setDraggingDeckId(undefined);
-  }, [setDraggingDeckId]);
+  }, []);
 
   const decks = useMemo((): IDeck[] | undefined => {
     return props.decks?.filter((deck) => !movedDeckIds.includes(deck.id));
@@ -159,8 +140,7 @@ export const Section = (props: Props): ReactElement => {
   return (
     <FoldersProvider>
       <DecksProvider>
-        <DndContext
-          sensors={sensors}
+        <DndKitProvider
           onDragStart={dragStartHandler}
           onDragEnd={dragEndHandler}
           onDragCancel={dragCancelHandler}
@@ -186,7 +166,6 @@ export const Section = (props: Props): ReactElement => {
             />
             {(isFolders || isFolder) && (
               <>
-                {/* <h3 className={classes.foldersTitle()}>Folders</h3> */}
                 {props.folders && (
                   <div className={classes.folders()}>
                     {isFolder && (
@@ -201,7 +180,6 @@ export const Section = (props: Props): ReactElement => {
             )}
             {isDecks && (
               <>
-                {/* <h3 className={classes.decksTitle()}>Decks</h3> */}
                 <div className={classes.decks()}>
                   {decks.map((deck) =>
                     draggingDeckId !== deck.id ? (
@@ -223,8 +201,40 @@ export const Section = (props: Props): ReactElement => {
           <DeckDraggableOverlay
             deck={props.decks?.find((deck) => deck.id === draggingDeckId)}
           />
-        </DndContext>
+        </DndKitProvider>
       </DecksProvider>
     </FoldersProvider>
   );
 };
+
+const DndKitProvider = memo(
+  (props: {
+    children: ReactNode;
+    onDragStart: (event: DragStartEvent) => void;
+    onDragEnd: (event: DragEndEvent) => void;
+    onDragCancel: () => void;
+  }) => {
+    const mouseSensor = useSensor(MouseSensor, {
+      activationConstraint: {
+        delay: 250,
+        distance: 1,
+        tolerance: 10,
+      },
+    });
+
+    const sensors = useSensors(mouseSensor);
+
+    return (
+      <DndContext
+        sensors={sensors}
+        onDragStart={props.onDragStart}
+        onDragEnd={props.onDragEnd}
+        onDragCancel={props.onDragCancel}
+      >
+        {props.children}
+      </DndContext>
+    );
+  },
+);
+
+DndKitProvider.displayName = "DndKitProvider";

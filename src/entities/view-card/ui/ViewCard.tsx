@@ -55,6 +55,7 @@ interface Props {
   card: ICard;
   iconButtons?: ReactNode;
   descriptionWrapperClassName?: string;
+  disabled?: boolean;
 }
 
 export const ViewCard = memo((props: Props): ReactElement => {
@@ -90,6 +91,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               icon="sound"
               variant="ghost"
               color="primary"
+              disabled={props.disabled}
               onClick={() => {
                 const audio = new Audio(soundUrl);
                 audio.play();

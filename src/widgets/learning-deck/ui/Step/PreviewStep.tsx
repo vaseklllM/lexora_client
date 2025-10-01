@@ -16,7 +16,7 @@ const classesSlots = tv({
     cardThree: "top-2 left-2 z-3",
     cardFour: "top-3 left-3 z-2",
     cardFive: "top-4 left-4 z-1",
-    button: "z-6 h-12 w-12 shadow-lg/40",
+    button: "z-6 h-12 w-12 shadow-md/30",
     buttonArrowLeft: "",
     buttonArrowRight: "",
   },
@@ -68,6 +68,7 @@ export const PreviewStep = (props: Props): ReactElement => {
           <ViewCard
             key={card.id}
             card={card}
+            disabled={idx !== activeCardIdx}
             className={classes.card({
               className: (() => {
                 switch (idx) {

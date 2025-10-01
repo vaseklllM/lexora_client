@@ -12,7 +12,7 @@ export const cardFieldsSchema = v.object({
     noOnlySpacesStringSchema("Word is required"),
     v.custom(
       (value): value is string =>
-        typeof value === "string" && value.trim().length > 1,
+        typeof value === "string" && value.trim().length >= 1,
       "Word is too short",
     ),
     v.maxLength(

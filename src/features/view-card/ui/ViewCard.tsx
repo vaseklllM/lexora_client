@@ -2,6 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { Card, CardSide } from "@/entities/card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { Cerf } from "@/shared/ui/Cefr";
 import { sleep } from "@/shared/utils/sleep";
 import { memo, ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
@@ -113,7 +114,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
         <div className={classes.front()}>
           {isNativeSound && (
             <div className={classes.headerRow()}>
-              <p className={classes.cefr()}>{props.card.cefr}</p>
+              <Cerf cefr={props.card.cefr} />
               {props.card.soundUrls.map((soundUrl, idx) => (
                 <ButtonIcon
                   key={idx}

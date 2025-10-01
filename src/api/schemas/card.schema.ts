@@ -34,7 +34,7 @@ export const cardSchema = v.object({
       }),
     ),
   ),
-  cefr: v.optional(v.enum(Cefr)),
+  cefr: v.enum(Cefr),
 });
 
 export type ICard = v.InferOutput<typeof cardSchema>;

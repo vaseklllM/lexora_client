@@ -4,8 +4,9 @@ import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
+import { Step, useLearningDeckStore } from "../../model/store";
 
 const classesSlots = tv({
   slots: {
@@ -67,20 +68,23 @@ interface Props {
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const step = useLearningDeckStore((state) => state.activeStep);
 
   const classes = classesSlots({
     activeCard: getCardEnum(activeCardIdx),
   });
 
-  // useEffect(() => {
-  //   sleep(600).then(() => {
-  //     const audio = new Audio(props.cards[0].soundUrls[0]);
-  //     audio.play();
-  //     audio.onended = () => {
-  //       setIsPlaying(false);
-  //     };
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (step === Step.PREVIEW) {
+      sleep(1000).then(() => {
+        const audio = new Audio(props.cards[0].soundUrls[0]);
+        audio.play();
+        audio.onended = () => {
+          setIsPlaying(false);
+        };
+      });
+    }
+  }, [step]);
 
   const handlePreviousCard = useCallback(async () => {
     setIsPlaying(true);

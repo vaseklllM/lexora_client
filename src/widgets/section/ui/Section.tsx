@@ -21,7 +21,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { ReactElement, useCallback, useMemo, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { tv } from "tailwind-variants";
 import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
@@ -92,7 +92,7 @@ export const Section = (props: Props): ReactElement => {
       return routes.dashboard.folder.url(props.parentFolder.id);
     }
     return routes.dashboard.url();
-  }, [props.folder]);
+  }, [props.parentFolder?.id]);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -103,6 +103,11 @@ export const Section = (props: Props): ReactElement => {
   });
 
   const sensors = useSensors(mouseSensor);
+
+  // Clear moved decks when folder changes to prevent memory leaks
+  useEffect(() => {
+    setMovedDeckIds([]);
+  }, [props.folder?.id]);
 
   const dragEndHandler = useCallback(
     async (args: DragEndEvent) => {

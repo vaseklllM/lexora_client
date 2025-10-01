@@ -3,7 +3,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { ReactElement, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -47,11 +47,21 @@ interface Props {
 }
 
 export const PreviewStep = (props: Props): ReactElement => {
-  const [activeCardIdx, _setActiveCardIdx] = useState<number>(0);
+  const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
 
   const classes = classesSlots({
     activeCard: getCardEnum(activeCardIdx),
   });
+
+  const handlePreviousCard = useCallback(() => {
+    setActiveCardIdx(
+      (prev) => (prev - 1 + props.cards.length) % props.cards.length,
+    );
+  }, [setActiveCardIdx]);
+
+  const handleNextCard = useCallback(() => {
+    setActiveCardIdx((prev) => (prev + 1) % props.cards.length);
+  }, [setActiveCardIdx]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -62,6 +72,8 @@ export const PreviewStep = (props: Props): ReactElement => {
         className={classes.button({ className: classes.buttonArrowLeft() })}
         iconWidth="24px"
         iconHeight="24px"
+        disabled={activeCardIdx === 0}
+        onClick={handlePreviousCard}
       />
       <div className={classes.cards()}>
         {props.cards.map((card, idx) => (
@@ -95,6 +107,8 @@ export const PreviewStep = (props: Props): ReactElement => {
         className={classes.button({ className: classes.buttonArrowRight() })}
         iconWidth="24px"
         iconHeight="24px"
+        onClick={handleNextCard}
+        disabled={activeCardIdx === props.cards.length - 1}
       />
     </div>
   );

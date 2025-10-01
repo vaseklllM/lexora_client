@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
 export enum Step {
-  START,
-  PREVIEW,
-  PAIR_IT,
-  GUESS_IT,
-  RECALL_IT,
-  TYPE_IT,
+  START = "start",
+  PREVIEW = "preview",
+  PAIR_IT = "pairIt",
+  GUESS_IT = "guessIt",
+  RECALL_IT = "recallIt",
+  TYPE_IT = "typeIt",
 }
 
 type State = {

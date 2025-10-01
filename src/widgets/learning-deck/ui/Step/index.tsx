@@ -10,15 +10,28 @@ const classesSlots = tv({
   slots: {
     base: "",
     content:
-      "bg-base-300 mt-6 flex min-h-124 items-center justify-center overflow-hidden rounded-xl p-6",
+      "bg-base-300 relative mt-6 min-h-142 overflow-hidden rounded-xl p-6",
     buttonStart: "h-28 w-28",
     textStart: "text-base-content/80 text-lg font-bold",
+    step: "absolute top-0 flex h-full w-full transition-[left] duration-600",
+    stepStart: "left-0 flex-col items-center justify-center gap-6",
+    stepPreview: "left-[100%]",
+    stepPairIt: "",
+    stepGuessIt: "",
+    stepRecallIt: "",
+    stepTypeIt: "",
   },
   variants: {
     step: {
-      start: {
-        content: "flex-col gap-6",
+      start: {},
+      preview: {
+        stepStart: "-left-[100%]",
+        stepPreview: "left-0",
       },
+      pairIt: {},
+      guessIt: {},
+      recallIt: {},
+      typeIt: {},
     },
   },
 });
@@ -41,45 +54,31 @@ export const StepComponent = (props: Props): ReactElement | null => {
   }, [openStep]);
 
   const classes = classesSlots({
-    step: getStepEnum(step),
+    step,
   });
 
   return (
     <div className={classes.base({ className: props.className })}>
       <StepsHeader />
       <div className={classes.content()}>
-        <ButtonIcon
-          color="primary"
-          icon="play"
-          className={classes.buttonStart()}
-          iconWidth="48px"
-          iconHeight="48px"
-          onClick={startHandler}
-          disabled={props.cards.length === 0}
+        <div className={classes.step({ className: classes.stepStart() })}>
+          <ButtonIcon
+            color="primary"
+            icon="play"
+            className={classes.buttonStart()}
+            iconWidth="48px"
+            iconHeight="48px"
+            onClick={startHandler}
+            disabled={props.cards.length === 0}
+          />
+          <p className={classes.textStart()}>Click to start</p>
+        </div>
+        <PreviewStep
+          className={classes.step({ className: classes.stepPreview() })}
+          cards={props.cards}
+          onFinish={finishReviewStepHandler}
         />
-        <p className={classes.textStart()}>Click to start</p>
       </div>
     </div>
   );
-
-  switch (step) {
-    case Step.PREVIEW:
-      return (
-        <PreviewStep
-          cards={props.cards}
-          className={props.className}
-          onFinish={finishReviewStepHandler}
-        />
-      );
-
-    default:
-      return null;
-  }
 };
-
-function getStepEnum(step: Step) {
-  switch (step) {
-    case Step.START:
-      return "start";
-  }
-}

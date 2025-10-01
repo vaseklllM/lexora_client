@@ -4,12 +4,12 @@ import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "",
+    base: "flex items-center justify-center gap-6",
     cards: "relative h-124 w-85",
     card: "transition-[left,top, opacity] absolute h-120 w-85 p-4 shadow-md/40 duration-600",
     cardOne: "top-0 left-0 z-5",
@@ -72,15 +72,15 @@ export const PreviewStep = (props: Props): ReactElement => {
     activeCard: getCardEnum(activeCardIdx),
   });
 
-  useEffect(() => {
-    sleep(600).then(() => {
-      const audio = new Audio(props.cards[0].soundUrls[0]);
-      audio.play();
-      audio.onended = () => {
-        setIsPlaying(false);
-      };
-    });
-  }, []);
+  // useEffect(() => {
+  //   sleep(600).then(() => {
+  //     const audio = new Audio(props.cards[0].soundUrls[0]);
+  //     audio.play();
+  //     audio.onended = () => {
+  //       setIsPlaying(false);
+  //     };
+  //   });
+  // }, []);
 
   const handlePreviousCard = useCallback(async () => {
     setIsPlaying(true);

@@ -1,7 +1,5 @@
 "use client";
 
-import { revalidateGetDeck } from "@/api/deck/get-deck";
-import { moveDeck } from "@/api/deck/move-deck";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { IFolder } from "@/api/schemas/folder.schema";
@@ -10,28 +8,12 @@ import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { DecksProvider, DraggableDeck } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
 import { routes } from "@/shared/routes";
-import { Alert } from "@/shared/ui/Alert";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
-import {
-  DndContext,
-  DragEndEvent,
-  DragStartEvent,
-  MouseSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  memo,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { toast } from "react-toastify";
+import { ReactElement, useMemo } from "react";
 import { tv } from "tailwind-variants";
+import { withDndKitProvider } from "../hoc/withDndKitProvider";
+import { useSectionStore } from "../model/store";
 import { DeckDraggableOverlay } from "./DeckDraggableOverlay";
 import { DropdownMenu } from "./DropdownMenu";
 import { ParentFolder } from "./ParentFolder";
@@ -52,7 +34,7 @@ const classesSlots = tv({
   },
 });
 
-interface Props {
+export interface SectionProps {
   className?: string;
   folders?: IFolder[];
   parentFolder?: IFolder;
@@ -65,87 +47,47 @@ interface Props {
   title?: string;
 }
 
-export const Section = (props: Props): ReactElement => {
-  const [draggingDeckId, setDraggingDeckId] = useState<string | undefined>();
-  const [movedDeckIds, setMovedDeckIds] = useState<string[]>([]);
-  const isFolders = props.folders && props.folders.length > 0;
+export const Section = withDndKitProvider(
+  (props: SectionProps): ReactElement => {
+    const draggingDeckId = useSectionStore((store) => store.draggingDeckId);
+    const movedDeckIds = useSectionStore((store) => store.movedDeckIds);
+    const isFolders = props.folders && props.folders.length > 0;
 
-  const isFolder = !!props.folder?.id;
+    const isFolder = !!props.folder?.id;
 
-  const classes = classesSlots();
+    const classes = classesSlots();
 
-  const lastBreadcrumb = useMemo((): Breadcrumb | undefined => {
-    if (props.folder) {
-      return {
-        icon: "folder",
-        title: props.folder.name,
-        url: routes.dashboard.folder.url(props.folder.id),
-      };
-    }
-  }, [props.folder]);
-
-  const backUrl = useMemo<string>((): string => {
-    if (props.parentFolder?.id) {
-      return routes.dashboard.folder.url(props.parentFolder.id);
-    }
-    return routes.dashboard.url();
-  }, [props.parentFolder?.id]);
-
-  // Clear moved decks when folder changes to prevent memory leaks
-  useEffect(() => {
-    setMovedDeckIds([]);
-  }, [props.folder?.id]);
-
-  const dragEndHandler = useCallback(async (args: DragEndEvent) => {
-    if (
-      typeof args.over?.id === "string" &&
-      typeof args.active.id === "string"
-    ) {
-      const deckId = args.active.id as string;
-      const toFolderId = args.over.id as string;
-
-      const result = await moveDeck({
-        deckId,
-        toFolderId: toFolderId === "home" ? undefined : toFolderId,
-      });
-      if (result.ok) {
-        await revalidateGetDeck(deckId);
-        setMovedDeckIds((prev): string[] => [...prev, deckId]);
-      } else {
-        toast(<Alert message={result.data.message} type="error" />, {
-          hideProgressBar: true,
-        });
+    const lastBreadcrumb = useMemo((): Breadcrumb | undefined => {
+      if (props.folder) {
+        return {
+          icon: "folder",
+          title: props.folder.name,
+          url: routes.dashboard.folder.url(props.folder.id),
+        };
       }
-    }
-    setDraggingDeckId(undefined);
-  }, []);
+    }, [props.folder]);
 
-  const dragStartHandler = useCallback((event: DragStartEvent) => {
-    if (typeof event.active.id === "string") {
-      setDraggingDeckId(event.active.id);
-    }
-  }, []);
+    const backUrl = useMemo<string>((): string => {
+      if (props.parentFolder?.id) {
+        return routes.dashboard.folder.url(props.parentFolder.id);
+      }
+      return routes.dashboard.url();
+    }, [props.parentFolder?.id]);
 
-  const dragCancelHandler = useCallback(() => {
-    setDraggingDeckId(undefined);
-  }, []);
+    const decks = useMemo((): IDeck[] | undefined => {
+      return props.decks?.filter((deck) => !movedDeckIds.includes(deck.id));
+    }, [props.decks, movedDeckIds]);
 
-  const decks = useMemo((): IDeck[] | undefined => {
-    return props.decks?.filter((deck) => !movedDeckIds.includes(deck.id));
-  }, [props.decks, movedDeckIds]);
+    const isDecks = decks && decks.length > 0;
+    const isEmpty = !isFolders && !isDecks;
 
-  const isDecks = decks && decks.length > 0;
-  const isEmpty = !isFolders && !isDecks;
-
-  return (
-    <FoldersProvider>
-      <DecksProvider>
-        <DndKitProvider
-          onDragStart={dragStartHandler}
-          onDragEnd={dragEndHandler}
-          onDragCancel={dragCancelHandler}
-        >
-          <div className={classes.base({ className: props.className })}>
+    return (
+      <FoldersProvider>
+        <DecksProvider>
+          <div
+            key={props.folder?.id}
+            className={classes.base({ className: props.className })}
+          >
             {props.title && <h3 className={classes.title()}>{props.title}</h3>}
             {isFolder && (
               <div className={classes.header()}>
@@ -199,42 +141,11 @@ export const Section = (props: Props): ReactElement => {
             )}
           </div>
           <DeckDraggableOverlay
+            key={draggingDeckId}
             deck={props.decks?.find((deck) => deck.id === draggingDeckId)}
           />
-        </DndKitProvider>
-      </DecksProvider>
-    </FoldersProvider>
-  );
-};
-
-const DndKitProvider = memo(
-  (props: {
-    children: ReactNode;
-    onDragStart: (event: DragStartEvent) => void;
-    onDragEnd: (event: DragEndEvent) => void;
-    onDragCancel: () => void;
-  }) => {
-    const mouseSensor = useSensor(MouseSensor, {
-      activationConstraint: {
-        delay: 250,
-        distance: 1,
-        tolerance: 10,
-      },
-    });
-
-    const sensors = useSensors(mouseSensor);
-
-    return (
-      <DndContext
-        sensors={sensors}
-        onDragStart={props.onDragStart}
-        onDragEnd={props.onDragEnd}
-        onDragCancel={props.onDragCancel}
-      >
-        {props.children}
-      </DndContext>
+        </DecksProvider>
+      </FoldersProvider>
     );
   },
 );
-
-DndKitProvider.displayName = "DndKitProvider";

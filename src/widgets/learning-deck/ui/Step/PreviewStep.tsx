@@ -139,6 +139,7 @@ export const PreviewStep = (props: Props): ReactElement => {
             key={card.id}
             card={card}
             disabled={idx !== activeCardIdx}
+            useBackground
             className={classes.card({
               className: (() => {
                 switch (idx) {

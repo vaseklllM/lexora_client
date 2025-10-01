@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 relative flex h-full w-full flex-col rounded-xl",
+    base: "relative flex h-full w-full flex-col rounded-xl",
     frontTitleContainer:
       "flex h-full max-w-full flex-col items-center justify-center",
     frontTitle: "max-w-full text-xl font-bold break-words",
@@ -47,6 +47,11 @@ const classesSlots = tv({
         frontTitle: "max-w-[calc(100%-70px)]",
       },
     },
+    useBackground: {
+      true: {
+        base: "bg-base-100",
+      },
+    },
   },
 });
 
@@ -56,6 +61,7 @@ interface Props {
   iconButtons?: ReactNode;
   descriptionWrapperClassName?: string;
   disabled?: boolean;
+  useBackground?: boolean;
 }
 
 export const ViewCard = memo((props: Props): ReactElement => {
@@ -76,6 +82,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
     isLargeDescription,
     isLargeWord,
     isFloatButtons: isDescription && (isLargeWord || isLargeDescription),
+    useBackground: props.useBackground,
   });
 
   const isNativeSound = props.card.soundUrls.length > 0;

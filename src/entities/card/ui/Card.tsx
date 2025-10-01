@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, ReactElement, useEffect, useState } from "react";
+import { memo, ReactElement, ReactNode, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import classes from "./style.module.scss";
 
@@ -38,8 +38,8 @@ interface Props {
   activeSide?: CardSide;
   onSideChange?: (side: CardSide) => void;
   hoverSwitch?: boolean;
-  front?: ReactElement;
-  back?: ReactElement;
+  front?: ReactNode;
+  back?: ReactNode;
   defaultSide?: CardSide;
 }
 

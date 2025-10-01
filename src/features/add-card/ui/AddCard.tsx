@@ -31,6 +31,7 @@ interface Props {
 
 export const AddCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
+  const [isVisibleEditSide, setIsVisibleEditSide] = useState<boolean>(false);
 
   const classes = classesSlots();
 
@@ -89,6 +90,7 @@ export const AddCard = memo((props: Props): ReactElement => {
       setActiveSide("front");
       await sleep(400);
       reset();
+      setIsVisibleEditSide(false);
     },
     [setActiveSide],
   );
@@ -102,7 +104,10 @@ export const AddCard = memo((props: Props): ReactElement => {
         <div className={classes.front()}>
           <button
             className={classes.buttonAdd()}
-            onClick={() => setActiveSide("back")}
+            onClick={() => {
+              setIsVisibleEditSide(true);
+              setActiveSide("back");
+            }}
             disabled={activeSide === "back"}
           >
             Add Card
@@ -111,14 +116,16 @@ export const AddCard = memo((props: Props): ReactElement => {
         </div>
       }
       back={
-        <CardFieldsSide
-          languageWhatILearn={props.languageWhatILearn}
-          languageWhatIKnow={props.languageWhatIKnow}
-          isActiveThisSide={activeSide === "back"}
-          onSubmit={onSubmit}
-          onCancel={cancelHandler}
-          deckId={props.deckId}
-        />
+        isVisibleEditSide ? (
+          <CardFieldsSide
+            languageWhatILearn={props.languageWhatILearn}
+            languageWhatIKnow={props.languageWhatIKnow}
+            isActiveThisSide={activeSide === "back"}
+            onSubmit={onSubmit}
+            onCancel={cancelHandler}
+            deckId={props.deckId}
+          />
+        ) : null
       }
     />
   );

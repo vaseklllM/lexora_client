@@ -11,7 +11,7 @@ export const MAX_DECK_NAME_LENGTH = 50;
 /**
  * The maximum length of a word in a card
  */
-export const MAX_CARD_WORD_LENGTH = 50;
+export const MAX_CARD_WORD_LENGTH = 100;
 
 /**
  * The maximum length of a description in a card

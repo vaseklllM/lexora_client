@@ -3,6 +3,7 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
+import { PairItStep } from "./PairItStep";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
 
@@ -16,7 +17,7 @@ const classesSlots = tv({
     step: "absolute top-0 flex h-full w-full transition-[left] duration-600",
     stepStart: "left-0 flex-col items-center justify-center gap-6",
     stepPreview: "left-[100%]",
-    stepPairIt: "",
+    stepPairIt: "left-[100%]",
     stepGuessIt: "",
     stepRecallIt: "",
     stepTypeIt: "",
@@ -28,7 +29,11 @@ const classesSlots = tv({
         stepStart: "-left-[100%]",
         stepPreview: "left-0",
       },
-      pairIt: {},
+      pairIt: {
+        stepStart: "-left-[100%]",
+        stepPreview: "-left-[100%]",
+        stepPairIt: "left-0",
+      },
       guessIt: {},
       recallIt: {},
       typeIt: {},
@@ -77,6 +82,9 @@ export const StepComponent = (props: Props): ReactElement | null => {
           className={classes.step({ className: classes.stepPreview() })}
           cards={props.cards}
           onFinish={finishReviewStepHandler}
+        />
+        <PairItStep
+          className={classes.step({ className: classes.stepPairIt() })}
         />
       </div>
     </div>

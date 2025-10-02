@@ -37,8 +37,9 @@ interface Props {
 export const GuessItGame = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isMixRandomCards, setIsMixRandomCards] = useState<boolean>(false);
-  const isLastCard = props.cards.length - 1 === activeCardIdx;
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const isLastCard = props.cards.length - 1 === activeCardIdx;
 
   const classes = classesSlots();
 

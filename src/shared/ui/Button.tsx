@@ -13,20 +13,81 @@ const classesSlots = tv({
     button: "btn relative rounded-md",
     loader: "loading loading-spinner absolute",
   },
+  variants: {
+    disabled: {
+      true: {},
+      false: {},
+    },
+    variant: {
+      ghost: {
+        button: "btn-ghost",
+      },
+      dash: {
+        button: "btn-dash",
+      },
+      soft: {
+        button: "btn-soft",
+      },
+      outline: {
+        button: "btn-outline",
+      },
+    },
+    color: {
+      neutral: {
+        button: "btn-neutral",
+      },
+      primary: {
+        button: "btn-primary",
+      },
+      secondary: {
+        button: "btn-secondary",
+      },
+      accent: {
+        button: "btn-accent",
+      },
+      info: {
+        button: "btn-info",
+      },
+      success: {
+        button: "btn-success",
+      },
+      warning: {
+        button: "btn-warning",
+      },
+      error: {
+        button: "btn-error",
+      },
+    },
+  },
 });
+
+type Color =
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "info"
+  | "success"
+  | "warning"
+  | "error";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   isLoading?: boolean;
   children?: React.ReactNode;
+  color?: "neutral" | Color;
+  variant?: "ghost" | "dash" | "soft" | "outline";
 }
 
 export const Button = (props: ButtonProps) => {
-  const { isLoading, children, onClick, ...buttonProps } = props;
+  const { isLoading, children, onClick, color, variant, ...buttonProps } =
+    props;
 
   const [isLoadingState, setIsLoadingState] = useState(false);
 
-  const classes = classesSlots();
+  const classes = classesSlots({
+    color,
+    variant,
+  });
 
   const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
     async (event) => {

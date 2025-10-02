@@ -134,6 +134,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
         {displaySteps.includes(Step.GUESS_IT) && (
           <GuessItGame
             className={classes.step({ className: classes.stepGuessIt() })}
+            cards={props.cards}
           />
         )}
       </div>

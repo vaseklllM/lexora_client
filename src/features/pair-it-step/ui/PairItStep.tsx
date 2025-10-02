@@ -63,11 +63,11 @@ export const PairItStep = memo((props: Props): ReactElement => {
   const clickHandler = useCallback<CardButtonClickHandler>((args) => {
     switch (args.position) {
       case "left":
-        setActiveLeft(args.id);
+        setActiveLeft((prev) => (prev === args.id ? null : args.id));
         break;
 
       case "right":
-        setActiveRight(args.id);
+        setActiveRight((prev) => (prev === args.id ? null : args.id));
         break;
     }
   }, []);

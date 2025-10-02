@@ -68,7 +68,6 @@ interface Props {
 
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-  const isPlaying = player.useIsPlaying();
   const step = useLearningDeckStore((state) => state.activeStep);
 
   const classes = classesSlots({
@@ -116,7 +115,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         className={classes.button({ className: classes.buttonArrowLeft() })}
         iconWidth="24px"
         iconHeight="24px"
-        disabled={activeCardIdx === 0 || isPlaying}
+        disabled={activeCardIdx === 0}
         onClick={handlePreviousCard}
       />
       <div className={classes.cards()}>
@@ -153,7 +152,6 @@ export const PreviewStep = (props: Props): ReactElement => {
         iconWidth="24px"
         iconHeight="24px"
         onClick={handleNextCard}
-        disabled={isPlaying}
       />
     </div>
   );

@@ -8,6 +8,7 @@ import {
   DragEndEvent,
   DragStartEvent,
   MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -28,15 +29,21 @@ export function withDndKitProvider(
       (store) => store.clearMovedDeckIds,
     );
 
+    const touchSensor = useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 8,
+      },
+    });
+
     const mouseSensor = useSensor(MouseSensor, {
       activationConstraint: {
         delay: 250,
         distance: 1,
-        tolerance: 10,
       },
     });
 
-    const sensors = useSensors(mouseSensor);
+    const sensors = useSensors(mouseSensor, touchSensor);
 
     useEffect(() => {
       clearMovedDeckIds();

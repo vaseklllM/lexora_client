@@ -1,6 +1,7 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { player } from "@/shared/hooks/usePlayer";
 import { mixArray } from "@/shared/utils/mixArray";
 import {
   memo,
@@ -148,6 +149,10 @@ export const PairItStep = memo((props: Props): ReactElement => {
     if (activeLeft && activeRight) {
       if (activeLeft === activeRight) {
         setFinishedCards((prev) => [...prev, activeLeft]);
+        const card = props.cards.find((card) => card.id === activeLeft);
+        if (card) {
+          player.play(card.soundUrls[0]);
+        }
       } else {
         addErrorCards(activeLeft, activeRight);
       }
@@ -160,7 +165,7 @@ export const PairItStep = memo((props: Props): ReactElement => {
     if (finishedCards.length === props.cards.length) {
       props.onFinish?.();
     }
-  }, [finishedCards.length, props.cards.length, props.onFinish]);
+  }, [finishedCards.length, props.cards, props.onFinish]);
 
   return (
     <div className={classes.base({ className: props.className })}>

@@ -2,9 +2,21 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
-import { memo, ReactElement, useCallback, useMemo, useState } from "react";
+import {
+  memo,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { tv } from "tailwind-variants";
-import { CardButton, CardButtonClickHandler, Position } from "./CardButton";
+import {
+  CardButton,
+  CardButtonClickHandler,
+  CardButtonStatus,
+  Position,
+} from "./CardButton";
 
 const classesSlots = tv({
   slots: {
@@ -26,8 +38,11 @@ interface Props {
 
 export const PairItStep = memo((props: Props): ReactElement => {
   const classes = classesSlots();
-  const [activeLeft, setActiveLeft] = useState<string | null>(null);
-  const [activeRight, setActiveRight] = useState<string | null>(null);
+  const [activeLeft, setActiveLeft] = useState<string>();
+  const [activeRight, setActiveRight] = useState<string>();
+  const [finishedCards, setFinishedCards] = useState<string[]>([]);
+  const [errorLeftCards, setErrorLeftCards] = useState<string[]>([]);
+  const [errorRightCards, setErrorRightCards] = useState<string[]>([]);
 
   const cards = useMemo(() => {
     let leftCards: PairCard[] = [];
@@ -60,29 +75,85 @@ export const PairItStep = memo((props: Props): ReactElement => {
     return list;
   }, [props.cards]);
 
-  const clickHandler = useCallback<CardButtonClickHandler>((args) => {
-    switch (args.position) {
-      case "left":
-        setActiveLeft((prev) => (prev === args.id ? null : args.id));
-        break;
+  const clickHandler = useCallback<CardButtonClickHandler>(
+    (args) => {
+      if (finishedCards.includes(args.id)) {
+        return;
+      }
 
-      case "right":
-        setActiveRight((prev) => (prev === args.id ? null : args.id));
-        break;
-    }
-  }, []);
-
-  const checkIsActive = useCallback(
-    (id: string, position: Position) => {
-      switch (position) {
+      switch (args.position) {
         case "left":
-          return activeLeft === id;
+          setActiveLeft((prev) => (prev === args.id ? undefined : args.id));
+          break;
+
         case "right":
-          return activeRight === id;
+          setActiveRight((prev) => (prev === args.id ? undefined : args.id));
+          break;
       }
     },
-    [activeLeft, activeRight],
+    [finishedCards],
   );
+
+  const getStatus = useCallback(
+    (id: string, position: Position): CardButtonStatus | undefined => {
+      switch (position) {
+        case "left": {
+          if (activeLeft === id) {
+            return "active";
+          }
+
+          if (errorLeftCards.includes(id)) {
+            return "error";
+          }
+
+          if (finishedCards.includes(id)) {
+            return "success";
+          }
+
+          break;
+        }
+
+        case "right": {
+          if (activeRight === id) {
+            return "active";
+          }
+
+          if (errorRightCards.includes(id)) {
+            return "error";
+          }
+
+          if (finishedCards.includes(id)) {
+            return "success";
+          }
+
+          break;
+        }
+      }
+    },
+    [activeLeft, activeRight, errorLeftCards, errorRightCards],
+  );
+
+  const addErrorCards = useCallback((left: string, right: string) => {
+    setErrorLeftCards((prev) => [...prev, left]);
+    setErrorRightCards((prev) => [...prev, right]);
+
+    setTimeout(() => {
+      setErrorLeftCards((prev) => prev.filter((id) => id !== left));
+      setErrorRightCards((prev) => prev.filter((id) => id !== right));
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    if (activeLeft && activeRight) {
+      if (activeLeft === activeRight) {
+        setFinishedCards((prev) => [...prev, activeLeft]);
+      } else {
+        addErrorCards(activeLeft, activeRight);
+      }
+      setActiveLeft(undefined);
+      setActiveRight(undefined);
+    }
+  }, [activeLeft, activeRight]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -94,7 +165,7 @@ export const PairItStep = memo((props: Props): ReactElement => {
             key={`${card.position}-${card.id}`}
             position={card.position}
             onClick={clickHandler}
-            isActive={checkIsActive(card.id, card.position)}
+            status={getStatus(card.id, card.position)}
           />
         ))}
       </div>

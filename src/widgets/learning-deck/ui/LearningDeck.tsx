@@ -7,7 +7,6 @@ import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { ButtonBack } from "@/features/button-back";
 import { useEffect } from "react";
 import { tv } from "tailwind-variants";
-import { useLearningDeckStore } from "../model/store";
 import { StepComponent } from "./Step";
 import { useLastBreadcrumbs } from "./useLastBreadcrumbs";
 
@@ -28,11 +27,11 @@ export interface LearningDeckProps {
 export function LearningDeck(props: LearningDeckProps) {
   const classes = classesSlots();
   const lastBreadcrumb = useLastBreadcrumbs(props);
-  const reset = useLearningDeckStore((state) => state.reset);
+  // const reset = useLearningDeckStore((state) => state.reset);
 
   useEffect(() => {
     return () => {
-      reset();
+      // reset();
     };
   }, []);
 

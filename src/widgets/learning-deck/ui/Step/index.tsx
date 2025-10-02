@@ -1,10 +1,10 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { PairItStep } from "@/features/pair-it-step";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
-import { PairItStep } from "./PairItStep";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
 
@@ -52,7 +52,7 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.PAIR_IT]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);
@@ -105,6 +105,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
         {displaySteps.includes(Step.PAIR_IT) && (
           <PairItStep
             className={classes.step({ className: classes.stepPairIt() })}
+            cards={props.cards}
           />
         )}
       </div>

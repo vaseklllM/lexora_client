@@ -38,6 +38,7 @@ export const GuessItGame = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isMixRandomCards, setIsMixRandomCards] = useState<boolean>(false);
   const isLastCard = props.cards.length - 1 === activeCardIdx;
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const classes = classesSlots();
 
@@ -90,6 +91,8 @@ export const GuessItGame = (props: Props): ReactElement => {
             isRightOption={option.id === activeCard.id}
             onMixRandomCards={mixRandomCards}
             isLastCard={isLastCard}
+            isChecked={isChecked}
+            onChecked={setIsChecked}
           />
         ))}
       </div>

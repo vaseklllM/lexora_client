@@ -95,6 +95,10 @@ export const StepComponent = (props: Props): ReactElement | null => {
     await showStep(Step.GUESS_IT);
   }, []);
 
+  const finishGuessItStepHandler = useCallback(async () => {
+    await showStep(Step.RECALL_IT);
+  }, []);
+
   const classes = classesSlots({
     step,
   });
@@ -135,6 +139,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
           <GuessItGame
             className={classes.step({ className: classes.stepGuessIt() })}
             cards={props.cards}
+            onFinish={finishGuessItStepHandler}
           />
         )}
       </div>

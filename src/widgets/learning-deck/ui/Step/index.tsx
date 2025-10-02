@@ -18,7 +18,7 @@ const classesSlots = tv({
       "bg-base-300 relative mt-6 min-h-142 overflow-hidden rounded-xl p-6",
     buttonStart: "h-28 w-28",
     textStart: "text-base-content/80 text-lg font-bold",
-    step: `absolute top-0 flex h-full w-full transition-[left] duration-${STEP_DELAY}`,
+    step: `absolute top-0 flex h-full w-full p-6 transition-[left] duration-${STEP_DELAY}`,
     stepStart: "left-0 flex-col items-center justify-center gap-6",
     stepPreview: "left-[100%]",
     stepPairIt: "left-[100%]",
@@ -49,14 +49,15 @@ const classesSlots = tv({
         stepPreview: "-left-[100%]",
         stepPairIt: "-left-[100%]",
         stepGuessIt: "-left-[100%]",
-        stepTypeIt: "left-0",
+        stepRecallIt: "left-0",
       },
       typeIt: {
         stepStart: "-left-[100%]",
         stepPreview: "-left-[100%]",
         stepPairIt: "-left-[100%]",
         stepGuessIt: "-left-[100%]",
-        stepTypeIt: "-left-[100%]",
+        stepRecallIt: "-left-[100%]",
+        stepTypeIt: "left-0",
       },
     },
   },
@@ -70,7 +71,7 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.GUESS_IT]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);
@@ -142,6 +143,11 @@ export const StepComponent = (props: Props): ReactElement | null => {
             onFinish={finishGuessItStepHandler}
           />
         )}
+        {displaySteps.includes(Step.RECALL_IT) && (
+          <div className={classes.step({ className: classes.stepRecallIt() })}>
+            Recall it
+          </div>
+        )}
       </div>
     </div>
   );
@@ -149,6 +155,9 @@ export const StepComponent = (props: Props): ReactElement | null => {
 
 function getPrevStep(step: Step): Step | undefined {
   switch (step) {
+    case Step.START:
+      return undefined;
+
     case Step.PREVIEW:
       return Step.START;
 
@@ -163,5 +172,9 @@ function getPrevStep(step: Step): Step | undefined {
 
     case Step.TYPE_IT:
       return Step.RECALL_IT;
+
+    default:
+      const _check: never = step;
+      throw new Error(`Unhandled step type: ${_check}`);
   }
 }

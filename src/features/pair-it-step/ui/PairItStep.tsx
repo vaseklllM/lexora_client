@@ -34,6 +34,7 @@ type PairCard = {
 interface Props {
   className?: string;
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 export const PairItStep = memo((props: Props): ReactElement => {
@@ -154,6 +155,12 @@ export const PairItStep = memo((props: Props): ReactElement => {
       setActiveRight(undefined);
     }
   }, [activeLeft, activeRight]);
+
+  useEffect(() => {
+    if (finishedCards.length === props.cards.length) {
+      props.onFinish?.();
+    }
+  }, [finishedCards.length, props.cards.length, props.onFinish]);
 
   return (
     <div className={classes.base({ className: props.className })}>

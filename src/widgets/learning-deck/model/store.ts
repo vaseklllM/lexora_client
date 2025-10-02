@@ -21,7 +21,7 @@ type Actions = {
 type Store = State & Actions;
 
 export const useLearningDeckStore = create<Store>((set) => ({
-  activeStep: Step.PAIR_IT,
+  activeStep: Step.START,
   openStep(step: Step) {
     set({ activeStep: step });
   },

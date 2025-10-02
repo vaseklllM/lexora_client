@@ -21,9 +21,9 @@ const classesSlots = tv({
     stepStart: "left-0 flex-col items-center justify-center gap-6",
     stepPreview: "left-[100%]",
     stepPairIt: "left-[100%]",
-    stepGuessIt: "",
-    stepRecallIt: "",
-    stepTypeIt: "",
+    stepGuessIt: "left-[100%]",
+    stepRecallIt: "left-[100%]",
+    stepTypeIt: "left-[100%]",
   },
   variants: {
     step: {
@@ -37,9 +37,26 @@ const classesSlots = tv({
         stepPreview: "-left-[100%]",
         stepPairIt: "left-0",
       },
-      guessIt: {},
-      recallIt: {},
-      typeIt: {},
+      guessIt: {
+        stepStart: "-left-[100%]",
+        stepPreview: "-left-[100%]",
+        stepPairIt: "-left-[100%]",
+        stepGuessIt: "left-0",
+      },
+      recallIt: {
+        stepStart: "-left-[100%]",
+        stepPreview: "-left-[100%]",
+        stepPairIt: "-left-[100%]",
+        stepGuessIt: "-left-[100%]",
+        stepTypeIt: "left-0",
+      },
+      typeIt: {
+        stepStart: "-left-[100%]",
+        stepPreview: "-left-[100%]",
+        stepPairIt: "-left-[100%]",
+        stepGuessIt: "-left-[100%]",
+        stepTypeIt: "-left-[100%]",
+      },
     },
   },
 });
@@ -52,11 +69,11 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.PAIR_IT]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);
-    await sleep(0);
+    await sleep(100);
     openStep(step);
     await sleep(STEP_DELAY);
     const prevStep = getPrevStep(step);
@@ -71,6 +88,10 @@ export const StepComponent = (props: Props): ReactElement | null => {
 
   const finishReviewStepHandler = useCallback(async () => {
     await showStep(Step.PAIR_IT);
+  }, []);
+
+  const finishPairItStepHandler = useCallback(async () => {
+    await showStep(Step.GUESS_IT);
   }, []);
 
   const classes = classesSlots({
@@ -106,7 +127,13 @@ export const StepComponent = (props: Props): ReactElement | null => {
           <PairItStep
             className={classes.step({ className: classes.stepPairIt() })}
             cards={props.cards}
+            onFinish={finishPairItStepHandler}
           />
+        )}
+        {displaySteps.includes(Step.GUESS_IT) && (
+          <div className={classes.step({ className: classes.stepGuessIt() })}>
+            guess it
+          </div>
         )}
       </div>
     </div>

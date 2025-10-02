@@ -1,4 +1,7 @@
+"use client";
+
 import { ICard } from "@/api/schemas/card.schema";
+import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
 import { memo, ReactElement, ReactNode } from "react";
@@ -100,8 +103,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
               color="primary"
               disabled={props.disabled}
               onClick={() => {
-                const audio = new Audio(soundUrl);
-                audio.play();
+                player.play(soundUrl);
               }}
               className={classes.frontSound()}
             />

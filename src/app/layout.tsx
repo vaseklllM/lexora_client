@@ -1,3 +1,4 @@
+import { AudioProvider } from "@/shared/hooks/usePlayer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -40,6 +41,7 @@ export default function RootLayout(
       >
         <NextAuthProvider>{children}</NextAuthProvider>
         <ToastContainer position="bottom-left" />
+        <AudioProvider />
       </body>
     </html>
   );

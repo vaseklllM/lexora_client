@@ -27,6 +27,8 @@ interface Props {
   id: string;
   onClick?: (args: { id: string }) => void;
   isRightOption: boolean;
+  onMixRandomCards?: () => void;
+  isLastCard?: boolean;
 }
 
 export const OptionButton = memo((props: Props): ReactElement => {
@@ -41,13 +43,22 @@ export const OptionButton = memo((props: Props): ReactElement => {
       setStatus("success");
       await sleep(800);
       props.onClick?.({ id: props.id });
+      if (props.isLastCard) return;
+      props.onMixRandomCards?.();
       setStatus(undefined);
     } else {
       setStatus("error");
       await sleep(800);
+      props.onMixRandomCards?.();
       setStatus(undefined);
     }
-  }, [props.onClick, props.id, props.isRightOption]);
+  }, [
+    props.onClick,
+    props.id,
+    props.isRightOption,
+    props.onMixRandomCards,
+    props.isLastCard,
+  ]);
 
   return (
     <button

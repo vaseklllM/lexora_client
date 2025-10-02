@@ -31,11 +31,13 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 export const GuessItGame = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isMixRandomCards, setIsMixRandomCards] = useState<boolean>(false);
+  const isLastCard = props.cards.length - 1 === activeCardIdx;
 
   const classes = classesSlots();
 
@@ -60,11 +62,14 @@ export const GuessItGame = (props: Props): ReactElement => {
   const handleOptionClick = useCallback(
     (card: ICard) => {
       if (card.id === activeCard.id) {
-        nextCard();
-        mixRandomCards();
+        if (isLastCard) {
+          props.onFinish?.();
+        } else {
+          nextCard();
+        }
       }
     },
-    [activeCard, nextCard, mixRandomCards],
+    [activeCard, nextCard, mixRandomCards, isLastCard, props.onFinish],
   );
 
   return (
@@ -83,6 +88,8 @@ export const GuessItGame = (props: Props): ReactElement => {
             onClick={() => handleOptionClick(option)}
             id={option.id}
             isRightOption={option.id === activeCard.id}
+            onMixRandomCards={mixRandomCards}
+            isLastCard={isLastCard}
           />
         ))}
       </div>

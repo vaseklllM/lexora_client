@@ -2,9 +2,9 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
-import { memo, ReactElement, useMemo } from "react";
+import { memo, ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
-import { CardButton } from "./CardButton";
+import { CardButton, CardButtonClickHandler, Position } from "./CardButton";
 
 const classesSlots = tv({
   slots: {
@@ -16,7 +16,7 @@ const classesSlots = tv({
 type PairCard = {
   id: string;
   title: string;
-  position: "left" | "right";
+  position: Position;
 };
 
 interface Props {
@@ -26,6 +26,8 @@ interface Props {
 
 export const PairItStep = memo((props: Props): ReactElement => {
   const classes = classesSlots();
+  const [activeLeft, setActiveLeft] = useState<string | null>(null);
+  const [activeRight, setActiveRight] = useState<string | null>(null);
 
   const cards = useMemo(() => {
     let leftCards: PairCard[] = [];
@@ -58,6 +60,30 @@ export const PairItStep = memo((props: Props): ReactElement => {
     return list;
   }, [props.cards]);
 
+  const clickHandler = useCallback<CardButtonClickHandler>((args) => {
+    switch (args.position) {
+      case "left":
+        setActiveLeft(args.id);
+        break;
+
+      case "right":
+        setActiveRight(args.id);
+        break;
+    }
+  }, []);
+
+  const checkIsActive = useCallback(
+    (id: string, position: Position) => {
+      switch (position) {
+        case "left":
+          return activeLeft === id;
+        case "right":
+          return activeRight === id;
+      }
+    },
+    [activeLeft, activeRight],
+  );
+
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.content()}>
@@ -66,6 +92,9 @@ export const PairItStep = memo((props: Props): ReactElement => {
             title={card.title}
             id={card.id}
             key={`${card.position}-${card.id}`}
+            position={card.position}
+            onClick={clickHandler}
+            isActive={checkIsActive(card.id, card.position)}
           />
         ))}
       </div>

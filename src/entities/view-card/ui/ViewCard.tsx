@@ -9,7 +9,7 @@ const classesSlots = tv({
     base: "relative flex h-full w-full flex-col rounded-xl",
     frontTitleContainer:
       "flex h-full max-w-full flex-col items-center justify-center",
-    frontTitle: "max-w-full text-xl font-bold break-words",
+    frontTitle: "max-w-full text-center text-xl font-bold break-words",
     headerRow: "flex items-center gap-2",
     frontSound: "",
     cefr: "text-base-content/40 text-sm",

@@ -2,6 +2,7 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { ViewCard } from "@/entities/view-card";
+import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useEffect, useState } from "react";
@@ -67,7 +68,7 @@ interface Props {
 
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const isPlaying = player.useIsPlaying();
   const step = useLearningDeckStore((state) => state.activeStep);
 
   const classes = classesSlots({
@@ -77,33 +78,22 @@ export const PreviewStep = (props: Props): ReactElement => {
   useEffect(() => {
     if (step === Step.PREVIEW) {
       sleep(1000).then(() => {
-        const audio = new Audio(props.cards[0].soundUrls[0]);
-        audio.play();
-        audio.onended = () => {
-          setIsPlaying(false);
-        };
+        player.play(props.cards[0].soundUrls[0]);
       });
     }
   }, [step]);
 
   const handlePreviousCard = useCallback(async () => {
-    setIsPlaying(true);
     const prevIdx =
       (activeCardIdx - 1 + props.cards.length) % props.cards.length;
     setActiveCardIdx(prevIdx);
 
     await sleep(600);
 
-    const audio = new Audio(props.cards[prevIdx].soundUrls[0]);
-    audio.play();
-    audio.onended = () => {
-      setIsPlaying(false);
-    };
+    player.play(props.cards[prevIdx].soundUrls[0]);
   }, [setActiveCardIdx, activeCardIdx]);
 
   const handleNextCard = useCallback(async () => {
-    setIsPlaying(true);
-
     const nextIdx = activeCardIdx + 1;
 
     if (nextIdx === props.cards.length) {
@@ -114,11 +104,7 @@ export const PreviewStep = (props: Props): ReactElement => {
     setActiveCardIdx(nextIdx);
 
     await sleep(600);
-    const audio = new Audio(props.cards[nextIdx].soundUrls[0]);
-    audio.play();
-    audio.onended = () => {
-      setIsPlaying(false);
-    };
+    player.play(props.cards[nextIdx].soundUrls[0]);
   }, [setActiveCardIdx, props.onFinish, activeCardIdx]);
 
   return (

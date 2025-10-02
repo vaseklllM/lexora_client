@@ -71,7 +71,7 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.RECALL_IT]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);

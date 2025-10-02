@@ -39,6 +39,7 @@ const classesSlots = tv({
         stepPreview: "step-primary",
         stepPairIt: "step-primary",
         stepGuessIt: "step-primary",
+        stepRecallIt: "step-primary",
       },
       typeIt: {
         stepStart: "step-primary",
@@ -46,6 +47,7 @@ const classesSlots = tv({
         stepPairIt: "step-primary",
         stepGuessIt: "step-primary",
         stepRecallIt: "step-primary",
+        stepTypeIt: "step-primary",
       },
     },
   },

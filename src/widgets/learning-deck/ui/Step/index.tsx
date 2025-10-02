@@ -1,11 +1,14 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { ReactElement, useCallback } from "react";
+import { sleep } from "@/shared/utils/sleep";
+import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
 import { PairItStep } from "./PairItStep";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
+
+const STEP_DELAY = 600;
 
 const classesSlots = tv({
   slots: {
@@ -14,7 +17,7 @@ const classesSlots = tv({
       "bg-base-300 relative mt-6 min-h-142 overflow-hidden rounded-xl p-6",
     buttonStart: "h-28 w-28",
     textStart: "text-base-content/80 text-lg font-bold",
-    step: "absolute top-0 flex h-full w-full transition-[left] duration-600",
+    step: `absolute top-0 flex h-full w-full transition-[left] duration-${STEP_DELAY}`,
     stepStart: "left-0 flex-col items-center justify-center gap-6",
     stepPreview: "left-[100%]",
     stepPairIt: "left-[100%]",
@@ -49,14 +52,26 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
 
-  const startHandler = useCallback(() => {
-    openStep(Step.PREVIEW);
-  }, [openStep]);
+  const showStep = useCallback(async (step: Step) => {
+    setDisplaySteps((prev) => [...prev, step]);
+    await sleep(0);
+    openStep(step);
+    await sleep(STEP_DELAY);
+    const prevStep = getPrevStep(step);
+    if (prevStep) {
+      setDisplaySteps((prev) => prev.filter((s) => s !== prevStep));
+    }
+  }, []);
 
-  const finishReviewStepHandler = useCallback(() => {
-    openStep(Step.PAIR_IT);
-  }, [openStep]);
+  const startHandler = useCallback(async () => {
+    await showStep(Step.PREVIEW);
+  }, []);
+
+  const finishReviewStepHandler = useCallback(async () => {
+    await showStep(Step.PAIR_IT);
+  }, []);
 
   const classes = classesSlots({
     step,
@@ -66,27 +81,52 @@ export const StepComponent = (props: Props): ReactElement | null => {
     <div className={classes.base({ className: props.className })}>
       <StepsHeader />
       <div className={classes.content()}>
-        <div className={classes.step({ className: classes.stepStart() })}>
-          <ButtonIcon
-            color="primary"
-            icon="play"
-            className={classes.buttonStart()}
-            iconWidth="48px"
-            iconHeight="48px"
-            onClick={startHandler}
-            disabled={props.cards.length === 0}
+        {displaySteps.includes(Step.START) && (
+          <div className={classes.step({ className: classes.stepStart() })}>
+            <ButtonIcon
+              color="primary"
+              icon="play"
+              className={classes.buttonStart()}
+              iconWidth="48px"
+              iconHeight="48px"
+              onClick={startHandler}
+              disabled={props.cards.length === 0}
+            />
+            <p className={classes.textStart()}>Click to start</p>
+          </div>
+        )}
+        {displaySteps.includes(Step.PREVIEW) && (
+          <PreviewStep
+            className={classes.step({ className: classes.stepPreview() })}
+            cards={props.cards}
+            onFinish={finishReviewStepHandler}
           />
-          <p className={classes.textStart()}>Click to start</p>
-        </div>
-        <PreviewStep
-          className={classes.step({ className: classes.stepPreview() })}
-          cards={props.cards}
-          onFinish={finishReviewStepHandler}
-        />
-        <PairItStep
-          className={classes.step({ className: classes.stepPairIt() })}
-        />
+        )}
+        {displaySteps.includes(Step.PAIR_IT) && (
+          <PairItStep
+            className={classes.step({ className: classes.stepPairIt() })}
+          />
+        )}
       </div>
     </div>
   );
 };
+
+function getPrevStep(step: Step): Step | undefined {
+  switch (step) {
+    case Step.PREVIEW:
+      return Step.START;
+
+    case Step.PAIR_IT:
+      return Step.PREVIEW;
+
+    case Step.GUESS_IT:
+      return Step.PAIR_IT;
+
+    case Step.RECALL_IT:
+      return Step.GUESS_IT;
+
+    case Step.TYPE_IT:
+      return Step.RECALL_IT;
+  }
+}

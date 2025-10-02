@@ -1,5 +1,6 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { PairItStep } from "@/features/pair-it-step";
+import { GuessItGame } from "@/features/guess-it-game";
+import { PairItGame } from "@/features/pair-it-game";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
@@ -69,7 +70,7 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.GUESS_IT]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);
@@ -124,16 +125,16 @@ export const StepComponent = (props: Props): ReactElement | null => {
           />
         )}
         {displaySteps.includes(Step.PAIR_IT) && (
-          <PairItStep
+          <PairItGame
             className={classes.step({ className: classes.stepPairIt() })}
             cards={props.cards}
             onFinish={finishPairItStepHandler}
           />
         )}
         {displaySteps.includes(Step.GUESS_IT) && (
-          <div className={classes.step({ className: classes.stepGuessIt() })}>
-            guess it
-          </div>
+          <GuessItGame
+            className={classes.step({ className: classes.stepGuessIt() })}
+          />
         )}
       </div>
     </div>

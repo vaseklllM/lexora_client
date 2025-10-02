@@ -38,7 +38,7 @@ interface Props {
   onFinish?: () => void;
 }
 
-export const PairItStep = memo((props: Props): ReactElement => {
+export const PairItGame = memo((props: Props): ReactElement => {
   const classes = classesSlots();
   const [activeLeft, setActiveLeft] = useState<string>();
   const [activeRight, setActiveRight] = useState<string>();
@@ -185,4 +185,4 @@ export const PairItStep = memo((props: Props): ReactElement => {
   );
 });
 
-PairItStep.displayName = "PairItStep";
+PairItGame.displayName = "PairItStep";

@@ -1,7 +1,7 @@
 import { usePlayerStore } from "./store";
 
 export const player = {
-  play(soundUrl: string) {
+  play(soundUrl: string, callback?: () => void) {
     const { audio, setIsPlaying } = usePlayerStore.getState();
     if (!audio) return;
     audio.src = soundUrl;
@@ -9,12 +9,15 @@ export const player = {
     audio.play();
     audio.onended = () => {
       setIsPlaying(false);
+      callback?.();
     };
     audio.onerror = () => {
       setIsPlaying(false);
+      callback?.();
     };
     audio.onpause = () => {
       setIsPlaying(false);
+      callback?.();
     };
     audio.onplay = () => {
       setIsPlaying(true);
@@ -22,26 +25,7 @@ export const player = {
   },
   async playAsync(soundUrl: string) {
     return new Promise((resolve) => {
-      const { audio, setIsPlaying } = usePlayerStore.getState();
-      if (!audio) return;
-      audio.src = soundUrl;
-
-      audio.play();
-      audio.onended = () => {
-        setIsPlaying(false);
-        resolve(true);
-      };
-      audio.onerror = () => {
-        setIsPlaying(false);
-        resolve(true);
-      };
-      audio.onpause = () => {
-        setIsPlaying(false);
-        resolve(true);
-      };
-      audio.onplay = () => {
-        setIsPlaying(true);
-      };
+      this.play(soundUrl, () => resolve(true));
     });
   },
   useIsPlaying() {

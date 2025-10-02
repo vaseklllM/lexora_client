@@ -1,3 +1,4 @@
+import { player } from "@/shared/hooks/usePlayer";
 import { sleep } from "@/shared/utils/sleep";
 import { memo, ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
@@ -35,6 +36,7 @@ interface Props {
   isLastCard?: boolean;
   isChecked?: boolean;
   onChecked?: (isChecked: boolean) => void;
+  soundUrl: string;
 }
 
 export const OptionButton = memo((props: Props): ReactElement => {
@@ -53,7 +55,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
     if (props.isRightOption) {
       props.onChecked?.(true);
       setCLickStatus("success");
-      await sleep(800);
+      await player.playAsync(props.soundUrl);
       props.onClick?.({ id: props.id });
       if (props.isLastCard) return;
       props.onMixRandomCards?.();
@@ -74,6 +76,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
     props.onMixRandomCards,
     props.isLastCard,
     props.onChecked,
+    props.soundUrl,
   ]);
 
   return (

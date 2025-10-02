@@ -20,6 +20,30 @@ export const player = {
       setIsPlaying(true);
     };
   },
+  async playAsync(soundUrl: string) {
+    return new Promise((resolve) => {
+      const { audio, setIsPlaying } = usePlayerStore.getState();
+      if (!audio) return;
+      audio.src = soundUrl;
+
+      audio.play();
+      audio.onended = () => {
+        setIsPlaying(false);
+        resolve(true);
+      };
+      audio.onerror = () => {
+        setIsPlaying(false);
+        resolve(true);
+      };
+      audio.onpause = () => {
+        setIsPlaying(false);
+        resolve(true);
+      };
+      audio.onplay = () => {
+        setIsPlaying(true);
+      };
+    });
+  },
   useIsPlaying() {
     return usePlayerStore((state) => state.isPlaying);
   },

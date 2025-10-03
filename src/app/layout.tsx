@@ -37,7 +37,7 @@ export default function RootLayout(
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextAuthProvider>{children}</NextAuthProvider>
         <ToastContainer position="bottom-left" />

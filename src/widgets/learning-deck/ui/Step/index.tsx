@@ -5,7 +5,7 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
-import { Step, useLearningDeckStore } from "../../model/store";
+import { DEFAULT_STEP, Step, useLearningDeckStore } from "../../model/store";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
 
@@ -16,7 +16,7 @@ const classesSlots = tv({
     base: "",
     content:
       "bg-base-300 relative mt-6 min-h-120 overflow-hidden rounded-xl sm:min-h-115 md:min-h-142 md:p-6",
-    buttonStart: "h-28 w-28",
+    buttonStart: "h-28 w-28 md:h-28 md:w-28",
     textStart: "text-base-content/80 text-lg font-bold",
     step: `absolute top-0 flex h-full w-full p-4 transition-[left] sm:p-6 duration-${STEP_DELAY}`,
     stepStart: "left-0 flex-col items-center justify-center gap-6",
@@ -71,7 +71,7 @@ interface Props {
 export const StepComponent = (props: Props): ReactElement | null => {
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
-  const [displaySteps, setDisplaySteps] = useState<Step[]>([Step.START]);
+  const [displaySteps, setDisplaySteps] = useState<Step[]>([DEFAULT_STEP]);
 
   const showStep = useCallback(async (step: Step) => {
     setDisplaySteps((prev) => [...prev, step]);

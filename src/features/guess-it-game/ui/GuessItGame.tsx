@@ -9,9 +9,9 @@ import { OptionButton } from "./OptionButton";
 const classesSlots = tv({
   slots: {
     base: "items-center justify-center",
-    content: "flex flex-col gap-4",
+    content: "flex flex-col gap-2 md:gap-4",
     header:
-      "bg-base-100 flex min-h-42 min-w-96 items-center justify-center rounded-lg p-4",
+      "bg-base-100 flex min-h-34 items-center justify-center rounded-lg p-4 md:min-h-42 md:min-w-96",
     headerText: "text-2xl",
     option:
       "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-sm",

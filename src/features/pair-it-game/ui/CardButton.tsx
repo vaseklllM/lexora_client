@@ -6,7 +6,7 @@ export type CardButtonStatus = "active" | "success" | "error";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 text-base-content hover:bg-base-200 w-50 cursor-pointer rounded-xl p-4 text-sm",
+    base: "bg-base-100 text-base-content hover:bg-base-200 w-50 cursor-pointer rounded-xl p-4 text-sm select-none",
   },
   variants: {
     status: {

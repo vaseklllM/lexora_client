@@ -18,7 +18,7 @@ import * as v from "valibot";
 
 const classesSlots = tv({
   slots: {
-    formWrapper: "mt-10 sm:mx-auto sm:w-full sm:max-w-sm",
+    formWrapper: "mt-6 sm:mx-auto sm:w-full sm:max-w-sm md:mt-10",
   },
   variants: {
     errorMessage: {
@@ -78,7 +78,7 @@ export function SignIn() {
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
+        <h2 className="mt-4 text-center text-2xl/9 font-bold tracking-tight lg:mt-10">
           Sign in
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">

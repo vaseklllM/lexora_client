@@ -7,12 +7,12 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex h-screen justify-center">
-      <div className="overflow-y-auto lg:w-3/7 xl:w-2/5">
-        <div className="flex min-h-full flex-col items-center justify-center p-6">
+      <div className="w-full overflow-y-auto lg:w-3/7 xl:w-2/5">
+        <div className="flex min-h-full flex-col items-center p-4 md:justify-center md:p-6">
           <Image
             alt="Your Company"
             src="/logo.svg"
-            className="mx-auto h-20 w-auto flex-shrink-0"
+            className="mx-auto h-12 w-auto flex-shrink-0 sm:h-14 md:h-20"
             width={100}
             height={100}
           />

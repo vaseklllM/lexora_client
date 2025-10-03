@@ -11,7 +11,7 @@ import { SoundIcon } from "../icons/Sound";
 
 const classesSlots = tv({
   slots: {
-    button: "btn h-8 w-8 rounded-full p-0",
+    button: "btn h-10 w-10 rounded-full p-0 md:h-8 md:w-8",
     tooltip: "tooltip flex",
   },
   variants: {

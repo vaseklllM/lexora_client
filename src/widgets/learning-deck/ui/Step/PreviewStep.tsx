@@ -20,9 +20,9 @@ const classesSlots = tv({
     cardFour: "top-3 left-3 z-2",
     cardFive: "top-4 left-4 z-1",
     button:
-      "absolute bottom-3 z-6 h-10 w-10 shadow-md/30 sm:relative sm:bottom-0 sm:h-12 sm:w-12",
-    buttonArrowLeft: "left-3 sm:left-0",
-    buttonArrowRight: "right-3 sm:right-0",
+      "absolute bottom-48 z-6 h-20 w-10 rounded-md opacity-60 shadow-md/30 hover:opacity-100 sm:relative sm:bottom-0 sm:h-12 sm:w-12 sm:rounded-full",
+    buttonArrowLeft: "left-1 sm:left-0",
+    buttonArrowRight: "right-1 sm:right-0",
   },
   variants: {
     activeCard: {

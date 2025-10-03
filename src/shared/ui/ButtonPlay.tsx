@@ -9,7 +9,7 @@ import { PlayIcon } from "../icons/Play";
 
 const classesSlots = tv({
   slots: {
-    button: "btn btn-circle btn-primary h-9 w-9 rounded-full",
+    button: "btn btn-circle btn-primary h-10 w-10 rounded-full sm:h-9 sm:w-9",
     icon: "ml-0.5",
   },
 });

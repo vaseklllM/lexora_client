@@ -12,7 +12,7 @@ import { useLastBreadcrumbs } from "./useLastBreadcrumbs";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-200 relative rounded-xl p-5 pr-5 pb-15 pl-5 shadow-md",
+    base: "bg-base-200 relative p-4 shadow-md sm:rounded-xl sm:p-5 sm:pr-5 sm:pb-15 sm:pl-5",
     header: "flex items-center gap-6",
     step: "mt-6",
   },

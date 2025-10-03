@@ -18,7 +18,7 @@ import { Fields, fieldsSchema } from "../model/fields-schema";
 
 const classesSlots = tv({
   slots: {
-    formWrapper: "mt-10 sm:mx-auto sm:w-full sm:max-w-sm",
+    formWrapper: "mt-6 sm:mx-auto sm:w-full sm:max-w-sm md:mt-10",
   },
   variants: {
     errorMessage: {
@@ -107,7 +107,7 @@ export function SignUp() {
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-5 text-center text-2xl/9 font-bold tracking-tight">
+        <h2 className="mt-4 text-center text-2xl/9 font-bold tracking-tight sm:mt-5">
           Sign up
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">

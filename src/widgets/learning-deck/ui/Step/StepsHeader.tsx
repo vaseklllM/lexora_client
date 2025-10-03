@@ -5,8 +5,8 @@ import { useLearningDeckStore } from "../../model/store";
 const classesSlots = tv({
   slots: {
     base: "flex justify-center",
-    steps: "steps w-full text-sm sm:text-base",
-    step: "step",
+    steps: "steps w-full text-[10px] sm:text-base",
+    step: "step after:bg-primary min-w-max! before:h-1! after:h-6! after:w-6!",
     stepStart: "",
     stepPreview: "",
     stepPairIt: "",

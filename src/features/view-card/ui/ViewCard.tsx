@@ -60,13 +60,11 @@ export const ViewCard = memo((props: Props): ReactElement => {
                 variant="dash"
                 color="primary"
                 onClick={editHandler}
-                // className="h-10 w-10 md:h-8 md:w-8"
               />
               <ButtonIcon
                 icon="delete"
                 variant="dash"
                 color="error"
-                // className="h-10 w-10 md:h-8 md:w-8"
                 onClick={deleteHandler}
               />
             </>

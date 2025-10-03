@@ -155,7 +155,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           required
           disabled={!props.isActiveThisSide || isSubmitting || isLoading}
         />
-        <fieldset className="fieldset">
+        <fieldset className="fieldset w-max min-w-20">
           <legend className="fieldset-legend text-base-content/70 p-0 pb-1 text-left text-xs font-medium">
             CEFR
           </legend>

@@ -23,7 +23,7 @@ const classesSlots = tv({
           "bg-base-100/60 text-base-content/60 hover:bg-base-200 hover:bg-base-100/60 cursor-auto",
       },
     },
-    testSize: {
+    titleLength: {
       big: {
         option: "text-[10px]",
       },
@@ -54,7 +54,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
 
   const classes = classesSlots({
     status,
-    testSize: props.title.length >= 80 ? "big" : undefined,
+    titleLength: props.title.length >= 80 ? "big" : undefined,
   });
 
   const clickHandler = useCallback(async () => {

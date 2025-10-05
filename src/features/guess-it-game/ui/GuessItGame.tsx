@@ -25,7 +25,7 @@ const classesSlots = tv({
         option: "bg-error text-error-content hover:bg-error cursor-auto",
       },
     },
-    headerSize: {
+    headerLength: {
       big: {
         headerText: "text-sm",
       },
@@ -52,7 +52,7 @@ export const GuessItGame = (props: Props): ReactElement => {
   );
 
   const classes = classesSlots({
-    headerSize:
+    headerLength:
       activeCard?.textInLearningLanguage.length >= 50 ? "big" : undefined,
   });
 

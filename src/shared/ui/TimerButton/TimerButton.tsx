@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { memo, ReactElement } from "react";
 import { useTimer } from "react-timer-hook";
 import { tv } from "tailwind-variants";
 import styles from "./style.module.scss";
@@ -19,7 +19,7 @@ interface Props {
   seconds: number;
 }
 
-export const TimerButton = (props: Props): ReactElement => {
+export const TimerButton = memo((props: Props): ReactElement => {
   const classes = classesSlots();
 
   const timer = useTimer({
@@ -58,4 +58,6 @@ export const TimerButton = (props: Props): ReactElement => {
       <span className="relative z-10">{props.children}</span>
     </button>
   );
-};
+});
+
+TimerButton.displayName = "TimerButton";

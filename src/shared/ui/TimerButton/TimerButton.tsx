@@ -27,7 +27,7 @@ export const TimerButton = (props: Props): ReactElement => {
   });
 
   const strokeDashoffset =
-    strokeDashoffsetMax - strokeDashoffsetMax * (timer.totalSeconds / 100);
+    strokeDashoffsetMax * (timer.totalSeconds / props.seconds);
 
   return (
     <button

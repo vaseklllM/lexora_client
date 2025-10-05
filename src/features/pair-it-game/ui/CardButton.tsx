@@ -6,7 +6,7 @@ export type CardButtonStatus = "active" | "success" | "error";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 text-base-content hover:bg-base-200 max-w-70 cursor-pointer rounded-xl p-4 text-sm break-words select-none",
+    base: "bg-base-100 text-base-content hover:bg-base-200 max-w-70 cursor-pointer rounded-xl p-3 text-sm break-words select-none md:p-4",
   },
   variants: {
     status: {
@@ -45,7 +45,7 @@ interface Props {
 export const CardButton = (props: Props): ReactElement => {
   const classes = classesSlots({
     status: props.status,
-    titleLength: props.title.length >= 80 ? "big" : undefined,
+    titleLength: props.title.length >= 60 ? "big" : undefined,
   });
 
   return (

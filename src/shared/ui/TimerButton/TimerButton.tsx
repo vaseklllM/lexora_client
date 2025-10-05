@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { useTimer } from "react-timer-hook";
 import { tv } from "tailwind-variants";
 import styles from "./style.module.scss";
 
@@ -15,15 +16,18 @@ const strokeDashoffsetMax = 375.7873229980469;
 interface Props {
   className?: string;
   children?: React.ReactNode;
-  percentage?: number;
+  seconds: number;
 }
 
 export const TimerButton = (props: Props): ReactElement => {
   const classes = classesSlots();
 
-  // Calculate strokeDashoffset based on percentage (reversed to empty out)
+  const timer = useTimer({
+    expiryTimestamp: new Date(Date.now() + 1000 * props.seconds),
+  });
+
   const strokeDashoffset =
-    strokeDashoffsetMax - strokeDashoffsetMax * ((props.percentage ?? 0) / 100);
+    strokeDashoffsetMax - strokeDashoffsetMax * (timer.totalSeconds / 100);
 
   return (
     <button

@@ -2,7 +2,6 @@ import { ICard } from "@/api/schemas/card.schema";
 import { TimerButton } from "@/shared/ui/TimerButton";
 import { mixArray } from "@/shared/utils/mixArray";
 import { ReactElement, useEffect, useMemo, useState } from "react";
-import { useTimer } from "react-timer-hook";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -24,10 +23,6 @@ interface Props {
 
 export const RecallIt = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-
-  const timer = useTimer({
-    expiryTimestamp: new Date(Date.now() + 1000 * 10),
-  });
 
   const mixedCards = useMemo(() => mixArray(props.cards), [props.cards]);
 
@@ -54,10 +49,7 @@ export const RecallIt = (props: Props): ReactElement => {
         </div>
       </div>
       <div className={classes.content()}>
-        <TimerButton
-          className={classes.timer()}
-          percentage={timer.totalSeconds * 10}
-        >
+        <TimerButton className={classes.timer()} seconds={10}>
           Show
         </TimerButton>
       </div>

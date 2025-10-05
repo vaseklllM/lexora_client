@@ -6,12 +6,12 @@ import styles from "./style.module.scss";
 const classesSlots = tv({
   slots: {
     button:
-      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-xl",
+      "bg-accent/20 font-regular flex h-12 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-xl",
     icon: "h-full w-full",
   },
 });
 
-const strokeDashoffsetMax = 260;
+const strokeDashoffsetMax = 235;
 
 interface Props {
   className?: string;
@@ -40,7 +40,7 @@ export const TimerButton = memo((props: Props): ReactElement => {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 96 64"
+        viewBox="0 0 96 48"
         preserveAspectRatio="none"
       >
         <rect
@@ -48,9 +48,9 @@ export const TimerButton = memo((props: Props): ReactElement => {
           x="2"
           y="2"
           width="92"
-          height="60"
-          rx="32"
-          ry="32"
+          height="44"
+          rx="24"
+          ry="24"
           style={{ strokeDashoffset, strokeDasharray: strokeDashoffsetMax }}
           transform="rotate(0 48 32) scale(1, 1)"
         />

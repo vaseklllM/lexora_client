@@ -9,10 +9,10 @@ import { OptionButton } from "./OptionButton";
 const classesSlots = tv({
   slots: {
     base: "items-center justify-center",
-    content: "flex flex-col gap-2 md:gap-4",
+    content: "flex max-w-full flex-col gap-2 md:gap-4",
     header:
-      "bg-base-100 flex min-h-34 items-center justify-center rounded-lg p-4 md:min-h-42 md:min-w-96",
-    headerText: "text-2xl",
+      "mb-2 flex min-h-34 max-w-full items-center justify-center rounded-lg p-4 md:min-h-42 md:min-w-96 dark:bg-gray-800",
+    headerText: "max-w-full text-center text-2xl break-words",
     option:
       "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-sm",
   },
@@ -23,6 +23,11 @@ const classesSlots = tv({
       },
       error: {
         option: "bg-error text-error-content hover:bg-error cursor-auto",
+      },
+    },
+    headerSize: {
+      big: {
+        headerText: "text-sm",
       },
     },
   },
@@ -41,12 +46,15 @@ export const GuessItGame = (props: Props): ReactElement => {
 
   const isLastCard = props.cards.length - 1 === activeCardIdx;
 
-  const classes = classesSlots();
-
   const activeCard = useMemo(
     () => props.cards[activeCardIdx],
     [props.cards, activeCardIdx],
   );
+
+  const classes = classesSlots({
+    headerSize:
+      activeCard?.textInLearningLanguage.length >= 50 ? "big" : undefined,
+  });
 
   const nextCard = useCallback(() => {
     setActiveCardIdx((prev) => prev + 1);

@@ -8,7 +8,7 @@ type Status = "success" | "error" | "disabled";
 const classesSlots = tv({
   slots: {
     option:
-      "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-xs select-none sm:text-sm",
+      "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-xs break-words select-none sm:text-sm",
   },
   variants: {
     status: {
@@ -21,6 +21,11 @@ const classesSlots = tv({
       disabled: {
         option:
           "bg-base-100/60 text-base-content/60 hover:bg-base-200 hover:bg-base-100/60 cursor-auto",
+      },
+    },
+    testSize: {
+      big: {
+        option: "text-[10px]",
       },
     },
   },
@@ -49,6 +54,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
 
   const classes = classesSlots({
     status,
+    testSize: props.title.length >= 80 ? "big" : undefined,
   });
 
   const clickHandler = useCallback(async () => {

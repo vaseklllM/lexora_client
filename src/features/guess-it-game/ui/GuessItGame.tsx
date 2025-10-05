@@ -11,7 +11,7 @@ const classesSlots = tv({
     base: "items-center justify-center",
     content: "flex max-w-full flex-col gap-2 md:gap-4",
     header:
-      "mb-2 flex min-h-34 max-w-full items-center justify-center rounded-lg p-4 md:min-h-42 md:min-w-96 dark:bg-gray-800",
+      "mb-2 flex min-h-34 max-w-full items-center justify-center rounded-lg bg-slate-200 p-2 md:min-h-42 md:min-w-96 md:p-4 dark:bg-gray-800",
     headerText: "max-w-full text-center text-2xl break-words",
     option:
       "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-sm",

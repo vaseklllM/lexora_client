@@ -37,9 +37,16 @@ export const Deck = memo((props: DeckProps): ReactElement => {
   const buttons = useButtons(props);
   const router = useRouter();
 
-  const clickHandler = useCallback(() => {
-    router.push(routes.dashboard.deck.url(props.deck.id));
-  }, [props.deck.id]);
+  const clickHandler = useCallback(
+    (event: React.MouseEvent) => {
+      if (event.altKey || event.metaKey) {
+        window.open(routes.dashboard.deck.url(props.deck.id), "_blank");
+      } else {
+        router.push(routes.dashboard.deck.url(props.deck.id));
+      }
+    },
+    [props.deck.id, router],
+  );
 
   const clickPlayHandler = useCallback(() => {
     if (props.deck.numberOfCards <= 0) return;

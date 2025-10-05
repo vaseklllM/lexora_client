@@ -43,7 +43,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   deck: IDeck;
   dottedDropdownButtons: DropdownItem[];
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
   onPlay?: () => void;
   ref?: Ref<HTMLDivElement>;
   hover?: boolean;

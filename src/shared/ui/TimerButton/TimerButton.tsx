@@ -6,7 +6,7 @@ import styles from "./style.module.scss";
 const classesSlots = tv({
   slots: {
     button:
-      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-xl p-4 px-6 text-xl",
+      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-xl",
     icon: "h-full w-full",
   },
 });
@@ -49,8 +49,8 @@ export const TimerButton = (props: Props): ReactElement => {
           y="2"
           width="92"
           height="60"
-          rx="12"
-          ry="12"
+          rx="32"
+          ry="32"
           style={{ strokeDashoffset }}
           transform="rotate(0 48 32) scale(-1, 1) translate(-96, 0)"
         />

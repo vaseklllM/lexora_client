@@ -1,6 +1,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { GuessItGame } from "@/features/guess-it-game";
 import { PairItGame } from "@/features/pair-it-game";
+import { RecallIt } from "@/features/recall-it";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { sleep } from "@/shared/utils/sleep";
 import { ReactElement, useCallback, useState } from "react";
@@ -144,9 +145,10 @@ export const StepComponent = (props: Props): ReactElement | null => {
           />
         )}
         {displaySteps.includes(Step.RECALL_IT) && (
-          <div className={classes.step({ className: classes.stepRecallIt() })}>
-            Recall it
-          </div>
+          <RecallIt
+            className={classes.step({ className: classes.stepRecallIt() })}
+            cards={props.cards}
+          />
         )}
       </div>
     </div>

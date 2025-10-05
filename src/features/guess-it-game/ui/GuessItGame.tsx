@@ -46,10 +46,7 @@ export const GuessItGame = (props: Props): ReactElement => {
 
   const isLastCard = props.cards.length - 1 === activeCardIdx;
 
-  const activeCard = useMemo(
-    () => props.cards[activeCardIdx],
-    [props.cards, activeCardIdx],
-  );
+  const activeCard = props.cards[activeCardIdx];
 
   const classes = classesSlots({
     headerLength:

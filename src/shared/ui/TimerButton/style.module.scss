@@ -1,0 +1,29 @@
+/**
+ * Demo variables
+ */
+$green: #76e19e;
+$white: #fff;
+$red: #fb7593;
+$yellow: #ffd05c;
+$white-broken: #e7e9f2;
+$body-bg: $white-broken;
+
+.countdown {
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+  transform-origin: center bottom;
+}
+
+.countdown__icon {
+  position: absolute;
+  fill: transparent;
+  stroke: var(--color-accent);
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.countdown__icon__circle {
+  stroke-dasharray: 375.7873229980469;
+  transition: stroke-dashoffset 1s linear;
+}

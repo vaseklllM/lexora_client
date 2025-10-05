@@ -6,8 +6,8 @@ import styles from "./style.module.scss";
 const classesSlots = tv({
   slots: {
     button:
-      "bg-accent/20 font-regular border-accent flex h-16 w-24 cursor-pointer items-center justify-center rounded-full border p-4 px-6 text-xl",
-    icon: "h-16 w-24",
+      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-xl",
+    icon: "h-full w-full",
   },
 });
 
@@ -40,11 +40,8 @@ export const TimerButton = (props: Props): ReactElement => {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
         viewBox="0 0 130 130"
-        overflow="visible"
-        enableBackground="new 0 0 130 130"
+        preserveAspectRatio="none"
       >
         <path
           className={styles.countdown__icon__circle}
@@ -53,7 +50,7 @@ export const TimerButton = (props: Props): ReactElement => {
           transform="rotate(-90 65 65) scale(-1, 1) translate(-130, 0)"
         />
       </svg>
-      <span>{props.children}</span>
+      <span className="relative z-10">{props.children}</span>
     </button>
   );
 };

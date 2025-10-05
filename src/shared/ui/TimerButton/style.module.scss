@@ -7,10 +7,13 @@
 
 .countdown__icon {
   position: absolute;
+  top: 0;
+  left: 0;
   fill: transparent;
   stroke: var(--color-accent);
-  stroke-width: 10px;
+  stroke-width: 3px;
   stroke-linecap: round;
+  pointer-events: none;
 }
 
 .countdown__icon__circle {

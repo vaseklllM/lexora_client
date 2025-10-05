@@ -6,12 +6,12 @@ import styles from "./style.module.scss";
 const classesSlots = tv({
   slots: {
     button:
-      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-xl",
+      "bg-accent/20 font-regular flex h-16 w-24 cursor-pointer items-center justify-center rounded-xl p-4 px-6 text-xl",
     icon: "h-full w-full",
   },
 });
 
-const strokeDashoffsetMax = 375.7873229980469;
+const strokeDashoffsetMax = 316;
 
 interface Props {
   className?: string;
@@ -40,14 +40,19 @@ export const TimerButton = (props: Props): ReactElement => {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 130 130"
+        viewBox="0 0 96 64"
         preserveAspectRatio="none"
       >
-        <path
+        <rect
           className={styles.countdown__icon__circle}
-          d="M5,64.8a59.8,59.8 0 1,0 119.6,0a59.8,59.8 0 1,0 -119.6,0"
+          x="2"
+          y="2"
+          width="92"
+          height="60"
+          rx="12"
+          ry="12"
           style={{ strokeDashoffset }}
-          transform="rotate(-90 65 65) scale(-1, 1) translate(-130, 0)"
+          transform="rotate(0 48 32) scale(-1, 1) translate(-96, 0)"
         />
       </svg>
       <span className="relative z-10">{props.children}</span>

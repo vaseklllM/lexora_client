@@ -25,9 +25,16 @@ export const Folder = memo((props: FolderProps): ReactElement => {
     id: props.folder.id,
   });
 
-  const clickHandler = useCallback(() => {
-    router.push(routes.dashboard.folder.url(props.folder.id));
-  }, [props.folder.id]);
+  const clickHandler = useCallback(
+    (event: React.MouseEvent) => {
+      if (event.altKey || event.metaKey) {
+        window.open(routes.dashboard.folder.url(props.folder.id), "_blank");
+      } else {
+        router.push(routes.dashboard.folder.url(props.folder.id));
+      }
+    },
+    [props.folder.id, router],
+  );
 
   return (
     <FolderEntity

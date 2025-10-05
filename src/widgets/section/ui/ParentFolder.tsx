@@ -31,13 +31,27 @@ export const ParentFolder = memo((props: Props): ReactElement => {
     id: parentFolder.id,
   });
 
-  const clickHandler = useCallback(() => {
-    if (props.parentFolder?.id) {
-      router.push(routes.dashboard.folder.url(props.parentFolder.id));
-    } else {
-      router.push(routes.dashboard.url());
-    }
-  }, [props.parentFolder?.id, router]);
+  const clickHandler = useCallback(
+    (event: React.MouseEvent) => {
+      if (event.altKey || event.metaKey) {
+        if (props.parentFolder?.id) {
+          window.open(
+            routes.dashboard.folder.url(props.parentFolder.id),
+            "_blank",
+          );
+        } else {
+          window.open(routes.dashboard.url(), "_blank");
+        }
+      } else {
+        if (props.parentFolder?.id) {
+          router.push(routes.dashboard.folder.url(props.parentFolder.id));
+        } else {
+          router.push(routes.dashboard.url());
+        }
+      }
+    },
+    [props.parentFolder?.id, router],
+  );
 
   return (
     <Folder

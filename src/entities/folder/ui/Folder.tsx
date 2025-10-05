@@ -46,7 +46,7 @@ interface Props {
   className?: string;
   folder: Partial<IFolder>;
   dottedDropdownButtons?: DropdownItem[];
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
   ref?: Ref<HTMLDivElement>;
   icon?: "folder" | "arrowBack";
   isOver?: boolean;

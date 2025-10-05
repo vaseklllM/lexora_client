@@ -6,7 +6,7 @@ const classesSlots = tv({
   slots: {
     base: "flex justify-center",
     steps: "steps w-full text-[10px] sm:text-xs md:text-base",
-    step: "step after:bg-primary min-w-max! before:h-1! after:h-6! after:w-6!",
+    step: "step after:bg-primary min-w-max! before:h-1! after:h-6! after:w-6! md:after:h-[2rem]! md:after:w-[2rem]!",
     stepStart: "",
     stepPreview: "",
     stepPairIt: "",

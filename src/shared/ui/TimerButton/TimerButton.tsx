@@ -52,7 +52,7 @@ export const TimerButton = memo((props: Props): ReactElement => {
           rx="32"
           ry="32"
           style={{ strokeDashoffset, strokeDasharray: strokeDashoffsetMax }}
-          transform="rotate(0 48 32) scale(-1, 1) translate(-96, 0)"
+          transform="rotate(0 48 32) scale(1, 1)"
         />
       </svg>
       <span className="relative z-10">{props.children}</span>

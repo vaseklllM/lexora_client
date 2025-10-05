@@ -49,7 +49,7 @@ export const RecallIt = (props: Props): ReactElement => {
         </div>
       </div>
       <div className={classes.content()}>
-        <TimerButton className={classes.timer()} seconds={4}>
+        <TimerButton className={classes.timer()} seconds={10}>
           Show
         </TimerButton>
       </div>

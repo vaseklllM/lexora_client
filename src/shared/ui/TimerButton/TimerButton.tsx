@@ -11,7 +11,7 @@ const classesSlots = tv({
   },
 });
 
-const strokeDashoffsetMax = 316;
+const strokeDashoffsetMax = 260;
 
 interface Props {
   className?: string;
@@ -27,7 +27,7 @@ export const TimerButton = memo((props: Props): ReactElement => {
   });
 
   const strokeDashoffset =
-    strokeDashoffsetMax * (timer.totalSeconds / props.seconds);
+    strokeDashoffsetMax * (1 - timer.totalSeconds / props.seconds);
 
   return (
     <button
@@ -51,7 +51,7 @@ export const TimerButton = memo((props: Props): ReactElement => {
           height="60"
           rx="32"
           ry="32"
-          style={{ strokeDashoffset }}
+          style={{ strokeDashoffset, strokeDasharray: strokeDashoffsetMax }}
           transform="rotate(0 48 32) scale(-1, 1) translate(-96, 0)"
         />
       </svg>

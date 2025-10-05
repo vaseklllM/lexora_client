@@ -33,16 +33,20 @@ const classesSlots = tv({
         base: "justify-center",
       },
     },
-    isLargeDescription: {
-      true: {
-        frontDescription: "text-xs",
-        frontDescriptionTranslation: "text-xs",
+    titleLength: {
+      big: {
+        frontTitle: "text-sm",
       },
     },
-    isLargeWord: {
-      true: {
-        frontTitle: "",
+    titleTranslationLength: {
+      big: {
         frontTitleTranslation: "text-xs",
+      },
+    },
+    descriptionLength: {
+      big: {
+        frontDescription: "text-xs",
+        frontDescriptionTranslation: "text-xs",
       },
     },
     isFloatButtons: {
@@ -73,19 +77,22 @@ export const ViewCard = memo((props: Props): ReactElement => {
     !!props.card.descriptionInKnownLanguage;
 
   const isLargeDescription: boolean =
-    (props.card.descriptionInKnownLanguage?.length ?? 0) > 70 ||
-    (props.card.descriptionInLearningLanguage?.length ?? 0) > 70;
+    (props.card.descriptionInKnownLanguage?.length ?? 0) >= 50 ||
+    (props.card.descriptionInLearningLanguage?.length ?? 0) >= 50;
 
   const isLargeWord: boolean =
-    (props.card.textInKnownLanguage?.length ?? 0) > 40 ||
-    (props.card.textInLearningLanguage?.length ?? 0) > 40;
+    (props.card.textInKnownLanguage?.length ?? 0) >= 80 ||
+    (props.card.textInLearningLanguage?.length ?? 0) >= 80;
 
   const classes = classesSlots({
     isDescription,
-    isLargeDescription,
-    isLargeWord,
     isFloatButtons: isDescription && (isLargeWord || isLargeDescription),
     useBackground: props.useBackground,
+    titleLength:
+      props.card.textInLearningLanguage?.length >= 80 ? "big" : undefined,
+    titleTranslationLength:
+      props.card.textInKnownLanguage?.length >= 80 ? "big" : undefined,
+    descriptionLength: isLargeDescription ? "big" : undefined,
   });
 
   const isNativeSound = props.card.soundUrls.length > 0;

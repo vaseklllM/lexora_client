@@ -2,10 +2,10 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
-import { mixArray } from "@/shared/utils/mixArray";
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
+import { useActiveCard } from "./useActiveCard";
 import { useBlurWordDescription } from "./useBlurWordDescription";
 
 const classesSlots = tv({
@@ -33,7 +33,6 @@ interface Props {
 }
 
 export const RecallIt = (props: Props): ReactElement => {
-  const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isTimerExpired, setIsTimerExpired] = useState<boolean>(false);
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);
@@ -41,13 +40,7 @@ export const RecallIt = (props: Props): ReactElement => {
   const { isBlurWordDescription, blurWordDescription, showDescriptionWord } =
     useBlurWordDescription();
 
-  const mixedCards = useMemo(() => mixArray(props.cards), [props.cards]);
-
-  const activeCard = mixedCards[activeCardIdx];
-
-  useEffect(() => {
-    setActiveCardIdx(0);
-  }, [props.cards]);
+  const { activeCard } = useActiveCard(props.cards);
 
   const classes = classesSlots({
     isUserShowedTranslation,

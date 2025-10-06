@@ -9,7 +9,7 @@ export enum Step {
   TYPE_IT = "typeIt",
 }
 
-export const DEFAULT_STEP = Step.START;
+export const DEFAULT_STEP = Step.PAIR_IT;
 
 type State = {
   activeStep: Step;

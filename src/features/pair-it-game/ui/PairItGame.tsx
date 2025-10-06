@@ -22,7 +22,7 @@ import {
 const classesSlots = tv({
   slots: {
     base: "items-center justify-center gap-4",
-    content: "grid grid-cols-2 gap-4",
+    content: "grid h-full grid-cols-2 gap-4",
   },
 });
 
@@ -45,6 +45,7 @@ export const PairItGame = memo((props: Props): ReactElement => {
   const [finishedCards, setFinishedCards] = useState<string[]>([]);
   const [errorLeftCards, setErrorLeftCards] = useState<string[]>([]);
   const [errorRightCards, setErrorRightCards] = useState<string[]>([]);
+  const isPlaying = player.useIsPlaying();
 
   const cards = useMemo(() => {
     let leftCards: PairCard[] = [];
@@ -162,10 +163,10 @@ export const PairItGame = memo((props: Props): ReactElement => {
   }, [activeLeft, activeRight]);
 
   useEffect(() => {
-    if (finishedCards.length === props.cards.length) {
+    if (finishedCards.length === props.cards.length && !isPlaying) {
       props.onFinish?.();
     }
-  }, [finishedCards.length, props.cards, props.onFinish]);
+  }, [finishedCards.length, props.cards, props.onFinish, isPlaying]);
 
   return (
     <div className={classes.base({ className: props.className })}>

@@ -1,6 +1,9 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { player } from "@/shared/hooks/usePlayer";
+import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { Cerf } from "@/shared/ui/Cefr";
 import { mixArray } from "@/shared/utils/mixArray";
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
@@ -10,8 +13,9 @@ const classesSlots = tv({
   slots: {
     base: "items-center justify-center",
     content: "flex h-full w-full max-w-full flex-col gap-2 md:gap-4",
+    iconButtons: "absolute top-2 left-2 flex flex-row items-center gap-2",
     header:
-      "mb-2 grid h-full min-h-34 max-w-full grid-cols-1 items-center justify-center rounded-lg bg-slate-300 p-2 md:min-h-42 md:min-w-96 md:p-4 dark:bg-gray-800",
+      "relative mb-2 grid h-full min-h-34 max-w-full grid-cols-1 items-center justify-center rounded-lg bg-slate-300 p-2 md:min-h-42 md:min-w-96 md:p-4 dark:bg-gray-800",
     headerText: "max-w-full text-center text-2xl break-words",
     option:
       "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-sm",
@@ -83,6 +87,20 @@ export const GuessItGame = (props: Props): ReactElement => {
     <div className={classes.base({ className: props.className })}>
       <div className={classes.content()}>
         <div className={classes.header()}>
+          <div className={classes.iconButtons()}>
+            {activeCard.cefr && <Cerf cefr={activeCard.cefr} />}
+            {activeCard.soundUrls?.map((soundUrl, idx) => (
+              <ButtonIcon
+                key={idx}
+                icon="sound"
+                variant="ghost"
+                color="primary"
+                onClick={() => {
+                  player.play(soundUrl);
+                }}
+              />
+            ))}
+          </div>
           <h3 className={classes.headerText()}>
             {activeCard?.textInLearningLanguage}
           </h3>

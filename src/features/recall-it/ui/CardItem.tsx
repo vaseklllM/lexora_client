@@ -13,8 +13,7 @@ const classesSlots = tv({
       "transition-blur max-w-full px-1 text-center text-xl break-words duration-300",
     descriptionWrapper: "bg-base-300 gap-2 rounded-lg p-2 py-3",
     description: "transition-blur text-center text-sm break-words duration-300",
-    iconButtons: "absolute top-2 left-2 flex flex-row gap-2",
-    soundButton: "",
+    iconButtons: "absolute top-2 left-2 flex flex-row items-center gap-2",
   },
   variants: {
     isBlur: {
@@ -81,7 +80,6 @@ export const CardItem = (props: Props): ReactElement => {
             onClick={() => {
               player.play(soundUrl);
             }}
-            className={classes.soundButton()}
           />
         ))}
       </div>

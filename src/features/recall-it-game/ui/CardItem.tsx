@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 relative flex min-h-60 max-w-full flex-col rounded-xl p-2 sm:min-h-50 md:min-w-96 lg:min-h-42",
+    base: "bg-base-100 relative flex min-h-60 max-w-full flex-col rounded-xl p-2 sm:min-h-50 md:min-w-96",
     titleWrapper: "flex h-full max-w-full items-center justify-center",
     title:
       "transition-blur max-w-full px-1 text-center text-xl break-words duration-300",

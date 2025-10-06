@@ -30,8 +30,8 @@ export function useActiveCard({
   const card = mixedCards.find((card) => card.id === activeCardId)!;
 
   const nextCard = useCallback(
-    async (newFinishedCards: string[]) => {
-      if (newFinishedCards.length === cards.length) {
+    async (nextRenderFinishedCards: string[]) => {
+      if (nextRenderFinishedCards.length === cards.length) {
         onFinish?.();
         return;
       }

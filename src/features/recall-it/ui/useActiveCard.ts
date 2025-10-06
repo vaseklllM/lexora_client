@@ -7,13 +7,13 @@ export function useActiveCard(cards: ICard[]) {
 
   const mixedCards = useMemo(() => mixArray(cards), [cards]);
 
-  const activeCard = mixedCards[activeCardIdx];
+  const card = mixedCards[activeCardIdx];
 
   useEffect(() => {
     setActiveCardIdx(0);
   }, [cards]);
 
   return {
-    activeCard,
+    card,
   };
 }

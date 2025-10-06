@@ -37,10 +37,8 @@ export const RecallIt = (props: Props): ReactElement => {
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
-  const { isBlurWordDescription, blurWordDescription, showDescriptionWord } =
-    useBlurWordDescription();
-
-  const { activeCard } = useActiveCard(props.cards);
+  const blurWordDescription = useBlurWordDescription();
+  const activeCard = useActiveCard(props.cards);
 
   const classes = classesSlots({
     isUserShowedTranslation,
@@ -52,30 +50,29 @@ export const RecallIt = (props: Props): ReactElement => {
   }, []);
 
   useEffect(() => {
-    player.play(activeCard.soundUrls[0]);
-    blurWordDescription();
-  }, [activeCard]);
+    player.play(activeCard.card.soundUrls[0]);
+  }, [activeCard.card]);
 
   const showHandler = useCallback(() => {
     setIsTimerExpired(true);
     setIsBlurTranslation(false);
     setIsUserShowedTranslation(true);
-    showDescriptionWord();
+    blurWordDescription.show();
   }, []);
 
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.header()}>
         <CardItem
-          title={activeCard.textInLearningLanguage}
-          description={activeCard.descriptionInLearningLanguage}
-          soundUrls={activeCard.soundUrls}
-          isBlurWordDescription={isBlurWordDescription}
-          cefr={activeCard.cefr}
+          title={activeCard.card.textInLearningLanguage}
+          description={activeCard.card.descriptionInLearningLanguage}
+          soundUrls={activeCard.card.soundUrls}
+          isBlurWordDescription={blurWordDescription.isBlur}
+          cefr={activeCard.card.cefr}
         />
         <CardItem
-          title={activeCard.textInKnownLanguage}
-          description={activeCard.descriptionInKnownLanguage}
+          title={activeCard.card.textInKnownLanguage}
+          description={activeCard.card.descriptionInKnownLanguage}
           isBlur={isBlurTranslation}
         />
       </div>

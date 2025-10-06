@@ -1,8 +1,7 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useBlurWordDescription() {
-  const [isBlurWordDescription, setIsBlurWordDescription] =
-    useState<boolean>(true);
+  const [isBlur, setIsBlur] = useState<boolean>(true);
   const blurDescriptionTimer = useRef<NodeJS.Timeout>(null);
 
   const blurWordDescription = useCallback(() => {
@@ -10,23 +9,26 @@ export function useBlurWordDescription() {
       clearTimeout(blurDescriptionTimer.current);
     }
 
-    setIsBlurWordDescription(true);
+    setIsBlur(true);
     blurDescriptionTimer.current = setTimeout(() => {
-      setIsBlurWordDescription(false);
+      setIsBlur(false);
     }, 4000);
   }, []);
 
-  const showDescriptionWord = useCallback(() => {
+  const show = useCallback(() => {
     if (blurDescriptionTimer.current) {
       clearTimeout(blurDescriptionTimer.current);
     }
 
-    setIsBlurWordDescription(false);
+    setIsBlur(false);
+  }, []);
+
+  useEffect(() => {
+    blurWordDescription();
   }, []);
 
   return {
-    isBlurWordDescription,
-    blurWordDescription,
-    showDescriptionWord,
+    isBlur,
+    show,
   };
 }

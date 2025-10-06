@@ -30,6 +30,7 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 export const RecallIt = (props: Props): ReactElement => {
@@ -38,7 +39,7 @@ export const RecallIt = (props: Props): ReactElement => {
     useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
   const blurWordDescription = useBlurWordDescription();
-  const activeCard = useActiveCard(props.cards);
+  const activeCard = useActiveCard(props);
 
   const classes = classesSlots({
     isUserShowedTranslation,

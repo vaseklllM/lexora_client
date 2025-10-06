@@ -101,6 +101,10 @@ export const StepComponent = (props: Props): ReactElement | null => {
     await showStep(Step.RECALL_IT);
   }, []);
 
+  const finishRecallItStepHandler = useCallback(async () => {
+    await showStep(Step.TYPE_IT);
+  }, []);
+
   const classes = classesSlots({
     step,
   });
@@ -148,8 +152,10 @@ export const StepComponent = (props: Props): ReactElement | null => {
           <RecallIt
             className={classes.step({ className: classes.stepRecallIt() })}
             cards={props.cards}
+            onFinish={finishRecallItStepHandler}
           />
         )}
+        {displaySteps.includes(Step.TYPE_IT) && <>type it</>}
       </div>
     </div>
   );

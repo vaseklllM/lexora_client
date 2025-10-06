@@ -18,9 +18,18 @@ const classesSlots = tv({
   slots: {
     base: "h-full flex-col items-center justify-between p-16!",
     header: "flex flex-col gap-6",
-    content: "",
+    content: "grid gap-4",
+    buttonForgot: "rounded-full",
+    buttonRecalled: "rounded-full",
     timer: "",
     timerExpiredButton: "h-12 w-24 rounded-full",
+  },
+  variants: {
+    isUserShowedTranslation: {
+      true: {
+        content: "grid-cols-2",
+      },
+    },
   },
 });
 
@@ -66,7 +75,9 @@ export const RecallIt = (props: Props): ReactElement => {
     setActiveCardIdx(0);
   }, [props.cards]);
 
-  const classes = classesSlots();
+  const classes = classesSlots({
+    isUserShowedTranslation,
+  });
 
   const handleTimerExpire = useCallback(() => {
     setIsTimerExpired(true);
@@ -104,8 +115,12 @@ export const RecallIt = (props: Props): ReactElement => {
         {isTimerExpired ? (
           isUserShowedTranslation ? (
             <>
-              <Button>Forgot</Button>
-              <Button>Recalled</Button>
+              <Button color="error" className={classes.buttonForgot()}>
+                Forgot
+              </Button>
+              <Button color="accent" className={classes.buttonRecalled()}>
+                Recalled
+              </Button>
             </>
           ) : (
             <Button color="accent" className={classes.timerExpiredButton()}>

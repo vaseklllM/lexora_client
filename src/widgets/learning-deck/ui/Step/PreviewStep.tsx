@@ -70,6 +70,8 @@ interface Props {
 export const PreviewStep = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const step = useLearningDeckStore((state) => state.activeStep);
+  const [isOpenNextStep, setIsOpenNextStep] = useState<boolean>(false);
+  const isPlaying = player.useIsPlaying();
 
   const classes = classesSlots({
     activeCard: getCardEnum(activeCardIdx),
@@ -97,7 +99,7 @@ export const PreviewStep = (props: Props): ReactElement => {
     const nextIdx = activeCardIdx + 1;
 
     if (nextIdx === props.cards.length) {
-      props.onFinish?.();
+      setIsOpenNextStep(true);
       return;
     }
 
@@ -105,7 +107,13 @@ export const PreviewStep = (props: Props): ReactElement => {
 
     await sleep(600);
     player.play(props.cards[nextIdx].soundUrls[0]);
-  }, [setActiveCardIdx, props.onFinish, activeCardIdx]);
+  }, [setActiveCardIdx, props.onFinish, activeCardIdx, setIsOpenNextStep]);
+
+  useEffect(() => {
+    if (isOpenNextStep && !isPlaying) {
+      props.onFinish?.();
+    }
+  }, [isOpenNextStep, isPlaying]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -116,7 +124,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         className={classes.button({ className: classes.buttonArrowLeft() })}
         iconWidth="24px"
         iconHeight="24px"
-        disabled={activeCardIdx === 0}
+        disabled={activeCardIdx === 0 || isOpenNextStep}
         onClick={handlePreviousCard}
       />
       <div className={classes.cards()}>
@@ -153,6 +161,7 @@ export const PreviewStep = (props: Props): ReactElement => {
         iconWidth="24px"
         iconHeight="24px"
         onClick={handleNextCard}
+        disabled={isOpenNextStep}
       />
     </div>
   );

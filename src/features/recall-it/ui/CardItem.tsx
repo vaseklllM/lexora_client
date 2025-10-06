@@ -18,13 +18,13 @@ const classesSlots = tv({
   variants: {
     isBlur: {
       true: {
-        title: "blur-md",
-        description: "blur-md",
+        title: "blur-sm",
+        description: "blur-sm",
       },
     },
     isBlurWordDescription: {
       true: {
-        description: "blur-md",
+        description: "blur-sm",
       },
     },
   },

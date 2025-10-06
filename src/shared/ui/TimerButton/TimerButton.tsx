@@ -6,7 +6,7 @@ import styles from "./style.module.scss";
 const classesSlots = tv({
   slots: {
     button:
-      "bg-accent/30 font-regular flex h-12 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-base",
+      "bg-accent/30 hover:bg-accent/40 font-regular flex h-12 w-24 cursor-pointer items-center justify-center rounded-full p-4 px-6 text-base transition-colors duration-150",
     icon: "h-full w-full",
   },
 });

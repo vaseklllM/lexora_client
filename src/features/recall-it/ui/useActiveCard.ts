@@ -25,7 +25,7 @@ export function useActiveCard({
 
   const [finishedCards, setFinishedCards] = useState<string[]>([]);
   const [activeCardId, setActiveCardId] = useState<string>(mixedCards[0]!.id);
-  const [isVisibleCards, setIsVisibleCards] = useState<boolean>(true);
+  const [isVisibleCard, setIsVisibleCard] = useState<boolean>(true);
 
   const card = mixedCards.find((card) => card.id === activeCardId)!;
 
@@ -35,7 +35,7 @@ export function useActiveCard({
         onFinish?.();
         return;
       }
-      setIsVisibleCards(false);
+      setIsVisibleCard(false);
       onBlurWordDescription?.();
       setIsBlurTranslation?.(true);
       await sleep(150);
@@ -57,14 +57,14 @@ export function useActiveCard({
         setActiveCardId(activeCards[activeCardIdx + 1].id);
       }
 
-      setIsVisibleCards(true);
+      setIsVisibleCard(true);
       await sleep(150);
     },
     [
       cards.length,
       mixedCards,
       activeCardId,
-      setIsVisibleCards,
+      setIsVisibleCard,
       onBlurWordDescription,
       setIsBlurTranslation,
       setIsTimerExpired,
@@ -91,6 +91,6 @@ export function useActiveCard({
     card,
     forgotCard,
     recalledCard,
-    isVisibleCards,
+    isVisibleCard,
   };
 }

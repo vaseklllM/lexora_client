@@ -32,6 +32,8 @@ interface Props {
 export const RecallIt = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isTimerExpired, setIsTimerExpired] = useState<boolean>(false);
+  const [isUserShowedTranslation, setIsUserShowedTranslation] =
+    useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
   const [isBlurWordDescription, setIsBlurWordDescription] =
     useState<boolean>(true);
@@ -79,6 +81,7 @@ export const RecallIt = (props: Props): ReactElement => {
   const showHandler = useCallback(() => {
     setIsTimerExpired(true);
     setIsBlurTranslation(false);
+    setIsUserShowedTranslation(true);
     showDescriptionWord();
   }, [showDescriptionWord]);
 
@@ -99,9 +102,16 @@ export const RecallIt = (props: Props): ReactElement => {
       </div>
       <div className={classes.content()}>
         {isTimerExpired ? (
-          <Button color="accent" className={classes.timerExpiredButton()}>
-            Next
-          </Button>
+          isUserShowedTranslation ? (
+            <>
+              <Button>Forgot</Button>
+              <Button>Recalled</Button>
+            </>
+          ) : (
+            <Button color="accent" className={classes.timerExpiredButton()}>
+              Next
+            </Button>
+          )
         ) : (
           <TimerButton
             className={classes.timer()}

@@ -11,7 +11,7 @@ import { useBlurWordDescription } from "./useBlurWordDescription";
 const classesSlots = tv({
   slots: {
     base: "h-full flex-col items-center justify-between p-12!",
-    header: "flex flex-col gap-6",
+    header: "flex flex-col gap-6 transition-opacity duration-150",
     content: "grid gap-4",
     buttonForgot: "h-12 rounded-full",
     buttonRecalled: "h-12 rounded-full",
@@ -22,6 +22,14 @@ const classesSlots = tv({
     isUserShowedTranslation: {
       true: {
         content: "grid-cols-2",
+      },
+    },
+    isVisibleCards: {
+      true: {
+        header: "opacity-100",
+      },
+      false: {
+        header: "opacity-0",
       },
     },
   },
@@ -38,11 +46,19 @@ export const RecallIt = (props: Props): ReactElement => {
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
+
   const blurWordDescription = useBlurWordDescription();
-  const activeCard = useActiveCard(props);
+  const activeCard = useActiveCard({
+    ...props,
+    onBlurWordDescription: blurWordDescription.blur,
+    setIsBlurTranslation,
+    setIsTimerExpired,
+    setIsUserShowedTranslation,
+  });
 
   const classes = classesSlots({
     isUserShowedTranslation,
+    isVisibleCards: activeCard.isVisibleCards,
   });
 
   const handleTimerExpire = useCallback(() => {

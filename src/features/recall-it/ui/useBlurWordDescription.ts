@@ -4,7 +4,7 @@ export function useBlurWordDescription() {
   const [isBlur, setIsBlur] = useState<boolean>(true);
   const blurDescriptionTimer = useRef<NodeJS.Timeout>(null);
 
-  const blurWordDescription = useCallback(() => {
+  const blur = useCallback(() => {
     if (blurDescriptionTimer.current) {
       clearTimeout(blurDescriptionTimer.current);
     }
@@ -24,11 +24,12 @@ export function useBlurWordDescription() {
   }, []);
 
   useEffect(() => {
-    blurWordDescription();
+    blur();
   }, []);
 
   return {
     isBlur,
     show,
+    blur,
   };
 }

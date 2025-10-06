@@ -1,17 +1,30 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
+import { sleep } from "@/shared/utils/sleep";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface Props {
   cards: ICard[];
   onFinish?: () => void;
+  onBlurWordDescription?: () => void;
+  setIsBlurTranslation?: (isBlur: boolean) => void;
+  setIsTimerExpired?: (isTimerExpired: boolean) => void;
+  setIsUserShowedTranslation?: (isUserShowedTranslation: boolean) => void;
 }
 
-export function useActiveCard({ cards, onFinish }: Props) {
+export function useActiveCard({
+  cards,
+  onFinish,
+  onBlurWordDescription,
+  setIsBlurTranslation,
+  setIsTimerExpired,
+  setIsUserShowedTranslation,
+}: Props) {
   const mixedCards = useMemo(() => mixArray(cards), [cards]);
 
   const [finishedCards, setFinishedCards] = useState<string[]>([]);
   const [activeCardId, setActiveCardId] = useState<string>(mixedCards[0]!.id);
+  const [isVisibleCards, setIsVisibleCards] = useState<boolean>(true);
 
   const card = mixedCards.find((card) => card.id === activeCardId)!;
 
@@ -21,7 +34,12 @@ export function useActiveCard({ cards, onFinish }: Props) {
     }
   }, [finishedCards.length, cards.length, onFinish]);
 
-  const nextCard = useCallback(() => {
+  const nextCard = useCallback(async () => {
+    setIsVisibleCards(false);
+    onBlurWordDescription?.();
+    setIsBlurTranslation?.(true);
+    await sleep(150);
+
     const activeCards = mixedCards.filter(
       (card) => !finishedCards.includes(card.id),
     );
@@ -30,12 +48,27 @@ export function useActiveCard({ cards, onFinish }: Props) {
       (card) => card.id === activeCardId,
     );
 
+    setIsTimerExpired?.(false);
+    setIsUserShowedTranslation?.(false);
+
     if (activeCardIdx === activeCards.length - 1) {
       setActiveCardId(activeCards[0]!.id);
     } else {
       setActiveCardId(activeCards[activeCardIdx + 1].id);
     }
-  }, [mixedCards, finishedCards, activeCardId, onFinish, setFinishedCards]);
+
+    setIsVisibleCards(true);
+    await sleep(150);
+  }, [
+    mixedCards,
+    finishedCards,
+    activeCardId,
+    setIsVisibleCards,
+    onBlurWordDescription,
+    setIsBlurTranslation,
+    setIsTimerExpired,
+    setIsUserShowedTranslation,
+  ]);
 
   const forgotCard = useCallback(() => {
     nextCard();
@@ -55,5 +88,6 @@ export function useActiveCard({ cards, onFinish }: Props) {
     card,
     forgotCard,
     recalledCard,
+    isVisibleCards,
   };
 }

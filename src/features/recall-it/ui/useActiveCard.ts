@@ -1,6 +1,6 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function useActiveCard(cards: ICard[]) {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
@@ -13,7 +13,12 @@ export function useActiveCard(cards: ICard[]) {
     setActiveCardIdx(0);
   }, [cards]);
 
+  const forgotCard = useCallback(() => {}, []);
+  const recalledCard = useCallback(() => {}, []);
+
   return {
     card,
+    forgotCard,
+    recalledCard,
   };
 }

@@ -10,7 +10,7 @@ import { useBlurWordDescription } from "./useBlurWordDescription";
 
 const classesSlots = tv({
   slots: {
-    base: "h-full flex-col items-center justify-between p-16!",
+    base: "h-full flex-col items-center justify-between p-12!",
     header: "flex flex-col gap-6",
     content: "grid gap-4",
     buttonForgot: "h-12 rounded-full",
@@ -80,15 +80,27 @@ export const RecallIt = (props: Props): ReactElement => {
         {isTimerExpired ? (
           isUserShowedTranslation ? (
             <>
-              <Button color="error" className={classes.buttonForgot()}>
+              <Button
+                onClick={activeCard.forgotCard}
+                color="error"
+                className={classes.buttonForgot()}
+              >
                 Forgot
               </Button>
-              <Button color="accent" className={classes.buttonRecalled()}>
+              <Button
+                onClick={activeCard.recalledCard}
+                color="accent"
+                className={classes.buttonRecalled()}
+              >
                 Recalled
               </Button>
             </>
           ) : (
-            <Button color="accent" className={classes.timerExpiredButton()}>
+            <Button
+              onClick={activeCard.forgotCard}
+              color="accent"
+              className={classes.timerExpiredButton()}
+            >
               Next
             </Button>
           )

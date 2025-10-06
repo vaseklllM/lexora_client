@@ -17,6 +17,7 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
   seconds: number;
+  onTimerExpire?: () => void;
 }
 
 export const TimerButton = memo((props: Props): ReactElement => {
@@ -24,6 +25,11 @@ export const TimerButton = memo((props: Props): ReactElement => {
 
   const timer = useTimer({
     expiryTimestamp: new Date(Date.now() + 1000 * props.seconds),
+    onExpire: () => {
+      setTimeout(() => {
+        props.onTimerExpire?.();
+      }, 1000);
+    },
   });
 
   const strokeDashoffset =

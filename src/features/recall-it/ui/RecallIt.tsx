@@ -1,7 +1,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { TimerButton } from "@/shared/ui/TimerButton";
 import { mixArray } from "@/shared/utils/mixArray";
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -23,6 +23,7 @@ interface Props {
 
 export const RecallIt = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
+  const [isTimerExpired, setIsTimerExpired] = useState<boolean>(false);
 
   const mixedCards = useMemo(() => mixArray(props.cards), [props.cards]);
 
@@ -33,6 +34,10 @@ export const RecallIt = (props: Props): ReactElement => {
   }, [props.cards]);
 
   const classes = classesSlots();
+
+  const handleTimerExpire = useCallback(() => {
+    setIsTimerExpired(true);
+  }, []);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -49,9 +54,15 @@ export const RecallIt = (props: Props): ReactElement => {
         </div>
       </div>
       <div className={classes.content()}>
-        <TimerButton className={classes.timer()} seconds={10}>
-          Show
-        </TimerButton>
+        {!isTimerExpired && (
+          <TimerButton
+            className={classes.timer()}
+            seconds={9}
+            onTimerExpire={handleTimerExpire}
+          >
+            Show
+          </TimerButton>
+        )}
       </div>
     </div>
   );

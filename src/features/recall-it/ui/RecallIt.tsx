@@ -3,7 +3,14 @@ import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
 import { mixArray } from "@/shared/utils/mixArray";
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
 
@@ -26,6 +33,28 @@ export const RecallIt = (props: Props): ReactElement => {
   const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
   const [isTimerExpired, setIsTimerExpired] = useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
+  const [isBlurWordDescription, setIsBlurWordDescription] =
+    useState<boolean>(true);
+  const blurDescriptionTimer = useRef<NodeJS.Timeout>(null);
+
+  const blurWordDescription = useCallback(() => {
+    if (blurDescriptionTimer.current) {
+      clearTimeout(blurDescriptionTimer.current);
+    }
+
+    setIsBlurWordDescription(true);
+    blurDescriptionTimer.current = setTimeout(() => {
+      setIsBlurWordDescription(false);
+    }, 4000);
+  }, []);
+
+  const showDescriptionWord = useCallback(() => {
+    if (blurDescriptionTimer.current) {
+      clearTimeout(blurDescriptionTimer.current);
+    }
+
+    setIsBlurWordDescription(false);
+  }, []);
 
   const mixedCards = useMemo(() => mixArray(props.cards), [props.cards]);
 
@@ -44,7 +73,14 @@ export const RecallIt = (props: Props): ReactElement => {
 
   useEffect(() => {
     player.play(activeCard.soundUrls[0]);
+    blurWordDescription();
   }, [activeCard]);
+
+  const showHandler = useCallback(() => {
+    setIsTimerExpired(true);
+    setIsBlurTranslation(false);
+    showDescriptionWord();
+  }, [showDescriptionWord]);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -53,6 +89,7 @@ export const RecallIt = (props: Props): ReactElement => {
           title={activeCard.textInLearningLanguage}
           description={activeCard.descriptionInLearningLanguage}
           soundUrls={activeCard.soundUrls}
+          isBlurWordDescription={isBlurWordDescription}
         />
         <CardItem
           title={activeCard.textInKnownLanguage}
@@ -62,11 +99,7 @@ export const RecallIt = (props: Props): ReactElement => {
       </div>
       <div className={classes.content()}>
         {isTimerExpired ? (
-          <Button
-            // variant="soft"
-            color="accent"
-            className={classes.timerExpiredButton()}
-          >
+          <Button color="accent" className={classes.timerExpiredButton()}>
             Next
           </Button>
         ) : (
@@ -74,6 +107,7 @@ export const RecallIt = (props: Props): ReactElement => {
             className={classes.timer()}
             seconds={9}
             onTimerExpire={handleTimerExpire}
+            onClick={showHandler}
           >
             Show
           </TimerButton>

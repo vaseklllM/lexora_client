@@ -18,6 +18,7 @@ interface Props {
   children?: React.ReactNode;
   seconds: number;
   onTimerExpire?: () => void;
+  onClick?: () => void;
 }
 
 export const TimerButton = memo((props: Props): ReactElement => {
@@ -37,6 +38,7 @@ export const TimerButton = memo((props: Props): ReactElement => {
 
   return (
     <button
+      onClick={props.onClick}
       className={classes.button({
         className: [props.className, styles.countdown],
       })}

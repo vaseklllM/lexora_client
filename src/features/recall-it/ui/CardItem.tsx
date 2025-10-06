@@ -20,6 +20,11 @@ const classesSlots = tv({
         description: "blur-md",
       },
     },
+    isBlurWordDescription: {
+      true: {
+        description: "blur-md",
+      },
+    },
   },
 });
 
@@ -28,12 +33,14 @@ interface Props {
   title: string;
   description?: string;
   isBlur?: boolean;
+  isBlurWordDescription?: boolean;
   soundUrls?: string[];
 }
 
 export const CardItem = (props: Props): ReactElement => {
   const classes = classesSlots({
     isBlur: props.isBlur,
+    isBlurWordDescription: props.isBlurWordDescription,
   });
 
   return (

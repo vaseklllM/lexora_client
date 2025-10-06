@@ -10,7 +10,7 @@ const classesSlots = tv({
     base: "bg-base-100 relative flex min-h-42 max-w-full flex-col rounded-xl p-2 md:min-w-96",
     titleWrapper: "flex h-full max-w-full items-center justify-center",
     title:
-      "transition-blur max-w-full text-center text-xl break-words duration-300",
+      "transition-blur max-w-full px-1 text-center text-xl break-words duration-300",
     descriptionWrapper: "bg-base-300 gap-2 rounded-lg p-2 py-3",
     description: "transition-blur text-center text-sm break-words duration-300",
     iconButtons: "absolute top-2 left-2 flex flex-row gap-2",

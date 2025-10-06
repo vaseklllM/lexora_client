@@ -1,3 +1,5 @@
+"use client";
+
 import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";

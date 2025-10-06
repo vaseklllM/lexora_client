@@ -2,7 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { mixArray } from "@/shared/utils/mixArray";
 import { sleep } from "@/shared/utils/sleep";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 interface Props {
   cards: ICard[];
@@ -29,63 +29,63 @@ export function useActiveCard({
 
   const card = mixedCards.find((card) => card.id === activeCardId)!;
 
-  useEffect(() => {
-    if (finishedCards.length === cards.length) {
-      onFinish?.();
-    }
-  }, [finishedCards.length, cards.length, onFinish]);
+  const nextCard = useCallback(
+    async (newFinishedCards: string[]) => {
+      if (newFinishedCards.length === cards.length) {
+        onFinish?.();
+        return;
+      }
+      setIsVisibleCards(false);
+      onBlurWordDescription?.();
+      setIsBlurTranslation?.(true);
+      await sleep(150);
 
-  const nextCard = useCallback(async () => {
-    setIsVisibleCards(false);
-    onBlurWordDescription?.();
-    setIsBlurTranslation?.(true);
-    await sleep(150);
+      const activeCards = mixedCards.filter(
+        (card) => !finishedCards.includes(card.id),
+      );
 
-    const activeCards = mixedCards.filter(
-      (card) => !finishedCards.includes(card.id),
-    );
+      const activeCardIdx = activeCards.findIndex(
+        (card) => card.id === activeCardId,
+      );
 
-    const activeCardIdx = activeCards.findIndex(
-      (card) => card.id === activeCardId,
-    );
+      setIsTimerExpired?.(false);
+      setIsUserShowedTranslation?.(false);
 
-    setIsTimerExpired?.(false);
-    setIsUserShowedTranslation?.(false);
+      if (activeCardIdx === activeCards.length - 1 || activeCardIdx === -1) {
+        setActiveCardId(activeCards[0]!.id);
+      } else {
+        setActiveCardId(activeCards[activeCardIdx + 1].id);
+      }
 
-    if (activeCardIdx === activeCards.length - 1) {
-      setActiveCardId(activeCards[0]!.id);
-    } else {
-      setActiveCardId(activeCards[activeCardIdx + 1].id);
-    }
-
-    setIsVisibleCards(true);
-    await sleep(150);
-  }, [
-    mixedCards,
-    finishedCards,
-    activeCardId,
-    setIsVisibleCards,
-    onBlurWordDescription,
-    setIsBlurTranslation,
-    setIsTimerExpired,
-    setIsUserShowedTranslation,
-  ]);
+      setIsVisibleCards(true);
+      await sleep(150);
+    },
+    [
+      cards.length,
+      mixedCards,
+      activeCardId,
+      setIsVisibleCards,
+      onBlurWordDescription,
+      setIsBlurTranslation,
+      setIsTimerExpired,
+      setIsUserShowedTranslation,
+      finishedCards,
+    ],
+  );
 
   const forgotCard = useCallback(() => {
     player.stop();
-    nextCard();
-  }, [nextCard]);
+    nextCard(finishedCards);
+  }, [nextCard, finishedCards]);
 
   const recalledCard = useCallback(() => {
     player.stop();
-    setFinishedCards((prev) => {
-      if (prev.includes(card.id)) {
-        return prev;
-      }
-      return [...prev, card.id];
-    });
-    nextCard();
-  }, [card.id, nextCard, setFinishedCards]);
+    const newFinishedCards = finishedCards.includes(card.id)
+      ? finishedCards
+      : [...finishedCards, card.id];
+    setFinishedCards(newFinishedCards);
+    nextCard(newFinishedCards);
+  }, [card.id, nextCard, setFinishedCards, finishedCards]);
 
   return {
     card,

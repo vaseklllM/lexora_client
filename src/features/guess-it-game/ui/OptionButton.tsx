@@ -8,7 +8,7 @@ type Status = "success" | "error" | "disabled";
 const classesSlots = tv({
   slots: {
     option:
-      "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-xs break-words select-none sm:text-sm",
+      "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-4 text-sm break-words select-none lg:text-base",
   },
   variants: {
     status: {

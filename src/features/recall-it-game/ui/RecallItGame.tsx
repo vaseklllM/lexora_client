@@ -44,7 +44,7 @@ interface Props {
   onFinish?: () => void;
 }
 
-export const RecallIt = (props: Props): ReactElement => {
+export const RecallItGame = (props: Props): ReactElement => {
   const [isTimerExpired, setIsTimerExpired] = useState<boolean>(false);
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);

@@ -2,7 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
 import { useActiveCard } from "./useActiveCard";
@@ -62,20 +62,18 @@ export const RecallIt = (props: Props): ReactElement => {
   });
 
   const handleTimerExpire = useCallback(() => {
+    player.play(activeCard.card.soundUrls[0]);
     setIsTimerExpired(true);
     setIsBlurTranslation(false);
-  }, []);
-
-  useEffect(() => {
-    player.play(activeCard.card.soundUrls[0]);
-  }, [activeCard.card]);
+  }, [activeCard.card.soundUrls[0]]);
 
   const showHandler = useCallback(() => {
+    player.play(activeCard.card.soundUrls[0]);
     setIsTimerExpired(true);
     setIsBlurTranslation(false);
     setIsUserShowedTranslation(true);
     blurWordDescription.show();
-  }, []);
+  }, [activeCard.card.soundUrls[0]]);
 
   return (
     <div className={classes.base({ className: props.className })}>

@@ -104,6 +104,7 @@ export const RecallIt = (props: Props): ReactElement => {
           description={activeCard.descriptionInLearningLanguage}
           soundUrls={activeCard.soundUrls}
           isBlurWordDescription={isBlurWordDescription}
+          cefr={activeCard.cefr}
         />
         <CardItem
           title={activeCard.textInKnownLanguage}

@@ -2,7 +2,7 @@ import { dateSchema } from "@/shared/schemas/date.schema";
 import { idSchema } from "@/shared/schemas/id.schema";
 import * as v from "valibot";
 
-export enum Cefr {
+export enum CefrEnum {
   A1 = "A1",
   A2 = "A2",
   B1 = "B1",
@@ -34,7 +34,7 @@ export const cardSchema = v.object({
       }),
     ),
   ),
-  cefr: v.enum(Cefr),
+  cefr: v.enum(CefrEnum),
 });
 
 export type ICard = v.InferOutput<typeof cardSchema>;

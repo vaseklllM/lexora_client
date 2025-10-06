@@ -1,4 +1,4 @@
-import { Cefr } from "@/api/schemas/card.schema";
+import { CefrEnum } from "@/api/schemas/card.schema";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
@@ -10,7 +10,7 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
-  cefr: Cefr;
+  cefr: CefrEnum;
 }
 
 export const Cerf = (props: Props): ReactElement => {
@@ -29,34 +29,34 @@ export const Cerf = (props: Props): ReactElement => {
   );
 };
 
-function getCerfColor(cefr: Cefr): { text: string } {
+function getCerfColor(cefr: CefrEnum): { text: string } {
   switch (cefr) {
-    case Cefr.A1:
+    case CefrEnum.A1:
       return {
         text: "text-green-400",
       };
 
-    case Cefr.A2:
+    case CefrEnum.A2:
       return {
         text: "text-lime-400",
       };
 
-    case Cefr.B1:
+    case CefrEnum.B1:
       return {
         text: "text-amber-400",
       };
 
-    case Cefr.B2:
+    case CefrEnum.B2:
       return {
         text: "text-orange-400",
       };
 
-    case Cefr.C1:
+    case CefrEnum.C1:
       return {
         text: "text-orange-600",
       };
 
-    case Cefr.C2:
+    case CefrEnum.C2:
       return {
         text: "text-red-700",
       };

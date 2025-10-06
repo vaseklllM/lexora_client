@@ -1,7 +1,7 @@
 "use client";
 
 import { fillCardData } from "@/api/ai/fill-card-data";
-import { Cefr } from "@/api/schemas/card.schema";
+import { CefrEnum } from "@/api/schemas/card.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
@@ -72,7 +72,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
       translation: props.defaultValues?.translation || "",
       example: props.defaultValues?.example || "",
       exampleTranslation: props.defaultValues?.exampleTranslation || "",
-      cefr: props.defaultValues?.cefr || Cefr.A1,
+      cefr: props.defaultValues?.cefr || CefrEnum.A1,
     },
     resolver: valibotResolver(cardFieldsSchema),
   });
@@ -164,12 +164,12 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
             defaultValue="Pick a CEFR"
             className="select"
           >
-            <option>{Cefr.A1}</option>
-            <option>{Cefr.A2}</option>
-            <option>{Cefr.B1}</option>
-            <option>{Cefr.B2}</option>
-            <option>{Cefr.C1}</option>
-            <option>{Cefr.C2}</option>
+            <option>{CefrEnum.A1}</option>
+            <option>{CefrEnum.A2}</option>
+            <option>{CefrEnum.B1}</option>
+            <option>{CefrEnum.B2}</option>
+            <option>{CefrEnum.C1}</option>
+            <option>{CefrEnum.C2}</option>
           </select>
         </fieldset>
         <InputLabeled

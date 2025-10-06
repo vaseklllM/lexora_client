@@ -3,16 +3,10 @@ import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
 import { mixArray } from "@/shared/utils/mixArray";
-import {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
+import { useBlurWordDescription } from "./useBlurWordDescription";
 
 const classesSlots = tv({
   slots: {
@@ -44,28 +38,8 @@ export const RecallIt = (props: Props): ReactElement => {
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
-  const [isBlurWordDescription, setIsBlurWordDescription] =
-    useState<boolean>(true);
-  const blurDescriptionTimer = useRef<NodeJS.Timeout>(null);
-
-  const blurWordDescription = useCallback(() => {
-    if (blurDescriptionTimer.current) {
-      clearTimeout(blurDescriptionTimer.current);
-    }
-
-    setIsBlurWordDescription(true);
-    blurDescriptionTimer.current = setTimeout(() => {
-      setIsBlurWordDescription(false);
-    }, 4000);
-  }, []);
-
-  const showDescriptionWord = useCallback(() => {
-    if (blurDescriptionTimer.current) {
-      clearTimeout(blurDescriptionTimer.current);
-    }
-
-    setIsBlurWordDescription(false);
-  }, []);
+  const { isBlurWordDescription, blurWordDescription, showDescriptionWord } =
+    useBlurWordDescription();
 
   const mixedCards = useMemo(() => mixArray(props.cards), [props.cards]);
 
@@ -94,7 +68,7 @@ export const RecallIt = (props: Props): ReactElement => {
     setIsBlurTranslation(false);
     setIsUserShowedTranslation(true);
     showDescriptionWord();
-  }, [showDescriptionWord]);
+  }, []);
 
   return (
     <div className={classes.base({ className: props.className })}>

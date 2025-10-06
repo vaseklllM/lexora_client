@@ -9,11 +9,11 @@ import { CardItem } from "./CardItem";
 
 const classesSlots = tv({
   slots: {
-    base: "h-full flex-col items-center justify-between p-10!",
-    header: "flex flex-col gap-4",
+    base: "h-full flex-col items-center justify-between p-16!",
+    header: "flex flex-col gap-6",
     content: "",
     timer: "",
-    timerExpiredButton: "h-12 w-24 rounded-full text-base",
+    timerExpiredButton: "h-12 w-24 rounded-full",
   },
 });
 
@@ -63,7 +63,7 @@ export const RecallIt = (props: Props): ReactElement => {
       <div className={classes.content()}>
         {isTimerExpired ? (
           <Button
-            variant="soft"
+            // variant="soft"
             color="accent"
             className={classes.timerExpiredButton()}
           >

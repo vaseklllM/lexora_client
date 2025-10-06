@@ -1,4 +1,5 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { player } from "@/shared/hooks/usePlayer";
 import { mixArray } from "@/shared/utils/mixArray";
 import { sleep } from "@/shared/utils/sleep";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -71,10 +72,12 @@ export function useActiveCard({
   ]);
 
   const forgotCard = useCallback(() => {
+    player.stop();
     nextCard();
   }, [nextCard]);
 
   const recalledCard = useCallback(() => {
+    player.stop();
     setFinishedCards((prev) => {
       if (prev.includes(card.id)) {
         return prev;

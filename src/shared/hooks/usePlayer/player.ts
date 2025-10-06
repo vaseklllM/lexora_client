@@ -31,4 +31,10 @@ export const player = {
   useIsPlaying() {
     return usePlayerStore((state) => state.isPlaying);
   },
+  stop() {
+    const { audio, setIsPlaying } = usePlayerStore.getState();
+    if (!audio) return;
+    audio.pause();
+    setIsPlaying(false);
+  },
 };

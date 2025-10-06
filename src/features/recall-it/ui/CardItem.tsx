@@ -7,11 +7,12 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 relative flex min-h-42 flex-col rounded-xl p-2 md:min-w-96",
-    titleWrapper: "flex h-full items-center justify-center",
-    title: "transition-blur text-center text-xl duration-300",
+    base: "bg-base-100 relative flex min-h-42 max-w-full flex-col rounded-xl p-2 md:min-w-96",
+    titleWrapper: "flex h-full max-w-full items-center justify-center",
+    title:
+      "transition-blur max-w-full text-center text-xl break-words duration-300",
     descriptionWrapper: "bg-base-300 gap-2 rounded-lg p-2 py-3",
-    description: "transition-blur text-center text-sm duration-300",
+    description: "transition-blur text-center text-sm break-words duration-300",
     iconButtons: "absolute top-2 left-2 flex flex-row gap-2",
     soundButton: "",
   },
@@ -25,6 +26,21 @@ const classesSlots = tv({
     isBlurWordDescription: {
       true: {
         description: "blur-sm",
+      },
+    },
+    titleLength: {
+      big: {
+        title: "text-sm",
+      },
+    },
+    descriptionLength: {
+      big: {
+        description: "text-xs",
+      },
+    },
+    isButtons: {
+      true: {
+        title: "mt-4",
       },
     },
   },
@@ -44,6 +60,12 @@ export const CardItem = (props: Props): ReactElement => {
   const classes = classesSlots({
     isBlur: props.isBlur,
     isBlurWordDescription: props.isBlurWordDescription,
+    titleLength: props.title.length >= 80 ? "big" : undefined,
+    descriptionLength:
+      (props.description?.length ?? 0) >= 80 ? "big" : undefined,
+    isButtons:
+      (Array.isArray(props.soundUrls) && props.soundUrls?.length > 0) ||
+      !!props.cefr,
   });
 
   return (

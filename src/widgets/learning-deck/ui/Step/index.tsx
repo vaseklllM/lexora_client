@@ -155,7 +155,11 @@ export const StepComponent = (props: Props): ReactElement | null => {
             onFinish={finishRecallItStepHandler}
           />
         )}
-        {displaySteps.includes(Step.TYPE_IT) && <>type it</>}
+        {displaySteps.includes(Step.TYPE_IT) && (
+          <div className={classes.step({ className: classes.stepTypeIt() })}>
+            type it
+          </div>
+        )}
       </div>
     </div>
   );

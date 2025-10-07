@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { useTypeItGameStore } from "../../model/store";
 import { ButtonRight } from "./ButtonRight";
 import { ButtonTryAgain } from "./ButtonTryAgain";
 
@@ -17,10 +18,15 @@ interface Props {
 
 export const UnrightAnswerButtons = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
 
   return (
     <div className={classes.buttons({ className: props.className })}>
-      <ButtonRight className={classes.button()} />
+      {viewVariant === "unrightAnswer" ? (
+        <ButtonRight className={classes.button()} />
+      ) : (
+        <div />
+      )}
       <ButtonTryAgain className={classes.button()} />
     </div>
   );

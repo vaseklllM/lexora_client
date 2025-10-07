@@ -11,7 +11,7 @@ import { toClearWord } from "./toClearWord";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
 
-type ViewVariant = "default" | "unrightAnswer";
+type ViewVariant = "default" | "unrightAnswer" | "help";
 
 type State = {
   cards: ICard[];
@@ -38,6 +38,7 @@ type Actions = {
   setIsDisabledButtonTryAgain: (isDisabled: boolean) => void;
   setIsDisabledButtonRight: (isDisabled: boolean) => void;
   setViewVariant: (buttonsVariant: ViewVariant) => void;
+  help: () => void;
 };
 
 type Store = State & Actions;
@@ -89,8 +90,8 @@ function initStore(props: TypeItGameProps) {
         await sleep(UNRIGHT_ANSWER_ANIMATION_DURATION);
         set({ unrightAnswerAnimation: false });
       },
-      setViewVariant(buttonsVariant) {
-        set({ viewVariant: buttonsVariant });
+      setViewVariant(viewVariant) {
+        set({ viewVariant });
       },
       nextCard() {
         const store = get();
@@ -143,6 +144,10 @@ function initStore(props: TypeItGameProps) {
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);
+      },
+      async help() {
+        const store = get();
+        store.setViewVariant("help");
       },
     };
   });

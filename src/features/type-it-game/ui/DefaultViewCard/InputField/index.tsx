@@ -20,6 +20,7 @@ const classesSlots = tv({
     },
     viewVariant: {
       default: {},
+      help: {},
       unrightAnswer: {
         input: "text-error!",
       },

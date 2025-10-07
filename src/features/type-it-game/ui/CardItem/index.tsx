@@ -25,7 +25,7 @@ interface Props {
   description?: string;
   soundUrls?: string[];
   cefr?: CefrEnum;
-  isUnrightAnswer?: boolean;
+  isWrongAnswer?: boolean;
 }
 
 export const CardItem = (props: Props): ReactElement => {
@@ -48,7 +48,7 @@ export const CardItem = (props: Props): ReactElement => {
         ))}
       </div>
       <div className={classes.titleWrapper()}>
-        {props.isUnrightAnswer && (
+        {props.isWrongAnswer && (
           <TranslationValue className={classes.translationInput()} />
         )}
         <h3 className={classes.title()}>{props.title}</h3>

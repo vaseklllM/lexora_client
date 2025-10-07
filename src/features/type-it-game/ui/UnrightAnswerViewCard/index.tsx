@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useActiveCard } from "../../hooks/useActiveCard";
 import { CardItem } from "../CardItem";
+import { useTypeItGameStore } from "../../model/store";
 
 const classesSlots = tv({
   slots: {
@@ -20,6 +21,7 @@ interface Props {
 export const UnrightAnswerViewCard = (props: Props): ReactElement => {
   const classes = classesSlots();
   const activeCard = useActiveCard();
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -27,7 +29,7 @@ export const UnrightAnswerViewCard = (props: Props): ReactElement => {
         title={activeCard.textInLearningLanguage}
         description={activeCard.descriptionInLearningLanguage}
         className={classes.cardItem()}
-        isUnrightAnswer
+        isWrongAnswer={viewVariant === "unrightAnswer"}
       />
     </div>
   );

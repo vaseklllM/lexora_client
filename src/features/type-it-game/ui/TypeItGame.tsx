@@ -61,7 +61,7 @@ export const TypeItGame = memo(
                 <DefaultViewCard />
               </motion.div>
             )}
-            {viewVariant === "unrightAnswer" && (
+            {(viewVariant === "unrightAnswer" || viewVariant === "help") && (
               <motion.div
                 key="unrightAnswer_card"
                 initial="enter"
@@ -87,7 +87,7 @@ export const TypeItGame = memo(
               transition={{ duration: 0.3 }}
             />
           )}
-          {viewVariant === "unrightAnswer" && (
+          {(viewVariant === "unrightAnswer" || viewVariant === "help") && (
             <motion.div
               key="unrightAnswer_buttons"
               initial="enter"

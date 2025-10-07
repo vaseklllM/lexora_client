@@ -6,7 +6,7 @@ import { InputField } from "./InputField";
 
 const classesSlots = tv({
   slots: {
-    base: "flex h-full flex-col items-center justify-evenly",
+    base: "flex h-full flex-col items-center gap-4",
     buttons:
       "grid w-full grid-cols-2 gap-4 transition-opacity duration-1000 md:w-max",
     button: "md:min-w-48",

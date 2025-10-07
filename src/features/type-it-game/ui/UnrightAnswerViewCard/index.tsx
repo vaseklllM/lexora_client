@@ -29,6 +29,7 @@ export const UnrightAnswerViewCard = (props: Props): ReactElement => {
         title={activeCard.textInKnownLanguage}
         description={activeCard.descriptionInKnownLanguage}
         className={classes.cardItem()}
+        isUnrightAnswer
       />
       <div className={classes.buttons()}>
         <ButtonRight className={classes.button()} />

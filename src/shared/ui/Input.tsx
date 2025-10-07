@@ -25,12 +25,13 @@ const classesSlots = tv({
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   error?: string;
+  inputClassName?: string;
 }
 
 export const Input = (
   props: InputProps & { ref?: React.Ref<HTMLInputElement> },
 ): React.ReactElement | null => {
-  const { error, className, ref, ...inputProps } = props;
+  const { error, className, ref, inputClassName, ...inputProps } = props;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const classes = classesSlots({
@@ -49,7 +50,7 @@ export const Input = (
             : inputProps.type
         }
         ref={ref}
-        className={classes.inputField()}
+        className={classes.inputField({ className: inputClassName })}
       />
       {error && <p className={classes.errorMessage()}>{error}</p>}
       {inputProps.type === "password" && (

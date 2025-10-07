@@ -15,7 +15,13 @@ const classesSlots = tv({
   variants: {
     unrightAnswerAnimation: {
       true: {
-        input: "animate-shakeX",
+        input: "animate-shakeX text-error!",
+      },
+    },
+    viewVariant: {
+      default: {},
+      unrightAnswer: {
+        input: "text-error!",
       },
     },
   },
@@ -39,8 +45,11 @@ export const InputField = (props: Props): ReactElement => {
     (state) => state.unrightAnswerAnimation,
   );
 
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
+
   const classes = classesSlots({
     unrightAnswerAnimation,
+    viewVariant,
   });
 
   return (
@@ -49,6 +58,7 @@ export const InputField = (props: Props): ReactElement => {
       inputClassName={classes.input()}
       placeholder="Type the translation"
       value={translationInput}
+      disabled={unrightAnswerAnimation || viewVariant !== "default"}
       onChange={(e) => setTranslationInput(e.target.value)}
       onKeyDown={(e) => {
         if (e.key === "Enter") {

@@ -14,7 +14,7 @@ const classesSlots = tv({
     base: "flex h-full w-full flex-col gap-4",
     inputWrapper: "flex w-full flex-col items-center",
     buttons: "mt-4 grid w-full grid-cols-2 gap-4 md:mt-24 md:w-max",
-    button: "min-w-42",
+    button: "md:min-w-48",
   },
 });
 

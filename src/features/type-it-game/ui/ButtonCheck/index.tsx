@@ -18,7 +18,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
   return (
     <Button
       size="lg"
-      color="accent"
+      color="primary"
       className={classes.button({ className: props.className })}
     >
       Check

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "motion/react";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useTypeItGameStore } from "../../model/store";
@@ -14,6 +15,12 @@ const classesSlots = tv({
   },
 });
 
+const variants = {
+  enter: { opacity: 0, y: 10 },
+  center: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+};
+
 interface Props {
   className?: string;
 }
@@ -22,21 +29,38 @@ export const Buttons = (props: Props): ReactElement => {
   const classes = classesSlots();
   const buttonsVariant = useTypeItGameStore((state) => state.buttonsVariant);
 
-  switch (buttonsVariant) {
-    case "default":
-      return (
-        <div className={classes.buttons({ className: props.className })}>
-          <ButtonHelp className={classes.button()} />
-          <ButtonCheck className={classes.button()} />
-        </div>
-      );
-
-    case "unrightAnswer":
-      return (
-        <div className={classes.buttons({ className: props.className })}>
-          <ButtonRight className={classes.button()} />
-          <ButtonTryAgain className={classes.button()} />
-        </div>
-      );
-  }
+  return (
+    <AnimatePresence mode="wait">
+      {buttonsVariant === "default" && (
+        <motion.div
+          key="A"
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={classes.buttons({ className: props.className })}>
+            <ButtonHelp className={classes.button()} />
+            <ButtonCheck className={classes.button()} />
+          </div>
+        </motion.div>
+      )}
+      {buttonsVariant === "unrightAnswer" && (
+        <motion.div
+          key="B"
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={classes.buttons({ className: props.className })}>
+            <ButtonRight className={classes.button()} />
+            <ButtonTryAgain className={classes.button()} />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { player } from "@/shared/hooks/usePlayer";
 import { mixArray } from "@/shared/utils/mixArray";
 import { ComponentType, createContext, useContext, useRef } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
@@ -14,6 +15,7 @@ type State = {
 
 type Actions = {
   setTranslationInput: (translationInput: string) => void;
+  checkTranslation: () => void;
 };
 
 type Store = State & Actions;
@@ -21,7 +23,7 @@ type Store = State & Actions;
 const Context = createContext<StoreApi<Store> | undefined>(undefined);
 
 function initStore(props: TypeItGameProps) {
-  return createStore<Store>((set) => {
+  return createStore<Store>((set, get) => {
     const cards = mixArray(props.cards);
 
     return {
@@ -30,6 +32,34 @@ function initStore(props: TypeItGameProps) {
       translationInput: "",
       setTranslationInput(translationInput) {
         set({ translationInput });
+      },
+      checkTranslation() {
+        const store = get();
+        const activeCard = store.cards.find(
+          (card) => card.id === store.activeCardId,
+        );
+
+        if (!activeCard) return;
+
+        const wordsList = activeCard.textInKnownLanguage.split(",");
+
+        const prepareWord = (word: string) => {
+          return word
+            .toLocaleLowerCase()
+            .trim()
+            .replaceAll(".", "")
+            .replaceAll("?", "")
+            .replaceAll(",", "");
+        };
+
+        if (
+          wordsList.some(
+            (word) => prepareWord(word) === prepareWord(store.translationInput),
+          )
+        ) {
+          player.play(activeCard.soundUrls[0]);
+        } else {
+        }
       },
     };
   });

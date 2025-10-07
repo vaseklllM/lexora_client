@@ -22,6 +22,9 @@ export const InputField = (props: Props): ReactElement => {
   const setTranslationInput = useTypeItGameStore(
     (state) => state.setTranslationInput,
   );
+  const checkTranslation = useTypeItGameStore(
+    (state) => state.checkTranslation,
+  );
 
   return (
     <Input
@@ -30,6 +33,11 @@ export const InputField = (props: Props): ReactElement => {
       placeholder="Type the translation"
       value={translationInput}
       onChange={(e) => setTranslationInput(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          checkTranslation();
+        }
+      }}
     />
   );
 };

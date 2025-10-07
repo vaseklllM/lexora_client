@@ -1,6 +1,7 @@
 import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { useTypeItGameStore } from "../../model/store";
 
 const classesSlots = tv({
   slots: {
@@ -14,12 +15,16 @@ interface Props {
 
 export const ButtonCheck = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const checkTranslation = useTypeItGameStore(
+    (state) => state.checkTranslation,
+  );
 
   return (
     <Button
       size="lg"
       color="primary"
       className={classes.button({ className: props.className })}
+      onClick={checkTranslation}
     >
       Check
     </Button>

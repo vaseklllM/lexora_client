@@ -4,6 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { AnimatePresence, motion } from "motion/react";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { useActiveCard } from "../hooks/useActiveCard";
 import { useTypeItGameStore, withStoreProvider } from "../model/store";
 import { CardItem } from "./CardItem";
 import { DefaultViewCard } from "./DefaultViewCard";
@@ -32,13 +33,19 @@ const variants = {
 export const TypeItGame = memo(
   withStoreProvider(function Component(props: TypeItGameProps): ReactElement {
     const classes = classesSlots({});
-
     const viewVariant = useTypeItGameStore((state) => state.viewVariant);
+
+    const activeCard = useActiveCard();
 
     return (
       <div className={classes.base({ className: props.className })}>
         <div className={classes.content()}>
-          <CardItem />
+          <CardItem
+            title={activeCard.textInLearningLanguage}
+            description={activeCard.descriptionInLearningLanguage}
+            cefr={activeCard.cefr}
+            soundUrls={activeCard.soundUrls}
+          />
           <AnimatePresence mode="wait">
             {viewVariant === "default" && (
               <motion.div

@@ -1,9 +1,9 @@
+import { CefrEnum } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useActiveCard } from "../../hooks/useActiveCard";
 
 const classesSlots = tv({
   slots: {
@@ -42,14 +42,15 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
-  description?: string;
   isBlur?: boolean;
   isBlurWordDescription?: boolean;
+  title: string;
+  description?: string;
+  soundUrls?: string[];
+  cefr?: CefrEnum;
 }
 
 export const CardItem = (props: Props): ReactElement => {
-  const activeCard = useActiveCard();
-
   const classes = classesSlots({
     isBlur: props.isBlur,
     isBlurWordDescription: props.isBlurWordDescription,
@@ -58,8 +59,8 @@ export const CardItem = (props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.iconButtons()}>
-        {activeCard.cefr && <Cerf cefr={activeCard.cefr} />}
-        {activeCard.soundUrls?.map((soundUrl, idx) => (
+        {props.cefr && <Cerf cefr={props.cefr} />}
+        {props.soundUrls?.map((soundUrl, idx) => (
           <ButtonIcon
             key={idx}
             icon="sound"
@@ -72,13 +73,11 @@ export const CardItem = (props: Props): ReactElement => {
         ))}
       </div>
       <div className={classes.titleWrapper()}>
-        <h3 className={classes.title()}>{activeCard.textInLearningLanguage}</h3>
+        <h3 className={classes.title()}>{props.title}</h3>
       </div>
-      {activeCard.descriptionInLearningLanguage && (
+      {props.description && (
         <div className={classes.descriptionWrapper()}>
-          <p className={classes.description()}>
-            {activeCard.descriptionInLearningLanguage}
-          </p>
+          <p className={classes.description()}>{props.description}</p>
         </div>
       )}
     </div>

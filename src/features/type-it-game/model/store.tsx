@@ -2,7 +2,6 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
-import { mixArray } from "@/shared/utils/mixArray";
 import { sleep } from "@/shared/utils/sleep";
 import { ComponentType, createContext, useContext, useRef } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
@@ -14,9 +13,8 @@ export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
 type ViewVariant = "default" | "unrightAnswer" | "help";
 
 type State = {
-  cards: ICard[];
+  card: ICard;
   finishedCards: string[];
-  activeCardId: string;
   translationInput: string;
   isDisabledButtonHelp: boolean;
   isDisabledButtonCheck: boolean;
@@ -30,7 +28,6 @@ type Actions = {
   setTranslationInput: (translationInput: string) => void;
   clearTranslationInput: () => void;
   checkTranslation: () => Promise<void>;
-  nextCard: () => void;
   addFinishedCard: (cardId: string) => void;
   playUnrightAnswerAnimation: () => Promise<void>;
   setIsDisabledButtonHelp: (isDisabled: boolean) => void;
@@ -47,11 +44,8 @@ const Context = createContext<StoreApi<Store> | undefined>(undefined);
 
 function initStore(props: TypeItGameProps) {
   return createStore<Store>((set, get): Store => {
-    const cards = mixArray(props.cards);
-
     return {
-      cards,
-      activeCardId: cards[0]!.id,
+      card: props.card,
       translationInput: "",
       finishedCards: [],
       isDisabledButtonHelp: false,
@@ -93,54 +87,33 @@ function initStore(props: TypeItGameProps) {
       setViewVariant(viewVariant) {
         set({ viewVariant });
       },
-      nextCard() {
-        const store = get();
-        const activeCard = store.cards.find(
-          (card) => card.id === store.activeCardId,
-        );
 
-        if (!activeCard) return;
-
-        const activeCardIdx = store.cards.findIndex(
-          (card) => card.id === store.activeCardId,
-        );
-
-        if (activeCardIdx === store.cards.length - 1 || activeCardIdx === -1) {
-          set({ activeCardId: store.cards[0].id });
-        } else {
-          set({ activeCardId: store.cards[activeCardIdx + 1].id });
-        }
-      },
       async checkTranslation() {
         const store = get();
         store.setIsDisabledButtonHelp(true);
         store.setIsDisabledButtonCheck(true);
 
-        const activeCard = store.cards.find(
-          (card) => card.id === store.activeCardId,
-        );
-
-        if (toClearWord(store.translationInput) === "" || !activeCard) {
+        if (toClearWord(store.translationInput) === "") {
           store.setIsDisabledButtonHelp(false);
           store.setIsDisabledButtonCheck(false);
           return;
         }
 
-        const wordsList = activeCard.textInLearningLanguage.split(",");
+        const wordsList = store.card.textInLearningLanguage.split(",");
 
         if (
           wordsList.some(
             (word) => toClearWord(word) === toClearWord(store.translationInput),
           )
         ) {
-          await player.playAsync(activeCard.soundUrls[0]);
-          store.addFinishedCard(activeCard.id);
+          await player.playAsync(store.card.soundUrls[0]);
+          store.addFinishedCard(store.card.id);
           store.clearTranslationInput();
-          store.nextCard();
+          // store.nextCard();
         } else {
           await store.playUnrightAnswerAnimation();
           store.setViewVariant("unrightAnswer");
-          await player.playAsync(activeCard.soundUrls[0]);
+          await player.playAsync(store.card.soundUrls[0]);
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);
@@ -149,12 +122,7 @@ function initStore(props: TypeItGameProps) {
         const store = get();
         store.setViewVariant("help");
 
-        const activeCard = store.cards.find(
-          (card) => card.id === store.activeCardId,
-        );
-
-        if (!activeCard) return;
-        await player.playAsync(activeCard.soundUrls[0]);
+        await player.playAsync(store.card.soundUrls[0]);
       },
     };
   });

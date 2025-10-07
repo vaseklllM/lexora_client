@@ -22,7 +22,7 @@ const classesSlots = tv({
 
 export interface TypeItGameProps {
   className?: string;
-  cards: ICard[];
+  card: ICard;
   onFinish?: () => void;
 }
 

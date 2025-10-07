@@ -159,7 +159,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
         {displaySteps.includes(Step.TYPE_IT) && (
           <TypeItGame
             className={classes.step({ className: classes.stepTypeIt() })}
-            cards={props.cards}
+            card={props.cards[0]}
           />
         )}
       </div>

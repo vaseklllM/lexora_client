@@ -18,13 +18,17 @@ export const ButtonCheck = (props: Props): ReactElement => {
   const checkTranslation = useTypeItGameStore(
     (state) => state.checkTranslation,
   );
+  const isDisabledButtons = useTypeItGameStore(
+    (state) => state.isDisabledButtons,
+  );
 
   return (
     <Button
       size="lg"
       color="primary"
       className={classes.button({ className: props.className })}
-      onClick={checkTranslation}
+      onClick={() => checkTranslation()}
+      disabled={isDisabledButtons}
     >
       Check
     </Button>

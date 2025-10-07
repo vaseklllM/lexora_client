@@ -9,13 +9,18 @@ import { TypeItGameProps } from "../ui/TypeItGame";
 
 type State = {
   cards: ICard[];
+  finishedCards: string[];
   activeCardId: string;
   translationInput: string;
+  isDisabledButtons: boolean;
 };
 
 type Actions = {
   setTranslationInput: (translationInput: string) => void;
   checkTranslation: () => void;
+  nextCard: () => void;
+  addFinishedCard: (cardId: string) => void;
+  setIsDisabledButtons: (isDisabledButtons: boolean) => void;
 };
 
 type Store = State & Actions;
@@ -23,18 +28,50 @@ type Store = State & Actions;
 const Context = createContext<StoreApi<Store> | undefined>(undefined);
 
 function initStore(props: TypeItGameProps) {
-  return createStore<Store>((set, get) => {
+  return createStore<Store>((set, get): Store => {
     const cards = mixArray(props.cards);
 
     return {
       cards,
       activeCardId: cards[0]!.id,
       translationInput: "",
+      finishedCards: [],
+      isDisabledButtons: false,
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
-      checkTranslation() {
+      addFinishedCard(cardId) {
+        set((store) => ({
+          finishedCards: store.finishedCards.some((id) => id === cardId)
+            ? store.finishedCards
+            : [...store.finishedCards, cardId],
+        }));
+      },
+      setIsDisabledButtons(isDisabledButtons) {
+        set({ isDisabledButtons });
+      },
+      nextCard() {
         const store = get();
+        const activeCard = store.cards.find(
+          (card) => card.id === store.activeCardId,
+        );
+
+        if (!activeCard) return;
+
+        const activeCardIdx = store.cards.findIndex(
+          (card) => card.id === store.activeCardId,
+        );
+
+        if (activeCardIdx === store.cards.length - 1 || activeCardIdx === -1) {
+          // store.onFinish?.();
+          set({ activeCardId: store.cards[0].id });
+        } else {
+          set({ activeCardId: store.cards[activeCardIdx + 1].id });
+        }
+      },
+      async checkTranslation() {
+        const store = get();
+        store.setIsDisabledButtons(true);
         const activeCard = store.cards.find(
           (card) => card.id === store.activeCardId,
         );
@@ -57,8 +94,12 @@ function initStore(props: TypeItGameProps) {
             (word) => prepareWord(word) === prepareWord(store.translationInput),
           )
         ) {
-          player.play(activeCard.soundUrls[0]);
+          await player.playAsync(activeCard.soundUrls[0]);
+          store.addFinishedCard(activeCard.id);
+          store.nextCard();
+          store.setIsDisabledButtons(false);
         } else {
+          store.setIsDisabledButtons(false);
         }
       },
     };

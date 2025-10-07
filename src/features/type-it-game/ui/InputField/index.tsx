@@ -8,13 +8,14 @@ import {
 
 const classesSlots = tv({
   slots: {
+    wrapper: "w-full",
     base: "w-full",
     input: "py-4 text-center",
   },
   variants: {
     unrightAnswerAnimation: {
       true: {
-        input: "animate-shakeX",
+        wrapper: "animate-shakeX",
       },
     },
   },
@@ -43,22 +44,26 @@ export const InputField = (props: Props): ReactElement => {
   });
 
   return (
-    <Input
-      className={classes.base({ className: props.className })}
-      inputClassName={classes.input()}
-      placeholder="Type the translation"
-      value={translationInput}
-      onChange={(e) => setTranslationInput(e.target.value)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          checkTranslation();
-        }
-      }}
+    <div
+      className={classes.wrapper()}
       style={
         {
           "--animation-shakeX-duration": `${UNRIGHT_ANSWER_ANIMATION_DURATION}ms`,
         } as CSSProperties
       }
-    />
+    >
+      <Input
+        className={classes.base({ className: props.className })}
+        inputClassName={classes.input()}
+        placeholder="Type the translation"
+        value={translationInput}
+        onChange={(e) => setTranslationInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            checkTranslation();
+          }
+        }}
+      />
+    </div>
   );
 };

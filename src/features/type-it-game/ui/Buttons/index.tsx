@@ -27,11 +27,11 @@ interface Props {
 
 export const Buttons = (props: Props): ReactElement => {
   const classes = classesSlots();
-  const buttonsVariant = useTypeItGameStore((state) => state.buttonsVariant);
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
 
   return (
     <AnimatePresence mode="wait">
-      {buttonsVariant === "default" && (
+      {viewVariant === "default" && (
         <motion.div
           key="A"
           initial="enter"
@@ -46,7 +46,7 @@ export const Buttons = (props: Props): ReactElement => {
           </div>
         </motion.div>
       )}
-      {buttonsVariant === "unrightAnswer" && (
+      {viewVariant === "unrightAnswer" && (
         <motion.div
           key="B"
           initial="enter"

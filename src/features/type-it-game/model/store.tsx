@@ -10,7 +10,7 @@ import { TypeItGameProps } from "../ui/TypeItGame";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
 
-type ButtonsVariant = "default" | "unrightAnswer";
+type ViewVariant = "default" | "unrightAnswer";
 
 type State = {
   cards: ICard[];
@@ -22,7 +22,7 @@ type State = {
   isDisabledButtonTryAgain: boolean;
   isDisabledButtonRight: boolean;
   unrightAnswerAnimation: boolean;
-  buttonsVariant: ButtonsVariant;
+  viewVariant: ViewVariant;
 };
 
 type Actions = {
@@ -36,7 +36,7 @@ type Actions = {
   setIsDisabledButtonCheck: (isDisabled: boolean) => void;
   setIsDisabledButtonTryAgain: (isDisabled: boolean) => void;
   setIsDisabledButtonRight: (isDisabled: boolean) => void;
-  setButtonsVariant: (buttonsVariant: ButtonsVariant) => void;
+  setViewVariant: (buttonsVariant: ViewVariant) => void;
 };
 
 type Store = State & Actions;
@@ -57,7 +57,7 @@ function initStore(props: TypeItGameProps) {
       isDisabledButtonTryAgain: false,
       isDisabledButtonRight: false,
       unrightAnswerAnimation: false,
-      buttonsVariant: "default",
+      viewVariant: "default",
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
@@ -88,8 +88,8 @@ function initStore(props: TypeItGameProps) {
         await sleep(UNRIGHT_ANSWER_ANIMATION_DURATION);
         set({ unrightAnswerAnimation: false });
       },
-      setButtonsVariant(buttonsVariant) {
-        set({ buttonsVariant });
+      setViewVariant(buttonsVariant) {
+        set({ viewVariant: buttonsVariant });
       },
       nextCard() {
         const store = get();
@@ -145,7 +145,7 @@ function initStore(props: TypeItGameProps) {
           store.clearTranslationInput();
           store.nextCard();
         } else {
-          store.setButtonsVariant("unrightAnswer");
+          store.setViewVariant("unrightAnswer");
           await store.playUnrightAnswerAnimation();
         }
         store.setIsDisabledButtonHelp(false);

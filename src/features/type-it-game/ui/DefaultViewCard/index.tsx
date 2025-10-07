@@ -8,7 +8,7 @@ const classesSlots = tv({
   slots: {
     base: "flex h-full flex-col items-center justify-evenly",
     buttons:
-      "mt-4 grid w-full grid-cols-2 gap-4 transition-opacity duration-1000 md:w-max",
+      "grid w-full grid-cols-2 gap-4 transition-opacity duration-1000 md:w-max",
     button: "md:min-w-48",
   },
 });

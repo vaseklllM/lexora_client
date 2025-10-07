@@ -2,10 +2,16 @@ import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useActiveCard } from "../../hooks/useActiveCard";
 import { CardItem } from "../CardItem";
+import { ButtonRight } from "./ButtonRight";
+import { ButtonTryAgain } from "./ButtonTryAgain";
 
 const classesSlots = tv({
   slots: {
-    base: "flex h-full",
+    base: "flex h-full flex-col items-center gap-4",
+    cardItem: "flex-1",
+    buttons:
+      "grid w-full grid-cols-2 gap-4 transition-opacity duration-1000 md:w-max",
+    button: "md:min-w-48",
   },
 });
 
@@ -18,10 +24,16 @@ export const UnrightAnswerViewCard = (props: Props): ReactElement => {
   const activeCard = useActiveCard();
 
   return (
-    <CardItem
-      className={classes.base({ className: props.className })}
-      title={activeCard.textInKnownLanguage}
-      description={activeCard.descriptionInKnownLanguage}
-    />
+    <div className={classes.base({ className: props.className })}>
+      <CardItem
+        title={activeCard.textInKnownLanguage}
+        description={activeCard.descriptionInKnownLanguage}
+        className={classes.cardItem()}
+      />
+      <div className={classes.buttons()}>
+        <ButtonRight className={classes.button()} />
+        <ButtonTryAgain className={classes.button()} />
+      </div>
+    </div>
   );
 };

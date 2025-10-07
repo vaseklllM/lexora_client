@@ -39,11 +39,10 @@ export const Buttons = (props: Props): ReactElement => {
           exit="exit"
           variants={variants}
           transition={{ duration: 0.3 }}
+          className={classes.buttons({ className: props.className })}
         >
-          <div className={classes.buttons({ className: props.className })}>
-            <ButtonHelp className={classes.button()} />
-            <ButtonCheck className={classes.button()} />
-          </div>
+          <ButtonHelp className={classes.button()} />
+          <ButtonCheck className={classes.button()} />
         </motion.div>
       )}
       {viewVariant === "unrightAnswer" && (
@@ -54,11 +53,10 @@ export const Buttons = (props: Props): ReactElement => {
           exit="exit"
           variants={variants}
           transition={{ duration: 0.3 }}
+          className={classes.buttons({ className: props.className })}
         >
-          <div className={classes.buttons({ className: props.className })}>
-            <ButtonRight className={classes.button()} />
-            <ButtonTryAgain className={classes.button()} />
-          </div>
+          <ButtonRight className={classes.button()} />
+          <ButtonTryAgain className={classes.button()} />
         </motion.div>
       )}
     </AnimatePresence>

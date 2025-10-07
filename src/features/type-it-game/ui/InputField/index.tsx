@@ -1,12 +1,22 @@
 import { Input } from "@/shared/ui/Input";
-import { ReactElement } from "react";
+import { CSSProperties, ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useTypeItGameStore } from "../../model/store";
+import {
+  UNRIGHT_ANSWER_ANIMATION_DURATION,
+  useTypeItGameStore,
+} from "../../model/store";
 
 const classesSlots = tv({
   slots: {
     base: "w-full",
     input: "py-4 text-center",
+  },
+  variants: {
+    unrightAnswerAnimation: {
+      true: {
+        input: "animate-shakeX",
+      },
+    },
   },
 });
 
@@ -15,7 +25,6 @@ interface Props {
 }
 
 export const InputField = (props: Props): ReactElement => {
-  const classes = classesSlots();
   const translationInput = useTypeItGameStore(
     (state) => state.translationInput,
   );
@@ -25,6 +34,13 @@ export const InputField = (props: Props): ReactElement => {
   const checkTranslation = useTypeItGameStore(
     (state) => state.checkTranslation,
   );
+  const unrightAnswerAnimation = useTypeItGameStore(
+    (state) => state.unrightAnswerAnimation,
+  );
+
+  const classes = classesSlots({
+    unrightAnswerAnimation,
+  });
 
   return (
     <Input
@@ -38,6 +54,11 @@ export const InputField = (props: Props): ReactElement => {
           checkTranslation();
         }
       }}
+      style={
+        {
+          "--animation-shakeX-duration": `${UNRIGHT_ANSWER_ANIMATION_DURATION}ms`,
+        } as CSSProperties
+      }
     />
   );
 };

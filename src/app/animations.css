@@ -1,3 +1,8 @@
+.animate-shakeX {
+  animation-name: shakeX;
+  animation-duration: var(--animation-shakeX-duration);
+}
+
 @keyframes shakeX {
   from,
   to {

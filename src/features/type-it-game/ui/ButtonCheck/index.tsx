@@ -27,7 +27,9 @@ export const ButtonCheck = (props: Props): ReactElement => {
       size="lg"
       color="primary"
       className={classes.button({ className: props.className })}
-      onClick={() => checkTranslation()}
+      onClick={() => {
+        checkTranslation();
+      }}
       disabled={isDisabledButtons}
     >
       Check

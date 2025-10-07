@@ -9,7 +9,7 @@ import { createStore, StoreApi, useStore } from "zustand";
 import { TypeItGameProps } from "../ui/TypeItGame";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
-export const BUTTONS_VISIBLE_ANIMATION_DURATION = 2000;
+// export const BUTTONS_VISIBLE_ANIMATION_DURATION = 2000;
 
 type ButtonsVariant = "default" | "unrightAnswer";
 
@@ -24,7 +24,7 @@ type State = {
   isDisabledButtonRight: boolean;
   unrightAnswerAnimation: boolean;
   buttonsVariant: ButtonsVariant;
-  isVisibleButtons: boolean;
+  // isVisibleButtons: boolean;
 };
 
 type Actions = {
@@ -39,6 +39,7 @@ type Actions = {
   setIsDisabledButtonTryAgain: (isDisabled: boolean) => void;
   setIsDisabledButtonRight: (isDisabled: boolean) => void;
   setButtonsVariant: (buttonsVariant: ButtonsVariant) => Promise<void>;
+  // tryAgain: () => Promise<void>;
 };
 
 type Store = State & Actions;
@@ -60,7 +61,7 @@ function initStore(props: TypeItGameProps) {
       isDisabledButtonRight: false,
       unrightAnswerAnimation: false,
       buttonsVariant: "default",
-      isVisibleButtons: true,
+      // isVisibleButtons: true,
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
@@ -92,15 +93,15 @@ function initStore(props: TypeItGameProps) {
         set({ unrightAnswerAnimation: false });
       },
       async setButtonsVariant(buttonsVariant) {
-        const activeButtonVariant = get().buttonsVariant;
+        // const activeButtonVariant = get().buttonsVariant;
 
-        if (activeButtonVariant === buttonsVariant) return;
+        // if (activeButtonVariant === buttonsVariant) return;
 
-        set({ isVisibleButtons: false });
-        await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
+        // set({ isVisibleButtons: false });
+        // await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
         set({ buttonsVariant });
-        set({ isVisibleButtons: true });
-        await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
+        // await sleep(0);
+        // set({ isVisibleButtons: true });
       },
       nextCard() {
         const store = get();
@@ -156,8 +157,10 @@ function initStore(props: TypeItGameProps) {
           store.clearTranslationInput();
           store.nextCard();
         } else {
-          await store.playUnrightAnswerAnimation();
-          await store.setButtonsVariant("unrightAnswer");
+          await Promise.all([
+            store.playUnrightAnswerAnimation(),
+            store.setButtonsVariant("unrightAnswer"),
+          ]);
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);

@@ -148,6 +148,13 @@ function initStore(props: TypeItGameProps) {
       async help() {
         const store = get();
         store.setViewVariant("help");
+
+        const activeCard = store.cards.find(
+          (card) => card.id === store.activeCardId,
+        );
+
+        if (!activeCard) return;
+        await player.playAsync(activeCard.soundUrls[0]);
       },
     };
   });

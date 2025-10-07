@@ -7,11 +7,12 @@ import { tv } from "tailwind-variants";
 import { useTypeItGameStore, withStoreProvider } from "../model/store";
 import { CardItem } from "./CardItem";
 import { DefaultViewCard } from "./DefaultViewCard";
+import { UnrightAnswerViewCard } from "./UnrightAnswerViewCard";
 
 const classesSlots = tv({
   slots: {
     base: "flex h-full w-full flex-col gap-4",
-    content: "grid h-full grid-cols-1 gap-4",
+    content: "grid h-full grid-cols-1 grid-rows-2 gap-4",
     defaultBlock: "",
   },
 });
@@ -47,9 +48,20 @@ export const TypeItGame = memo(
                 exit="exit"
                 variants={variants}
                 transition={{ duration: 0.3 }}
-                className={classes.defaultBlock()}
               >
                 <DefaultViewCard />
+              </motion.div>
+            )}
+            {viewVariant === "unrightAnswer" && (
+              <motion.div
+                key="B"
+                initial="enter"
+                animate="center"
+                exit="exit"
+                variants={variants}
+                transition={{ duration: 0.3 }}
+              >
+                <UnrightAnswerViewCard />
               </motion.div>
             )}
           </AnimatePresence>

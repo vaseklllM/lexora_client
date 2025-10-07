@@ -7,6 +7,7 @@ import { sleep } from "@/shared/utils/sleep";
 import { ComponentType, createContext, useContext, useRef } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { TypeItGameProps } from "../ui/TypeItGame";
+import { toClearWord } from "./toClearWord";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
 
@@ -118,16 +119,7 @@ function initStore(props: TypeItGameProps) {
           (card) => card.id === store.activeCardId,
         );
 
-        const prepareWord = (word: string) => {
-          return word
-            .toLocaleLowerCase()
-            .trim()
-            .replaceAll(".", "")
-            .replaceAll("?", "")
-            .replaceAll(",", "");
-        };
-
-        if (prepareWord(store.translationInput) === "" || !activeCard) {
+        if (toClearWord(store.translationInput) === "" || !activeCard) {
           store.setIsDisabledButtonHelp(false);
           store.setIsDisabledButtonCheck(false);
           return;
@@ -137,7 +129,7 @@ function initStore(props: TypeItGameProps) {
 
         if (
           wordsList.some(
-            (word) => prepareWord(word) === prepareWord(store.translationInput),
+            (word) => toClearWord(word) === toClearWord(store.translationInput),
           )
         ) {
           await player.playAsync(activeCard.soundUrls[0]);

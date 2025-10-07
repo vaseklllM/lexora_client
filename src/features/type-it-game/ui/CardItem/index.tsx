@@ -4,14 +4,14 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useTypeItGameStore } from "../../model/store";
+import { TranslationValue } from "./TranslationValue";
 
 const classesSlots = tv({
   slots: {
     base: "bg-base-100 relative flex w-full max-w-full flex-col rounded-xl p-2",
     titleWrapper:
-      "flex h-full max-w-full flex-col items-center justify-center gap-1",
-    translationInput: "text-error text-center text-xl break-words",
+      "flex h-full max-w-full flex-col items-center justify-center gap-2",
+    translationInput: "",
     title: "transition-blur max-w-full px-1 text-center text-xl break-words",
     descriptionWrapper: "bg-base-300 gap-2 rounded-lg p-2 py-3",
     description: "transition-blur text-center text-sm break-words",
@@ -31,10 +31,6 @@ interface Props {
 export const CardItem = (props: Props): ReactElement => {
   const classes = classesSlots({});
 
-  const translationInput = useTypeItGameStore(
-    (state) => state.translationInput,
-  );
-
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.iconButtons()}>
@@ -53,7 +49,7 @@ export const CardItem = (props: Props): ReactElement => {
       </div>
       <div className={classes.titleWrapper()}>
         {props.isUnrightAnswer && (
-          <h3 className={classes.translationInput()}>{translationInput}</h3>
+          <TranslationValue className={classes.translationInput()} />
         )}
         <h3 className={classes.title()}>{props.title}</h3>
       </div>

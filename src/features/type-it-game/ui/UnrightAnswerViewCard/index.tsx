@@ -2,8 +2,6 @@ import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useActiveCard } from "../../hooks/useActiveCard";
 import { CardItem } from "../CardItem";
-import { ButtonRight } from "./ButtonRight";
-import { ButtonTryAgain } from "./ButtonTryAgain";
 
 const classesSlots = tv({
   slots: {
@@ -31,10 +29,6 @@ export const UnrightAnswerViewCard = (props: Props): ReactElement => {
         className={classes.cardItem()}
         isUnrightAnswer
       />
-      <div className={classes.buttons()}>
-        <ButtonRight className={classes.button()} />
-        <ButtonTryAgain className={classes.button()} />
-      </div>
     </div>
   );
 };

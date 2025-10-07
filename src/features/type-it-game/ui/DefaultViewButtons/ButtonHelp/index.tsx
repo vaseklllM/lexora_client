@@ -16,6 +16,7 @@ interface Props {
 export const ButtonHelp = (props: Props): ReactElement => {
   const classes = classesSlots();
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonHelp);
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
 
   return (
     <Button
@@ -23,7 +24,7 @@ export const ButtonHelp = (props: Props): ReactElement => {
       color="primary"
       variant="outline"
       className={classes.button({ className: props.className })}
-      disabled={isDisabled}
+      disabled={isDisabled || viewVariant !== "default"}
     >
       Help
     </Button>

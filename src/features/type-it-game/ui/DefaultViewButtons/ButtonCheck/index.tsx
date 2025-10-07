@@ -19,6 +19,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
     (state) => state.checkTranslation,
   );
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonCheck);
+  const viewVariant = useTypeItGameStore((state) => state.viewVariant);
 
   return (
     <Button
@@ -28,7 +29,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
       onClick={() => {
         checkTranslation();
       }}
-      disabled={isDisabled}
+      disabled={isDisabled || viewVariant !== "default"}
     >
       Check
     </Button>

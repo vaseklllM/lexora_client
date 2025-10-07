@@ -7,7 +7,9 @@ import { tv } from "tailwind-variants";
 import { useActiveCard } from "../hooks/useActiveCard";
 import { useTypeItGameStore, withStoreProvider } from "../model/store";
 import { CardItem } from "./CardItem";
+import { DefaultViewButtons } from "./DefaultViewButtons";
 import { DefaultViewCard } from "./DefaultViewCard";
+import { UnrightAnswerButtons } from "./UnrightAnswerButtons";
 import { UnrightAnswerViewCard } from "./UnrightAnswerViewCard";
 
 const classesSlots = tv({
@@ -15,6 +17,7 @@ const classesSlots = tv({
     base: "flex h-full w-full flex-col gap-4",
     content: "grid h-full grid-cols-1 grid-rows-2 gap-4",
     defaultBlock: "",
+    buttons: "flex w-full justify-center",
   },
 });
 
@@ -49,7 +52,7 @@ export const TypeItGame = memo(
           <AnimatePresence mode="wait">
             {viewVariant === "default" && (
               <motion.div
-                key="A"
+                key="default_card"
                 initial="enter"
                 animate="center"
                 exit="exit"
@@ -61,7 +64,7 @@ export const TypeItGame = memo(
             )}
             {viewVariant === "unrightAnswer" && (
               <motion.div
-                key="B"
+                key="unrightAnswer_card"
                 initial="enter"
                 animate="center"
                 exit="exit"
@@ -73,6 +76,34 @@ export const TypeItGame = memo(
             )}
           </AnimatePresence>
         </div>
+        <AnimatePresence mode="wait">
+          {viewVariant === "default" && (
+            <motion.div
+              key="default_buttons"
+              initial="enter"
+              animate="center"
+              exit="exit"
+              variants={variants}
+              className={classes.buttons()}
+              transition={{ duration: 0.3 }}
+            >
+              <DefaultViewButtons />
+            </motion.div>
+          )}
+          {viewVariant === "unrightAnswer" && (
+            <motion.div
+              key="unrightAnswer_buttons"
+              initial="enter"
+              animate="center"
+              exit="exit"
+              variants={variants}
+              className={classes.buttons()}
+              transition={{ duration: 0.3 }}
+            >
+              <UnrightAnswerButtons />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }),

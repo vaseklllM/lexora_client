@@ -9,7 +9,6 @@ import { createStore, StoreApi, useStore } from "zustand";
 import { TypeItGameProps } from "../ui/TypeItGame";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
-// export const BUTTONS_VISIBLE_ANIMATION_DURATION = 2000;
 
 type ButtonsVariant = "default" | "unrightAnswer";
 
@@ -24,7 +23,6 @@ type State = {
   isDisabledButtonRight: boolean;
   unrightAnswerAnimation: boolean;
   buttonsVariant: ButtonsVariant;
-  // isVisibleButtons: boolean;
 };
 
 type Actions = {
@@ -38,8 +36,7 @@ type Actions = {
   setIsDisabledButtonCheck: (isDisabled: boolean) => void;
   setIsDisabledButtonTryAgain: (isDisabled: boolean) => void;
   setIsDisabledButtonRight: (isDisabled: boolean) => void;
-  setButtonsVariant: (buttonsVariant: ButtonsVariant) => Promise<void>;
-  // tryAgain: () => Promise<void>;
+  setButtonsVariant: (buttonsVariant: ButtonsVariant) => void;
 };
 
 type Store = State & Actions;
@@ -61,7 +58,6 @@ function initStore(props: TypeItGameProps) {
       isDisabledButtonRight: false,
       unrightAnswerAnimation: false,
       buttonsVariant: "default",
-      // isVisibleButtons: true,
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
@@ -92,16 +88,8 @@ function initStore(props: TypeItGameProps) {
         await sleep(UNRIGHT_ANSWER_ANIMATION_DURATION);
         set({ unrightAnswerAnimation: false });
       },
-      async setButtonsVariant(buttonsVariant) {
-        // const activeButtonVariant = get().buttonsVariant;
-
-        // if (activeButtonVariant === buttonsVariant) return;
-
-        // set({ isVisibleButtons: false });
-        // await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
+      setButtonsVariant(buttonsVariant) {
         set({ buttonsVariant });
-        // await sleep(0);
-        // set({ isVisibleButtons: true });
       },
       nextCard() {
         const store = get();
@@ -157,10 +145,8 @@ function initStore(props: TypeItGameProps) {
           store.clearTranslationInput();
           store.nextCard();
         } else {
-          await Promise.all([
-            store.playUnrightAnswerAnimation(),
-            store.setButtonsVariant("unrightAnswer"),
-          ]);
+          store.setButtonsVariant("unrightAnswer");
+          await store.playUnrightAnswerAnimation();
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);

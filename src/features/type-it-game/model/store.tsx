@@ -10,6 +10,8 @@ import { TypeItGameProps } from "../ui/TypeItGame";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
 
+type ButtonsVariant = "default" | "unrightAnswer";
+
 type State = {
   cards: ICard[];
   finishedCards: string[];
@@ -17,15 +19,17 @@ type State = {
   translationInput: string;
   isDisabledButtons: boolean;
   unrightAnswerAnimation: boolean;
+  buttonsVariant: ButtonsVariant;
 };
 
 type Actions = {
   setTranslationInput: (translationInput: string) => void;
-  checkTranslation: () => void;
+  checkTranslation: () => Promise<void>;
   nextCard: () => void;
   addFinishedCard: (cardId: string) => void;
   setIsDisabledButtons: (isDisabledButtons: boolean) => void;
-  setUnrightAnswerAnimation: (unrightAnswerAnimation: boolean) => void;
+  playUnrightAnswerAnimation: () => Promise<void>;
+  setButtonsVariant: (buttonsVariant: ButtonsVariant) => Promise<void>;
 };
 
 type Store = State & Actions;
@@ -43,6 +47,7 @@ function initStore(props: TypeItGameProps) {
       finishedCards: [],
       isDisabledButtons: false,
       unrightAnswerAnimation: false,
+      buttonsVariant: "default",
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
@@ -56,8 +61,13 @@ function initStore(props: TypeItGameProps) {
       setIsDisabledButtons(isDisabledButtons) {
         set({ isDisabledButtons });
       },
-      setUnrightAnswerAnimation(unrightAnswerAnimation) {
-        set({ unrightAnswerAnimation });
+      async playUnrightAnswerAnimation() {
+        set({ unrightAnswerAnimation: true });
+        await sleep(UNRIGHT_ANSWER_ANIMATION_DURATION);
+        set({ unrightAnswerAnimation: false });
+      },
+      async setButtonsVariant(buttonsVariant) {
+        set({ buttonsVariant });
       },
       nextCard() {
         const store = get();
@@ -114,9 +124,8 @@ function initStore(props: TypeItGameProps) {
           store.addFinishedCard(activeCard.id);
           store.nextCard();
         } else {
-          store.setUnrightAnswerAnimation(true);
-          await sleep(UNRIGHT_ANSWER_ANIMATION_DURATION);
-          store.setUnrightAnswerAnimation(false);
+          await store.playUnrightAnswerAnimation();
+          store.setButtonsVariant("unrightAnswer");
         }
         store.setIsDisabledButtons(false);
       },

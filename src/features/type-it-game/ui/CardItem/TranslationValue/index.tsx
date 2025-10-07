@@ -34,6 +34,7 @@ export const TranslationValue = (props: Props): ReactElement => {
         let sameSymbols: string = "";
 
         for (let i = 0; i < translationInput.length; i++) {
+          if (!word[i] || !translationInput[i]) return sameSymbols;
           if (word[i].toLowerCase() === translationInput[i].toLowerCase()) {
             sameSymbols += translationInput[i];
           } else {

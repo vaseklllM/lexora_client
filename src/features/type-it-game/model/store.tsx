@@ -139,6 +139,7 @@ function initStore(props: TypeItGameProps) {
         } else {
           await store.playUnrightAnswerAnimation();
           store.setViewVariant("unrightAnswer");
+          await player.playAsync(activeCard.soundUrls[0]);
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);

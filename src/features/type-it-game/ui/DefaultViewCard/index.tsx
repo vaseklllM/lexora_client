@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { DefaultViewButtons } from "../DefaultViewButtons";
 import { InputField } from "./InputField";
 
 const classesSlots = tv({
@@ -18,6 +19,7 @@ export const DefaultViewCard = (props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <InputField />
+      <DefaultViewButtons />
     </div>
   );
 };

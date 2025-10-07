@@ -24,8 +24,8 @@ export const UnrightAnswerViewCard = (props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <CardItem
-        title={activeCard.textInKnownLanguage}
-        description={activeCard.descriptionInKnownLanguage}
+        title={activeCard.textInLearningLanguage}
+        description={activeCard.descriptionInLearningLanguage}
         className={classes.cardItem()}
         isUnrightAnswer
       />

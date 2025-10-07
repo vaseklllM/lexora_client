@@ -43,8 +43,8 @@ export const TypeItGame = memo(
       <div className={classes.base({ className: props.className })}>
         <div className={classes.content()}>
           <CardItem
-            title={activeCard.textInLearningLanguage}
-            description={activeCard.descriptionInLearningLanguage}
+            title={activeCard.textInKnownLanguage}
+            description={activeCard.descriptionInKnownLanguage}
             cefr={activeCard.cefr}
             soundUrls={activeCard.soundUrls}
           />

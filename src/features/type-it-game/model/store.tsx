@@ -125,7 +125,7 @@ function initStore(props: TypeItGameProps) {
           return;
         }
 
-        const wordsList = activeCard.textInKnownLanguage.split(",");
+        const wordsList = activeCard.textInLearningLanguage.split(",");
 
         if (
           wordsList.some(

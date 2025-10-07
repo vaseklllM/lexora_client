@@ -18,7 +18,7 @@ interface Props {
 export const TranslationValue = (props: Props): ReactElement => {
   const classes = classesSlots({});
 
-  const translation = useActiveCard((card) => card.textInKnownLanguage);
+  const translation = useActiveCard((card) => card.textInLearningLanguage);
   const translationsList = useMemo(
     () => translation.split(",").map((word) => toClearWord(word)),
     [translation],

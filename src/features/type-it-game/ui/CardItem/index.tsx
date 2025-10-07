@@ -7,7 +7,7 @@ import { useActiveCard } from "../../hooks/useActiveCard";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 relative flex min-h-70 w-full max-w-full flex-col rounded-xl p-2 md:h-full",
+    base: "bg-base-100 relative flex w-full max-w-full flex-col rounded-xl p-2",
     titleWrapper: "flex h-full max-w-full items-center justify-center",
     title:
       "transition-blur mt-4 max-w-full px-1 text-center text-xl break-words duration-300",

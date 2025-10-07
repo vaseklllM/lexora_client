@@ -1,21 +1,21 @@
 import { Input } from "@/shared/ui/Input";
+
 import { CSSProperties, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import {
   UNRIGHT_ANSWER_ANIMATION_DURATION,
   useTypeItGameStore,
-} from "../../model/store";
+} from "../../../model/store";
 
 const classesSlots = tv({
   slots: {
-    wrapper: "w-full",
     base: "w-full",
     input: "py-4 text-center",
   },
   variants: {
     unrightAnswerAnimation: {
       true: {
-        wrapper: "animate-shakeX",
+        input: "animate-shakeX",
       },
     },
   },
@@ -44,26 +44,22 @@ export const InputField = (props: Props): ReactElement => {
   });
 
   return (
-    <div
-      className={classes.wrapper()}
+    <Input
+      className={classes.base({ className: props.className })}
+      inputClassName={classes.input()}
+      placeholder="Type the translation"
+      value={translationInput}
+      onChange={(e) => setTranslationInput(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          checkTranslation();
+        }
+      }}
       style={
         {
           "--animation-shakeX-duration": `${UNRIGHT_ANSWER_ANIMATION_DURATION}ms`,
         } as CSSProperties
       }
-    >
-      <Input
-        className={classes.base({ className: props.className })}
-        inputClassName={classes.input()}
-        placeholder="Type the translation"
-        value={translationInput}
-        onChange={(e) => setTranslationInput(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            checkTranslation();
-          }
-        }}
-      />
-    </div>
+    />
   );
 };

@@ -145,8 +145,8 @@ function initStore(props: TypeItGameProps) {
           store.clearTranslationInput();
           store.nextCard();
         } else {
-          store.setViewVariant("unrightAnswer");
           await store.playUnrightAnswerAnimation();
+          store.setViewVariant("unrightAnswer");
         }
         store.setIsDisabledButtonHelp(false);
         store.setIsDisabledButtonCheck(false);

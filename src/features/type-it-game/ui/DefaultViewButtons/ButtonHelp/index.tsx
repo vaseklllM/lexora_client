@@ -5,7 +5,7 @@ import { useTypeItGameStore } from "../../../model/store";
 
 const classesSlots = tv({
   slots: {
-    button: "",
+    button: "rounded-xl",
   },
 });
 

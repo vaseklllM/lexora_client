@@ -10,7 +10,7 @@ import {
 const classesSlots = tv({
   slots: {
     base: "w-full",
-    input: "py-4 text-center",
+    input: "rounded-xl py-4 text-center",
   },
   variants: {
     unrightAnswerAnimation: {

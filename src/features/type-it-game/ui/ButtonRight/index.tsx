@@ -13,19 +13,21 @@ interface Props {
   className?: string;
 }
 
-export const ButtonHelp = (props: Props): ReactElement => {
+export const ButtonRight = (props: Props): ReactElement => {
   const classes = classesSlots();
-  const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonHelp);
+
+  const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonRight);
 
   return (
     <Button
       size="lg"
-      color="primary"
       variant="outline"
+      color="primary"
       className={classes.button({ className: props.className })}
+      // onClick={() => {}}
       disabled={isDisabled}
     >
-      Help
+      Right
     </Button>
   );
 };

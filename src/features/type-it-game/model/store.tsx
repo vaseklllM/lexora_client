@@ -9,6 +9,7 @@ import { createStore, StoreApi, useStore } from "zustand";
 import { TypeItGameProps } from "../ui/TypeItGame";
 
 export const UNRIGHT_ANSWER_ANIMATION_DURATION = 700;
+export const BUTTONS_VISIBLE_ANIMATION_DURATION = 2000;
 
 type ButtonsVariant = "default" | "unrightAnswer";
 
@@ -17,18 +18,26 @@ type State = {
   finishedCards: string[];
   activeCardId: string;
   translationInput: string;
-  isDisabledButtons: boolean;
+  isDisabledButtonHelp: boolean;
+  isDisabledButtonCheck: boolean;
+  isDisabledButtonTryAgain: boolean;
+  isDisabledButtonRight: boolean;
   unrightAnswerAnimation: boolean;
   buttonsVariant: ButtonsVariant;
+  isVisibleButtons: boolean;
 };
 
 type Actions = {
   setTranslationInput: (translationInput: string) => void;
+  clearTranslationInput: () => void;
   checkTranslation: () => Promise<void>;
   nextCard: () => void;
   addFinishedCard: (cardId: string) => void;
-  setIsDisabledButtons: (isDisabledButtons: boolean) => void;
   playUnrightAnswerAnimation: () => Promise<void>;
+  setIsDisabledButtonHelp: (isDisabled: boolean) => void;
+  setIsDisabledButtonCheck: (isDisabled: boolean) => void;
+  setIsDisabledButtonTryAgain: (isDisabled: boolean) => void;
+  setIsDisabledButtonRight: (isDisabled: boolean) => void;
   setButtonsVariant: (buttonsVariant: ButtonsVariant) => Promise<void>;
 };
 
@@ -45,11 +54,18 @@ function initStore(props: TypeItGameProps) {
       activeCardId: cards[0]!.id,
       translationInput: "",
       finishedCards: [],
-      isDisabledButtons: false,
+      isDisabledButtonHelp: false,
+      isDisabledButtonCheck: false,
+      isDisabledButtonTryAgain: false,
+      isDisabledButtonRight: false,
       unrightAnswerAnimation: false,
       buttonsVariant: "default",
+      isVisibleButtons: true,
       setTranslationInput(translationInput) {
         set({ translationInput });
+      },
+      clearTranslationInput() {
+        set({ translationInput: "" });
       },
       addFinishedCard(cardId) {
         set((store) => ({
@@ -58,8 +74,17 @@ function initStore(props: TypeItGameProps) {
             : [...store.finishedCards, cardId],
         }));
       },
-      setIsDisabledButtons(isDisabledButtons) {
-        set({ isDisabledButtons });
+      setIsDisabledButtonHelp(isDisabledButtonHelp) {
+        set({ isDisabledButtonHelp });
+      },
+      setIsDisabledButtonCheck(isDisabledButtonCheck) {
+        set({ isDisabledButtonCheck });
+      },
+      setIsDisabledButtonTryAgain(isDisabledButtonTryAgain) {
+        set({ isDisabledButtonTryAgain });
+      },
+      setIsDisabledButtonRight(isDisabledButtonRight) {
+        set({ isDisabledButtonRight });
       },
       async playUnrightAnswerAnimation() {
         set({ unrightAnswerAnimation: true });
@@ -67,7 +92,15 @@ function initStore(props: TypeItGameProps) {
         set({ unrightAnswerAnimation: false });
       },
       async setButtonsVariant(buttonsVariant) {
+        const activeButtonVariant = get().buttonsVariant;
+
+        if (activeButtonVariant === buttonsVariant) return;
+
+        set({ isVisibleButtons: false });
+        await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
         set({ buttonsVariant });
+        set({ isVisibleButtons: true });
+        await sleep(BUTTONS_VISIBLE_ANIMATION_DURATION);
       },
       nextCard() {
         const store = get();
@@ -89,15 +122,12 @@ function initStore(props: TypeItGameProps) {
       },
       async checkTranslation() {
         const store = get();
-        store.setIsDisabledButtons(true);
+        store.setIsDisabledButtonHelp(true);
+        store.setIsDisabledButtonCheck(true);
+
         const activeCard = store.cards.find(
           (card) => card.id === store.activeCardId,
         );
-
-        if (!activeCard) {
-          store.setIsDisabledButtons(false);
-          return;
-        }
 
         const prepareWord = (word: string) => {
           return word
@@ -108,8 +138,9 @@ function initStore(props: TypeItGameProps) {
             .replaceAll(",", "");
         };
 
-        if (prepareWord(store.translationInput) === "") {
-          store.setIsDisabledButtons(false);
+        if (prepareWord(store.translationInput) === "" || !activeCard) {
+          store.setIsDisabledButtonHelp(false);
+          store.setIsDisabledButtonCheck(false);
           return;
         }
 
@@ -122,12 +153,14 @@ function initStore(props: TypeItGameProps) {
         ) {
           await player.playAsync(activeCard.soundUrls[0]);
           store.addFinishedCard(activeCard.id);
+          store.clearTranslationInput();
           store.nextCard();
         } else {
           await store.playUnrightAnswerAnimation();
-          store.setButtonsVariant("unrightAnswer");
+          await store.setButtonsVariant("unrightAnswer");
         }
-        store.setIsDisabledButtons(false);
+        store.setIsDisabledButtonHelp(false);
+        store.setIsDisabledButtonCheck(false);
       },
     };
   });

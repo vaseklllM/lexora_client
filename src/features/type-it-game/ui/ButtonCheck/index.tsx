@@ -18,9 +18,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
   const checkTranslation = useTypeItGameStore(
     (state) => state.checkTranslation,
   );
-  const isDisabledButtons = useTypeItGameStore(
-    (state) => state.isDisabledButtons,
-  );
+  const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonCheck);
 
   return (
     <Button
@@ -30,7 +28,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
       onClick={() => {
         checkTranslation();
       }}
-      disabled={isDisabledButtons}
+      disabled={isDisabled}
     >
       Check
     </Button>

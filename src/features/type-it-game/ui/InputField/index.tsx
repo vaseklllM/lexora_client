@@ -1,11 +1,11 @@
 import { Input } from "@/shared/ui/Input";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useTypeItGameStore } from "../model/store";
+import { useTypeItGameStore } from "../../model/store";
 
 const classesSlots = tv({
   slots: {
-    base: "",
+    base: "w-full",
     input: "py-4 text-center",
   },
 });

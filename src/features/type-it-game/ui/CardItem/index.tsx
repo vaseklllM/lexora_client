@@ -3,11 +3,11 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useActiveCard } from "../hooks/useActiveCard";
+import { useActiveCard } from "../../hooks/useActiveCard";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 relative flex min-h-60 w-full max-w-full flex-col rounded-xl p-2 sm:min-h-50 md:min-w-96",
+    base: "bg-base-100 relative flex h-full w-full max-w-full flex-col rounded-xl p-2",
     titleWrapper: "flex h-full max-w-full items-center justify-center",
     title:
       "transition-blur mt-4 max-w-full px-1 text-center text-xl break-words duration-300",

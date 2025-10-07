@@ -4,14 +4,17 @@ import { ICard } from "@/api/schemas/card.schema";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { withStoreProvider } from "../model/store";
+import { ButtonCheck } from "./ButtonCheck";
+import { ButtonHelp } from "./ButtonHelp";
 import { CardItem } from "./CardItem";
 import { InputField } from "./InputField";
 
 const classesSlots = tv({
   slots: {
-    base: "",
-    content: "grid h-full w-full grid-cols-1 gap-4",
-    inputWrapper: "",
+    base: "flex h-full w-full flex-col gap-4",
+    inputWrapper: "flex w-full flex-col items-center",
+    buttons: "mt-4 grid w-full grid-cols-2 gap-4 md:mt-24 md:w-max",
+    button: "min-w-42",
   },
 });
 
@@ -27,10 +30,12 @@ export const TypeItGame = memo(
 
     return (
       <div className={classes.base({ className: props.className })}>
-        <div className={classes.content()}>
-          <CardItem />
-          <div className={classes.inputWrapper()}>
-            <InputField />
+        <CardItem />
+        <div className={classes.inputWrapper()}>
+          <InputField />
+          <div className={classes.buttons()}>
+            <ButtonHelp className={classes.button()} />
+            <ButtonCheck className={classes.button()} />
           </div>
         </div>
       </div>

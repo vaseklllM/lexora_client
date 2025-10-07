@@ -58,6 +58,23 @@ const classesSlots = tv({
         button: "btn-error",
       },
     },
+    size: {
+      xs: {
+        button: "btn-xs",
+      },
+      sm: {
+        button: "btn-sm",
+      },
+      md: {
+        button: "btn-md",
+      },
+      lg: {
+        button: "btn-lg",
+      },
+      xl: {
+        button: "btn-xl",
+      },
+    },
   },
 });
 
@@ -76,10 +93,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
   color?: "neutral" | Color;
   variant?: "ghost" | "dash" | "soft" | "outline";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 export const Button = (props: ButtonProps) => {
-  const { isLoading, children, onClick, color, variant, ...buttonProps } =
+  const { isLoading, children, onClick, color, variant, size, ...buttonProps } =
     props;
 
   const [isLoadingState, setIsLoadingState] = useState(false);
@@ -87,6 +105,7 @@ export const Button = (props: ButtonProps) => {
   const classes = classesSlots({
     color,
     variant,
+    size,
   });
 
   const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(

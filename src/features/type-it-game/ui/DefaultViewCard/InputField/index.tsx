@@ -71,6 +71,8 @@ export const InputField = (props: Props): ReactElement => {
           "--animation-shakeX-duration": `${UNRIGHT_ANSWER_ANIMATION_DURATION}ms`,
         } as CSSProperties
       }
+      data-1p-ignore="true"
+      autoComplete="off"
     />
   );
 };

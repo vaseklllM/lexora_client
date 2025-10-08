@@ -139,10 +139,11 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
             ref={assignRef(nameRegister.ref, nameFieldRef)}
             error={errors.name?.message}
             type="text"
-            autoComplete="name"
             autoFocus={props.isOpen}
             tabIndex={-1}
             label="Name"
+            data-1p-ignore="true"
+            autoComplete="off"
           />
 
           <div className="mt-4 flex w-full justify-end gap-4">

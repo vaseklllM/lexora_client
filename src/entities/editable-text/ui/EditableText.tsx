@@ -113,6 +113,8 @@ export const EditableText = (props: Props): ReactElement => {
                 saveHandler();
               }
             }}
+            data-1p-ignore="true"
+            autoComplete="off"
           />
           <ButtonIcon
             icon="cancel"

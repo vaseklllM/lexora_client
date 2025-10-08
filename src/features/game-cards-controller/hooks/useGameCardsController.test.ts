@@ -149,4 +149,81 @@ describe("useGameCardsController", () => {
     });
     expect(result.current.active).toEqual(cards[2]);
   });
+
+  it("should return the all cards if the all cards are not guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[2]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[3]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[4]);
+  });
+
+  it("should return the all cards if the all cards are guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[2]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[3]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[4]);
+  });
+
+  it("should call onFinish if the all cards are guessed", () => {
+    const mockCallback = jest.fn();
+
+    const { result } = renderHook(() =>
+      useGameCardsController({ cards, onFinish: mockCallback }),
+    );
+    act(() => {
+      cards.forEach(() => {
+        result.current.next(true);
+      });
+      result.current.next(true);
+    });
+    expect(mockCallback).toHaveBeenCalled();
+  });
+
+  it("should return the first card if the all cards are not guessed", () => {
+    const mockCallback = jest.fn();
+
+    const { result } = renderHook(() =>
+      useGameCardsController({ cards, onFinish: mockCallback }),
+    );
+
+    act(() => {
+      cards.forEach(() => {
+        result.current.next(false);
+      });
+      result.current.next(false);
+    });
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(result.current.active).toEqual(cards[0]);
+  });
 });
+
+// describe("error cases ", () => {});

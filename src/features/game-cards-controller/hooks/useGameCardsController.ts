@@ -9,12 +9,14 @@ interface Result {
 
 interface Props {
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 type TState = {
   cards: ICard[];
   activeCard: ICard;
   activeCardIdx: number;
+  finishedCards: ICard[];
 };
 
 export function useGameCardsController(props: Props): Result {
@@ -27,6 +29,7 @@ export function useGameCardsController(props: Props): Result {
         cards,
         activeCard: cards[activeCardIdx]!,
         activeCardIdx,
+        finishedCards: [],
       };
     })(),
   );
@@ -34,24 +37,45 @@ export function useGameCardsController(props: Props): Result {
   const next = useCallback<Result["next"]>(
     (isGuessed) => {
       setState((prevState) => {
+        let activeCardIdx = prevState.activeCardIdx + 1;
+
         if (!isGuessed) {
+          if (prevState.activeCardIdx === prevState.cards.length) {
+            activeCardIdx = 0;
+          }
+
           return {
             ...prevState,
-            activeCardIdx: prevState.activeCardIdx + 1,
-            activeCard: prevState.cards[prevState.activeCardIdx + 1]!,
+            activeCardIdx,
+            activeCard: prevState.cards[activeCardIdx]!,
           };
         }
 
-        const activeCardIdx = prevState.activeCardIdx + 1;
+        if (activeCardIdx === prevState.cards.length) {
+          props.onFinish?.();
+          return prevState;
+        }
+
+        const finishedCards = prevState.finishedCards.some(
+          (card) => card.id === prevState.activeCard.id,
+        )
+          ? prevState.finishedCards
+          : [...prevState.finishedCards, prevState.activeCard];
+
+        const cards = prevState.cards.filter(
+          (card) =>
+            !finishedCards.some((finishedCard) => finishedCard.id === card.id),
+        );
 
         return {
           ...prevState,
-          activeCardIdx,
-          activeCard: prevState.cards[activeCardIdx]!,
+          cards,
+          finishedCards,
+          activeCard: cards[prevState.activeCardIdx]!,
         };
       });
     },
-    [setState],
+    [setState, props.onFinish],
   );
 
   return {

@@ -59,13 +59,6 @@ export const StepComponent = (props: Props): ReactElement | null => {
   const openStep = useLearningDeckStore((state) => state.openStep);
   const stepAnimation = useLearningDeckStore((state) => state.stepAnimation);
 
-  const showStep = useCallback(
-    async (step: Step) => {
-      openStep(step);
-    },
-    [openStep],
-  );
-
   const startHandler = useCallback(async () => {
     const result = await startLearningDeckSession({
       deckId: props.deck.id,
@@ -77,29 +70,29 @@ export const StepComponent = (props: Props): ReactElement | null => {
     }
   }, [props.deck.id, openStep]);
 
-  const finishReviewStepHandler = useCallback(async () => {
-    await showStep(Step.PAIR_IT);
-  }, [showStep]);
+  const finishReviewStepHandler = useCallback(() => {
+    openStep(Step.PAIR_IT);
+  }, [openStep]);
 
-  const finishPairItStepHandler = useCallback(async () => {
-    await showStep(Step.GUESS_IT);
-  }, [showStep]);
+  const finishPairItStepHandler = useCallback(() => {
+    openStep(Step.GUESS_IT);
+  }, [openStep]);
 
-  const finishGuessItStepHandler = useCallback(async () => {
-    await showStep(Step.RECALL_IT);
-  }, [showStep]);
+  const finishGuessItStepHandler = useCallback(() => {
+    openStep(Step.RECALL_IT);
+  }, [openStep]);
 
-  const finishRecallItStepHandler = useCallback(async () => {
-    await showStep(Step.TYPE_IT);
-  }, [showStep]);
+  const finishRecallItStepHandler = useCallback(() => {
+    openStep(Step.TYPE_IT);
+  }, [openStep]);
 
   const finishTypeItStepHandler = useCallback(async () => {
     await finishLearningDeckSession({
       cardIds: cards.map((card) => card.id),
     });
     await revalidateGetDeck(props.deck.id);
-    await showStep(Step.START);
-  }, [cards, props.deck.id, showStep]);
+    openStep(Step.START);
+  }, [cards, props.deck.id, openStep]);
 
   const classes = classesSlots();
 

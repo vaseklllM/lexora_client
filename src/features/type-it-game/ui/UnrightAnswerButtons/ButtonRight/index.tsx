@@ -1,3 +1,4 @@
+import { useNextCardHandler } from "@/features/type-it-game/hooks/useNextCardHandler";
 import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
@@ -17,6 +18,7 @@ export const ButtonRight = (props: Props): ReactElement => {
   const classes = classesSlots();
 
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonRight);
+  const nextCardHandler = useNextCardHandler();
 
   return (
     <Button
@@ -24,7 +26,9 @@ export const ButtonRight = (props: Props): ReactElement => {
       variant="outline"
       color="primary"
       className={classes.button({ className: props.className })}
-      // onClick={() => {}}
+      onClick={() => {
+        nextCardHandler?.();
+      }}
       disabled={isDisabled}
     >
       Right

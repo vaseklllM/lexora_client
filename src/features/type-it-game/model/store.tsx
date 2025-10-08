@@ -110,7 +110,7 @@ function initStore(props: TypeItGameProps) {
           await player.playAsync(store.card.soundUrls[0]);
           store.addFinishedCard(store.card.id);
           store.clearTranslationInput();
-          // store.nextCard();
+          props.onNextCard?.();
         } else {
           await store.playUnrightAnswerAnimation();
           store.setViewVariant("unrightAnswer");

@@ -42,8 +42,12 @@ export function useGameCardsController(props: Props): Result {
           };
         }
 
+        const activeCardIdx = prevState.activeCardIdx + 1;
+
         return {
           ...prevState,
+          activeCardIdx,
+          activeCard: prevState.cards[activeCardIdx]!,
         };
       });
     },

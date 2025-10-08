@@ -1,5 +1,5 @@
 import { CefrEnum, ICard } from "@/api/schemas/card.schema";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { useGameCardsController } from "./useGameCardsController";
 
 jest.mock("@/shared/utils/mixArray", () => ({
@@ -104,5 +104,49 @@ describe("useGameCardsController", () => {
   it("should return the first card", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+  });
+
+  it("should return the second card if the first card is not guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+  });
+
+  it("should return the second card if the first card is guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+  });
+
+  it("should return the third card if the second card is not guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cards[2]);
+  });
+
+  it("should return the third card if the second card is guessed", () => {
+    const { result } = renderHook(() => useGameCardsController({ cards }));
+    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[1]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cards[2]);
   });
 });

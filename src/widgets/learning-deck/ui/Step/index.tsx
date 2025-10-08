@@ -130,6 +130,8 @@ export const StepComponent = (props: Props): ReactElement | null => {
     step,
   });
 
+  const isCardsToLearn = props.deck.numberOfNewCards > 0;
+
   return (
     <div className={classes.base({ className: props.className })}>
       <StepsHeader />
@@ -143,9 +145,11 @@ export const StepComponent = (props: Props): ReactElement | null => {
               iconWidth="48px"
               iconHeight="48px"
               onClick={startHandler}
-              disabled={props.deck.numberOfNewCards <= 0}
+              disabled={!isCardsToLearn}
             />
-            <p className={classes.textStart()}>Click to start</p>
+            <p className={classes.textStart()}>
+              Learn{isCardsToLearn ? "" : " (no words to learn)"}
+            </p>
           </div>
         )}
         {displaySteps.includes(Step.PREVIEW) && (

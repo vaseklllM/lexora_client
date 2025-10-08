@@ -36,7 +36,7 @@ export const TypeItCardsListGame = (
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={cardsController.active.id}
+        key={cardsController.idx}
         initial="enter"
         animate="center"
         exit="exit"

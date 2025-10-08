@@ -4,6 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
+import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
@@ -30,6 +31,12 @@ const classesSlots = tv({
   },
 });
 
+const variants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
 interface Props {
   className?: string;
   cards: ICard[];
@@ -43,6 +50,7 @@ export const RecallItGame = (props: Props): ReactElement => {
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
 
   const blurWordDescription = useBlurWordDescription();
+
   const activeCard = useActiveCard({
     ...props,
     onBlurWordDescription: blurWordDescription.blur,
@@ -71,20 +79,30 @@ export const RecallItGame = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <div className={classes.header()}>
-        <CardItem
-          title={activeCard.card.textInLearningLanguage}
-          description={activeCard.card.descriptionInLearningLanguage}
-          soundUrls={activeCard.card.soundUrls}
-          isBlurWordDescription={blurWordDescription.isBlur}
-          cefr={activeCard.card.cefr}
-        />
-        <CardItem
-          title={activeCard.card.textInKnownLanguage}
-          description={activeCard.card.descriptionInKnownLanguage}
-          isBlur={isBlurTranslation}
-        />
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeCard.idx}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.2 }}
+          className={classes.header()}
+        >
+          <CardItem
+            title={activeCard.card.textInLearningLanguage}
+            description={activeCard.card.descriptionInLearningLanguage}
+            soundUrls={activeCard.card.soundUrls}
+            isBlurWordDescription={blurWordDescription.isBlur}
+            cefr={activeCard.card.cefr}
+          />
+          <CardItem
+            title={activeCard.card.textInKnownLanguage}
+            description={activeCard.card.descriptionInKnownLanguage}
+            isBlur={isBlurTranslation}
+          />
+        </motion.div>
+      </AnimatePresence>
       <div className={classes.content()}>
         {isTimerExpired ? (
           isUserShowedTranslation ? (

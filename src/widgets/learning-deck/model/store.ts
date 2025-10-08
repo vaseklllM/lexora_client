@@ -13,6 +13,7 @@ export const DEFAULT_STEP = Step.START;
 
 type State = {
   activeStep: Step;
+  isPlaying: boolean;
 };
 
 type Actions = {
@@ -24,10 +25,11 @@ type Store = State & Actions;
 
 export const useLearningDeckStore = create<Store>((set) => ({
   activeStep: DEFAULT_STEP,
+  isPlaying: false,
   openStep(step: Step) {
-    set({ activeStep: step });
+    set({ activeStep: step, isPlaying: step === Step.START ? false : true });
   },
   reset() {
-    set({ activeStep: DEFAULT_STEP });
+    set({ activeStep: DEFAULT_STEP, isPlaying: false });
   },
 }));

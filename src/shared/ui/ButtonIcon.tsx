@@ -8,6 +8,7 @@ import { EditIcon } from "../icons/Edit";
 import { PlayIcon } from "../icons/Play";
 import { PlusIcon } from "../icons/Plus";
 import { SoundIcon } from "../icons/Sound";
+import { StopIcon } from "../icons/Stop";
 
 const classesSlots = tv({
   slots: {
@@ -115,7 +116,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "sound"
     | "arrow_left"
     | "arrow_right"
-    | "play";
+    | "play"
+    | "stop";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
@@ -217,6 +219,14 @@ function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
           height={props.iconHeight || "14px"}
           width={props.iconWidth || "14px"}
           className={classes.play()}
+        />
+      );
+
+    case "stop":
+      return (
+        <StopIcon
+          height={props.iconHeight || "14px"}
+          width={props.iconWidth || "14px"}
         />
       );
   }

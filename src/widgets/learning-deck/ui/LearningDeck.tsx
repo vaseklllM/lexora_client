@@ -5,7 +5,8 @@ import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { ButtonBack } from "@/features/button-back";
 import { player } from "@/shared/hooks/usePlayer";
-import { useEffect } from "react";
+import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { useCallback, useEffect } from "react";
 import { tv } from "tailwind-variants";
 import { useLearningDeckStore } from "../model/store";
 import { StepComponent } from "./Step";
@@ -28,13 +29,18 @@ export function LearningDeck(props: LearningDeckProps) {
   const classes = classesSlots();
   const lastBreadcrumb = useLastBreadcrumbs(props);
   const reset = useLearningDeckStore((state) => state.reset);
+  const isPlaying = useLearningDeckStore((state) => state.isPlaying);
+
+  const stopHandler = useCallback(() => {
+    player.stop();
+    reset();
+  }, [reset]);
 
   useEffect(() => {
     return () => {
-      reset();
-      player.stop();
+      stopHandler();
     };
-  }, []);
+  }, [stopHandler]);
 
   return (
     <div className={classes.base()}>
@@ -44,6 +50,14 @@ export function LearningDeck(props: LearningDeckProps) {
           breadcrumbs={props.foldersBreadcrumbs}
           lastItem={lastBreadcrumb}
         />
+        {isPlaying && (
+          <ButtonIcon
+            icon="stop"
+            variant="soft"
+            color="secondary"
+            onClick={stopHandler}
+          />
+        )}
       </div>
       <StepComponent deck={props.deck} className={classes.step()} />
     </div>

@@ -32,7 +32,7 @@ export const Breadcrumbs = (props: Props): ReactElement => {
           <Breadcrumb
             key={breadcrumb.url}
             {...breadcrumb}
-            isLast={index === props.breadcrumbs.length - 1}
+            isClickable={index !== props.breadcrumbs.length - 1}
           />
         ))}
       </ul>
@@ -40,19 +40,19 @@ export const Breadcrumbs = (props: Props): ReactElement => {
   );
 };
 
-function Breadcrumb(props: Breadcrumb & { isLast: boolean }) {
+function Breadcrumb(props: Breadcrumb & { isClickable: boolean }) {
   return (
     <li>
-      {props.isLast ? (
-        <span className="inline-flex !cursor-default items-center gap-2 hover:!no-underline">
-          {props.icon && <Icon icon={props.icon} />}
-          {props.title}
-        </span>
-      ) : (
+      {props.isClickable ? (
         <Link href={props.url}>
           {props.icon && <Icon icon={props.icon} />}
           {props.title}
         </Link>
+      ) : (
+        <span className="inline-flex !cursor-default items-center gap-2 hover:!no-underline">
+          {props.icon && <Icon icon={props.icon} />}
+          {props.title}
+        </span>
       )}
     </li>
   );

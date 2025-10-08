@@ -1,9 +1,9 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
-import { mixArray } from "@/shared/utils/mixArray";
-import { AnimatePresence, motion } from "motion/react";
-import { ReactElement, useMemo, useState } from "react";
+import { useGameCardsController } from "@/features/game-cards-controller";
+import { AnimatePresence, motion, Variants } from "motion/react";
+import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { TypeItGame } from "./TypeItGame";
 
@@ -18,7 +18,7 @@ export interface TypeItCardsListGameProps {
   cards: ICard[];
 }
 
-const variants = {
+const variants: Variants = {
   enter: { opacity: 0 },
   center: { opacity: 1 },
   exit: { opacity: 0 },
@@ -28,35 +28,24 @@ export const TypeItCardsListGame = (
   props: TypeItCardsListGameProps,
 ): ReactElement => {
   const classes = classesSlots({});
-  const cards = useMemo(() => mixArray(props.cards), [props.cards]);
-  const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-
-  const activeCard = useMemo(
-    () => cards[activeCardIdx],
-    [cards, activeCardIdx],
-  );
+  const cardsController = useGameCardsController(props);
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeCard.id}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          variants={variants}
-          transition={{ duration: 0.3 }}
-          className={classes.base({ className: props.className })}
-        >
-          <TypeItGame card={activeCard} />
-        </motion.div>
-      </AnimatePresence>
-      <button
-        onClick={() => setActiveCardIdx((prev) => prev + 1)}
-        style={{ position: "absolute", bottom: 0, right: 0 }}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={cardsController.active.id}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        variants={variants}
+        transition={{ duration: 0.3 }}
+        className={classes.base({ className: props.className })}
       >
-        Next
-      </button>
-    </>
+        <TypeItGame
+          card={cardsController.active}
+          onNextCard={cardsController.next}
+        />
+      </motion.div>
+    </AnimatePresence>
   );
 };

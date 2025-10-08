@@ -21,7 +21,7 @@ const classesSlots = tv({
   },
 });
 
-export type TypeItGameNextCardHandler = () => void;
+export type TypeItGameNextCardHandler = (isGuessed: boolean) => void;
 
 export interface TypeItGameProps {
   className?: string;

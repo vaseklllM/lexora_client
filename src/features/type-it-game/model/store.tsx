@@ -22,6 +22,7 @@ type State = {
   isDisabledButtonRight: boolean;
   unrightAnswerAnimation: boolean;
   viewVariant: ViewVariant;
+  isGuessed: boolean;
 };
 
 type Actions = {
@@ -55,6 +56,7 @@ function initStore(props: TypeItGameProps) {
       isDisabledButtonRight: false,
       unrightAnswerAnimation: false,
       viewVariant: "default",
+      isGuessed: true,
       setTranslationInput(translationInput) {
         set({ translationInput });
       },
@@ -110,7 +112,7 @@ function initStore(props: TypeItGameProps) {
           await player.playAsync(store.card.soundUrls[0]);
           store.addFinishedCard(store.card.id);
           store.clearTranslationInput();
-          props.onNextCard?.();
+          props.onNextCard?.(store.isGuessed);
         } else {
           await store.playUnrightAnswerAnimation();
           store.setViewVariant("unrightAnswer");
@@ -122,6 +124,7 @@ function initStore(props: TypeItGameProps) {
       async help() {
         const store = get();
         store.setViewVariant("help");
+        set({ isGuessed: false });
         setTimeout(() => {
           store.clearTranslationInput();
         }, 300);
@@ -130,6 +133,7 @@ function initStore(props: TypeItGameProps) {
       tryAgain() {
         const store = get();
         store.setViewVariant("default");
+        set({ isGuessed: false });
         setTimeout(() => {
           store.clearTranslationInput();
         }, 300);

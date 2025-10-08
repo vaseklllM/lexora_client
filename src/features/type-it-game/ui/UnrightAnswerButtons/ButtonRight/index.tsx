@@ -17,6 +17,7 @@ interface Props {
 export const ButtonRight = (props: Props): ReactElement => {
   const classes = classesSlots();
 
+  const isGuessed = useTypeItGameStore((state) => state.isGuessed);
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonRight);
   const nextCardHandler = useNextCardHandler();
 
@@ -27,7 +28,7 @@ export const ButtonRight = (props: Props): ReactElement => {
       color="primary"
       className={classes.button({ className: props.className })}
       onClick={() => {
-        nextCardHandler?.();
+        nextCardHandler?.(isGuessed);
       }}
       disabled={isDisabled}
       type="button"

@@ -20,12 +20,16 @@ export const ButtonTryAgain = (props: Props): ReactElement => {
     (state) => state.isDisabledButtonTryAgain,
   );
 
+  const tryAgain = useTypeItGameStore((state) => state.tryAgain);
+
   return (
     <Button
       size="lg"
       color="primary"
       className={classes.button({ className: props.className })}
-      // onClick={() => {}}
+      onClick={() => {
+        tryAgain();
+      }}
       disabled={isDisabled}
     >
       Try again

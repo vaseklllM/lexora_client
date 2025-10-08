@@ -36,6 +36,7 @@ type Actions = {
   setIsDisabledButtonRight: (isDisabled: boolean) => void;
   setViewVariant: (buttonsVariant: ViewVariant) => void;
   help: () => void;
+  tryAgain: () => void;
 };
 
 type Store = State & Actions;
@@ -121,8 +122,17 @@ function initStore(props: TypeItGameProps) {
       async help() {
         const store = get();
         store.setViewVariant("help");
-
+        setTimeout(() => {
+          store.clearTranslationInput();
+        }, 300);
         await player.playAsync(store.card.soundUrls[0]);
+      },
+      tryAgain() {
+        const store = get();
+        store.setViewVariant("default");
+        setTimeout(() => {
+          store.clearTranslationInput();
+        }, 300);
       },
     };
   });

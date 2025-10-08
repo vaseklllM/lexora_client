@@ -30,6 +30,7 @@ export const ButtonRight = (props: Props): ReactElement => {
         nextCardHandler?.();
       }}
       disabled={isDisabled}
+      type="button"
     >
       Right
     </Button>

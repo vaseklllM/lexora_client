@@ -31,6 +31,7 @@ export const ButtonTryAgain = (props: Props): ReactElement => {
         tryAgain();
       }}
       disabled={isDisabled}
+      type="button"
     >
       Try again
     </Button>

@@ -30,6 +30,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
         checkTranslation();
       }}
       disabled={isDisabled || viewVariant !== "default"}
+      type="button"
     >
       Check
     </Button>

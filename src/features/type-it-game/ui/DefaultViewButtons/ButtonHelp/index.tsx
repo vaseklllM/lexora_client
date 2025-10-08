@@ -29,6 +29,7 @@ export const ButtonHelp = (props: Props): ReactElement => {
       onClick={() => {
         help();
       }}
+      type="button"
     >
       Help
     </Button>

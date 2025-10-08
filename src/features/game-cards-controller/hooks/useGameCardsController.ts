@@ -8,6 +8,7 @@ interface GameCardsControllerResult {
   next: (isGuessed: boolean) => void;
   // when user make mistake active card will be save in cards array
   makeMistake: () => void;
+  isMadeMistake: boolean;
 }
 
 interface Props {
@@ -112,5 +113,6 @@ export function useGameCardsController(
     next,
     isLastCard: state.cards.length <= 1,
     makeMistake,
+    isMadeMistake: state.isMadeMistake,
   };
 }

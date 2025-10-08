@@ -107,6 +107,7 @@ export const GuessItGame = (props: Props): ReactElement => {
             isChecked={isChecked}
             onChecked={setIsChecked}
             soundUrl={option.soundUrls[0]}
+            isMadeMistake={cardsController.isMadeMistake}
           />
         ))}
       </div>

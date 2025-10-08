@@ -43,6 +43,7 @@ interface Props {
   soundUrl: string;
   onMakeMistake?: () => void;
   onNext?: (isGuessed: boolean) => void;
+  isMadeMistake?: boolean;
 }
 
 export const OptionButton = memo((props: Props): ReactElement => {
@@ -64,7 +65,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
       setClickStatus("success");
       await player.playAsync(props.soundUrl);
       props.onNext?.(true);
-      if (props.isLastCard) return;
+      if (props.isLastCard && !props.isMadeMistake) return;
       props.onMixOptions?.();
       setClickStatus(undefined);
       props.onChecked?.(false);
@@ -86,6 +87,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
     props.isLastCard,
     props.onChecked,
     props.soundUrl,
+    props.isMadeMistake,
   ]);
 
   return (

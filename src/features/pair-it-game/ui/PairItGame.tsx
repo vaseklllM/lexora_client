@@ -22,7 +22,8 @@ import {
 const classesSlots = tv({
   slots: {
     base: "items-center justify-center gap-4",
-    content: "grid h-full grid-cols-2 gap-4",
+    content: "flex h-full w-full md:w-200",
+    table: "grid h-full w-full grid-cols-2 gap-4",
   },
 });
 
@@ -171,16 +172,18 @@ export const PairItGame = memo((props: Props): ReactElement => {
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.content()}>
-        {cards.map((card) => (
-          <CardButton
-            title={card.title}
-            id={card.id}
-            key={`${card.position}-${card.id}`}
-            position={card.position}
-            onClick={clickHandler}
-            status={getStatus(card.id, card.position)}
-          />
-        ))}
+        <div className={classes.table()}>
+          {cards.map((card) => (
+            <CardButton
+              title={card.title}
+              id={card.id}
+              key={`${card.position}-${card.id}`}
+              position={card.position}
+              onClick={clickHandler}
+              status={getStatus(card.id, card.position)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { ButtonBack } from "@/features/button-back";
+import { player } from "@/shared/hooks/usePlayer";
 import { useEffect } from "react";
 import { tv } from "tailwind-variants";
 import { useLearningDeckStore } from "../model/store";
@@ -33,6 +34,7 @@ export function LearningDeck(props: LearningDeckProps) {
   useEffect(() => {
     return () => {
       reset();
+      player.stop();
     };
   }, []);
 

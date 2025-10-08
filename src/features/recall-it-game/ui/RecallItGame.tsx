@@ -15,7 +15,7 @@ const classesSlots = tv({
   slots: {
     base: "h-full flex-col items-center justify-between gap-6",
     header:
-      "grid h-full w-full max-w-full grid-cols-1 flex-col gap-4 transition-opacity duration-150 lg:h-auto",
+      "grid h-full w-full max-w-full grid-cols-1 flex-col gap-4 transition-opacity duration-150 lg:h-auto lg:w-250",
     content: "grid gap-4",
     buttonForgot: "h-12 rounded-full",
     buttonRecalled: "h-12 rounded-full",

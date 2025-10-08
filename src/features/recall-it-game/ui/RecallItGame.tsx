@@ -27,14 +27,6 @@ const classesSlots = tv({
         content: "grid-cols-2",
       },
     },
-    isVisibleCard: {
-      true: {
-        header: "opacity-100",
-      },
-      false: {
-        header: "opacity-0",
-      },
-    },
   },
 });
 
@@ -61,7 +53,6 @@ export const RecallItGame = (props: Props): ReactElement => {
 
   const classes = classesSlots({
     isUserShowedTranslation,
-    isVisibleCard: activeCard.isVisibleCard,
   });
 
   const handleTimerExpire = useCallback(() => {

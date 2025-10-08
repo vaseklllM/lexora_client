@@ -1,8 +1,8 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { useGameCardsController } from "@/features/game-cards-controller";
 import { player } from "@/shared/hooks/usePlayer";
-import { mixArray } from "@/shared/utils/mixArray";
 import { sleep } from "@/shared/utils/sleep";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 
 interface Props {
   cards: ICard[];
@@ -21,76 +21,48 @@ export function useActiveCard({
   setIsTimerExpired,
   setIsUserShowedTranslation,
 }: Props) {
-  const mixedCards = useMemo(() => mixArray(cards), [cards]);
-
-  const [finishedCards, setFinishedCards] = useState<string[]>([]);
-  const [activeCardId, setActiveCardId] = useState<string>(mixedCards[0]!.id);
-  const [isVisibleCard, setIsVisibleCard] = useState<boolean>(true);
-
-  const card = mixedCards.find((card) => card.id === activeCardId)!;
+  const cardsController = useGameCardsController({
+    cards,
+    onFinish,
+  });
 
   const nextCard = useCallback(
-    async (nextRenderFinishedCards: string[]) => {
-      if (nextRenderFinishedCards.length === cards.length) {
-        onFinish?.();
-        return;
-      }
-      setIsVisibleCard(false);
+    async (isGuessed: boolean) => {
       onBlurWordDescription?.();
       setIsBlurTranslation?.(true);
       await sleep(150);
 
-      const activeCards = mixedCards.filter(
-        (card) => !finishedCards.includes(card.id),
-      );
-
-      const activeCardIdx = activeCards.findIndex(
-        (card) => card.id === activeCardId,
-      );
+      cardsController.next(isGuessed);
 
       setIsTimerExpired?.(false);
       setIsUserShowedTranslation?.(false);
 
-      if (activeCardIdx === activeCards.length - 1 || activeCardIdx === -1) {
-        setActiveCardId(activeCards[0]!.id);
-      } else {
-        setActiveCardId(activeCards[activeCardIdx + 1].id);
-      }
-
-      setIsVisibleCard(true);
       await sleep(150);
     },
     [
       cards.length,
-      mixedCards,
-      activeCardId,
-      setIsVisibleCard,
+
       onBlurWordDescription,
       setIsBlurTranslation,
       setIsTimerExpired,
       setIsUserShowedTranslation,
-      finishedCards,
+      cardsController.next,
     ],
   );
 
   const forgotCard = useCallback(() => {
     player.stop();
-    nextCard(finishedCards);
-  }, [nextCard, finishedCards]);
+    nextCard(false);
+  }, [nextCard]);
 
   const recalledCard = useCallback(() => {
     player.stop();
-    const newFinishedCards = finishedCards.includes(card.id)
-      ? finishedCards
-      : [...finishedCards, card.id];
-    setFinishedCards(newFinishedCards);
-    nextCard(newFinishedCards);
-  }, [card.id, nextCard, setFinishedCards, finishedCards]);
+    nextCard(true);
+  }, [nextCard]);
 
   return {
-    card,
+    card: cardsController.active,
     forgotCard,
     recalledCard,
-    isVisibleCard,
   };
 }

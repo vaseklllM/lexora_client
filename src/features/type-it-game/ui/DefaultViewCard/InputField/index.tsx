@@ -1,6 +1,5 @@
 import { Input } from "@/shared/ui/Input";
-
-import { CSSProperties, ReactElement } from "react";
+import { CSSProperties, ReactElement, useLayoutEffect, useRef } from "react";
 import { tv } from "tailwind-variants";
 import {
   UNRIGHT_ANSWER_ANIMATION_DURATION,
@@ -33,6 +32,8 @@ interface Props {
 }
 
 export const InputField = (props: Props): ReactElement => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const translationInput = useTypeItGameStore(
     (state) => state.translationInput,
   );
@@ -53,8 +54,13 @@ export const InputField = (props: Props): ReactElement => {
     viewVariant,
   });
 
+  useLayoutEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <Input
+      ref={inputRef}
       className={classes.base({ className: props.className })}
       inputClassName={classes.input()}
       placeholder="Type the translation"

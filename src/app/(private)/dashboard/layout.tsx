@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <div className="bg-base-300 min-h-screen">
       <Header userName={me.name} avatarUrl={me.avatar} />
-      <div className="pb-20 sm:p-4">{children}</div>
+      <div className="pb-30 sm:p-4">{children}</div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export enum Step {
   TYPE_IT = "typeIt",
 }
 
-export const DEFAULT_STEP = Step.RECALL_IT;
+export const DEFAULT_STEP = Step.START;
 
 type State = {
   activeStep: Step;

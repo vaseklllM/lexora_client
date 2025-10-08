@@ -2,7 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
 import { useCallback, useEffect, useState } from "react";
 
-interface Result {
+interface GameCardsControllerResult {
   active: ICard;
   isLastCard: boolean;
   next: (isGuessed: boolean) => void;
@@ -24,7 +24,9 @@ type TState = {
   isFinished: boolean;
 };
 
-export function useGameCardsController(props: Props): Result {
+export function useGameCardsController(
+  props: Props,
+): GameCardsControllerResult {
   const [state, setState] = useState<TState>(
     ((): TState => {
       const cards = mixArray(props.cards);
@@ -41,7 +43,7 @@ export function useGameCardsController(props: Props): Result {
     })(),
   );
 
-  const next = useCallback<Result["next"]>(
+  const next = useCallback<GameCardsControllerResult["next"]>(
     (isGuessed) => {
       setState((prevState) => {
         if (!isGuessed || prevState.isMadeMistake) {

@@ -69,15 +69,6 @@ export const GuessItGame = (props: Props): ReactElement => {
     [props.cards, isMixOptions],
   );
 
-  const handleOptionClick = useCallback(
-    (card: ICard) => {
-      if (card.id === cardsController.active.id) {
-        cardsController.next(true);
-      }
-    },
-    [cardsController.active.id, cardsController.next],
-  );
-
   return (
     <div className={classes.base({ className: props.className })}>
       <div className={classes.content()}>
@@ -107,7 +98,8 @@ export const GuessItGame = (props: Props): ReactElement => {
             title={option.textInKnownLanguage}
             className={classes.option()}
             key={option.id}
-            onClick={() => handleOptionClick(option)}
+            onMakeMistake={cardsController.makeMistake}
+            onNext={cardsController.next}
             id={option.id}
             isRightOption={option.id === cardsController.active.id}
             onMixOptions={mixRandomCards}

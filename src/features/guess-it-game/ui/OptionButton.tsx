@@ -35,17 +35,18 @@ interface Props {
   className?: string;
   title: string;
   id: string;
-  onClick?: (args: { id: string }) => void;
   isRightOption: boolean;
   onMixOptions?: () => void;
   isLastCard?: boolean;
   isChecked?: boolean;
   onChecked?: (isChecked: boolean) => void;
   soundUrl: string;
+  onMakeMistake?: () => void;
+  onNext?: (isGuessed: boolean) => void;
 }
 
 export const OptionButton = memo((props: Props): ReactElement => {
-  const [clickStatus, setCLickStatus] = useState<Status>();
+  const [clickStatus, setClickStatus] = useState<Status>();
 
   const status = useMemo((): Status | undefined => {
     if (clickStatus) return clickStatus;
@@ -60,23 +61,25 @@ export const OptionButton = memo((props: Props): ReactElement => {
   const clickHandler = useCallback(async () => {
     if (props.isRightOption) {
       props.onChecked?.(true);
-      setCLickStatus("success");
+      setClickStatus("success");
       await player.playAsync(props.soundUrl);
-      props.onClick?.({ id: props.id });
+      props.onNext?.(true);
       if (props.isLastCard) return;
       props.onMixOptions?.();
-      setCLickStatus(undefined);
+      setClickStatus(undefined);
       props.onChecked?.(false);
     } else {
+      props.onMakeMistake?.();
       props.onChecked?.(true);
-      setCLickStatus("error");
+      setClickStatus("error");
       await sleep(800);
       props.onMixOptions?.();
-      setCLickStatus(undefined);
+      setClickStatus(undefined);
       props.onChecked?.(false);
     }
   }, [
-    props.onClick,
+    props.onNext,
+    props.onMakeMistake,
     props.id,
     props.isRightOption,
     props.onMixOptions,

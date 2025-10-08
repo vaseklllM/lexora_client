@@ -38,9 +38,10 @@ export function LearningDeck(props: LearningDeckProps) {
 
   useEffect(() => {
     return () => {
-      stopHandler();
+      player.stop();
+      reset();
     };
-  }, [stopHandler]);
+  }, [reset]);
 
   return (
     <div className={classes.base()}>

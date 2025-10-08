@@ -13,6 +13,7 @@ export const DEFAULT_STEP = Step.START;
 
 type State = {
   activeStep: Step;
+  stepAnimation: "forward" | "backward";
   isPlaying: boolean;
 };
 
@@ -26,10 +27,21 @@ type Store = State & Actions;
 export const useLearningDeckStore = create<Store>((set) => ({
   activeStep: DEFAULT_STEP,
   isPlaying: false,
+  stepAnimation: "forward",
   openStep(step: Step) {
-    set({ activeStep: step, isPlaying: step === Step.START ? false : true });
+    set(() => {
+      return {
+        activeStep: step,
+        isPlaying: step === Step.START ? false : true,
+        stepAnimation: step === Step.START ? "backward" : "forward",
+      };
+    });
   },
   reset() {
-    set({ activeStep: DEFAULT_STEP, isPlaying: false });
+    set({
+      activeStep: DEFAULT_STEP,
+      isPlaying: false,
+      stepAnimation: "backward",
+    });
   },
 }));

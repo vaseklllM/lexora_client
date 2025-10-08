@@ -3,6 +3,7 @@ import { mixArray } from "@/shared/utils/mixArray";
 import { useCallback, useEffect, useState } from "react";
 
 interface GameCardsControllerResult {
+  idx: number;
   active: ICard;
   isLastCard: boolean;
   next: (isGuessed: boolean) => void;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 type TState = {
+  idx: number;
   cards: ICard[];
   activeCard: ICard;
   activeCardIdx: number;
@@ -40,6 +42,7 @@ export function useGameCardsController(
         finishedCards: [],
         isMadeMistake: false,
         isFinished: false,
+        idx: 0,
       };
     })(),
   );
@@ -59,6 +62,7 @@ export function useGameCardsController(
             activeCardIdx,
             activeCard: prevState.cards[activeCardIdx]!,
             isMadeMistake: false,
+            idx: prevState.idx + 1,
           };
         }
 
@@ -89,6 +93,7 @@ export function useGameCardsController(
           finishedCards,
           activeCardIdx,
           activeCard: cards[activeCardIdx]!,
+          idx: prevState.idx + 1,
         };
       });
     },
@@ -114,5 +119,6 @@ export function useGameCardsController(
     isLastCard: state.cards.length <= 1,
     makeMistake,
     isMadeMistake: state.isMadeMistake,
+    idx: state.idx,
   };
 }

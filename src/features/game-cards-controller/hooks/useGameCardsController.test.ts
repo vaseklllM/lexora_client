@@ -101,6 +101,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toBeUndefined();
     expect(result.current.isLastCard).toBeTruthy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
   });
 
   it("should return the first card", () => {
@@ -108,6 +109,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
   });
 
   it("should return the second card if the first card is not guessed", () => {
@@ -115,12 +117,14 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
   });
 
   it("should return the second card if the first card is guessed", () => {
@@ -128,12 +132,14 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
   });
 
   it("should return the third card if the second card is not guessed", () => {
@@ -141,18 +147,21 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[2]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(2);
   });
 
   it("should return the third card if the second card is guessed", () => {
@@ -160,18 +169,21 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[2]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(2);
   });
 
   it("should return the all cards if the all cards are not guessed", () => {
@@ -179,30 +191,35 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[2]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(2);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[3]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(3);
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[4]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(4);
   });
 
   it("should return the all cards if the all cards are guessed", () => {
@@ -211,30 +228,35 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cards[0]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[2]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(2);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[3]);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(3);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[4]);
     expect(result.current.isLastCard).toBeTruthy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(4);
   });
 
   it("should call onFinish if the all cards are guessed", () => {
@@ -243,6 +265,7 @@ describe("useGameCardsController", () => {
     const { result } = renderHook(() =>
       useGameCardsController({ cards, onFinish: mockCallback }),
     );
+    expect(result.current.idx).toBe(0);
     cards.forEach(() => {
       act(() => {
         result.current.next(true);
@@ -251,6 +274,7 @@ describe("useGameCardsController", () => {
     expect(mockCallback).toHaveBeenCalled();
     expect(result.current.isLastCard).toBeTruthy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(cards.length - 1);
   });
 
   it("should return the first card if the all cards are not guessed", () => {
@@ -270,6 +294,7 @@ describe("useGameCardsController", () => {
         onFinish: mockCallback,
       }),
     );
+    expect(result.current.idx).toBe(0);
 
     cards.forEach(() => {
       act(() => {
@@ -282,6 +307,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardCurious);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(cards.length);
   });
 
   it("should return the mixed cards", () => {
@@ -364,6 +390,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardCurious);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(0);
 
     // 2 card
     act(() => {
@@ -372,6 +399,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardWalkInThePark);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(1);
 
     // 3 card
     act(() => {
@@ -380,6 +408,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardAcross);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(2);
 
     // 4 card
     act(() => {
@@ -388,7 +417,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardDisappointed);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
-
+    expect(result.current.idx).toBe(3);
     // 5 card
     act(() => {
       result.current.next(true);
@@ -397,6 +426,7 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(4);
 
     // 2 card
     act(() => {
@@ -409,6 +439,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardWalkInThePark);
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.isLastCard).toBeFalsy();
+    expect(result.current.idx).toBe(5);
 
     // 3 card
     act(() => {
@@ -417,6 +448,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardAcross);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(6);
 
     // 5 card
     act(() => {
@@ -426,6 +458,7 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(7);
 
     // 3 card
     act(() => {
@@ -435,6 +468,7 @@ describe("useGameCardsController", () => {
     expect(result.current.active).toEqual(cardAcross);
     expect(result.current.isLastCard).toBeTruthy();
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(8);
 
     // 5 card
     act(() => {
@@ -444,5 +478,6 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(1);
     expect(result.current.isMadeMistake).toBeFalsy();
+    expect(result.current.idx).toBe(8);
   });
 });

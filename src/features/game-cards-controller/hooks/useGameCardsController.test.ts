@@ -199,11 +199,10 @@ describe("useGameCardsController", () => {
     const { result } = renderHook(() =>
       useGameCardsController({ cards, onFinish: mockCallback }),
     );
-    act(() => {
-      cards.forEach(() => {
+    cards.forEach(() => {
+      act(() => {
         result.current.next(true);
       });
-      result.current.next(true);
     });
     expect(mockCallback).toHaveBeenCalled();
   });
@@ -211,19 +210,80 @@ describe("useGameCardsController", () => {
   it("should return the first card if the all cards are not guessed", () => {
     const mockCallback = jest.fn();
 
+    const cards = [
+      cardCurious,
+      cardWalkInThePark,
+      cardAcross,
+      cardDisappointed,
+      cardSmart,
+    ];
+
+    const { result } = renderHook(() =>
+      useGameCardsController({
+        cards,
+        onFinish: mockCallback,
+      }),
+    );
+
+    cards.forEach(() => {
+      act(() => {
+        result.current.next(false);
+      });
+    });
+
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(result.current.active).toEqual(cardCurious);
+  });
+
+  it("should return the mixed cards", () => {
+    const mockCallback = jest.fn();
+
+    const cards = [
+      cardCurious,
+      cardWalkInThePark,
+      cardAcross,
+      cardDisappointed,
+      cardSmart,
+    ];
+
     const { result } = renderHook(() =>
       useGameCardsController({ cards, onFinish: mockCallback }),
     );
-
+    expect(result.current.active).toEqual(cardCurious);
     act(() => {
-      cards.forEach(() => {
-        result.current.next(false);
-      });
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cardWalkInThePark);
+    act(() => {
       result.current.next(false);
     });
+    expect(result.current.active).toEqual(cardAcross);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cardDisappointed);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cardSmart);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cardWalkInThePark);
     expect(mockCallback).toHaveBeenCalledTimes(0);
-    expect(result.current.active).toEqual(cards[0]);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cardAcross);
+    act(() => {
+      result.current.next(false);
+    });
+    expect(result.current.active).toEqual(cardAcross);
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(result.current.active).toEqual(cardAcross);
+    expect(mockCallback).toHaveBeenCalledTimes(1);
   });
 });
-
-// describe("error cases ", () => {});

@@ -37,10 +37,10 @@ export function useGameCardsController(props: Props): Result {
   const next = useCallback<Result["next"]>(
     (isGuessed) => {
       setState((prevState) => {
-        let activeCardIdx = prevState.activeCardIdx + 1;
-
         if (!isGuessed) {
-          if (prevState.activeCardIdx === prevState.cards.length) {
+          let activeCardIdx = prevState.activeCardIdx + 1;
+
+          if (prevState.activeCardIdx === prevState.cards.length - 1) {
             activeCardIdx = 0;
           }
 
@@ -51,9 +51,10 @@ export function useGameCardsController(props: Props): Result {
           };
         }
 
-        if (activeCardIdx === prevState.cards.length) {
-          props.onFinish?.();
-          return prevState;
+        let activeCardIdx = prevState.activeCardIdx;
+
+        if (activeCardIdx === prevState.cards.length - 1) {
+          activeCardIdx = 0;
         }
 
         const finishedCards = prevState.finishedCards.some(
@@ -67,11 +68,17 @@ export function useGameCardsController(props: Props): Result {
             !finishedCards.some((finishedCard) => finishedCard.id === card.id),
         );
 
+        if (cards.length === 0) {
+          props.onFinish?.();
+          return prevState;
+        }
+
         return {
           ...prevState,
           cards,
           finishedCards,
-          activeCard: cards[prevState.activeCardIdx]!,
+          activeCardIdx,
+          activeCard: cards[activeCardIdx]!,
         };
       });
     },

@@ -1,4 +1,8 @@
+import { finishLearningDeckSession } from "@/api/deck/finish-learning-deck-session";
+import { revalidateGetDeck } from "@/api/deck/get-deck";
+import { startLearningDeckSession } from "@/api/deck/start-learning-deck-session";
 import { ICard } from "@/api/schemas/card.schema";
+import { IDeck } from "@/api/schemas/deck.schema";
 import { GuessItGame } from "@/features/guess-it-game";
 import { PairItGame } from "@/features/pair-it-game";
 import { RecallItGame } from "@/features/recall-it-game";
@@ -67,10 +71,11 @@ const classesSlots = tv({
 
 interface Props {
   className?: string;
-  cards: ICard[];
+  deck: IDeck;
 }
 
 export const StepComponent = (props: Props): ReactElement | null => {
+  const [cards, setCards] = useState<ICard[]>([]);
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
   const [displaySteps, setDisplaySteps] = useState<Step[]>([DEFAULT_STEP]);
@@ -87,8 +92,15 @@ export const StepComponent = (props: Props): ReactElement | null => {
   }, []);
 
   const startHandler = useCallback(async () => {
-    await showStep(Step.PREVIEW);
-  }, []);
+    const result = await startLearningDeckSession({
+      deckId: props.deck.id,
+      count: 5,
+    });
+    if (result.ok) {
+      setCards(result.data.cards);
+      await showStep(Step.PREVIEW);
+    }
+  }, [props.deck.id]);
 
   const finishReviewStepHandler = useCallback(async () => {
     await showStep(Step.PAIR_IT);
@@ -105,6 +117,14 @@ export const StepComponent = (props: Props): ReactElement | null => {
   const finishRecallItStepHandler = useCallback(async () => {
     await showStep(Step.TYPE_IT);
   }, []);
+
+  const finishTypeItStepHandler = useCallback(async () => {
+    await finishLearningDeckSession({
+      cardIds: cards.map((card) => card.id),
+    });
+    await revalidateGetDeck(props.deck.id);
+    await showStep(Step.START);
+  }, [cards, props.deck.id]);
 
   const classes = classesSlots({
     step,
@@ -123,7 +143,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
               iconWidth="48px"
               iconHeight="48px"
               onClick={startHandler}
-              disabled={props.cards.length === 0}
+              disabled={props.deck.numberOfNewCards <= 0}
             />
             <p className={classes.textStart()}>Click to start</p>
           </div>
@@ -131,35 +151,36 @@ export const StepComponent = (props: Props): ReactElement | null => {
         {displaySteps.includes(Step.PREVIEW) && (
           <PreviewStep
             className={classes.step({ className: classes.stepPreview() })}
-            cards={props.cards}
+            cards={cards}
             onFinish={finishReviewStepHandler}
           />
         )}
         {displaySteps.includes(Step.PAIR_IT) && (
           <PairItGame
             className={classes.step({ className: classes.stepPairIt() })}
-            cards={props.cards}
+            cards={cards}
             onFinish={finishPairItStepHandler}
           />
         )}
         {displaySteps.includes(Step.GUESS_IT) && (
           <GuessItGame
             className={classes.step({ className: classes.stepGuessIt() })}
-            cards={props.cards}
+            cards={cards}
             onFinish={finishGuessItStepHandler}
           />
         )}
         {displaySteps.includes(Step.RECALL_IT) && (
           <RecallItGame
             className={classes.step({ className: classes.stepRecallIt() })}
-            cards={props.cards}
+            cards={cards}
             onFinish={finishRecallItStepHandler}
           />
         )}
         {displaySteps.includes(Step.TYPE_IT) && (
           <TypeItCardsListGame
             className={classes.step({ className: classes.stepTypeIt() })}
-            cards={props.cards}
+            cards={cards}
+            onFinish={finishTypeItStepHandler}
           />
         )}
       </div>

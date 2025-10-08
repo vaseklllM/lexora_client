@@ -16,6 +16,7 @@ const classesSlots = tv({
 export interface TypeItCardsListGameProps {
   className?: string;
   cards: ICard[];
+  onFinish?: () => void;
 }
 
 const variants: Variants = {
@@ -28,10 +29,7 @@ export const TypeItCardsListGame = (
   props: TypeItCardsListGameProps,
 ): ReactElement => {
   const classes = classesSlots({});
-  const cardsController = useGameCardsController({
-    cards: props.cards,
-    onFinish: () => {},
-  });
+  const cardsController = useGameCardsController(props);
 
   return (
     <AnimatePresence mode="wait">

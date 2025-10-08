@@ -50,10 +50,7 @@ export const Deck = memo((props: DeckProps): ReactElement => {
 
   const clickPlayHandler = useCallback(() => {
     if (props.deck.numberOfCards <= 0) return;
-
-    if (props.deck.numberOfNewCards === props.deck.numberOfCards) {
-      router.push(routes.dashboard.learningDeck.url(props.deck.id));
-    }
+    router.push(routes.dashboard.learningDeck.url(props.deck.id));
   }, [props.deck, router]);
 
   return (

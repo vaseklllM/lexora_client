@@ -28,7 +28,10 @@ export const TypeItCardsListGame = (
   props: TypeItCardsListGameProps,
 ): ReactElement => {
   const classes = classesSlots({});
-  const cardsController = useGameCardsController(props);
+  const cardsController = useGameCardsController({
+    cards: props.cards,
+    onFinish: () => {},
+  });
 
   return (
     <AnimatePresence mode="wait">

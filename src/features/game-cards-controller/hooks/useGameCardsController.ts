@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 
 interface Result {
   active: ICard;
+  isLastCard: boolean;
   next: (isGuessed: boolean) => void;
 }
 
@@ -88,5 +89,6 @@ export function useGameCardsController(props: Props): Result {
   return {
     active: state.activeCard,
     next,
+    isLastCard: state.cards.length <= 1,
   };
 }

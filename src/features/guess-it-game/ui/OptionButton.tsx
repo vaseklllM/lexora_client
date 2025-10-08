@@ -37,7 +37,7 @@ interface Props {
   id: string;
   onClick?: (args: { id: string }) => void;
   isRightOption: boolean;
-  onMixRandomCards?: () => void;
+  onMixOptions?: () => void;
   isLastCard?: boolean;
   isChecked?: boolean;
   onChecked?: (isChecked: boolean) => void;
@@ -64,14 +64,14 @@ export const OptionButton = memo((props: Props): ReactElement => {
       await player.playAsync(props.soundUrl);
       props.onClick?.({ id: props.id });
       if (props.isLastCard) return;
-      props.onMixRandomCards?.();
+      props.onMixOptions?.();
       setCLickStatus(undefined);
       props.onChecked?.(false);
     } else {
       props.onChecked?.(true);
       setCLickStatus("error");
       await sleep(800);
-      props.onMixRandomCards?.();
+      props.onMixOptions?.();
       setCLickStatus(undefined);
       props.onChecked?.(false);
     }
@@ -79,7 +79,7 @@ export const OptionButton = memo((props: Props): ReactElement => {
     props.onClick,
     props.id,
     props.isRightOption,
-    props.onMixRandomCards,
+    props.onMixOptions,
     props.isLastCard,
     props.onChecked,
     props.soundUrl,

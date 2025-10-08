@@ -99,98 +99,120 @@ describe("useGameCardsController", () => {
   it("should return undefined active card", () => {
     const { result } = renderHook(() => useGameCardsController({ cards: [] }));
     expect(result.current.active).toBeUndefined();
+    expect(result.current.isLastCard).toBeTruthy();
   });
 
   it("should return the first card", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the second card if the first card is not guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the second card if the first card is guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the third card if the second card is not guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[2]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the third card if the second card is guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[2]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the all cards if the all cards are not guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[2]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[3]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cards[4]);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the all cards if the all cards are guessed", () => {
     const { result } = renderHook(() => useGameCardsController({ cards }));
 
     expect(result.current.active).toEqual(cards[0]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[1]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[2]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[3]);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cards[4]);
+    expect(result.current.isLastCard).toBeTruthy();
   });
 
   it("should call onFinish if the all cards are guessed", () => {
@@ -205,6 +227,7 @@ describe("useGameCardsController", () => {
       });
     });
     expect(mockCallback).toHaveBeenCalled();
+    expect(result.current.isLastCard).toBeTruthy();
   });
 
   it("should return the first card if the all cards are not guessed", () => {
@@ -231,8 +254,10 @@ describe("useGameCardsController", () => {
       });
     });
 
+    expect(result.current.isLastCard).toBeFalsy();
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.active).toEqual(cardCurious);
+    expect(result.current.isLastCard).toBeFalsy();
   });
 
   it("should return the mixed cards", () => {
@@ -250,40 +275,49 @@ describe("useGameCardsController", () => {
       useGameCardsController({ cards, onFinish: mockCallback }),
     );
     expect(result.current.active).toEqual(cardCurious);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cardWalkInThePark);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cardDisappointed);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cardSmart);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cardWalkInThePark);
     expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(result.current.isLastCard).toBeFalsy();
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeTruthy();
     act(() => {
       result.current.next(false);
     });
     expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(0);
     act(() => {
       result.current.next(true);
     });
     expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(1);
   });
 });

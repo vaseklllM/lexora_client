@@ -1,6 +1,7 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { useGameCardsController } from "@/features/game-cards-controller";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
@@ -44,43 +45,36 @@ interface Props {
 }
 
 export const GuessItGame = (props: Props): ReactElement => {
-  const [activeCardIdx, setActiveCardIdx] = useState<number>(0);
-  const [isMixRandomCards, setIsMixRandomCards] = useState<boolean>(false);
+  const [isMixOptions, setIsMixOptions] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
-
-  const isLastCard = props.cards.length - 1 === activeCardIdx;
-
-  const activeCard = props.cards[activeCardIdx];
+  const cardsController = useGameCardsController({
+    cards: props.cards,
+    onFinish: props.onFinish,
+  });
 
   const classes = classesSlots({
     headerLength:
-      activeCard?.textInLearningLanguage.length >= 50 ? "big" : undefined,
+      cardsController.active.textInLearningLanguage.length >= 50
+        ? "big"
+        : undefined,
   });
 
-  const nextCard = useCallback(() => {
-    setActiveCardIdx((prev) => prev + 1);
-  }, [props.cards]);
-
   const mixRandomCards = useCallback(() => {
-    setIsMixRandomCards((v) => !v);
+    setIsMixOptions((v) => !v);
   }, []);
 
-  const randomCards = useMemo(
+  const options = useMemo(
     () => mixArray(props.cards),
-    [props.cards, isMixRandomCards],
+    [props.cards, isMixOptions],
   );
 
   const handleOptionClick = useCallback(
     (card: ICard) => {
-      if (card.id === activeCard.id) {
-        if (isLastCard) {
-          props.onFinish?.();
-        } else {
-          nextCard();
-        }
+      if (card.id === cardsController.active.id) {
+        cardsController.next(true);
       }
     },
-    [activeCard, nextCard, mixRandomCards, isLastCard, props.onFinish],
+    [cardsController.active.id, cardsController.next],
   );
 
   return (
@@ -88,8 +82,10 @@ export const GuessItGame = (props: Props): ReactElement => {
       <div className={classes.content()}>
         <div className={classes.header()}>
           <div className={classes.iconButtons()}>
-            {activeCard.cefr && <Cerf cefr={activeCard.cefr} />}
-            {activeCard.soundUrls?.map((soundUrl, idx) => (
+            {cardsController.active.cefr && (
+              <Cerf cefr={cardsController.active.cefr} />
+            )}
+            {cardsController.active.soundUrls?.map((soundUrl, idx) => (
               <ButtonIcon
                 key={idx}
                 icon="sound"
@@ -102,19 +98,19 @@ export const GuessItGame = (props: Props): ReactElement => {
             ))}
           </div>
           <h3 className={classes.headerText()}>
-            {activeCard?.textInLearningLanguage}
+            {cardsController.active.textInLearningLanguage}
           </h3>
         </div>
-        {randomCards.map((option) => (
+        {options.map((option) => (
           <OptionButton
             title={option.textInKnownLanguage}
             className={classes.option()}
             key={option.id}
             onClick={() => handleOptionClick(option)}
             id={option.id}
-            isRightOption={option.id === activeCard.id}
-            onMixRandomCards={mixRandomCards}
-            isLastCard={isLastCard}
+            isRightOption={option.id === cardsController.active.id}
+            onMixOptions={mixRandomCards}
+            isLastCard={cardsController.isLastCard}
             isChecked={isChecked}
             onChecked={setIsChecked}
             soundUrl={option.soundUrls[0]}

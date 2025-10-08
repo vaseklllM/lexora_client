@@ -1,11 +1,13 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Result {
   active: ICard;
   isLastCard: boolean;
   next: (isGuessed: boolean) => void;
+  // when user make mistake active card will be save in cards array
+  makeMistake: () => void;
 }
 
 interface Props {
@@ -18,6 +20,8 @@ type TState = {
   activeCard: ICard;
   activeCardIdx: number;
   finishedCards: ICard[];
+  isMadeMistake: boolean;
+  isFinished: boolean;
 };
 
 export function useGameCardsController(props: Props): Result {
@@ -31,6 +35,8 @@ export function useGameCardsController(props: Props): Result {
         activeCard: cards[activeCardIdx]!,
         activeCardIdx,
         finishedCards: [],
+        isMadeMistake: false,
+        isFinished: false,
       };
     })(),
   );
@@ -38,7 +44,7 @@ export function useGameCardsController(props: Props): Result {
   const next = useCallback<Result["next"]>(
     (isGuessed) => {
       setState((prevState) => {
-        if (!isGuessed) {
+        if (!isGuessed || prevState.isMadeMistake) {
           let activeCardIdx = prevState.activeCardIdx + 1;
 
           if (prevState.activeCardIdx === prevState.cards.length - 1) {
@@ -49,6 +55,7 @@ export function useGameCardsController(props: Props): Result {
             ...prevState,
             activeCardIdx,
             activeCard: prevState.cards[activeCardIdx]!,
+            isMadeMistake: false,
           };
         }
 
@@ -70,8 +77,7 @@ export function useGameCardsController(props: Props): Result {
         );
 
         if (cards.length === 0) {
-          props.onFinish?.();
-          return prevState;
+          return { ...prevState, isFinished: true };
         }
 
         return {
@@ -86,9 +92,23 @@ export function useGameCardsController(props: Props): Result {
     [setState, props.onFinish],
   );
 
+  const makeMistake = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      isMadeMistake: true,
+    }));
+  }, [setState]);
+
+  useEffect(() => {
+    if (state.isFinished) {
+      props.onFinish?.();
+    }
+  }, [state.isFinished, props.onFinish]);
+
   return {
     active: state.activeCard,
     next,
     isLastCard: state.cards.length <= 1,
+    makeMistake,
   };
 }

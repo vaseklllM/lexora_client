@@ -320,4 +320,94 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(1);
   });
+
+  it("should return the mixed cards and make mistakes", () => {
+    const mockCallback = jest.fn();
+
+    const cards = [
+      cardCurious,
+      cardWalkInThePark,
+      cardAcross,
+      cardDisappointed,
+      cardSmart,
+    ];
+
+    const { result } = renderHook(() =>
+      useGameCardsController({ cards, onFinish: mockCallback }),
+    );
+
+    // 1 card
+    expect(result.current.active).toEqual(cardCurious);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(true);
+    });
+
+    // 2 card
+    expect(result.current.active).toEqual(cardWalkInThePark);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(false);
+    });
+
+    // 3 card
+    expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(false);
+    });
+
+    // 4 card
+    expect(result.current.active).toEqual(cardDisappointed);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(true);
+    });
+
+    // 5 card
+    expect(result.current.active).toEqual(cardSmart);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.makeMistake();
+    });
+    act(() => {
+      result.current.next(true);
+    });
+
+    // 2 card
+    expect(result.current.active).toEqual(cardWalkInThePark);
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(true);
+    });
+
+    // 3 card
+    expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeFalsy();
+    act(() => {
+      result.current.next(false);
+    });
+
+    // 5 card
+    expect(result.current.active).toEqual(cardSmart);
+    expect(result.current.isLastCard).toBeFalsy();
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    act(() => {
+      result.current.next(true);
+    });
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+
+    // 3 card
+    expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeTruthy();
+    act(() => {
+      result.current.next(true);
+    });
+
+    // 5 card
+    expect(result.current.active).toEqual(cardAcross);
+    expect(result.current.isLastCard).toBeTruthy();
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+  });
 });

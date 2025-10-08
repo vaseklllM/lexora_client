@@ -47,6 +47,7 @@ interface Props {
 export const GuessItGame = (props: Props): ReactElement => {
   const [isMixOptions, setIsMixOptions] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
   const cardsController = useGameCardsController({
     cards: props.cards,
     onFinish: props.onFinish,

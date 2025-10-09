@@ -17,6 +17,7 @@ const classesSlots = tv({
     base: "bg-base-200 relative p-4 shadow-md sm:rounded-xl sm:p-5 sm:pr-5 sm:pb-15 sm:pl-5",
     header: "flex items-center gap-6",
     step: "mt-6",
+    buttonStop: "dark:btn-soft btn-outline",
   },
 });
 
@@ -54,8 +55,8 @@ export function LearningDeck(props: LearningDeckProps) {
         {isPlaying && (
           <ButtonIcon
             icon="stop"
-            variant="soft"
             color="secondary"
+            className={classes.buttonStop()}
             onClick={stopHandler}
           />
         )}

@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     base: "flex flex-col items-center justify-center gap-4",
-    button: "h-28 w-28 md:h-28 md:w-28",
+    button: "dark:btn-soft btn-outline h-28 w-28 md:h-28 md:w-28",
     title: "text-base-content/80 text-lg font-bold",
   },
 });
@@ -49,7 +49,7 @@ export const ButtonRepeat = (props: Props): ReactElement => {
         className={classes.button()}
         iconWidth="58px"
         iconHeight="58px"
-        variant="soft"
+        // variant="outline"
         onClick={repeatHandler}
       />
       <p className={classes.title()}>Repeat</p>

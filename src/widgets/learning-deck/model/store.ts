@@ -17,18 +17,15 @@ type State = {
   activeStep: Step;
   stepAnimation: "forward" | "backward";
   isPlaying: boolean;
-  cardsToLearn: ICard[];
+  mode?: "learning" | "repeat";
+  cards: ICard[];
   isVisibleModalChooseReviewType: boolean;
-  review?: {
-    cards: ICard[];
-    type: GameType;
-  };
 };
 
 type Actions = {
   openStep(step: Step): void;
-  reset(): void;
-  setCardsToLearn(cards: ICard[]): void;
+  startLearningSession(cards: ICard[]): void;
+  stopSession(): void;
   startReviewSession(type: GameType, cards: ICard[]): void;
   openModalChooseReviewType(): void;
   closeModalChooseReviewType(): void;
@@ -40,11 +37,34 @@ export const useLearningDeckStore = create<Store>((set) => ({
   activeStep: DEFAULT_STEP,
   isPlaying: false,
   stepAnimation: "forward",
-  cardsToLearn: [],
+  cards: [],
   isVisibleModalChooseReviewType: false,
-  review: undefined,
-  setCardsToLearn(cards: ICard[]) {
-    set({ cardsToLearn: cards });
+  startLearningSession(cards: ICard[]) {
+    set({
+      cards: cards,
+      activeStep: Step.PREVIEW,
+      mode: "learning",
+      stepAnimation: "forward",
+      isPlaying: true,
+    });
+  },
+  stopSession() {
+    set((prev) => {
+      switch (prev.mode) {
+        case "learning":
+        case "repeat":
+          return {
+            isPlaying: false,
+            mode: undefined,
+            stepAnimation: "backward",
+            activeStep: DEFAULT_STEP,
+            cards: [],
+          };
+
+        default:
+          return prev;
+      }
+    });
   },
   openStep(step: Step) {
     set(() => {
@@ -55,16 +75,28 @@ export const useLearningDeckStore = create<Store>((set) => ({
       };
     });
   },
-  reset() {
-    set({
-      activeStep: DEFAULT_STEP,
-      isPlaying: false,
-      stepAnimation: "backward",
-      cardsToLearn: [],
-    });
-  },
   startReviewSession(type: GameType, cards: ICard[]) {
-    set({ review: { cards, type } });
+    set({
+      cards,
+      isPlaying: true,
+      mode: "repeat",
+      stepAnimation: "forward",
+      activeStep: ((): Step => {
+        switch (type) {
+          case "pairIt":
+            return Step.PAIR_IT;
+
+          case "guessIt":
+            return Step.GUESS_IT;
+
+          case "recallIt":
+            return Step.RECALL_IT;
+
+          case "typeIt":
+            return Step.TYPE_IT;
+        }
+      })(),
+    });
   },
   openModalChooseReviewType() {
     set({ isVisibleModalChooseReviewType: true });

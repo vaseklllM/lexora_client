@@ -2,10 +2,7 @@
 
 import { startLearningDeckSession } from "@/api/deck/start-learning-deck-session";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import {
-  Step,
-  useLearningDeckStore,
-} from "@/widgets/learning-deck/model/store";
+import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement, useCallback } from "react";
 import { buttonClassesSlots } from "./classes";
 
@@ -18,8 +15,9 @@ interface Props {
 export const ButtonStart = (props: Props): ReactElement => {
   const classes = buttonClassesSlots();
   const isCardsToLearn = props.numberOfNewCards > 0;
-  const setCards = useLearningDeckStore((state) => state.setCardsToLearn);
-  const openStep = useLearningDeckStore((state) => state.openStep);
+  const startLearningSession = useLearningDeckStore(
+    (state) => state.startLearningSession,
+  );
 
   const startHandler = useCallback(async () => {
     const result = await startLearningDeckSession({
@@ -27,10 +25,9 @@ export const ButtonStart = (props: Props): ReactElement => {
       count: 5,
     });
     if (result.ok) {
-      setCards(result.data.cards);
-      openStep(Step.PREVIEW);
+      startLearningSession(result.data.cards);
     }
-  }, [props.deckId, setCards, openStep]);
+  }, [props.deckId, startLearningSession]);
 
   return (
     <div className={classes.base()}>

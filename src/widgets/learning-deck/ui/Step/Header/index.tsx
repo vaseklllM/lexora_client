@@ -8,7 +8,7 @@ import { StepsHeader } from "./StepsHeader";
 
 export const Header = (): ReactElement => {
   const isLearning = useLearningDeckStore(
-    (state) => state.activeStep !== Step.START,
+    (state) => state.activeStep !== Step.START && state.mode === "learning",
   );
 
   return (

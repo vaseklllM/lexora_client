@@ -29,20 +29,20 @@ export interface LearningDeckProps {
 export function LearningDeck(props: LearningDeckProps) {
   const classes = classesSlots();
   const lastBreadcrumb = useLastBreadcrumbs(props);
-  const reset = useLearningDeckStore((state) => state.reset);
+  const stopSession = useLearningDeckStore((state) => state.stopSession);
   const isPlaying = useLearningDeckStore((state) => state.isPlaying);
 
   const stopHandler = useCallback(() => {
     player.stop();
-    reset();
-  }, [reset]);
+    stopSession();
+  }, [stopSession]);
 
   useEffect(() => {
     return () => {
       player.stop();
-      reset();
+      stopSession();
     };
-  }, [reset]);
+  }, [stopSession]);
 
   return (
     <div className={classes.base()}>

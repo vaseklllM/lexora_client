@@ -11,7 +11,12 @@ import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
-import { ButtonRepeat, ButtonStart, ModalReviewType } from "./StepStart";
+import {
+  ButtonRepeat,
+  ButtonRepeatAll,
+  ButtonStart,
+  ModalReviewType,
+} from "./StepStart";
 
 const classesSlots = tv({
   slots: {
@@ -89,6 +94,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
   const classes = classesSlots();
 
   const isCardsToRepeat = props.deck.numberOfCardsNeedToReview > 0;
+  const isCardsToRepeatAll = props.deck.numberOfCardsInProgress > 0;
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -112,7 +118,18 @@ export const StepComponent = (props: Props): ReactElement | null => {
                 numberOfNewCards={props.deck.numberOfNewCards}
                 deckId={props.deck.id}
               />
-              {isCardsToRepeat && <ButtonRepeat />}
+              {isCardsToRepeat && (
+                <ButtonRepeat
+                  numberOfCardsNeedToReview={
+                    props.deck.numberOfCardsNeedToReview
+                  }
+                />
+              )}
+              {isCardsToRepeatAll && (
+                <ButtonRepeatAll
+                  numberOfCardsInProgress={props.deck.numberOfCardsInProgress}
+                />
+              )}
             </motion.div>
           )}
           {step === Step.PREVIEW && (

@@ -67,12 +67,12 @@ export function useGameCardsController(
 
   const next = useCallback<GameCardsControllerResult["next"]>(
     (isGuessed) => {
-      setState((prevState) => {
-        props.onFinishReviewCard?.({
-          card: prevState.activeCard,
-          isGuessed: prevState.isMadeMistake ? false : isGuessed,
-        });
+      props.onFinishReviewCard?.({
+        card: state.activeCard,
+        isGuessed: state.isMadeMistake ? false : isGuessed,
+      });
 
+      setState((prevState) => {
         if (!isGuessed || prevState.isMadeMistake) {
           let activeCardIdx = prevState.activeCardIdx + 1;
 
@@ -157,7 +157,7 @@ export function useGameCardsController(
         };
       });
     },
-    [setState, props.onFinishReviewCard],
+    [setState, props.onFinishReviewCard, state.activeCard, state.isMadeMistake],
   );
 
   const makeMistake = useCallback(() => {

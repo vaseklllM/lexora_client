@@ -207,6 +207,28 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: true,
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(true);
     });
@@ -214,6 +236,29 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(1);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        status: "finished",
+        isActive: false,
+      },
+      {
+        id: cards[1].id,
+        isActive: true,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
   });
 
   it("should return the third card if the second card is not guessed", () => {
@@ -222,6 +267,28 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: true,
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -229,6 +296,29 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(1);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: true,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -236,6 +326,30 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(2);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[2].id,
+        isActive: true,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
   });
 
   it("should return the third card if the second card is guessed", () => {
@@ -244,6 +358,28 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: true,
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(true);
     });
@@ -251,6 +387,29 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(1);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cards[1].id,
+        isActive: true,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(true);
     });
@@ -258,6 +417,30 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(2);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cards[2].id,
+        isActive: true,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
   });
 
   it("should return the all cards if the all cards are not guessed", () => {
@@ -266,6 +449,28 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: true,
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -273,6 +478,29 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(1);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: true,
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -280,6 +508,30 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(2);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[2].id,
+        isActive: true,
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -287,6 +539,31 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(3);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[3].id,
+        isActive: true,
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -294,6 +571,32 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(4);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[4].id,
+        isActive: true,
+      },
+    ]);
     act(() => {
       result.current.next(false);
     });
@@ -301,6 +604,33 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(5);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cards[0].id,
+        isActive: true,
+        status: "mistake",
+      },
+      {
+        id: cards[1].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[2].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[3].id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cards[4].id,
+        isActive: false,
+        status: "mistake",
+      },
+    ]);
   });
 
   it("should return the all cards if the all cards are guessed", () => {

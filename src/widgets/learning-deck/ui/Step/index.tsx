@@ -1,5 +1,6 @@
 import { finishLearningDeckSession } from "@/api/deck/finish-learning-deck-session";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
+import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { GuessItGame } from "@/features/guess-it-game";
 import { PairItGame } from "@/features/pair-it-game";
@@ -56,6 +57,7 @@ const variants: Variants = {
 interface Props {
   className?: string;
   deck: IDeck;
+  deckCards: ICard[];
 }
 
 export const StepComponent = (props: Props): ReactElement | null => {
@@ -64,6 +66,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
   const openStep = useLearningDeckStore((state) => state.openStep);
   const stepAnimation = useLearningDeckStore((state) => state.stepAnimation);
   const stopSession = useLearningDeckStore((state) => state.stopSession);
+  const mode = useLearningDeckStore((state) => state.mode);
 
   const finishReviewStepHandler = useCallback(() => {
     openStep(Step.PAIR_IT);
@@ -217,12 +220,13 @@ export const StepComponent = (props: Props): ReactElement | null => {
                 className={classes.step()}
                 cards={cards}
                 onFinish={finishTypeItStepHandler}
+                mode={mode}
               />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      <ModalRepeatGameType deckId={props.deck.id} />
+      <ModalRepeatGameType deckId={props.deck.id} deckCards={props.deckCards} />
       <ModalRepeatAllGameType deckId={props.deck.id} />
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
@@ -24,6 +25,7 @@ const classesSlots = tv({
 export interface LearningDeckProps {
   foldersBreadcrumbs: IFolderBreadcrumb[];
   deck: IDeck;
+  deckCards: ICard[];
 }
 
 export function LearningDeck(props: LearningDeckProps) {
@@ -61,7 +63,11 @@ export function LearningDeck(props: LearningDeckProps) {
           />
         )}
       </div>
-      <StepComponent deck={props.deck} className={classes.step()} />
+      <StepComponent
+        deck={props.deck}
+        className={classes.step()}
+        deckCards={props.deckCards}
+      />
     </div>
   );
 }

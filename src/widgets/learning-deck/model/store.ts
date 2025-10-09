@@ -1,5 +1,5 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { GameType } from "@/shared/types/GameType";
+import { GameType } from "@/shared/types/Game";
 import { create } from "zustand";
 
 export enum Step {

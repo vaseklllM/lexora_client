@@ -18,5 +18,11 @@ export default async function Page(props: Props) {
     redirect(routes.dashboard.url());
   }
 
-  return <LearningDeck foldersBreadcrumbs={foldersBreadcrumbs} deck={deck} />;
+  return (
+    <LearningDeck
+      foldersBreadcrumbs={foldersBreadcrumbs}
+      deck={deck}
+      deckCards={cards}
+    />
+  );
 }

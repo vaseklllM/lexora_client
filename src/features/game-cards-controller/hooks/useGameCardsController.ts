@@ -2,7 +2,12 @@ import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
 import { useCallback, useEffect, useState } from "react";
 
-interface GameCardsControllerResult {
+type CardMap = Pick<ICard, "id"> & {
+  isActive: boolean;
+  status?: "finished" | "mistake";
+};
+
+export interface GameCardsControllerResult {
   idx: number;
   active: ICard;
   isLastCard: boolean;
@@ -10,6 +15,7 @@ interface GameCardsControllerResult {
   // when user make mistake active card will be save in cards array
   makeMistake: () => void;
   isMadeMistake: boolean;
+  cardsMap: CardMap[];
 }
 
 interface Props {
@@ -25,6 +31,7 @@ type TState = {
   finishedCards: ICard[];
   isMadeMistake: boolean;
   isFinished: boolean;
+  cardsMap: CardMap[];
 };
 
 export function useGameCardsController(
@@ -43,6 +50,11 @@ export function useGameCardsController(
         isMadeMistake: false,
         isFinished: false,
         idx: 0,
+        cardsMap: cards.map((card, idx) => ({
+          id: card.id,
+          isActive: idx === 0,
+          status: undefined,
+        })),
       };
     })(),
   );
@@ -57,12 +69,25 @@ export function useGameCardsController(
             activeCardIdx = 0;
           }
 
+          const activeCard = prevState.cards[activeCardIdx]!;
+
           return {
             ...prevState,
             activeCardIdx,
-            activeCard: prevState.cards[activeCardIdx]!,
+            activeCard,
             isMadeMistake: false,
             idx: prevState.idx + 1,
+            cardsMap: prevState.cardsMap.map((card) => {
+              if (card.id === prevState.activeCard.id) {
+                return { ...card, isActive: false, status: "mistake" };
+              }
+
+              if (card.id === activeCard.id) {
+                return { ...card, isActive: true };
+              }
+
+              return card;
+            }),
           };
         }
 
@@ -83,8 +108,21 @@ export function useGameCardsController(
             !finishedCards.some((finishedCard) => finishedCard.id === card.id),
         );
 
+        const activeCard = cards[activeCardIdx]!;
+
         if (cards.length === 0) {
-          return { ...prevState, isFinished: true };
+          return {
+            ...prevState,
+            isFinished: true,
+            finishedCards,
+            cardsMap: prevState.cardsMap.map((card) => {
+              if (card.id === prevState.activeCard.id) {
+                return { ...card, isActive: true, status: "finished" };
+              }
+
+              return card;
+            }),
+          };
         }
 
         return {
@@ -92,8 +130,19 @@ export function useGameCardsController(
           cards,
           finishedCards,
           activeCardIdx,
-          activeCard: cards[activeCardIdx]!,
+          activeCard,
           idx: prevState.idx + 1,
+          cardsMap: prevState.cardsMap.map((card) => {
+            if (card.id === prevState.activeCard.id) {
+              return { ...card, isActive: false, status: "finished" };
+            }
+
+            if (card.id === activeCard.id) {
+              return { ...card, isActive: true };
+            }
+
+            return card;
+          }),
         };
       });
     },
@@ -120,5 +169,6 @@ export function useGameCardsController(
     makeMistake,
     isMadeMistake: state.isMadeMistake,
     idx: state.idx,
+    cardsMap: state.cardsMap,
   };
 }

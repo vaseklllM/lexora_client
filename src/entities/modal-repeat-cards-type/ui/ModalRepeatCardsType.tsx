@@ -1,4 +1,4 @@
-import { GameType } from "@/shared/types/GameType";
+import { GameType } from "@/shared/types/Game";
 import { Button } from "@/shared/ui/Button";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";

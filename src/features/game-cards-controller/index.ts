@@ -1,1 +1,4 @@
-export { useGameCardsController } from "./hooks/useGameCardsController";
+export {
+  useGameCardsController,
+  type GameCardsControllerResult,
+} from "./hooks/useGameCardsController";

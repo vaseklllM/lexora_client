@@ -21,7 +21,7 @@ import {
 
 const classesSlots = tv({
   slots: {
-    base: "items-center justify-center gap-4",
+    base: "flex w-full items-center justify-center gap-4",
     content: "flex h-full w-full md:w-200",
     table: "grid h-full w-full grid-cols-2 gap-4",
   },

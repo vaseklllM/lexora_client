@@ -144,11 +144,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
               transition={transition}
               className={classes.step()}
             >
-              <PreviewStep
-                className={classes.step()}
-                cards={cards}
-                onFinish={finishReviewStepHandler}
-              />
+              <PreviewStep cards={cards} onFinish={finishReviewStepHandler} />
             </motion.div>
           )}
           {step === Step.PAIR_IT && (
@@ -162,11 +158,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
               transition={transition}
               className={classes.step()}
             >
-              <PairItGame
-                className={classes.step()}
-                cards={cards}
-                onFinish={finishPairItStepHandler}
-              />
+              <PairItGame cards={cards} onFinish={finishPairItStepHandler} />
             </motion.div>
           )}
           {step === Step.GUESS_IT && (

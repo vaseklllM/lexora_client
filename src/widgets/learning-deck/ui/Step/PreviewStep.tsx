@@ -11,7 +11,7 @@ import { Step, useLearningDeckStore } from "../../model/store";
 
 const classesSlots = tv({
   slots: {
-    base: "flex items-center justify-center gap-4 sm:gap-6",
+    base: "flex w-full items-center justify-center gap-4 sm:gap-6",
     cards: "relative h-full w-full sm:w-70 md:h-124 md:w-85",
     card: "transition-[left,top, opacity] absolute h-full w-full p-4 shadow-md/40 duration-600 sm:w-70 md:h-120 md:w-85",
     cardOne: "top-0 left-0 z-5",

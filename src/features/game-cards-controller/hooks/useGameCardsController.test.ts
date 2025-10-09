@@ -1208,33 +1208,33 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.idx).toBe(7);
-    // expect(result.current.cardsMap).toEqual([
-    //   {
-    //     id: cardCurious.id,
-    //     isActive: false,
-    //     status: "finished",
-    //   },
-    //   {
-    //     id: cardWalkInThePark.id,
-    //     isActive: false,
-    //     status: "finished",
-    //   },
-    //   {
-    //     id: cardAcross.id,
-    //     isActive: true,
-    //     status: "mistake",
-    //   },
-    //   {
-    //     id: cardDisappointed.id,
-    //     isActive: false,
-    //     status: "finished",
-    //   },
-    //   {
-    //     id: cardSmart.id,
-    //     isActive: false,
-    //     status: "finished",
-    //   },
-    // ]);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        isActive: true,
+        status: "mistake",
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "finished",
+      },
+    ]);
     act(() => {
       result.current.next(true);
     });
@@ -1242,6 +1242,33 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeTruthy();
     expect(mockCallback).toHaveBeenCalledTimes(1);
     expect(result.current.idx).toBe(7);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        isActive: true,
+        status: "finished",
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "finished",
+      },
+    ]);
   });
 
   it("should return the mixed cards and make mistakes", () => {

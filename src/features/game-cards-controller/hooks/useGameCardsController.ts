@@ -78,12 +78,12 @@ export function useGameCardsController(
             isMadeMistake: false,
             idx: prevState.idx + 1,
             cardsMap: prevState.cardsMap.map((card) => {
-              if (card.id === prevState.activeCard.id) {
-                return { ...card, isActive: false, status: "mistake" };
-              }
-
               if (card.id === activeCard.id) {
                 return { ...card, isActive: true };
+              }
+
+              if (card.id === prevState.activeCard.id) {
+                return { ...card, isActive: false, status: "mistake" };
               }
 
               return card;
@@ -133,12 +133,12 @@ export function useGameCardsController(
           activeCard,
           idx: prevState.idx + 1,
           cardsMap: prevState.cardsMap.map((card) => {
-            if (card.id === prevState.activeCard.id) {
-              return { ...card, isActive: false, status: "finished" };
-            }
-
             if (card.id === activeCard.id) {
               return { ...card, isActive: true };
+            }
+
+            if (card.id === prevState.activeCard.id) {
+              return { ...card, isActive: false, status: "finished" };
             }
 
             return card;

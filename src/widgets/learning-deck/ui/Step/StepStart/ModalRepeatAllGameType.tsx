@@ -8,13 +8,13 @@ interface Props {
   deckId: string;
 }
 
-export const ModalReviewType = (props: Props): ReactElement => {
+export const ModalRepeatAllGameType = (props: Props): ReactElement => {
   const isOpen = useLearningDeckStore(
-    (state) => state.isVisibleModalChooseReviewType,
+    (state) => state.isVisibleModalRepeatGameType,
   );
 
-  const closeModalChooseReviewType = useLearningDeckStore(
-    (state) => state.closeModalChooseReviewType,
+  const closeModalRepeatGameType = useLearningDeckStore(
+    (state) => state.closeModalRepeatGameType,
   );
   const startReviewSession = useLearningDeckStore(
     (state) => state.startReviewSession,
@@ -35,7 +35,7 @@ export const ModalReviewType = (props: Props): ReactElement => {
   return (
     <ModalRepeatCardsType
       isOpen={isOpen}
-      onClose={closeModalChooseReviewType}
+      onClose={closeModalRepeatGameType}
       onChooseGameType={onChooseGameTypeHandler}
     />
   );

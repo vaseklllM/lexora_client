@@ -19,7 +19,8 @@ type State = {
   isPlaying: boolean;
   mode?: "learning" | "repeat";
   cards: ICard[];
-  isVisibleModalChooseReviewType: boolean;
+  isVisibleModalRepeatGameType: boolean;
+  isVisibleModalRepeatAllGameType: boolean;
 };
 
 type Actions = {
@@ -27,8 +28,10 @@ type Actions = {
   startLearningSession(cards: ICard[]): void;
   stopSession(): void;
   startReviewSession(type: GameType, cards: ICard[]): void;
-  openModalChooseReviewType(): void;
-  closeModalChooseReviewType(): void;
+  openModalRepeatGameType(): void;
+  closeModalRepeatGameType(): void;
+  openModalRepeatAllGameType(): void;
+  closeModalRepeatAllGameType(): void;
 };
 
 type Store = State & Actions;
@@ -38,7 +41,8 @@ export const useLearningDeckStore = create<Store>((set) => ({
   isPlaying: false,
   stepAnimation: "forward",
   cards: [],
-  isVisibleModalChooseReviewType: false,
+  isVisibleModalRepeatGameType: false,
+  isVisibleModalRepeatAllGameType: false,
   startLearningSession(cards: ICard[]) {
     set({
       cards: cards,
@@ -98,10 +102,16 @@ export const useLearningDeckStore = create<Store>((set) => ({
       })(),
     });
   },
-  openModalChooseReviewType() {
-    set({ isVisibleModalChooseReviewType: true });
+  openModalRepeatGameType() {
+    set({ isVisibleModalRepeatGameType: true });
   },
-  closeModalChooseReviewType() {
-    set({ isVisibleModalChooseReviewType: false });
+  closeModalRepeatGameType() {
+    set({ isVisibleModalRepeatGameType: false });
+  },
+  openModalRepeatAllGameType() {
+    set({ isVisibleModalRepeatAllGameType: true });
+  },
+  closeModalRepeatAllGameType() {
+    set({ isVisibleModalRepeatAllGameType: false });
   },
 }));

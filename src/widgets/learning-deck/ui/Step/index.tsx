@@ -15,8 +15,9 @@ import {
   ButtonRepeat,
   ButtonRepeatAll,
   ButtonStart,
-  ModalReviewType,
+  ModalRepeatGameType,
 } from "./StepStart";
+import { ModalRepeatAllGameType } from "./StepStart/ModalRepeatAllGameType";
 
 const classesSlots = tv({
   slots: {
@@ -221,7 +222,8 @@ export const StepComponent = (props: Props): ReactElement | null => {
           )}
         </AnimatePresence>
       </div>
-      <ModalReviewType deckId={props.deck.id} />
+      <ModalRepeatGameType deckId={props.deck.id} />
+      <ModalRepeatAllGameType deckId={props.deck.id} />
     </div>
   );
 };

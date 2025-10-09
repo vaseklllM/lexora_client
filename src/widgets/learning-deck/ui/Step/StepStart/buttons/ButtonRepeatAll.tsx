@@ -3,6 +3,7 @@
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { ReactElement } from "react";
 import { buttonClassesSlots } from "./classes";
+import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 
 interface Props {
   className?: string;
@@ -14,6 +15,10 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
     type: "repeatAll",
   });
 
+  const openModalRepeatAllGameType = useLearningDeckStore(
+    (state) => state.openModalRepeatAllGameType,
+  );
+
   return (
     <div className={classes.base({ className: props.className })}>
       <ButtonIcon
@@ -22,6 +27,7 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
         className={classes.button()}
         iconWidth="48px"
         iconHeight="48px"
+        onClick={openModalRepeatAllGameType}
       />
       <p className={classes.title()}>
         Repeat All ({props.numberOfCardsInProgress})

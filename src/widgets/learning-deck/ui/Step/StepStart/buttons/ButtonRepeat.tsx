@@ -12,7 +12,7 @@ interface Props {
 
 export const ButtonRepeat = (props: Props): ReactElement => {
   const openModalChooseReviewType = useLearningDeckStore(
-    (state) => state.openModalChooseReviewType,
+    (state) => state.openModalRepeatGameType,
   );
 
   const classes = buttonClassesSlots({

@@ -41,7 +41,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
 
   const openFrontHandler = useCallback(async () => {
     setActiveSide("front");
-    await sleep(400);
+    await sleep(800);
     setBackSide(undefined);
   }, [setActiveSide, setBackSide]);
 

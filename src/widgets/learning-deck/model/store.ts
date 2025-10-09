@@ -71,7 +71,11 @@ export const useLearningDeckStore = create<Store>((set) => ({
     });
   },
   openStep(step: Step) {
-    set(() => {
+    set((prev) => {
+      if (prev.activeStep === Step.START && step !== Step.PREVIEW) {
+        return prev;
+      }
+
       return {
         activeStep: step,
         isPlaying: step === Step.START ? false : true,

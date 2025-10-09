@@ -2,7 +2,10 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
-import { useGameCardsController } from "@/features/game-cards-controller";
+import {
+  GameCardsControllerFinishReviewCardHandler,
+  useGameCardsController,
+} from "@/features/game-cards-controller";
 import { GameMode } from "@/shared/types/Game";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement } from "react";
@@ -28,13 +31,17 @@ export interface TypeItCardsListGameProps {
   cards: ICard[];
   onFinish?: () => void;
   mode?: GameMode;
+  onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
 }
 
 export const TypeItCardsListGame = (
   props: TypeItCardsListGameProps,
 ): ReactElement => {
   const classes = classesSlots({});
-  const cardsController = useGameCardsController(props);
+  const cardsController = useGameCardsController({
+    cards: props.cards,
+    onFinishReviewCard: props.onFinishReviewCard,
+  });
 
   return (
     <div className={classes.base({ className: props.className })}>

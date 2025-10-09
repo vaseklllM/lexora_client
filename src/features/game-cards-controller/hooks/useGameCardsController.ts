@@ -18,10 +18,16 @@ export interface GameCardsControllerResult {
   cardsMap: CardMap[];
 }
 
-interface Props {
+export type GameCardsControllerFinishReviewCardHandler = (args: {
+  card: ICard;
+  isGuessed: boolean;
+}) => void;
+
+type Props = {
   cards: ICard[];
   onFinish?: () => void;
-}
+  onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
+};
 
 type TState = {
   idx: number;
@@ -62,6 +68,11 @@ export function useGameCardsController(
   const next = useCallback<GameCardsControllerResult["next"]>(
     (isGuessed) => {
       setState((prevState) => {
+        props.onFinishReviewCard?.({
+          card: prevState.activeCard,
+          isGuessed: prevState.isMadeMistake ? false : isGuessed,
+        });
+
         if (!isGuessed || prevState.isMadeMistake) {
           let activeCardIdx = prevState.activeCardIdx + 1;
 
@@ -146,7 +157,7 @@ export function useGameCardsController(
         };
       });
     },
-    [setState, props.onFinish],
+    [setState, props.onFinishReviewCard],
   );
 
   const makeMistake = useCallback(() => {

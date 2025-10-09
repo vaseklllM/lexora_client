@@ -6,7 +6,7 @@ import { GuessItGame } from "@/features/guess-it-game";
 import { PairItGame } from "@/features/pair-it-game";
 import { RecallItGame } from "@/features/recall-it-game";
 import { TypeItCardsListGame } from "@/features/type-it-game";
-import { AnimatePresence, Transition, Variants, motion } from "motion/react";
+import { AnimatePresence, motion, Transition, Variants } from "motion/react";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
@@ -19,6 +19,7 @@ import {
   ModalRepeatGameType,
 } from "./StepStart";
 import { ModalRepeatAllGameType } from "./StepStart/ModalRepeatAllGameType";
+import { useFinishReviewCard } from "./useFinishReviewCard";
 
 const classesSlots = tv({
   slots: {
@@ -54,13 +55,15 @@ const variants: Variants = {
   },
 };
 
-interface Props {
+export interface StepComponentProps {
   className?: string;
   deck: IDeck;
   deckCards: ICard[];
 }
 
-export const StepComponent = (props: Props): ReactElement | null => {
+export const StepComponent = (
+  props: StepComponentProps,
+): ReactElement | null => {
   const cards = useLearningDeckStore((state) => state.cards);
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
@@ -96,6 +99,8 @@ export const StepComponent = (props: Props): ReactElement | null => {
 
   const isCardsToRepeat = props.deck.numberOfCardsNeedToReview > 0;
   const isCardsToRepeatAll = props.deck.numberOfCardsInProgress > 0;
+
+  const finishReviewCard = useFinishReviewCard(props);
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -207,6 +212,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
                 cards={cards}
                 onFinish={finishTypeItStepHandler}
                 mode={mode}
+                onFinishReviewCard={finishReviewCard.typeItCardHandler}
               />
             </motion.div>
           )}

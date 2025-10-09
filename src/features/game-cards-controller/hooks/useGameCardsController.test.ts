@@ -1291,6 +1291,28 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: true,
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+      },
+      {
+        id: cardAcross.id,
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+      },
+    ]);
 
     // 2 card
     act(() => {
@@ -1300,6 +1322,29 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(1);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: true,
+      },
+      {
+        id: cardAcross.id,
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+      },
+    ]);
 
     // 3 card
     act(() => {
@@ -1309,6 +1354,30 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(2);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cardAcross.id,
+        isActive: true,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+      },
+    ]);
 
     // 4 card
     act(() => {
@@ -1318,6 +1387,31 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(3);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: true,
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+      },
+    ]);
     // 5 card
     act(() => {
       result.current.next(true);
@@ -1327,6 +1421,32 @@ describe("useGameCardsController", () => {
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(4);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "mistake",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: true,
+      },
+    ]);
 
     // 2 card
     act(() => {
@@ -1340,6 +1460,33 @@ describe("useGameCardsController", () => {
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.idx).toBe(5);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: true,
+        status: "mistake",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "mistake",
+      },
+    ]);
 
     // 3 card
     act(() => {
@@ -1349,6 +1496,33 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(6);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: true,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "mistake",
+      },
+    ]);
 
     // 5 card
     act(() => {
@@ -1359,6 +1533,33 @@ describe("useGameCardsController", () => {
     expect(mockCallback).toHaveBeenCalledTimes(0);
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(7);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: false,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: true,
+        status: "mistake",
+      },
+    ]);
 
     // 3 card
     act(() => {
@@ -1369,6 +1570,33 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeTruthy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(8);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        status: "mistake",
+        isActive: true,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "finished",
+      },
+    ]);
 
     // 5 card
     act(() => {
@@ -1379,5 +1607,32 @@ describe("useGameCardsController", () => {
     expect(mockCallback).toHaveBeenCalledTimes(1);
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(8);
+    expect(result.current.cardsMap).toEqual([
+      {
+        id: cardCurious.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardWalkInThePark.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardAcross.id,
+        status: "finished",
+        isActive: true,
+      },
+      {
+        id: cardDisappointed.id,
+        isActive: false,
+        status: "finished",
+      },
+      {
+        id: cardSmart.id,
+        isActive: false,
+        status: "finished",
+      },
+    ]);
   });
 });

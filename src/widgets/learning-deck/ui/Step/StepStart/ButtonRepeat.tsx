@@ -1,9 +1,8 @@
 "use client";
 
-import { startReviewDeckSession } from "@/api/deck/start-review-deck-session";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
-import { ReactElement, useCallback } from "react";
+import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
@@ -28,18 +27,9 @@ interface Props {
 }
 
 export const ButtonRepeat = (props: Props): ReactElement => {
-  const startReviewSession = useLearningDeckStore(
-    (state) => state.startReviewSession,
+  const openModalChooseReviewType = useLearningDeckStore(
+    (state) => state.openModalChooseReviewType,
   );
-
-  const repeatHandler = useCallback(async () => {
-    const result = await startReviewDeckSession({
-      deckId: props.deckId,
-    });
-    if (result.ok) {
-      startReviewSession("guessIt", result.data.cards);
-    }
-  }, [props.deckId, startReviewSession]);
 
   const isCardsToReview = props.numberOfCardsNeedToReview > 0;
 
@@ -54,7 +44,9 @@ export const ButtonRepeat = (props: Props): ReactElement => {
         className={classes.button()}
         iconWidth="58px"
         iconHeight="58px"
-        onClick={repeatHandler}
+        onClick={() => {
+          openModalChooseReviewType();
+        }}
       />
       <p className={classes.title()}>Repeat</p>
     </div>

@@ -18,6 +18,7 @@ type State = {
   stepAnimation: "forward" | "backward";
   isPlaying: boolean;
   cardsToLearn: ICard[];
+  isVisibleModalChooseReviewType: boolean;
   review?: {
     cards: ICard[];
     type: ReviewType;
@@ -29,6 +30,8 @@ type Actions = {
   reset(): void;
   setCardsToLearn(cards: ICard[]): void;
   startReviewSession(type: ReviewType, cards: ICard[]): void;
+  openModalChooseReviewType(): void;
+  closeModalChooseReviewType(): void;
 };
 
 type Store = State & Actions;
@@ -38,6 +41,7 @@ export const useLearningDeckStore = create<Store>((set) => ({
   isPlaying: false,
   stepAnimation: "forward",
   cardsToLearn: [],
+  isVisibleModalChooseReviewType: false,
   review: undefined,
   setCardsToLearn(cards: ICard[]) {
     set({ cardsToLearn: cards });
@@ -61,5 +65,11 @@ export const useLearningDeckStore = create<Store>((set) => ({
   },
   startReviewSession(type: ReviewType, cards: ICard[]) {
     set({ review: { cards, type } });
+  },
+  openModalChooseReviewType() {
+    set({ isVisibleModalChooseReviewType: true });
+  },
+  closeModalChooseReviewType() {
+    set({ isVisibleModalChooseReviewType: false });
   },
 }));

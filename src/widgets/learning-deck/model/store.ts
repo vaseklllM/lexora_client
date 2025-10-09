@@ -11,18 +11,24 @@ export enum Step {
 }
 
 export const DEFAULT_STEP = Step.START;
+type ReviewType = "pairIt" | "guessIt" | "recallIt" | "typeIt";
 
 type State = {
   activeStep: Step;
   stepAnimation: "forward" | "backward";
   isPlaying: boolean;
   cardsToLearn: ICard[];
+  review?: {
+    cards: ICard[];
+    type: ReviewType;
+  };
 };
 
 type Actions = {
   openStep(step: Step): void;
   reset(): void;
   setCardsToLearn(cards: ICard[]): void;
+  startReviewSession(type: ReviewType, cards: ICard[]): void;
 };
 
 type Store = State & Actions;
@@ -32,6 +38,7 @@ export const useLearningDeckStore = create<Store>((set) => ({
   isPlaying: false,
   stepAnimation: "forward",
   cardsToLearn: [],
+  review: undefined,
   setCardsToLearn(cards: ICard[]) {
     set({ cardsToLearn: cards });
   },
@@ -51,5 +58,8 @@ export const useLearningDeckStore = create<Store>((set) => ({
       stepAnimation: "backward",
       cardsToLearn: [],
     });
+  },
+  startReviewSession(type: ReviewType, cards: ICard[]) {
+    set({ review: { cards, type } });
   },
 }));

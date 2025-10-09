@@ -1,11 +1,8 @@
 "use client";
 
-import { startLearningDeckSession } from "@/api/deck/start-learning-deck-session";
+import { startReviewDeckSession } from "@/api/deck/start-review-deck-session";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import {
-  Step,
-  useLearningDeckStore,
-} from "@/widgets/learning-deck/model/store";
+import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 
@@ -31,19 +28,18 @@ interface Props {
 }
 
 export const ButtonRepeat = (props: Props): ReactElement => {
-  const setCards = useLearningDeckStore((state) => state.setCardsToLearn);
-  const openStep = useLearningDeckStore((state) => state.openStep);
+  const startReviewSession = useLearningDeckStore(
+    (state) => state.startReviewSession,
+  );
 
   const repeatHandler = useCallback(async () => {
-    const result = await startLearningDeckSession({
+    const result = await startReviewDeckSession({
       deckId: props.deckId,
-      count: 5,
     });
     if (result.ok) {
-      setCards(result.data.cards);
-      openStep(Step.PREVIEW);
+      startReviewSession("guessIt", result.data.cards);
     }
-  }, [props.deckId, setCards, openStep]);
+  }, [props.deckId, startReviewSession]);
 
   const isCardsToReview = props.numberOfCardsNeedToReview > 0;
 

@@ -1,19 +1,17 @@
 import { finishLearningDeckSession } from "@/api/deck/finish-learning-deck-session";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
-import { startLearningDeckSession } from "@/api/deck/start-learning-deck-session";
-import { ICard } from "@/api/schemas/card.schema";
 import { IDeck } from "@/api/schemas/deck.schema";
 import { GuessItGame } from "@/features/guess-it-game";
 import { PairItGame } from "@/features/pair-it-game";
 import { RecallItGame } from "@/features/recall-it-game";
 import { TypeItCardsListGame } from "@/features/type-it-game";
-import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { AnimatePresence, Transition, Variants, motion } from "motion/react";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
 import { PreviewStep } from "./PreviewStep";
 import { StepsHeader } from "./StepsHeader";
+import { ButtonRepeat, ButtonStart } from "./StepStart";
 
 const classesSlots = tv({
   slots: {
@@ -22,8 +20,9 @@ const classesSlots = tv({
       "bg-base-300 relative mt-6 flex h-170 overflow-hidden rounded-xl sm:h-160",
     buttonStart: "h-28 w-28 md:h-28 md:w-28",
     textStart: "text-base-content/80 text-lg font-bold",
+    startButton: "flex flex-col items-center justify-center gap-4",
     step: `absolute inset-0 flex h-full w-full min-w-full p-4 md:p-6`,
-    stepStart: "left-0 flex-col items-center justify-center gap-6",
+    stepStart: "left-0 flex-col items-center justify-evenly",
   },
 });
 
@@ -54,21 +53,10 @@ interface Props {
 }
 
 export const StepComponent = (props: Props): ReactElement | null => {
-  const [cards, setCards] = useState<ICard[]>([]);
+  const cards = useLearningDeckStore((state) => state.cards);
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
   const stepAnimation = useLearningDeckStore((state) => state.stepAnimation);
-
-  const startHandler = useCallback(async () => {
-    const result = await startLearningDeckSession({
-      deckId: props.deck.id,
-      count: 5,
-    });
-    if (result.ok) {
-      setCards(result.data.cards);
-      openStep(Step.PREVIEW);
-    }
-  }, [props.deck.id, openStep]);
 
   const finishReviewStepHandler = useCallback(() => {
     openStep(Step.PAIR_IT);
@@ -96,7 +84,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
 
   const classes = classesSlots();
 
-  const isCardsToLearn = props.deck.numberOfNewCards > 0;
+  const isCardsToRepeat = props.deck.numberOfCardsInProgress > 0;
 
   return (
     <div className={classes.base({ className: props.className })}>
@@ -116,18 +104,18 @@ export const StepComponent = (props: Props): ReactElement | null => {
                 className: classes.stepStart(),
               })}
             >
-              <ButtonIcon
-                color="primary"
-                icon="play"
-                className={classes.buttonStart()}
-                iconWidth="48px"
-                iconHeight="48px"
-                onClick={startHandler}
-                disabled={!isCardsToLearn}
+              <ButtonStart
+                numberOfNewCards={props.deck.numberOfNewCards}
+                deckId={props.deck.id}
               />
-              <p className={classes.textStart()}>
-                Learn{isCardsToLearn ? "" : " (no words to learn)"}
-              </p>
+              {isCardsToRepeat && (
+                <ButtonRepeat
+                  deckId={props.deck.id}
+                  numberOfCardsNeedToReview={
+                    props.deck.numberOfCardsNeedToReview
+                  }
+                />
+              )}
             </motion.div>
           )}
           {step === Step.PREVIEW && (

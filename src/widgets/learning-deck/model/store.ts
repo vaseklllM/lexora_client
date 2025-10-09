@@ -1,3 +1,4 @@
+import { ICard } from "@/api/schemas/card.schema";
 import { create } from "zustand";
 
 export enum Step {
@@ -15,11 +16,13 @@ type State = {
   activeStep: Step;
   stepAnimation: "forward" | "backward";
   isPlaying: boolean;
+  cards: ICard[];
 };
 
 type Actions = {
   openStep(step: Step): void;
   reset(): void;
+  setCards(cards: ICard[]): void;
 };
 
 type Store = State & Actions;
@@ -28,6 +31,10 @@ export const useLearningDeckStore = create<Store>((set) => ({
   activeStep: DEFAULT_STEP,
   isPlaying: false,
   stepAnimation: "forward",
+  cards: [],
+  setCards(cards: ICard[]) {
+    set({ cards });
+  },
   openStep(step: Step) {
     set(() => {
       return {

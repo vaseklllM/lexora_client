@@ -7,6 +7,7 @@ import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
 import { PlayIcon } from "../icons/Play";
 import { PlusIcon } from "../icons/Plus";
+import { RepeatIcon } from "../icons/Repeat";
 import { SoundIcon } from "../icons/Sound";
 import { StopIcon } from "../icons/Stop";
 
@@ -117,7 +118,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "arrow_left"
     | "arrow_right"
     | "play"
-    | "stop";
+    | "stop"
+    | "repeat";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
@@ -229,5 +231,8 @@ function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
           width={props.iconWidth || "14px"}
         />
       );
+
+    case "repeat":
+      return <RepeatIcon width={props.iconWidth} height={props.iconHeight} />;
   }
 }

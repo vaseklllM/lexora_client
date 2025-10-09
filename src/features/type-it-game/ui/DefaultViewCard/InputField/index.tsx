@@ -55,7 +55,9 @@ export const InputField = (props: Props): ReactElement => {
   });
 
   useLayoutEffect(() => {
-    inputRef.current?.focus();
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 800);
   }, []);
 
   return (

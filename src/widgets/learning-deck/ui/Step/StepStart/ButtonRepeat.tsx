@@ -15,6 +15,13 @@ const classesSlots = tv({
     button: "dark:btn-soft btn-outline h-28 w-28 md:h-28 md:w-28",
     title: "text-base-content/80 text-lg font-bold",
   },
+  variants: {
+    isCardsToReview: {
+      true: {
+        button: "btn-primary",
+      },
+    },
+  },
 });
 
 interface Props {
@@ -24,7 +31,6 @@ interface Props {
 }
 
 export const ButtonRepeat = (props: Props): ReactElement => {
-  const classes = classesSlots();
   const setCards = useLearningDeckStore((state) => state.setCards);
   const openStep = useLearningDeckStore((state) => state.openStep);
 
@@ -41,15 +47,17 @@ export const ButtonRepeat = (props: Props): ReactElement => {
 
   const isCardsToReview = props.numberOfCardsNeedToReview > 0;
 
+  const classes = classesSlots({
+    isCardsToReview,
+  });
+
   return (
     <div className={classes.base()}>
       <ButtonIcon
-        color={isCardsToReview ? "primary" : "secondary"}
         icon="repeat"
         className={classes.button()}
         iconWidth="58px"
         iconHeight="58px"
-        // variant="outline"
         onClick={repeatHandler}
       />
       <p className={classes.title()}>Repeat</p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
@@ -13,14 +14,15 @@ import { useBlurWordDescription } from "./useBlurWordDescription";
 
 const classesSlots = tv({
   slots: {
-    base: "h-full flex-col items-center justify-between gap-6",
+    base: "h-full flex-col items-center gap-6",
     header:
       "grid h-full w-full max-w-full grid-cols-1 flex-col gap-4 transition-opacity duration-150 lg:h-auto lg:w-250",
-    content: "grid gap-4",
+    content: "mt-auto grid gap-4",
     buttonForgot: "h-12 rounded-full",
     buttonRecalled: "h-12 rounded-full",
     timer: "",
     timerExpiredButton: "h-12 w-24 rounded-full",
+    statusBar: "w-full",
   },
   variants: {
     isUserShowedTranslation: {
@@ -79,6 +81,10 @@ export const RecallItGame = (props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
+      <RepeatCardsStatusBar
+        cardsMap={activeCard.cardsMap}
+        className={classes.statusBar()}
+      />
       <AnimatePresence mode="wait">
         <motion.div
           key={activeCard.idx}

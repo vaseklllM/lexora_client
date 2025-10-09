@@ -65,5 +65,6 @@ export function useActiveCard({
     forgotCard,
     recalledCard,
     idx: cardsController.idx,
+    cardsMap: cardsController.cardsMap,
   };
 }

@@ -31,7 +31,7 @@ interface Props {
 }
 
 export const ButtonRepeat = (props: Props): ReactElement => {
-  const setCards = useLearningDeckStore((state) => state.setCards);
+  const setCards = useLearningDeckStore((state) => state.setCardsToLearn);
   const openStep = useLearningDeckStore((state) => state.openStep);
 
   const repeatHandler = useCallback(async () => {

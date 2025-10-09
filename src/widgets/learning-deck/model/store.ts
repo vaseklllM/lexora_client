@@ -16,13 +16,13 @@ type State = {
   activeStep: Step;
   stepAnimation: "forward" | "backward";
   isPlaying: boolean;
-  cards: ICard[];
+  cardsToLearn: ICard[];
 };
 
 type Actions = {
   openStep(step: Step): void;
   reset(): void;
-  setCards(cards: ICard[]): void;
+  setCardsToLearn(cards: ICard[]): void;
 };
 
 type Store = State & Actions;
@@ -31,9 +31,9 @@ export const useLearningDeckStore = create<Store>((set) => ({
   activeStep: DEFAULT_STEP,
   isPlaying: false,
   stepAnimation: "forward",
-  cards: [],
-  setCards(cards: ICard[]) {
-    set({ cards });
+  cardsToLearn: [],
+  setCardsToLearn(cards: ICard[]) {
+    set({ cardsToLearn: cards });
   },
   openStep(step: Step) {
     set(() => {
@@ -49,6 +49,7 @@ export const useLearningDeckStore = create<Store>((set) => ({
       activeStep: DEFAULT_STEP,
       isPlaying: false,
       stepAnimation: "backward",
+      cardsToLearn: [],
     });
   },
 }));

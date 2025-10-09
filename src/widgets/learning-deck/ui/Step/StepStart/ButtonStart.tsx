@@ -26,7 +26,7 @@ interface Props {
 export const ButtonStart = (props: Props): ReactElement => {
   const classes = classesSlots();
   const isCardsToLearn = props.numberOfNewCards > 0;
-  const setCards = useLearningDeckStore((state) => state.setCards);
+  const setCards = useLearningDeckStore((state) => state.setCardsToLearn);
   const openStep = useLearningDeckStore((state) => state.openStep);
 
   const startHandler = useCallback(async () => {

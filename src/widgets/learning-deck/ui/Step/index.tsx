@@ -53,10 +53,13 @@ interface Props {
 }
 
 export const StepComponent = (props: Props): ReactElement | null => {
-  const cards = useLearningDeckStore((state) => state.cards);
+  const cards = useLearningDeckStore((state) => state.cardsToLearn);
   const step = useLearningDeckStore((state) => state.activeStep);
   const openStep = useLearningDeckStore((state) => state.openStep);
   const stepAnimation = useLearningDeckStore((state) => state.stepAnimation);
+  const setCardsToLearn = useLearningDeckStore(
+    (state) => state.setCardsToLearn,
+  );
 
   const finishReviewStepHandler = useCallback(() => {
     openStep(Step.PAIR_IT);
@@ -80,7 +83,8 @@ export const StepComponent = (props: Props): ReactElement | null => {
     });
     await revalidateGetDeck(props.deck.id);
     openStep(Step.START);
-  }, [cards, props.deck.id, openStep]);
+    setCardsToLearn([]);
+  }, [cards, props.deck.id, openStep, setCardsToLearn]);
 
   const classes = classesSlots();
 

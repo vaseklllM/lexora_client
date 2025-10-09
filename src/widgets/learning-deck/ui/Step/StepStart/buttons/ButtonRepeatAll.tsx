@@ -1,7 +1,6 @@
 "use client";
 
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement } from "react";
 import { buttonClassesSlots } from "./classes";
 
@@ -11,10 +10,6 @@ interface Props {
 }
 
 export const ButtonRepeatAll = (props: Props): ReactElement => {
-  const openModalChooseReviewType = useLearningDeckStore(
-    (state) => state.openModalChooseReviewType,
-  );
-
   const classes = buttonClassesSlots({
     type: "repeatAll",
   });
@@ -27,9 +22,6 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
         className={classes.button()}
         iconWidth="48px"
         iconHeight="48px"
-        onClick={() => {
-          openModalChooseReviewType();
-        }}
       />
       <p className={classes.title()}>
         Repeat All ({props.numberOfCardsInProgress})

@@ -9,8 +9,8 @@ import { AnimatePresence, Transition, Variants, motion } from "motion/react";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
 import { Step, useLearningDeckStore } from "../../model/store";
+import { Header } from "./Header";
 import { PreviewStep } from "./PreviewStep";
-import { StepsHeader } from "./StepsHeader";
 import {
   ButtonRepeat,
   ButtonRepeatAll,
@@ -22,7 +22,7 @@ const classesSlots = tv({
   slots: {
     base: "",
     content:
-      "bg-base-300 relative mt-6 flex h-170 overflow-hidden rounded-xl sm:h-160",
+      "bg-base-300 relative flex h-170 overflow-hidden rounded-xl sm:h-160",
     buttonStart: "h-28 w-28 md:h-28 md:w-28",
     textStart: "text-base-content/80 text-lg font-bold",
     startButton: "flex flex-col items-center justify-center gap-4",
@@ -98,7 +98,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <StepsHeader />
+      <Header />
       <div className={classes.content()}>
         <AnimatePresence custom={stepAnimation} initial={false}>
           {step === Step.START && (
@@ -224,7 +224,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
           )}
         </AnimatePresence>
       </div>
-      <ModalReviewType />
+      <ModalReviewType deckId={props.deck.id} />
     </div>
   );
 };

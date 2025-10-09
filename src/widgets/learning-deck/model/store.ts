@@ -1,4 +1,5 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { GameType } from "@/shared/types/GameType";
 import { create } from "zustand";
 
 export enum Step {
@@ -11,7 +12,6 @@ export enum Step {
 }
 
 export const DEFAULT_STEP = Step.START;
-type ReviewType = "pairIt" | "guessIt" | "recallIt" | "typeIt";
 
 type State = {
   activeStep: Step;
@@ -21,7 +21,7 @@ type State = {
   isVisibleModalChooseReviewType: boolean;
   review?: {
     cards: ICard[];
-    type: ReviewType;
+    type: GameType;
   };
 };
 
@@ -29,7 +29,7 @@ type Actions = {
   openStep(step: Step): void;
   reset(): void;
   setCardsToLearn(cards: ICard[]): void;
-  startReviewSession(type: ReviewType, cards: ICard[]): void;
+  startReviewSession(type: GameType, cards: ICard[]): void;
   openModalChooseReviewType(): void;
   closeModalChooseReviewType(): void;
 };
@@ -63,7 +63,7 @@ export const useLearningDeckStore = create<Store>((set) => ({
       cardsToLearn: [],
     });
   },
-  startReviewSession(type: ReviewType, cards: ICard[]) {
+  startReviewSession(type: GameType, cards: ICard[]) {
     set({ review: { cards, type } });
   },
   openModalChooseReviewType() {

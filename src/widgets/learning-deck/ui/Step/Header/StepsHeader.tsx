@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useLearningDeckStore } from "../../model/store";
+import { useLearningDeckStore } from "../../../model/store";
 
 const classesSlots = tv({
   slots: {
-    base: "flex justify-center",
+    base: "flex justify-center pb-6",
     steps: "steps w-full text-[10px] sm:text-xs md:text-base",
     step: "step after:bg-primary min-w-max! before:h-1! after:h-6! after:w-6! md:after:h-[2rem]! md:after:w-[2rem]!",
     stepStart: "",

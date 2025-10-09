@@ -14,16 +14,16 @@ import { OptionButton } from "./OptionButton";
 
 const classesSlots = tv({
   slots: {
-    base: "flex flex-col items-center justify-center",
+    base: "flex w-full flex-col items-center justify-center",
     content:
-      "mt-6 flex h-full w-full max-w-full flex-col gap-4 md:gap-4 lg:w-250",
+      "mt-4 flex h-full w-full max-w-full flex-col gap-4 md:gap-4 lg:w-250",
     iconButtons: "absolute top-2 left-2 flex flex-row items-center gap-2",
     header:
       "bg-base-200 relative grid h-full min-h-34 max-w-full grid-cols-1 items-center justify-center rounded-lg p-2 md:min-h-42 md:min-w-96 md:p-4 dark:bg-gray-800",
     headerText: "max-w-full text-center text-2xl break-words",
     option:
       "bg-base-100 text-base-content hover:bg-base-200 cursor-pointer rounded-lg p-3 text-sm",
-    statusBar: "w-full",
+    statusBar: "w-full lg:max-w-250",
   },
   variants: {
     status: {

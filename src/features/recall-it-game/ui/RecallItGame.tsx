@@ -14,7 +14,7 @@ import { useBlurWordDescription } from "./useBlurWordDescription";
 
 const classesSlots = tv({
   slots: {
-    base: "h-full flex-col items-center gap-6",
+    base: "flex h-full w-full flex-col items-center gap-4",
     header:
       "grid h-full w-full max-w-full grid-cols-1 flex-col gap-4 transition-opacity duration-150 lg:h-auto lg:w-250",
     content: "mt-auto grid gap-4",
@@ -22,7 +22,7 @@ const classesSlots = tv({
     buttonRecalled: "h-12 rounded-full",
     timer: "",
     timerExpiredButton: "h-12 w-24 rounded-full",
-    statusBar: "w-full",
+    statusBar: "w-full lg:max-w-250",
   },
   variants: {
     isUserShowedTranslation: {

@@ -11,8 +11,9 @@ import { TypeItGame } from "./TypeItGame";
 
 const classesSlots = tv({
   slots: {
-    base: "flex flex-col gap-4",
-    content: "flex h-full w-full",
+    base: "flex w-full flex-col items-center justify-center gap-4",
+    content: "flex h-full w-full lg:max-w-250",
+    statusBar: "w-full lg:max-w-250",
   },
 });
 
@@ -37,25 +38,26 @@ export const TypeItCardsListGame = (
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <RepeatCardsStatusBar cardsMap={cardsController.cardsMap} />
-      <div className="h-full w-full">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={cardsController.idx}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            variants={variants}
-            transition={{ duration: 0.3 }}
-            className={classes.content()}
-          >
-            <TypeItGame
-              card={cardsController.active}
-              onNextCard={cardsController.next}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      <RepeatCardsStatusBar
+        cardsMap={cardsController.cardsMap}
+        className={classes.statusBar()}
+      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={cardsController.idx}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.3 }}
+          className={classes.content()}
+        >
+          <TypeItGame
+            card={cardsController.active}
+            onNextCard={cardsController.next}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

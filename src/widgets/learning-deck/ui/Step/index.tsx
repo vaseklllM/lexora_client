@@ -180,11 +180,7 @@ export const StepComponent = (props: Props): ReactElement | null => {
               transition={transition}
               className={classes.step()}
             >
-              <GuessItGame
-                className={classes.step()}
-                cards={cards}
-                onFinish={finishGuessItStepHandler}
-              />
+              <GuessItGame cards={cards} onFinish={finishGuessItStepHandler} />
             </motion.div>
           )}
           {step === Step.RECALL_IT && (
@@ -199,7 +195,6 @@ export const StepComponent = (props: Props): ReactElement | null => {
               className={classes.step()}
             >
               <RecallItGame
-                className={classes.step()}
                 cards={cards}
                 onFinish={finishRecallItStepHandler}
               />
@@ -217,7 +212,6 @@ export const StepComponent = (props: Props): ReactElement | null => {
               className={classes.step()}
             >
               <TypeItCardsListGame
-                className={classes.step()}
                 cards={cards}
                 onFinish={finishTypeItStepHandler}
                 mode={mode}

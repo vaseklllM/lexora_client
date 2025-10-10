@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 import {
   UNRIGHT_ANSWER_ANIMATION_DURATION,
   useTypeItGameStore,
-} from "../../../model/store";
+} from "../../../../model/store";
 
 const classesSlots = tv({
   slots: {

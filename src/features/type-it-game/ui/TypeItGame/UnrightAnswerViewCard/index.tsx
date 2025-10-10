@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useActiveCard } from "../../hooks/useActiveCard";
-import { useTypeItGameStore } from "../../model/store";
+import { useActiveCard } from "../../../hooks/useActiveCard";
+import { useTypeItGameStore } from "../../../model/store";
 import { CardItem } from "../CardItem";
 
 const classesSlots = tv({

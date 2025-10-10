@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useTypeItGameStore } from "../../model/store";
+import { useTypeItGameStore } from "../../../model/store";
 import { ButtonRight } from "./ButtonRight";
 import { ButtonTryAgain } from "./ButtonTryAgain";
 

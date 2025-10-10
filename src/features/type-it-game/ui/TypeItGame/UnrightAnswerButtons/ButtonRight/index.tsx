@@ -2,7 +2,7 @@ import { useNextCardHandler } from "@/features/type-it-game/hooks/useNextCardHan
 import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
-import { useTypeItGameStore } from "../../../model/store";
+import { useTypeItGameStore } from "../../../../model/store";
 
 const classesSlots = tv({
   slots: {

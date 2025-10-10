@@ -36,7 +36,8 @@ type PairCard = {
 interface Props {
   className?: string;
   cards: ICard[];
-  onFinish?: () => void;
+  onFinishPart?: () => void;
+  onFinishReviewCard?: (isGuessed: boolean) => void;
 }
 
 export const PairItGameRound = memo((props: Props): ReactElement => {
@@ -165,9 +166,9 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
 
   useEffect(() => {
     if (finishedCards.length === props.cards.length && !isPlaying) {
-      props.onFinish?.();
+      props.onFinishPart?.();
     }
-  }, [finishedCards.length, props.cards, props.onFinish, isPlaying]);
+  }, [finishedCards.length, props.cards, props.onFinishPart, isPlaying]);
 
   return (
     <div className={classes.base({ className: props.className })}>

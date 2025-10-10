@@ -1,5 +1,5 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type CardMap = {
   isActive: boolean;
@@ -32,7 +32,6 @@ type Props = {
 type TState = {
   idx: number;
   isMadeMistake: boolean;
-  isFinished: boolean;
   cardsMap: CardMap[];
 };
 
@@ -47,7 +46,6 @@ export function useGameCardsController(
     ((): TState => {
       return {
         isMadeMistake: false,
-        isFinished: false,
         idx: 0,
         cardsMap: props.cards.map(
           (card, idx): CardMap => ({
@@ -72,28 +70,26 @@ export function useGameCardsController(
         isGuessed: state.isMadeMistake ? false : isGuessed,
       });
 
-      setState((prevState): TState => {
-        if (!isGuessed || prevState.isMadeMistake) {
-          const newActiveCardId = getNextActiveCardId(prevState.cardsMap);
+      const newActiveCardId = getNextActiveCardId(state.cardsMap);
 
-          return {
-            ...prevState,
-            isMadeMistake: false,
-            idx: prevState.idx + 1,
-            cardsMap: prevState.cardsMap.map((map) => {
-              if (map.card.id === newActiveCardId) {
-                return { ...map, isActive: true };
-              }
+      if (!isGuessed || state.isMadeMistake) {
+        setState((prevState) => ({
+          ...prevState,
+          isMadeMistake: false,
+          idx: prevState.idx + 1,
+          cardsMap: prevState.cardsMap.map((map) => {
+            if (map.card.id === newActiveCardId) {
+              return { ...map, isActive: true };
+            }
 
-              if (map.isActive) {
-                return { ...map, isActive: false, status: "mistake" };
-              }
-              return map;
-            }),
-          };
-        }
-
-        const newCardsMap = prevState.cardsMap.map((map): CardMap => {
+            if (map.isActive) {
+              return { ...map, isActive: false, status: "mistake" };
+            }
+            return map;
+          }),
+        }));
+      } else {
+        const newCardsMap = state.cardsMap.map((map): CardMap => {
           if (!map.isActive) return map;
           return { ...map, status: "finished" };
         });
@@ -101,32 +97,29 @@ export function useGameCardsController(
         if (
           newCardsMap.filter((map) => map.status !== "finished").length === 0
         ) {
-          return {
+          setState((prevState) => ({
             ...prevState,
-            isFinished: true,
-
             cardsMap: newCardsMap,
-          };
+          }));
+          props.onFinish?.();
+        } else {
+          setState((prevState) => ({
+            ...prevState,
+            idx: prevState.idx + 1,
+            cardsMap: prevState.cardsMap.map((map) => {
+              if (map.card.id === newActiveCardId) {
+                return { ...map, isActive: true };
+              }
+
+              if (!map.isActive) return map;
+
+              return { ...map, isActive: false, status: "finished" };
+            }),
+          }));
         }
-
-        const newActiveCardId = getNextActiveCardId(prevState.cardsMap);
-
-        return {
-          ...prevState,
-          idx: prevState.idx + 1,
-          cardsMap: prevState.cardsMap.map((map) => {
-            if (map.card.id === newActiveCardId) {
-              return { ...map, isActive: true };
-            }
-
-            if (!map.isActive) return map;
-
-            return { ...map, isActive: false, status: "finished" };
-          }),
-        };
-      });
+      }
     },
-    [setState, props.onFinishReviewCard, state.isMadeMistake, activeCard],
+    [setState, props.onFinishReviewCard, props.onFinish, state, activeCard],
   );
 
   const makeMistake = useCallback(() => {
@@ -135,12 +128,6 @@ export function useGameCardsController(
       isMadeMistake: true,
     }));
   }, [setState]);
-
-  useEffect(() => {
-    if (state.isFinished) {
-      props.onFinish?.();
-    }
-  }, [state.isFinished, props.onFinish]);
 
   const isLastCard = useMemo(
     () => state.cardsMap.filter((map) => map.status !== "finished").length <= 1,

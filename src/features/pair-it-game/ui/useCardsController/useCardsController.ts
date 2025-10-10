@@ -4,10 +4,15 @@ import { useCallback, useMemo, useState } from "react";
 
 const CARDS_PER_PART = 5;
 
-export function useCardsController(cards: ICard[], onFinish?: () => void) {
+type Props = {
+  cards: ICard[];
+  onFinish?: () => void;
+};
+
+export function useCardsController(props: Props) {
   const [part, setPart] = useState<number>(1);
 
-  const mixedCards = useMemo(() => mixArray(cards), []);
+  const mixedCards = useMemo(() => mixArray(props.cards), []);
 
   const activePartCards = useMemo(
     () => mixedCards.slice((part - 1) * CARDS_PER_PART, part * CARDS_PER_PART),
@@ -16,12 +21,12 @@ export function useCardsController(cards: ICard[], onFinish?: () => void) {
 
   const nextPartHandler = useCallback(() => {
     if (part * CARDS_PER_PART >= mixedCards.length) {
-      onFinish?.();
+      props.onFinish?.();
       return;
     }
 
     setPart((prev) => prev + 1);
-  }, [mixedCards, part, onFinish]);
+  }, [mixedCards, part, props.onFinish]);
 
   return {
     cards: activePartCards,

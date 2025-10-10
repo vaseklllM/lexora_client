@@ -21,13 +21,13 @@ interface Props {
 export const PairItGame = memo((props: Props): ReactElement => {
   const classes = classesSlots();
 
-  const cardsController = useCardsController(props.cards);
+  const cardsController = useCardsController(props);
 
   return (
     <div className={classes.base({ className: props.className })}>
       <PairItGameRound
         cards={cardsController.cards}
-        onFinish={props.onFinish}
+        onFinish={cardsController.onNextPart}
       />
     </div>
   );

@@ -3,6 +3,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { FinishCardHandler } from "@/shared/hooks/useSliceCards";
+import { MistakeCardHandler } from "@/shared/hooks/useSliceCards/useSliceCards";
 import { mixArray } from "@/shared/utils/mixArray";
 import { memo, ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
@@ -32,6 +33,7 @@ interface Props {
   cards: ICard[];
   onFinishPart?: () => void;
   onFinishReviewCard?: FinishCardHandler;
+  onMistakeCard?: MistakeCardHandler;
 }
 
 export const PairItGameRound = memo((props: Props): ReactElement => {
@@ -123,6 +125,10 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
           }
         } else {
           addErrorCards(left, right);
+          const card = props.cards.find((card) => card.id === right);
+          if (card) {
+            props.onMistakeCard?.(card);
+          }
         }
         setActiveLeft(undefined);
         setActiveRight(undefined);
@@ -135,6 +141,7 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
       addErrorCards,
       props.onFinishPart,
       props.cards,
+      props.onMistakeCard,
     ],
   );
 

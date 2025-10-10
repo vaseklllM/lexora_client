@@ -64,6 +64,7 @@ export const PairItGame = memo((props: Props): ReactElement => {
             cards={cardsController.cards}
             onFinishPart={cardsController.nextPart}
             onFinishReviewCard={cardsController.finishCard}
+            onMistakeCard={cardsController.mistakeCard}
             className={classes.content()}
           />
         </motion.div>

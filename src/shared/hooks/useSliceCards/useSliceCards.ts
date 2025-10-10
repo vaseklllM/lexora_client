@@ -18,6 +18,7 @@ type Props = {
 };
 
 export type FinishCardHandler = (card: ICard) => void;
+export type MistakeCardHandler = (card: ICard) => void;
 
 export interface UseSliceCardsResult {
   cards: ICard[];
@@ -26,6 +27,7 @@ export interface UseSliceCardsResult {
   numberOfFinishedCards: number;
   numberOfCards: number;
   part: number;
+  mistakeCard: MistakeCardHandler;
 }
 
 export function useSliceCards(props: Props): UseSliceCardsResult {
@@ -60,6 +62,16 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
     [setFinishedCardIds, props.onFinishReviewCard],
   );
 
+  const mistakeCard = useCallback<MistakeCardHandler>(
+    (card: ICard) => {
+      props.onFinishReviewCard?.({
+        card,
+        isGuessed: false,
+      });
+    },
+    [props.onFinishReviewCard],
+  );
+
   return {
     cards: activePartCards,
     nextPart: nextPartHandler,
@@ -67,5 +79,6 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
     numberOfFinishedCards: finishedCardIds.length,
     numberOfCards: props.cards.length,
     part,
+    mistakeCard,
   };
 }

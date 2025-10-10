@@ -4,23 +4,24 @@ import { useCallback, useMemo, useState } from "react";
 
 const CARDS_PER_PART = 5;
 
-export function useCardsController(cards: ICard[]) {
+export function useCardsController(cards: ICard[], onFinish?: () => void) {
   const [part, setPart] = useState<number>(1);
 
   const mixedCards = useMemo(() => mixArray(cards), []);
 
   const activePartCards = useMemo(
-    () => mixedCards.slice(0, part * CARDS_PER_PART),
+    () => mixedCards.slice((part - 1) * CARDS_PER_PART, part * CARDS_PER_PART),
     [mixedCards, part],
   );
 
   const nextPartHandler = useCallback(() => {
     if (part * CARDS_PER_PART >= mixedCards.length) {
+      onFinish?.();
       return;
     }
 
     setPart((prev) => prev + 1);
-  }, [mixedCards, part]);
+  }, [mixedCards, part, onFinish]);
 
   return {
     cards: activePartCards,

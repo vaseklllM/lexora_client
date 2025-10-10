@@ -1,12 +1,12 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import { useMixCards } from "@/shared/hooks/useMixCards";
 import { useSliceCards } from "@/shared/hooks/useSliceCards";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { PairItGameRound } from "./PairItGameRound";
-import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 
 const classesSlots = tv({
   slots: {
@@ -33,7 +33,11 @@ export const PairItGame = memo((props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <RepeatCardsStatusBar cardsMap={[]} className={classes.statusBar()} />
+      <RepeatCardsStatusBar
+        numberOfCards={cardsController.numberOfCards}
+        numberOfFinishedCards={cardsController.numberOfFinishedCards}
+        className={classes.statusBar()}
+      />
       <PairItGameRound
         cards={cardsController.cards}
         onFinishPart={cardsController.nextPart}

@@ -48,7 +48,6 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
   const [finishedCards, setFinishedCards] = useState<string[]>([]);
   const [errorLeftCards, setErrorLeftCards] = useState<string[]>([]);
   const [errorRightCards, setErrorRightCards] = useState<string[]>([]);
-  const isPlaying = player.useIsPlaying();
 
   const cards = useMemo(() => {
     let leftCards: PairCard[] = [];
@@ -165,12 +164,6 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
       setActiveRight(undefined);
     }
   }, [activeLeft, activeRight]);
-
-  useEffect(() => {
-    if (finishedCards.length === props.cards.length && !isPlaying) {
-      props.onFinishPart?.();
-    }
-  }, [finishedCards.length, props.cards, props.onFinishPart, isPlaying]);
 
   return (
     <div className={classes.base({ className: props.className })}>

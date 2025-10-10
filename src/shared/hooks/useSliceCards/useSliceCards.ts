@@ -15,12 +15,14 @@ export interface UseSliceCardsResult {
   cards: ICard[];
   nextPart: () => void;
   finishCard: FinishCardHandler;
+  numberOfFinishedCards: number;
+  numberOfCards: number;
 }
 
 export function useSliceCards(props: Props): UseSliceCardsResult {
   const { cardsPerPart = CARDS_PER_PART } = props;
   const [part, setPart] = useState<number>(1);
-  const [_finishedCardIds, setFinishedCardIds] = useState<string[]>([]);
+  const [finishedCardIds, setFinishedCardIds] = useState<string[]>([]);
 
   const activePartCards = useMemo(
     () => props.cards.slice((part - 1) * cardsPerPart, part * cardsPerPart),
@@ -49,5 +51,7 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
     cards: activePartCards,
     nextPart: nextPartHandler,
     finishCard,
+    numberOfFinishedCards: finishedCardIds.length,
+    numberOfCards: props.cards.length,
   };
 }

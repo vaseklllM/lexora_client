@@ -29,22 +29,41 @@ export type CardMap = {
   status?: "finished" | "mistake";
 };
 
-interface Props {
+type Props = {
   className?: string;
-  cardsMap: CardMap[];
-}
+} & (
+  | { cardsMap: CardMap[] }
+  | { numberOfFinishedCards: number; numberOfCards: number }
+);
 
 export const RepeatCardsStatusBar = (props: Props): ReactElement => {
   const classes = classesSlots();
 
+  if ("cardsMap" in props) {
+    return (
+      <ul className={classes.base({ className: props.className })}>
+        {props.cardsMap.map((i) => (
+          <li
+            key={i.id}
+            className={classes.item({
+              status: i.status,
+              isActive: i.isActive,
+            })}
+          />
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ul className={classes.base({ className: props.className })}>
-      {props.cardsMap.map((i) => (
+      {Array.from({ length: props.numberOfCards }).map((_, index) => (
         <li
-          key={i.id}
+          key={index}
           className={classes.item({
-            status: i.status,
-            isActive: i.isActive,
+            status:
+              index < props.numberOfFinishedCards ? "finished" : undefined,
+            isActive: index === props.numberOfFinishedCards,
           })}
         />
       ))}

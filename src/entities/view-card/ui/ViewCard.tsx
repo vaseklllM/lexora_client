@@ -4,6 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
+import { CircleProgress } from "@/shared/ui/CircleProgress";
 import { memo, ReactElement, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
@@ -102,6 +103,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
       {isNativeSound && (
         <div className={classes.headerRow()}>
           <Cerf cefr={props.card.cefr} />
+          <CircleProgress value={20} />
           {props.card.soundUrls.map((soundUrl, idx) => (
             <ButtonIcon
               key={idx}

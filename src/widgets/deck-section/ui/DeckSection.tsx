@@ -30,7 +30,7 @@ const classesSlots = tv({
     base: "bg-base-200 relative shadow-md sm:rounded-xl sm:p-5",
     headerSection: "px-5 pt-5 sm:p-0 sm:pt-0",
     header: "flex items-center gap-6",
-    progressWrapper: "mt-6 flex items-center justify-start md:gap-4",
+    progressWrapper: "mt-6 flex items-center justify-start gap-4",
     progress: "progress progress-primary opacity-80",
     languagesList: "mt-6 flex flex-col gap-3",
     buttonBack: "",

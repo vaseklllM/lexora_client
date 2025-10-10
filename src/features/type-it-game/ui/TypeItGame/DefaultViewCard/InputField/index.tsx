@@ -1,3 +1,4 @@
+import { useIsFirstMount } from "@/features/type-it-game/hooks/useIsFirstMount";
 import { Input } from "@/shared/ui/Input";
 import { CSSProperties, ReactElement, useLayoutEffect, useRef } from "react";
 import { tv } from "tailwind-variants";
@@ -54,10 +55,15 @@ export const InputField = (props: Props): ReactElement => {
     viewVariant,
   });
 
+  const isFirstMount = useIsFirstMount();
+
   useLayoutEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 800);
+    setTimeout(
+      () => {
+        inputRef.current?.focus();
+      },
+      isFirstMount.current ? 800 : 150,
+    );
   }, []);
 
   return (

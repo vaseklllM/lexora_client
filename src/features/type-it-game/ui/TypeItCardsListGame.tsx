@@ -10,6 +10,7 @@ import { useMixCards } from "@/shared/hooks/useMixCards";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
+import { FirstMountProvider } from "../hooks/useIsFirstMount";
 import { TypeItGame } from "./TypeItGame";
 
 const classesSlots = tv({
@@ -46,26 +47,28 @@ export const TypeItCardsListGame = (
 
   return (
     <div className={classes.base({ className: props.className })}>
-      <RepeatCardsStatusBar
-        cardsMap={cardsController.cardsMap}
-        className={classes.statusBar()}
-      />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={cardsController.idx}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          variants={variants}
-          transition={{ duration: 0.3 }}
-          className={classes.content()}
-        >
-          <TypeItGame
-            card={cardsController.active}
-            onNextCard={cardsController.next}
-          />
-        </motion.div>
-      </AnimatePresence>
+      <FirstMountProvider>
+        <RepeatCardsStatusBar
+          cardsMap={cardsController.cardsMap}
+          className={classes.statusBar()}
+        />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={cardsController.idx}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={variants}
+            transition={{ duration: 0.3 }}
+            className={classes.content()}
+          >
+            <TypeItGame
+              card={cardsController.active}
+              onNextCard={cardsController.next}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </FirstMountProvider>
     </div>
   );
 };

@@ -54,7 +54,7 @@ describe("useCardsController", () => {
     );
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([card6]);
   });
@@ -70,12 +70,12 @@ describe("useCardsController", () => {
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([card6]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(mockCallback).toHaveBeenCalled();
     expect(result.current.cards).toEqual([card6]);
@@ -112,12 +112,12 @@ describe("useCardsController", () => {
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([card6, card7, card8, card9, card10]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([
       card11,
@@ -128,12 +128,12 @@ describe("useCardsController", () => {
     ]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([card16, card17, card18, card19]);
     expect(mockCallback).not.toHaveBeenCalled();
     act(() => {
-      result.current.onNextPart();
+      result.current.nextPart();
     });
     expect(result.current.cards).toEqual([card16, card17, card18, card19]);
     expect(mockCallback).toHaveBeenCalled();

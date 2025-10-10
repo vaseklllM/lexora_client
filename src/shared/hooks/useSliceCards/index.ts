@@ -1,1 +1,1 @@
-export { useSliceCards } from "./useSliceCards";
+export { useSliceCards, type FinishCardHandler } from "./useSliceCards";

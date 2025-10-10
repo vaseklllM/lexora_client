@@ -8,7 +8,15 @@ type Props = {
   onFinish?: () => void;
 };
 
-export function useSliceCards(props: Props) {
+export type FinishCardHandler = (card: ICard) => void;
+
+export interface UseSliceCardsResult {
+  cards: ICard[];
+  nextPart: () => void;
+  finishCard: FinishCardHandler;
+}
+
+export function useSliceCards(props: Props): UseSliceCardsResult {
   const [part, setPart] = useState<number>(1);
 
   const activePartCards = useMemo(
@@ -25,8 +33,13 @@ export function useSliceCards(props: Props) {
     setPart((prev) => prev + 1);
   }, [props.cards, part, props.onFinish]);
 
+  const finishCard = useCallback<FinishCardHandler>((card: ICard) => {
+    return card;
+  }, []);
+
   return {
     cards: activePartCards,
-    onNextPart: nextPartHandler,
+    nextPart: nextPartHandler,
+    finishCard,
   };
 }

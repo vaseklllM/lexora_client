@@ -2,6 +2,7 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
+import { FinishCardHandler } from "@/shared/hooks/useSliceCards";
 import { mixArray } from "@/shared/utils/mixArray";
 import {
   memo,
@@ -37,7 +38,7 @@ interface Props {
   className?: string;
   cards: ICard[];
   onFinishPart?: () => void;
-  onFinishReviewCard?: (isGuessed: boolean) => void;
+  onFinishReviewCard?: FinishCardHandler;
 }
 
 export const PairItGameRound = memo((props: Props): ReactElement => {
@@ -155,6 +156,7 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
         const card = props.cards.find((card) => card.id === activeLeft);
         if (card) {
           player.play(card.soundUrls[0]);
+          props.onFinishReviewCard?.(card);
         }
       } else {
         addErrorCards(activeLeft, activeRight);

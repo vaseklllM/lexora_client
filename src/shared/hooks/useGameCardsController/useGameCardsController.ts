@@ -2,7 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-type CardMap = Pick<ICard, "id"> & {
+type CardMap = {
   isActive: boolean;
   status?: "finished" | "mistake";
   card: ICard;
@@ -61,12 +61,13 @@ export function useGameCardsController(
         isMadeMistake: false,
         isFinished: false,
         idx: 0,
-        cardsMap: cards.map((card, idx) => ({
-          id: card.id,
-          isActive: idx === 0,
-          status: undefined,
-          card,
-        })),
+        cardsMap: cards.map(
+          (card, idx): CardMap => ({
+            isActive: idx === 0,
+            status: undefined,
+            card,
+          }),
+        ),
       };
     })(),
   );
@@ -80,30 +81,29 @@ export function useGameCardsController(
 
       setState((prevState) => {
         if (!isGuessed || prevState.isMadeMistake) {
-          let activeCardIdx = prevState.activeCardIdx + 1;
+          const prevActiveCardIdx = prevState.activeCardIdx;
+          let newActiveCardIdx = prevActiveCardIdx + 1;
 
-          if (prevState.activeCardIdx === prevState.cards.length - 1) {
-            activeCardIdx = 0;
+          if (prevActiveCardIdx === prevState.cards.length - 1) {
+            newActiveCardIdx = 0;
           }
 
-          const activeCard = prevState.cards[activeCardIdx]!;
+          const activeCard = prevState.cards[newActiveCardIdx]!;
 
           return {
             ...prevState,
-            activeCardIdx,
+            activeCardIdx: newActiveCardIdx,
             activeCard,
             isMadeMistake: false,
             idx: prevState.idx + 1,
-            cardsMap: prevState.cardsMap.map((card) => {
-              if (card.id === activeCard.id) {
-                return { ...card, isActive: true };
+            cardsMap: prevState.cardsMap.map((map) => {
+              if (map.card.id === activeCard.id) {
+                return { ...map, isActive: true };
               }
 
-              if (card.id === prevState.activeCard.id) {
-                return { ...card, isActive: false, status: "mistake" };
-              }
+              if (!map.isActive) return map;
 
-              return card;
+              return { ...map, isActive: false, status: "mistake" };
             }),
           };
         }
@@ -132,12 +132,9 @@ export function useGameCardsController(
             ...prevState,
             isFinished: true,
             finishedCards,
-            cardsMap: prevState.cardsMap.map((card) => {
-              if (card.id === prevState.activeCard.id) {
-                return { ...card, isActive: true, status: "finished" };
-              }
-
-              return card;
+            cardsMap: prevState.cardsMap.map((map) => {
+              if (!map.isActive) return map;
+              return { ...map, status: "finished" };
             }),
           };
         }
@@ -149,16 +146,14 @@ export function useGameCardsController(
           activeCardIdx,
           activeCard,
           idx: prevState.idx + 1,
-          cardsMap: prevState.cardsMap.map((card) => {
-            if (card.id === activeCard.id) {
-              return { ...card, isActive: true };
+          cardsMap: prevState.cardsMap.map((map) => {
+            if (map.card.id === activeCard.id) {
+              return { ...map, isActive: true };
             }
 
-            if (card.id === prevState.activeCard.id) {
-              return { ...card, isActive: false, status: "finished" };
-            }
+            if (!map.isActive) return map;
 
-            return card;
+            return { ...map, isActive: false, status: "finished" };
           }),
         };
       });
@@ -179,14 +174,20 @@ export function useGameCardsController(
     }
   }, [state.isFinished, props.onFinish]);
 
-  const activeCard = useMemo((): ICard => {
-    return state.cardsMap.find((card) => card.isActive)!.card;
-  }, [state.cardsMap, props.cards]);
+  const activeCard = useMemo(
+    (): ICard => state.cardsMap.find((card) => card.isActive)!.card,
+    [state.cardsMap, props.cards],
+  );
+
+  const isLastCard = useMemo(
+    () => state.cardsMap.filter((map) => map.status !== "finished").length <= 1,
+    [state.cardsMap],
+  );
 
   return {
     active: activeCard,
     next,
-    isLastCard: state.cards.length <= 1,
+    isLastCard,
     makeMistake,
     isMadeMistake: state.isMadeMistake,
     idx: state.idx,

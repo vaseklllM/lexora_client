@@ -35,7 +35,7 @@ export const RepeatCardsStatusBar = (props: Props): ReactElement => {
     <ul className={classes.base({ className: props.className })}>
       {props.cardsMap.map((i) => (
         <li
-          key={i.id}
+          key={i.card.id}
           className={classes.item({
             status: i.status,
             isActive: i.isActive,

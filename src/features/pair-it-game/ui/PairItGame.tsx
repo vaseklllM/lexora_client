@@ -1,6 +1,7 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { useMixCards } from "@/shared/hooks/useMixCards";
 import { useSliceCards } from "@/shared/hooks/useSliceCards";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
@@ -20,7 +21,11 @@ interface Props {
 
 export const PairItGame = memo((props: Props): ReactElement => {
   const classes = classesSlots();
-  const cardsController = useSliceCards(props);
+  const mixedCards = useMixCards(props.cards);
+  const cardsController = useSliceCards({
+    cards: mixedCards,
+    onFinish: props.onFinish,
+  });
 
   return (
     <div className={classes.base({ className: props.className })}>

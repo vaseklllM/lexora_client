@@ -23,10 +23,6 @@ import { renderHook } from "@testing-library/react";
 import { act } from "react";
 import { useSliceCards } from "./useSliceCards";
 
-jest.mock("@/shared/utils/mixArray", () => ({
-  mixArray: jest.fn((arr) => arr),
-}));
-
 describe("useCardsController", () => {
   it("should return empty array", () => {
     const { result } = renderHook(() => useSliceCards({ cards: [] }));

@@ -27,6 +27,7 @@ export const PairItGame = memo((props: Props): ReactElement => {
 
   const cardsController = useSliceCards({
     cards: mixedCards,
+    cardsPerPart: 5,
   });
 
   return (

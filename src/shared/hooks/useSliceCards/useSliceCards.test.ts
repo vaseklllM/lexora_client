@@ -138,4 +138,50 @@ describe("useCardsController", () => {
     expect(result.current.cards).toEqual([card16, card17, card18, card19]);
     expect(mockCallback).toHaveBeenCalled();
   });
+
+  it("should return cards when cardsPerPart is 2", () => {
+    const mockCallback = jest.fn();
+    const { result } = renderHook(() =>
+      useSliceCards({
+        cards: [card1, card2, card3, card4, card5, card6],
+        cardsPerPart: 2,
+        onFinish: mockCallback,
+      }),
+    );
+    expect(result.current.cards).toEqual([card1, card2]);
+    act(() => {
+      result.current.nextPart();
+    });
+    expect(result.current.cards).toEqual([card3, card4]);
+    act(() => {
+      result.current.nextPart();
+    });
+    expect(result.current.cards).toEqual([card5, card6]);
+    expect(mockCallback).not.toHaveBeenCalled();
+    act(() => {
+      result.current.nextPart();
+    });
+    expect(mockCallback).toHaveBeenCalled();
+  });
+
+  it("should return cards when cardsPerPart is 3", () => {
+    const mockCallback = jest.fn();
+    const { result } = renderHook(() =>
+      useSliceCards({
+        cards: [card1, card2, card3, card4, card5],
+        cardsPerPart: 3,
+        onFinish: mockCallback,
+      }),
+    );
+    expect(result.current.cards).toEqual([card1, card2, card3]);
+    act(() => {
+      result.current.nextPart();
+    });
+    expect(result.current.cards).toEqual([card4, card5]);
+    expect(mockCallback).not.toHaveBeenCalled();
+    act(() => {
+      result.current.nextPart();
+    });
+    expect(mockCallback).toHaveBeenCalled();
+  });
 });

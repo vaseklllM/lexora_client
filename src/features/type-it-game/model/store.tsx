@@ -14,7 +14,6 @@ type ViewVariant = "default" | "unrightAnswer" | "help";
 
 type State = {
   card: ICard;
-  // finishedCards: string[];
   translationInput: string;
   isDisabledButtonHelp: boolean;
   isDisabledButtonCheck: boolean;
@@ -29,7 +28,6 @@ type Actions = {
   setTranslationInput: (translationInput: string) => void;
   clearTranslationInput: () => void;
   checkTranslation: () => Promise<void>;
-  // addFinishedCard: (cardId: string) => void;
   playUnrightAnswerAnimation: () => Promise<void>;
   setIsDisabledButtonHelp: (isDisabled: boolean) => void;
   setIsDisabledButtonCheck: (isDisabled: boolean) => void;
@@ -49,7 +47,6 @@ function initStore(props: TypeItGameProps) {
     return {
       card: props.card,
       translationInput: "",
-      // finishedCards: [],
       isDisabledButtonHelp: false,
       isDisabledButtonCheck: false,
       isDisabledButtonTryAgain: false,
@@ -63,13 +60,6 @@ function initStore(props: TypeItGameProps) {
       clearTranslationInput() {
         set({ translationInput: "" });
       },
-      // addFinishedCard(cardId) {
-      //   set((store) => ({
-      //     finishedCards: store.finishedCards.some((id) => id === cardId)
-      //       ? store.finishedCards
-      //       : [...store.finishedCards, cardId],
-      //   }));
-      // },
       setIsDisabledButtonHelp(isDisabledButtonHelp) {
         set({ isDisabledButtonHelp });
       },
@@ -110,7 +100,6 @@ function initStore(props: TypeItGameProps) {
           )
         ) {
           await player.playAsync(store.card.soundUrls[0]);
-          // store.addFinishedCard(store.card.id);
           store.clearTranslationInput();
           props.onNextCard?.(store.isGuessed);
         } else {

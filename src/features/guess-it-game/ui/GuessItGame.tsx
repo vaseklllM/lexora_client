@@ -3,6 +3,7 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import { useGameCardsController } from "@/shared/hooks/useGameCardsController";
+import { useMixCards } from "@/shared/hooks/useMixCards";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";
@@ -58,8 +59,9 @@ export const GuessItGame = (props: Props): ReactElement => {
   const [isMixOptions, setIsMixOptions] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
+  const mixedCards = useMixCards(props.cards);
   const cardsController = useGameCardsController({
-    cards: props.cards,
+    cards: mixedCards,
     onFinish: props.onFinish,
   });
 

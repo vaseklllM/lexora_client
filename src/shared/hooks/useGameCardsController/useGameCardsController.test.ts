@@ -3,10 +3,6 @@ import { card1, card2, card3, card4, card5 } from "@/shared/test/cards";
 import { act, renderHook } from "@testing-library/react";
 import { useGameCardsController } from "./useGameCardsController";
 
-jest.mock("@/shared/utils/mixArray", () => ({
-  mixArray: jest.fn((arr) => arr),
-}));
-
 describe("useGameCardsController", () => {
   it("should throw error when cards array is empty", () => {
     expect(() => {

@@ -1,5 +1,4 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { mixArray } from "@/shared/utils/mixArray";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type CardMap = {
@@ -46,13 +45,11 @@ export function useGameCardsController(
 
   const [state, setState] = useState<TState>(
     ((): TState => {
-      const cards = mixArray(props.cards);
-
       return {
         isMadeMistake: false,
         isFinished: false,
         idx: 0,
-        cardsMap: cards.map(
+        cardsMap: props.cards.map(
           (card, idx): CardMap => ({
             isActive: idx === 0,
             status: undefined,

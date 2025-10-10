@@ -3,6 +3,7 @@ import {
   GameCardsControllerFinishReviewCardHandler,
   useGameCardsController,
 } from "@/shared/hooks/useGameCardsController";
+import { useMixCards } from "@/shared/hooks/useMixCards";
 import { player } from "@/shared/hooks/usePlayer";
 import { sleep } from "@/shared/utils/sleep";
 import { useCallback } from "react";
@@ -26,8 +27,9 @@ export function useActiveCard({
   setIsUserShowedTranslation,
   onFinishReviewCard,
 }: Props) {
+  const mixedCards = useMixCards(cards);
   const cardsController = useGameCardsController({
-    cards,
+    cards: mixedCards,
     onFinish,
     onFinishReviewCard,
   });

@@ -11,6 +11,7 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { TypeItGame } from "./TypeItGame";
+import { useMixCards } from "@/shared/hooks/useMixCards";
 
 const classesSlots = tv({
   slots: {
@@ -38,8 +39,9 @@ export const TypeItCardsListGame = (
   props: TypeItCardsListGameProps,
 ): ReactElement => {
   const classes = classesSlots({});
+  const mixedCards = useMixCards(props.cards);
   const cardsController = useGameCardsController({
-    cards: props.cards,
+    cards: mixedCards,
     onFinishReviewCard: props.onFinishReviewCard,
     onFinish: props.onFinish,
   });

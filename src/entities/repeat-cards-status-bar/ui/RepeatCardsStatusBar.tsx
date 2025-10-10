@@ -1,4 +1,3 @@
-import { GameCardsControllerResult } from "@/shared/hooks/useGameCardsController";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 
@@ -24,8 +23,15 @@ const classesSlots = tv({
   },
 });
 
-interface Props extends Pick<GameCardsControllerResult, "cardsMap"> {
+export type CardMap = {
+  id: string;
+  isActive: boolean;
+  status?: "finished" | "mistake";
+};
+
+interface Props {
   className?: string;
+  cardsMap: CardMap[];
 }
 
 export const RepeatCardsStatusBar = (props: Props): ReactElement => {
@@ -35,7 +41,7 @@ export const RepeatCardsStatusBar = (props: Props): ReactElement => {
     <ul className={classes.base({ className: props.className })}>
       {props.cardsMap.map((i) => (
         <li
-          key={i.card.id}
+          key={i.id}
           className={classes.item({
             status: i.status,
             isActive: i.isActive,

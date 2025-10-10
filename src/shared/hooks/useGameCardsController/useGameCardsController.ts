@@ -1,7 +1,8 @@
 import { ICard } from "@/api/schemas/card.schema";
+import { CardMap } from "@/entities/repeat-cards-status-bar";
 import { useCallback, useMemo, useState } from "react";
 
-type CardMap = {
+type CustomCardMap = {
   isActive: boolean;
   status?: "finished" | "mistake";
   card: ICard;
@@ -32,7 +33,7 @@ type Props = {
 type TState = {
   idx: number;
   isMadeMistake: boolean;
-  cardsMap: CardMap[];
+  cardsMap: CustomCardMap[];
 };
 
 export function useGameCardsController(
@@ -48,7 +49,7 @@ export function useGameCardsController(
         isMadeMistake: false,
         idx: 0,
         cardsMap: props.cards.map(
-          (card, idx): CardMap => ({
+          (card, idx): CustomCardMap => ({
             isActive: idx === 0,
             status: undefined,
             card,
@@ -89,7 +90,7 @@ export function useGameCardsController(
           }),
         }));
       } else {
-        const newCardsMap = state.cardsMap.map((map): CardMap => {
+        const newCardsMap = state.cardsMap.map((map): CustomCardMap => {
           if (!map.isActive) return map;
           return { ...map, status: "finished" };
         });
@@ -134,6 +135,18 @@ export function useGameCardsController(
     [state.cardsMap],
   );
 
+  const cardsMap = useMemo(
+    () =>
+      state.cardsMap.map(
+        (map): CardMap => ({
+          id: map.card.id,
+          isActive: map.isActive,
+          status: map.status,
+        }),
+      ),
+    [state.cardsMap],
+  );
+
   return {
     active: activeCard,
     next,
@@ -141,11 +154,11 @@ export function useGameCardsController(
     makeMistake,
     isMadeMistake: state.isMadeMistake,
     idx: state.idx,
-    cardsMap: state.cardsMap,
+    cardsMap,
   };
 }
 
-function getNextActiveCardId(cardsMap: CardMap[]): string {
+function getNextActiveCardId(cardsMap: CustomCardMap[]): string {
   const activeIdx = cardsMap.findIndex((map) => map.isActive);
 
   const activeCardInLastMap = cardsMap

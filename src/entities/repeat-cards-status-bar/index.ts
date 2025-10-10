@@ -1,1 +1,1 @@
-export { RepeatCardsStatusBar } from "./ui/RepeatCardsStatusBar";
+export { RepeatCardsStatusBar, type CardMap } from "./ui/RepeatCardsStatusBar";

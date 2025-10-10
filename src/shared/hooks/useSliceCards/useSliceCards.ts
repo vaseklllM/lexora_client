@@ -20,6 +20,7 @@ export interface UseSliceCardsResult {
 export function useSliceCards(props: Props): UseSliceCardsResult {
   const { cardsPerPart = CARDS_PER_PART } = props;
   const [part, setPart] = useState<number>(1);
+  const [_finishedCardIds, setFinishedCardIds] = useState<string[]>([]);
 
   const activePartCards = useMemo(
     () => props.cards.slice((part - 1) * cardsPerPart, part * cardsPerPart),
@@ -35,9 +36,14 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
     setPart((prev) => prev + 1);
   }, [props.cards, part, props.onFinish, cardsPerPart]);
 
-  const finishCard = useCallback<FinishCardHandler>((card: ICard) => {
-    return card;
-  }, []);
+  const finishCard = useCallback<FinishCardHandler>(
+    (card: ICard) => {
+      setFinishedCardIds((prev) =>
+        prev.includes(card.id) ? prev : [...prev, card.id],
+      );
+    },
+    [setFinishedCardIds],
+  );
 
   return {
     cards: activePartCards,

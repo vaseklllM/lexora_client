@@ -6,6 +6,7 @@ import { useSliceCards } from "@/shared/hooks/useSliceCards";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { PairItGameRound } from "./PairItGameRound";
+import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 
 const classesSlots = tv({
   slots: {
@@ -32,10 +33,7 @@ export const PairItGame = memo((props: Props): ReactElement => {
 
   return (
     <div className={classes.base({ className: props.className })}>
-      {/* <RepeatCardsStatusBar
-        cardsMap={gameCardsController.cardsMap}
-        className={classes.statusBar()}
-      /> */}
+      <RepeatCardsStatusBar cardsMap={[]} className={classes.statusBar()} />
       <PairItGameRound
         cards={cardsController.cards}
         onFinishPart={cardsController.nextPart}

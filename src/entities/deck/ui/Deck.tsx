@@ -1,5 +1,6 @@
 import { IDeck } from "@/api/schemas/deck.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
+import { Progress } from "@/entities/progress";
 import { ButtonPlay } from "@/shared/ui/ButtonPlay";
 import { countOf } from "@/shared/utils/count-of";
 import { HTMLAttributes, ReactElement, Ref } from "react";
@@ -12,25 +13,10 @@ const classesSlots = tv({
     languageIcon: "text-2xl",
     name: "text-base-content/100 w-[calc(100%-55px)] truncate text-sm font-medium",
     content: "flex items-center gap-2",
-    progressContent: "w-full",
-    progressContentText: "flex items-center justify-between gap-2",
-    numberOfCards: "text-sm font-medium",
-    progress: "progress progress-primary opacity-80",
-    numberOfCardsProgress: "text-sm font-medium",
+
     dottedButton: "absolute top-2 right-2",
   },
   variants: {
-    isCards: {
-      true: {
-        numberOfCards: "text-base-content/80",
-        numberOfCardsProgress: "text-base-content/60",
-      },
-      false: {
-        numberOfCards: "text-base-content/20",
-        numberOfCardsProgress: "text-base-content/20",
-        progress: "bg-base-content/10",
-      },
-    },
     hover: {
       true: "bg-gray-200 dark:bg-gray-700",
       false: "",
@@ -59,7 +45,6 @@ export const Deck = (props: Props): ReactElement => {
   } = props;
 
   const classes = classesSlots({
-    isCards: deck.numberOfCards > 0,
     hover,
   });
 
@@ -79,21 +64,11 @@ export const Deck = (props: Props): ReactElement => {
         <p className={classes.name()}>{deck.name}</p>
       </div>
       <div className={classes.content()}>
-        <div className={classes.progressContent()}>
-          <div className={classes.progressContentText()}>
-            <p className={classes.numberOfCards()}>
-              {countOf(deck.numberOfCards, "card")}
-            </p>
-            <p className={classes.numberOfCardsProgress()}>
-              {props.deck.masteryScore}%
-            </p>
-          </div>
-          <progress
-            className={classes.progress()}
-            value={props.deck.masteryScore}
-            max="100"
-          ></progress>
-        </div>
+        <Progress
+          percent={props.deck.masteryScore}
+          progressOf={countOf(deck.numberOfCards, "card")}
+          disabled={deck.numberOfCards <= 0}
+        />
         <ButtonPlay disabled={deck.numberOfCards === 0} onClick={onPlay} />
       </div>
     </div>

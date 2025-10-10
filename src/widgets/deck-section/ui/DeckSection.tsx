@@ -11,6 +11,7 @@ import {
   EditableTextSaveHandler,
 } from "@/entities/editable-text";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
+import { Progress } from "@/entities/progress";
 import { AddCard } from "@/features/add-card";
 import { ButtonBack } from "@/features/button-back";
 import { ViewCard } from "@/features/view-card";
@@ -19,6 +20,7 @@ import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { Chip } from "@/shared/ui/chip";
+import { countOf } from "@/shared/utils/count-of";
 import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
 import { ButtonPlay } from "./ButtonPlay";
@@ -28,9 +30,9 @@ const classesSlots = tv({
     base: "bg-base-200 relative shadow-md sm:rounded-xl sm:p-5",
     headerSection: "px-5 pt-5 sm:p-0 sm:pt-0",
     header: "flex items-center gap-6",
-    languagesSection:
-      "mt-6 flex items-center justify-between md:justify-start md:gap-4",
-    languagesList: "flex flex-col gap-3",
+    progressWrapper: "mt-6 flex items-center justify-start md:gap-4",
+    progress: "progress progress-primary opacity-80",
+    languagesList: "mt-6 flex flex-col gap-3",
     buttonBack: "",
     breadcrumbs: "",
     name: "mt-6",
@@ -106,23 +108,28 @@ export const DeckSection = (props: Props): ReactElement => {
           placeholder="Enter deck name"
           onSave={saveDeckName}
         />
-        <div className={classes.languagesSection()}>
-          <div className={classes.languagesList()}>
-            <p className={classes.language()}>
-              <span className="text-base-content/70">I learn:</span>{" "}
-              <Chip>
-                {props.deck.languageWhatILearn.name}{" "}
-                {props.deck.languageWhatILearn.iconSymbol}
-              </Chip>
-            </p>
-            <p className={classes.language()}>
-              <span className="text-base-content/70">I know:</span>{" "}
-              <Chip>
-                {props.deck.languageWhatIKnow.name}{" "}
-                {props.deck.languageWhatIKnow.iconSymbol}
-              </Chip>
-            </p>
-          </div>
+        <div className={classes.languagesList()}>
+          <p className={classes.language()}>
+            <span className="text-base-content/70">I learn:</span>{" "}
+            <Chip>
+              {props.deck.languageWhatILearn.name}{" "}
+              {props.deck.languageWhatILearn.iconSymbol}
+            </Chip>
+          </p>
+          <p className={classes.language()}>
+            <span className="text-base-content/70">I know:</span>{" "}
+            <Chip>
+              {props.deck.languageWhatIKnow.name}{" "}
+              {props.deck.languageWhatIKnow.iconSymbol}
+            </Chip>
+          </p>
+        </div>
+        <div className={classes.progressWrapper()}>
+          <Progress
+            percent={props.deck.masteryScore}
+            progressOf={countOf(props.deck.numberOfCards, "card")}
+            disabled={props.deck.numberOfCards <= 0}
+          />
           <ButtonPlay deckId={props.deck.id} />
         </div>
       </div>

@@ -180,7 +180,11 @@ export const StepComponent = (
               transition={transition}
               className={classes.step()}
             >
-              <GuessItGame cards={cards} onFinish={finishGuessItStepHandler} />
+              <GuessItGame
+                cards={cards}
+                onFinish={finishGuessItStepHandler}
+                onFinishReviewCard={finishReviewCard.guessItCardHandler}
+              />
             </motion.div>
           )}
           {step === Step.RECALL_IT && (

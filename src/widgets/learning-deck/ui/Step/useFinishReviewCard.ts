@@ -53,9 +53,17 @@ export const useFinishReviewCard = (props: StepComponentProps) => {
     [finishReviewCardHandler],
   );
 
+  const guessItCardHandler = useCallback<SliceCardsFinishReviewCardHandler>(
+    (args) => {
+      finishReviewCardHandler("guess_it", args);
+    },
+    [finishReviewCardHandler],
+  );
+
   return {
     typeItCardHandler,
     recallItCardHandler,
     pairItCardHandler,
+    guessItCardHandler,
   };
 };

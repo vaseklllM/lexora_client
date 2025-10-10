@@ -36,10 +36,14 @@ type Props = {
   | { numberOfFinishedCards: number; numberOfCards: number }
 );
 
-export const RepeatCardsStatusBar = (props: Props): ReactElement => {
+export const RepeatCardsStatusBar = (props: Props): ReactElement | null => {
   const classes = classesSlots();
 
   if ("cardsMap" in props) {
+    if (props.cardsMap.length <= 1) {
+      return null;
+    }
+
     return (
       <ul className={classes.base({ className: props.className })}>
         {props.cardsMap.map((i) => (

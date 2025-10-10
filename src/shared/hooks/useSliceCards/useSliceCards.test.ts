@@ -21,7 +21,7 @@ import {
 } from "@/shared/test/cards";
 import { renderHook } from "@testing-library/react";
 import { act } from "react";
-import { useCardsController } from "./useCardsController";
+import { useSliceCards } from "./useSliceCards";
 
 jest.mock("@/shared/utils/mixArray", () => ({
   mixArray: jest.fn((arr) => arr),
@@ -29,32 +29,32 @@ jest.mock("@/shared/utils/mixArray", () => ({
 
 describe("useCardsController", () => {
   it("should return empty array", () => {
-    const { result } = renderHook(() => useCardsController({ cards: [] }));
+    const { result } = renderHook(() => useSliceCards({ cards: [] }));
     expect(result.current.cards).toEqual([]);
   });
 
   it("should return one card", () => {
-    const { result } = renderHook(() => useCardsController({ cards: [card1] }));
+    const { result } = renderHook(() => useSliceCards({ cards: [card1] }));
     expect(result.current.cards).toEqual([card1]);
   });
 
   it("should return all five cards", () => {
     const { result } = renderHook(() =>
-      useCardsController({ cards: [card1, card2, card3, card4, card5] }),
+      useSliceCards({ cards: [card1, card2, card3, card4, card5] }),
     );
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
   });
 
   it("should return first five cards", () => {
     const { result } = renderHook(() =>
-      useCardsController({ cards: [card1, card2, card3, card4, card5, card6] }),
+      useSliceCards({ cards: [card1, card2, card3, card4, card5, card6] }),
     );
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
   });
 
   it("should return one card from second part", () => {
     const { result } = renderHook(() =>
-      useCardsController({ cards: [card1, card2, card3, card4, card5, card6] }),
+      useSliceCards({ cards: [card1, card2, card3, card4, card5, card6] }),
     );
     expect(result.current.cards).toEqual([card1, card2, card3, card4, card5]);
     act(() => {
@@ -66,7 +66,7 @@ describe("useCardsController", () => {
   it("should call onFinish if the all cards are guessed", () => {
     const mockCallback = jest.fn();
     const { result } = renderHook(() =>
-      useCardsController({
+      useSliceCards({
         cards: [card1, card2, card3, card4, card5, card6],
         onFinish: mockCallback,
       }),
@@ -88,7 +88,7 @@ describe("useCardsController", () => {
   it("should return all cards from the third part", () => {
     const mockCallback = jest.fn();
     const { result } = renderHook(() =>
-      useCardsController({
+      useSliceCards({
         cards: [
           card1,
           card2,

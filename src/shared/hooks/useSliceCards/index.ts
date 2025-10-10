@@ -1,0 +1,1 @@
+export { useSliceCards } from "./useSliceCards";

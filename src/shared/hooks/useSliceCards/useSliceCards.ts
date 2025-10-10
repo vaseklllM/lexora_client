@@ -9,7 +9,7 @@ type Props = {
   onFinish?: () => void;
 };
 
-export function useCardsController(props: Props) {
+export function useSliceCards(props: Props) {
   const [part, setPart] = useState<number>(1);
 
   const mixedCards = useMemo(() => mixArray(props.cards), []);

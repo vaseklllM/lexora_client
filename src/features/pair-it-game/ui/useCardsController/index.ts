@@ -1,1 +1,0 @@
-export { useCardsController } from "./useCardsController";

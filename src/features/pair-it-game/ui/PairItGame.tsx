@@ -1,10 +1,10 @@
 "use client";
 
 import { ICard } from "@/api/schemas/card.schema";
+import { useSliceCards } from "@/shared/hooks/useSliceCards";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { PairItGameRound } from "./PairItGameRound";
-import { useCardsController } from "./useCardsController";
 
 const classesSlots = tv({
   slots: {
@@ -20,8 +20,7 @@ interface Props {
 
 export const PairItGame = memo((props: Props): ReactElement => {
   const classes = classesSlots();
-
-  const cardsController = useCardsController(props);
+  const cardsController = useSliceCards(props);
 
   return (
     <div className={classes.base({ className: props.className })}>

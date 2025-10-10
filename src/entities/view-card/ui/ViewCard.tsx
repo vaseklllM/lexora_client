@@ -103,7 +103,7 @@ export const ViewCard = memo((props: Props): ReactElement => {
       {isNativeSound && (
         <div className={classes.headerRow()}>
           <Cerf cefr={props.card.cefr} />
-          <CircleProgress value={20} />
+          <CircleProgress value={props.card.masteryScore} />
           {props.card.soundUrls.map((soundUrl, idx) => (
             <ButtonIcon
               key={idx}

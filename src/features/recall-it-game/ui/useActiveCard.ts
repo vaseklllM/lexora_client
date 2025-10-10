@@ -1,5 +1,8 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { useGameCardsController } from "@/features/game-cards-controller";
+import {
+  GameCardsControllerFinishReviewCardHandler,
+  useGameCardsController,
+} from "@/features/game-cards-controller";
 import { player } from "@/shared/hooks/usePlayer";
 import { sleep } from "@/shared/utils/sleep";
 import { useCallback } from "react";
@@ -11,6 +14,7 @@ interface Props {
   setIsBlurTranslation?: (isBlur: boolean) => void;
   setIsTimerExpired?: (isTimerExpired: boolean) => void;
   setIsUserShowedTranslation?: (isUserShowedTranslation: boolean) => void;
+  onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
 }
 
 export function useActiveCard({
@@ -20,10 +24,12 @@ export function useActiveCard({
   setIsBlurTranslation,
   setIsTimerExpired,
   setIsUserShowedTranslation,
+  onFinishReviewCard,
 }: Props) {
   const cardsController = useGameCardsController({
     cards,
     onFinish,
+    onFinishReviewCard,
   });
 
   const nextCard = useCallback(

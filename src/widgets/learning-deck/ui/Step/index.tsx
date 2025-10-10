@@ -194,6 +194,7 @@ export const StepComponent = (
               <RecallItGame
                 cards={cards}
                 onFinish={finishRecallItStepHandler}
+                onFinishReviewCard={finishReviewCard.recallItCardHandler}
               />
             </motion.div>
           )}

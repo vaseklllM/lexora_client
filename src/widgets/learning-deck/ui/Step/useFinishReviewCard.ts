@@ -6,6 +6,7 @@ import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { GameCardsControllerFinishReviewCardHandler } from "@/features/game-cards-controller";
 import { useCallback } from "react";
 import { StepComponentProps } from ".";
+import { useLearningDeckStore } from "../../model/store";
 
 export const useFinishReviewCard = (props: StepComponentProps) => {
   const finishReviewCardHandler = useCallback(
@@ -13,6 +14,10 @@ export const useFinishReviewCard = (props: StepComponentProps) => {
       typeOfStrategy: FinishReviewCardTypeOfStrategy,
       args: Parameters<GameCardsControllerFinishReviewCardHandler>[0],
     ) => {
+      const store = useLearningDeckStore.getState();
+
+      if (store.mode !== "repeat") return;
+
       await finishReviewCard({
         cardId: args.card.id,
         isCorrectAnswer: args.isGuessed,
@@ -32,7 +37,16 @@ export const useFinishReviewCard = (props: StepComponentProps) => {
       [finishReviewCardHandler],
     );
 
+  const recallItCardHandler =
+    useCallback<GameCardsControllerFinishReviewCardHandler>(
+      (args) => {
+        finishReviewCardHandler("recall_it", args);
+      },
+      [finishReviewCardHandler],
+    );
+
   return {
     typeItCardHandler,
+    recallItCardHandler,
   };
 };

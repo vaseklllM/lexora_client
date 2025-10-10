@@ -2,6 +2,7 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
+import { GameCardsControllerFinishReviewCardHandler } from "@/features/game-cards-controller";
 import { player } from "@/shared/hooks/usePlayer";
 import { Button } from "@/shared/ui/Button";
 import { TimerButton } from "@/shared/ui/TimerButton";
@@ -43,6 +44,7 @@ interface Props {
   className?: string;
   cards: ICard[];
   onFinish?: () => void;
+  onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
 }
 
 export const RecallItGame = (props: Props): ReactElement => {
@@ -59,6 +61,7 @@ export const RecallItGame = (props: Props): ReactElement => {
     setIsBlurTranslation,
     setIsTimerExpired,
     setIsUserShowedTranslation,
+    onFinishReviewCard: props.onFinishReviewCard,
   });
 
   const classes = classesSlots({

@@ -41,6 +41,7 @@ export const TypeItCardsListGame = (
   const cardsController = useGameCardsController({
     cards: props.cards,
     onFinishReviewCard: props.onFinishReviewCard,
+    onFinish: props.onFinish,
   });
 
   return (

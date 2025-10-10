@@ -8,7 +8,7 @@ import { EditableTextError } from "../model/EditableTextError";
 
 const classesSlots = tv({
   slots: {
-    base: "relative flex w-fit gap-2",
+    base: "relative flex w-fit items-center gap-2",
     name: "text-base-content/100 text-xl font-light",
     nameInput: "",
     buttonEdit: "",

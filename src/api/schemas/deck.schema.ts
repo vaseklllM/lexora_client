@@ -12,6 +12,7 @@ export const deckSchema = v.object({
   numberOfCardsLearned: v.number(),
   languageWhatIKnow: languageSchema,
   languageWhatILearn: languageSchema,
+  masteryScore: v.pipe(v.number(), v.minValue(0), v.maxValue(100)),
 });
 
 export type IDeck = v.InferOutput<typeof deckSchema>;

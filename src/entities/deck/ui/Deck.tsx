@@ -2,7 +2,6 @@ import { IDeck } from "@/api/schemas/deck.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
 import { ButtonPlay } from "@/shared/ui/ButtonPlay";
 import { countOf } from "@/shared/utils/count-of";
-import { PercentMath } from "@/shared/utils/percent-math";
 import { HTMLAttributes, ReactElement, Ref } from "react";
 import { tv } from "tailwind-variants";
 
@@ -64,11 +63,6 @@ export const Deck = (props: Props): ReactElement => {
     hover,
   });
 
-  const numberOfCardsProgress = PercentMath.calculate(
-    deck.numberOfCards,
-    deck.numberOfCardsLearned,
-  );
-
   return (
     <div {...lastProps} className={classes.base({ className })}>
       <DropdownMenu
@@ -91,12 +85,12 @@ export const Deck = (props: Props): ReactElement => {
               {countOf(deck.numberOfCards, "card")}
             </p>
             <p className={classes.numberOfCardsProgress()}>
-              {numberOfCardsProgress}%
+              {props.deck.masteryScore}%
             </p>
           </div>
           <progress
             className={classes.progress()}
-            value={numberOfCardsProgress}
+            value={props.deck.masteryScore}
             max="100"
           ></progress>
         </div>

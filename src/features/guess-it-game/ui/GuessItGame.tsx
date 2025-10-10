@@ -2,7 +2,10 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
-import { useGameCardsController } from "@/shared/hooks/useGameCardsController";
+import {
+  GameCardsControllerFinishReviewCardHandler,
+  useGameCardsController,
+} from "@/shared/hooks/useGameCardsController";
 import { useMixCards } from "@/shared/hooks/useMixCards";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
@@ -53,6 +56,7 @@ interface Props {
   className?: string;
   cards: ICard[];
   onFinish?: () => void;
+  onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
 }
 
 export const GuessItGame = (props: Props): ReactElement => {
@@ -63,6 +67,7 @@ export const GuessItGame = (props: Props): ReactElement => {
   const cardsController = useGameCardsController({
     cards: mixedCards,
     onFinish: props.onFinish,
+    onFinishReviewCard: props.onFinishReviewCard,
   });
 
   const classes = classesSlots({
@@ -76,10 +81,12 @@ export const GuessItGame = (props: Props): ReactElement => {
     setIsMixOptions((v) => !v);
   }, []);
 
-  const options = useMemo(
-    () => mixArray(props.cards),
-    [props.cards, isMixOptions],
-  );
+  const options = useMemo(() => {
+    const mixedCards = mixArray(
+      props.cards.filter((card) => card.id !== cardsController.active.id),
+    );
+    return mixArray([cardsController.active, ...mixedCards.slice(0, 4)]);
+  }, [props.cards, cardsController.active, isMixOptions]);
 
   return (
     <div className={classes.base({ className: props.className })}>

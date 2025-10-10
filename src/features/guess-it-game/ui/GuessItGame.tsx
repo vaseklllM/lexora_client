@@ -2,7 +2,7 @@
 
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
-import { useGameCardsController } from "@/features/game-cards-controller";
+import { useGameCardsController } from "@/shared/hooks/useGameCardsController";
 import { player } from "@/shared/hooks/usePlayer";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { Cerf } from "@/shared/ui/Cefr";

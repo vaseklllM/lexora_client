@@ -5,7 +5,7 @@ import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import {
   GameCardsControllerFinishReviewCardHandler,
   useGameCardsController,
-} from "@/features/game-cards-controller";
+} from "@/shared/hooks/useGameCardsController";
 import { GameMode } from "@/shared/types/Game";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement } from "react";

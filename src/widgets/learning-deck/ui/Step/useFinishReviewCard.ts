@@ -3,7 +3,7 @@ import {
   FinishReviewCardTypeOfStrategy,
 } from "@/api/deck/finish-review-card";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
-import { GameCardsControllerFinishReviewCardHandler } from "@/features/game-cards-controller";
+import { GameCardsControllerFinishReviewCardHandler } from "@/shared/hooks/useGameCardsController";
 import { useCallback } from "react";
 import { StepComponentProps } from ".";
 import { useLearningDeckStore } from "../../model/store";

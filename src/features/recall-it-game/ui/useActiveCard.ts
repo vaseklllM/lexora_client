@@ -2,7 +2,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import {
   GameCardsControllerFinishReviewCardHandler,
   useGameCardsController,
-} from "@/features/game-cards-controller";
+} from "@/shared/hooks/useGameCardsController";
 import { player } from "@/shared/hooks/usePlayer";
 import { sleep } from "@/shared/utils/sleep";
 import { useCallback } from "react";

@@ -1,4 +1,4 @@
-import { GameCardsControllerResult } from "@/features/game-cards-controller";
+import { GameCardsControllerResult } from "@/shared/hooks/useGameCardsController";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 

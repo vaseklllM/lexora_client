@@ -1,6 +1,6 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { mixArray } from "@/shared/utils/mixArray";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type CardMap = Pick<ICard, "id"> & {
   isActive: boolean;
@@ -173,8 +173,16 @@ export function useGameCardsController(
     }
   }, [state.isFinished, props.onFinish]);
 
+  const activeCard = useMemo((): ICard => {
+    if (props.cards.length === 0) {
+      throw new Error("Cards are not set");
+    }
+    const activeCardId = state.cardsMap.find((card) => card.isActive)!.id;
+    return props.cards.find((card) => card.id === activeCardId)!;
+  }, [state.cardsMap, props.cards]);
+
   return {
-    active: state.activeCard,
+    active: activeCard,
     next,
     isLastCard: state.cards.length <= 1,
     makeMistake,

@@ -8,13 +8,10 @@ jest.mock("@/shared/utils/mixArray", () => ({
 }));
 
 describe("useGameCardsController", () => {
-  it("should return undefined active card", () => {
-    const { result } = renderHook(() => useGameCardsController({ cards: [] }));
-    expect(result.current.active).toBeUndefined();
-    expect(result.current.isLastCard).toBeTruthy();
-    expect(result.current.isMadeMistake).toBeFalsy();
-    expect(result.current.idx).toBe(0);
-    expect(result.current.cardsMap).toEqual([]);
+  it("should throw error when cards array is empty", () => {
+    expect(() => {
+      renderHook(() => useGameCardsController({ cards: [] }));
+    }).toThrow("Cards are not set");
   });
 
   it("should return the first card", () => {

@@ -21,32 +21,31 @@ describe("useGameCardsController", () => {
     expect(result.current.isLastCard).toBeFalsy();
     expect(result.current.isMadeMistake).toBeFalsy();
     expect(result.current.idx).toBe(0);
-    expect(result.current.cardsMap).toEqual(
-      cards.map((i, idx) => ({
-        id: i.id,
-        isActive: idx === 0,
-      })),
-    );
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: true,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: false,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
   });
@@ -60,24 +59,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: true,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: false,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
     act(() => {
@@ -89,25 +93,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: false,
         status: "mistake",
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: true,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
   });
@@ -121,24 +130,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: true,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: false,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
     act(() => {
@@ -150,25 +164,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         status: "finished",
         isActive: false,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: true,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
   });
@@ -182,24 +201,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: true,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: false,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
     act(() => {
@@ -211,25 +235,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: false,
         status: "mistake",
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: true,
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: false,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
     act(() => {
@@ -241,26 +270,31 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(2);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: false,
         status: "mistake",
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
         isActive: false,
         status: "mistake",
+        card: card2,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
         isActive: true,
+        card: card3,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
         isActive: false,
+        card: card4,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
         isActive: false,
+        card: card5,
       },
     ]);
   });
@@ -274,23 +308,28 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
         isActive: true,
+        card: card1,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -303,24 +342,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: true,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -333,25 +377,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(2);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: true,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -366,23 +415,28 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -395,24 +449,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: true,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -425,25 +484,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(2);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: true,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -456,26 +520,31 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(3);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: true,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -488,27 +557,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(4);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: true,
       },
     ]);
@@ -521,27 +595,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(5);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
         status: "mistake",
       },
@@ -558,23 +637,28 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -587,24 +671,29 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: true,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -617,25 +706,30 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(2);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: true,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -648,26 +742,31 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(3);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: true,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -680,27 +779,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(4);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: true,
       },
     ]);
@@ -713,27 +817,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(4);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: true,
         status: "finished",
       },
@@ -750,23 +859,28 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -781,27 +895,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(cards.length - 1);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: true,
         status: "finished",
       },
@@ -822,23 +941,28 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(0);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -857,27 +981,32 @@ describe("useGameCardsController", () => {
     expect(result.current.idx).toBe(cards.length);
     expect(result.current.cardsMap).toEqual([
       {
-        id: cards[0].id,
+        id: card1.id,
+        card: card1,
         isActive: true,
         status: "mistake",
       },
       {
-        id: cards[1].id,
+        id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[2].id,
+        id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[3].id,
+        id: card4.id,
+        card: card4,
         isActive: false,
         status: "mistake",
       },
       {
-        id: cards[4].id,
+        id: card5.id,
+        card: card5,
         isActive: false,
         status: "mistake",
       },
@@ -897,22 +1026,27 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -925,23 +1059,28 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: true,
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -954,24 +1093,29 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: true,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -984,25 +1128,30 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: true,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -1015,26 +1164,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: true,
       },
     ]);
@@ -1048,26 +1202,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: true,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
         status: "mistake",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },
@@ -1081,26 +1240,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: true,
         status: "mistake",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },
@@ -1115,26 +1279,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: true,
         status: "mistake",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },
@@ -1149,26 +1318,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: true,
         status: "finished",
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },
@@ -1192,22 +1366,27 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: true,
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -1223,23 +1402,28 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: true,
       },
       {
         id: card3.id,
+        card: card3,
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -1255,24 +1439,29 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         isActive: true,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -1288,25 +1477,30 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: true,
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
       },
     ]);
@@ -1322,26 +1516,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: true,
       },
     ]);
@@ -1361,26 +1560,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: true,
         status: "mistake",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "mistake",
       },
@@ -1397,26 +1601,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: true,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "mistake",
       },
@@ -1434,26 +1643,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: false,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: true,
         status: "mistake",
       },
@@ -1471,26 +1685,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         status: "mistake",
         isActive: true,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },
@@ -1508,26 +1727,31 @@ describe("useGameCardsController", () => {
     expect(result.current.cardsMap).toEqual([
       {
         id: card1.id,
+        card: card1,
         isActive: false,
         status: "finished",
       },
       {
         id: card2.id,
+        card: card2,
         isActive: false,
         status: "finished",
       },
       {
         id: card3.id,
+        card: card3,
         status: "finished",
         isActive: true,
       },
       {
         id: card4.id,
+        card: card4,
         isActive: false,
         status: "finished",
       },
       {
         id: card5.id,
+        card: card5,
         isActive: false,
         status: "finished",
       },

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 type CardMap = Pick<ICard, "id"> & {
   isActive: boolean;
   status?: "finished" | "mistake";
+  card: ICard;
 };
 
 export interface GameCardsControllerResult {
@@ -43,6 +44,10 @@ type TState = {
 export function useGameCardsController(
   props: Props,
 ): GameCardsControllerResult {
+  if (props.cards.length === 0) {
+    throw new Error("Cards are not set");
+  }
+
   const [state, setState] = useState<TState>(
     ((): TState => {
       const cards = mixArray(props.cards);
@@ -60,6 +65,7 @@ export function useGameCardsController(
           id: card.id,
           isActive: idx === 0,
           status: undefined,
+          card,
         })),
       };
     })(),
@@ -174,11 +180,7 @@ export function useGameCardsController(
   }, [state.isFinished, props.onFinish]);
 
   const activeCard = useMemo((): ICard => {
-    if (props.cards.length === 0) {
-      throw new Error("Cards are not set");
-    }
-    const activeCardId = state.cardsMap.find((card) => card.isActive)!.id;
-    return props.cards.find((card) => card.id === activeCardId)!;
+    return state.cardsMap.find((card) => card.isActive)!.card;
   }, [state.cardsMap, props.cards]);
 
   return {

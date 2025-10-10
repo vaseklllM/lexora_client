@@ -4,6 +4,7 @@ import {
 } from "@/api/deck/finish-review-card";
 import { revalidateGetDeck } from "@/api/deck/get-deck";
 import { GameCardsControllerFinishReviewCardHandler } from "@/shared/hooks/useGameCardsController";
+import { SliceCardsFinishReviewCardHandler } from "@/shared/hooks/useSliceCards";
 import { useCallback } from "react";
 import { StepComponentProps } from ".";
 import { useLearningDeckStore } from "../../model/store";
@@ -45,8 +46,16 @@ export const useFinishReviewCard = (props: StepComponentProps) => {
       [finishReviewCardHandler],
     );
 
+  const pairItCardHandler = useCallback<SliceCardsFinishReviewCardHandler>(
+    (args) => {
+      finishReviewCardHandler("pair_it", args);
+    },
+    [finishReviewCardHandler],
+  );
+
   return {
     typeItCardHandler,
     recallItCardHandler,
+    pairItCardHandler,
   };
 };

@@ -1,1 +1,5 @@
-export { useSliceCards, type FinishCardHandler } from "./useSliceCards";
+export {
+  useSliceCards,
+  type FinishCardHandler,
+  type SliceCardsFinishReviewCardHandler,
+} from "./useSliceCards";

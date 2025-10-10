@@ -3,7 +3,10 @@
 import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import { useMixCards } from "@/shared/hooks/useMixCards";
-import { useSliceCards } from "@/shared/hooks/useSliceCards";
+import {
+  SliceCardsFinishReviewCardHandler,
+  useSliceCards,
+} from "@/shared/hooks/useSliceCards";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
@@ -26,6 +29,7 @@ interface Props {
   className?: string;
   cards: ICard[];
   onFinish?: () => void;
+  onFinishReviewCard?: SliceCardsFinishReviewCardHandler;
 }
 
 export const PairItGame = memo((props: Props): ReactElement => {
@@ -36,6 +40,7 @@ export const PairItGame = memo((props: Props): ReactElement => {
     cards: mixedCards,
     cardsPerPart: 5,
     onFinish: props.onFinish,
+    onFinishReviewCard: props.onFinishReviewCard,
   });
 
   return (

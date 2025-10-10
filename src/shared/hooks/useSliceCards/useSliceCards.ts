@@ -5,10 +5,16 @@ import { useCallback, useMemo, useState } from "react";
 
 const CARDS_PER_PART = 5;
 
+export type SliceCardsFinishReviewCardHandler = (args: {
+  card: ICard;
+  isGuessed: boolean;
+}) => void;
+
 type Props = {
   cards: ICard[];
-  onFinish?: () => void;
   cardsPerPart?: number;
+  onFinish?: () => void;
+  onFinishReviewCard?: SliceCardsFinishReviewCardHandler;
 };
 
 export type FinishCardHandler = (card: ICard) => void;
@@ -43,11 +49,15 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
 
   const finishCard = useCallback<FinishCardHandler>(
     (card: ICard) => {
+      props.onFinishReviewCard?.({
+        card,
+        isGuessed: true,
+      });
       setFinishedCardIds((prev) =>
         prev.includes(card.id) ? prev : [...prev, card.id],
       );
     },
-    [setFinishedCardIds],
+    [setFinishedCardIds, props.onFinishReviewCard],
   );
 
   return {

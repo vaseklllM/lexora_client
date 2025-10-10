@@ -162,7 +162,11 @@ export const StepComponent = (
               transition={transition}
               className={classes.step()}
             >
-              <PairItGame cards={cards} onFinish={finishPairItStepHandler} />
+              <PairItGame
+                cards={cards}
+                onFinish={finishPairItStepHandler}
+                onFinishReviewCard={finishReviewCard.pairItCardHandler}
+              />
             </motion.div>
           )}
           {step === Step.GUESS_IT && (

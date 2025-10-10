@@ -4,6 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { RepeatCardsStatusBar } from "@/entities/repeat-cards-status-bar";
 import { useMixCards } from "@/shared/hooks/useMixCards";
 import { useSliceCards } from "@/shared/hooks/useSliceCards";
+import { AnimatePresence, motion, Variants } from "motion/react";
 import { memo, ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { PairItGameRound } from "./PairItGameRound";
@@ -15,6 +16,11 @@ const classesSlots = tv({
     content: "h-full w-full",
   },
 });
+const variants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 
 interface Props {
   className?: string;
@@ -38,12 +44,24 @@ export const PairItGame = memo((props: Props): ReactElement => {
         numberOfFinishedCards={cardsController.numberOfFinishedCards}
         className={classes.statusBar()}
       />
-      <PairItGameRound
-        cards={cardsController.cards}
-        onFinishPart={cardsController.nextPart}
-        onFinishReviewCard={cardsController.finishCard}
-        className={classes.content()}
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={cardsController.part}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.3 }}
+          className={classes.content()}
+        >
+          <PairItGameRound
+            cards={cardsController.cards}
+            onFinishPart={cardsController.nextPart}
+            onFinishReviewCard={cardsController.finishCard}
+            className={classes.content()}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 });

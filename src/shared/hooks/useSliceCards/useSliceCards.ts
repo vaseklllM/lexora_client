@@ -19,6 +19,7 @@ export interface UseSliceCardsResult {
   finishCard: FinishCardHandler;
   numberOfFinishedCards: number;
   numberOfCards: number;
+  part: number;
 }
 
 export function useSliceCards(props: Props): UseSliceCardsResult {
@@ -55,5 +56,6 @@ export function useSliceCards(props: Props): UseSliceCardsResult {
     finishCard,
     numberOfFinishedCards: finishedCardIds.length,
     numberOfCards: props.cards.length,
+    part,
   };
 }

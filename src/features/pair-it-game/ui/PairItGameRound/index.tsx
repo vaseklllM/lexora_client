@@ -4,14 +4,7 @@ import { ICard } from "@/api/schemas/card.schema";
 import { player } from "@/shared/hooks/usePlayer";
 import { FinishCardHandler } from "@/shared/hooks/useSliceCards";
 import { mixArray } from "@/shared/utils/mixArray";
-import {
-  memo,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { memo, ReactElement, useCallback, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import {
   CardButton,
@@ -80,23 +73,69 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
     return list;
   }, [props.cards]);
 
+  const addErrorCards = useCallback((left: string, right: string) => {
+    setErrorLeftCards((prev) => [...prev, left]);
+    setErrorRightCards((prev) => [...prev, right]);
+
+    setTimeout(() => {
+      setErrorLeftCards((prev) => prev.filter((id) => id !== left));
+      setErrorRightCards((prev) => prev.filter((id) => id !== right));
+    }, 1000);
+  }, []);
+
   const clickHandler = useCallback<CardButtonClickHandler>(
     (args) => {
       if (finishedCards.includes(args.id)) {
         return;
       }
+      const left = (() => {
+        if (args.position !== "left") return activeLeft;
+        return activeLeft === args.id ? undefined : args.id;
+      })();
+      const right = (() => {
+        if (args.position !== "right") return activeRight;
+        return activeRight === args.id ? undefined : args.id;
+      })();
 
       switch (args.position) {
-        case "left":
-          setActiveLeft((prev) => (prev === args.id ? undefined : args.id));
+        case "left": {
+          setActiveLeft(left);
           break;
+        }
 
-        case "right":
-          setActiveRight((prev) => (prev === args.id ? undefined : args.id));
+        case "right": {
+          setActiveRight(right);
           break;
+        }
+      }
+
+      if (left && right) {
+        if (left === right) {
+          setFinishedCards((prev) => [...prev, left]);
+          const card = props.cards.find((card) => card.id === left);
+          if (card) {
+            props.onFinishReviewCard?.(card);
+            player.playAsync(card.soundUrls[0]).then(() => {
+              if (finishedCards.length === props.cards.length - 1) {
+                props.onFinishPart?.();
+              }
+            });
+          }
+        } else {
+          addErrorCards(left, right);
+        }
+        setActiveLeft(undefined);
+        setActiveRight(undefined);
       }
     },
-    [finishedCards],
+    [
+      finishedCards,
+      activeLeft,
+      activeRight,
+      addErrorCards,
+      props.onFinishPart,
+      props.cards,
+    ],
   );
 
   const getStatus = useCallback(
@@ -137,33 +176,6 @@ export const PairItGameRound = memo((props: Props): ReactElement => {
     },
     [activeLeft, activeRight, errorLeftCards, errorRightCards],
   );
-
-  const addErrorCards = useCallback((left: string, right: string) => {
-    setErrorLeftCards((prev) => [...prev, left]);
-    setErrorRightCards((prev) => [...prev, right]);
-
-    setTimeout(() => {
-      setErrorLeftCards((prev) => prev.filter((id) => id !== left));
-      setErrorRightCards((prev) => prev.filter((id) => id !== right));
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (activeLeft && activeRight) {
-      if (activeLeft === activeRight) {
-        setFinishedCards((prev) => [...prev, activeLeft]);
-        const card = props.cards.find((card) => card.id === activeLeft);
-        if (card) {
-          player.play(card.soundUrls[0]);
-          props.onFinishReviewCard?.(card);
-        }
-      } else {
-        addErrorCards(activeLeft, activeRight);
-      }
-      setActiveLeft(undefined);
-      setActiveRight(undefined);
-    }
-  }, [activeLeft, activeRight]);
 
   return (
     <div className={classes.base({ className: props.className })}>

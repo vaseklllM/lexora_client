@@ -1,3 +1,5 @@
+"use client";
+
 import { ICard } from "@/api/schemas/card.schema";
 import { useCallback, useMemo, useState } from "react";
 

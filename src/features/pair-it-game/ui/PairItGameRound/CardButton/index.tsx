@@ -1,4 +1,6 @@
-import { ReactElement } from "react";
+"use client";
+
+import { memo, ReactElement, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 export type Position = "left" | "right";
@@ -6,7 +8,7 @@ export type CardButtonStatus = "active" | "success" | "error";
 
 const classesSlots = tv({
   slots: {
-    base: "bg-base-100 text-base-content hover:bg-base-200 w-full cursor-pointer rounded-xl p-3 text-sm break-words select-none md:p-4",
+    base: "bg-base-100 text-base-content hover:bg-base-200 w-full cursor-pointer rounded-xl p-3 text-sm break-words opacity-100 transition-opacity duration-300 select-none md:p-4",
   },
   variants: {
     status: {
@@ -23,6 +25,11 @@ const classesSlots = tv({
     titleLength: {
       big: {
         base: "text-[10px] sm:text-xs",
+      },
+    },
+    isHidden: {
+      true: {
+        base: "opacity-0",
       },
     },
   },
@@ -42,11 +49,22 @@ interface Props {
   status?: CardButtonStatus;
 }
 
-export const CardButton = (props: Props): ReactElement => {
+export const CardButton = memo((props: Props): ReactElement => {
+  const [isHidden, setIsHidden] = useState(false);
+
   const classes = classesSlots({
     status: props.status,
     titleLength: props.title.length >= 60 ? "big" : undefined,
+    isHidden,
   });
+
+  useEffect(() => {
+    if (props.status === "success" && !isHidden) {
+      setTimeout(() => {
+        setIsHidden(true);
+      }, 1000);
+    }
+  }, [props.status, isHidden]);
 
   return (
     <button
@@ -63,4 +81,6 @@ export const CardButton = (props: Props): ReactElement => {
       {props.title}
     </button>
   );
-};
+});
+
+CardButton.displayName = "CardButton";

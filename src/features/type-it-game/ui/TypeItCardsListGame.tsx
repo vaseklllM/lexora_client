@@ -6,12 +6,11 @@ import {
   GameCardsControllerFinishReviewCardHandler,
   useGameCardsController,
 } from "@/shared/hooks/useGameCardsController";
-import { GameMode } from "@/shared/types/Game";
+import { useMixCards } from "@/shared/hooks/useMixCards";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { TypeItGame } from "./TypeItGame";
-import { useMixCards } from "@/shared/hooks/useMixCards";
 
 const classesSlots = tv({
   slots: {
@@ -31,7 +30,6 @@ export interface TypeItCardsListGameProps {
   className?: string;
   cards: ICard[];
   onFinish?: () => void;
-  mode?: GameMode;
   onFinishReviewCard?: GameCardsControllerFinishReviewCardHandler;
 }
 

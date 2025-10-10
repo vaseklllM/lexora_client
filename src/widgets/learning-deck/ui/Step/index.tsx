@@ -72,12 +72,28 @@ export const StepComponent = (
   const mode = useLearningDeckStore((state) => state.mode);
 
   const finishReviewStepHandler = useCallback(() => {
-    openStep(Step.PAIR_IT);
-  }, [openStep]);
+    switch (mode) {
+      case "learning":
+        openStep(Step.PAIR_IT);
+        break;
+
+      case "repeat":
+        stopSession();
+        break;
+    }
+  }, [openStep, mode, stopSession]);
 
   const finishPairItStepHandler = useCallback(() => {
-    openStep(Step.GUESS_IT);
-  }, [openStep]);
+    switch (mode) {
+      case "learning":
+        openStep(Step.GUESS_IT);
+        break;
+
+      case "repeat":
+        stopSession();
+        break;
+    }
+  }, [openStep, mode, stopSession]);
 
   const finishGuessItStepHandler = useCallback(() => {
     openStep(Step.RECALL_IT);
@@ -212,7 +228,6 @@ export const StepComponent = (
               <TypeItCardsListGame
                 cards={cards}
                 onFinish={finishTypeItStepHandler}
-                mode={mode}
                 onFinishReviewCard={finishReviewCard.typeItCardHandler}
               />
             </motion.div>

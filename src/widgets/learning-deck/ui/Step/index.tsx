@@ -66,42 +66,25 @@ export const StepComponent = (
 ): ReactElement | null => {
   const cards = useLearningDeckStore((state) => state.cards);
   const step = useLearningDeckStore((state) => state.activeStep);
-  const openStep = useLearningDeckStore((state) => state.openStep);
+  const finishStep = useLearningDeckStore((state) => state.finishStep);
   const stepAnimation = useLearningDeckStore((state) => state.stepAnimation);
   const stopSession = useLearningDeckStore((state) => state.stopSession);
-  const mode = useLearningDeckStore((state) => state.mode);
 
   const finishReviewStepHandler = useCallback(() => {
-    switch (mode) {
-      case "learning":
-        openStep(Step.PAIR_IT);
-        break;
-
-      case "repeat":
-        stopSession();
-        break;
-    }
-  }, [openStep, mode, stopSession]);
+    finishStep(Step.PREVIEW);
+  }, [finishStep]);
 
   const finishPairItStepHandler = useCallback(() => {
-    switch (mode) {
-      case "learning":
-        openStep(Step.GUESS_IT);
-        break;
-
-      case "repeat":
-        stopSession();
-        break;
-    }
-  }, [openStep, mode, stopSession]);
+    finishStep(Step.PAIR_IT);
+  }, [finishStep]);
 
   const finishGuessItStepHandler = useCallback(() => {
-    openStep(Step.RECALL_IT);
-  }, [openStep]);
+    finishStep(Step.GUESS_IT);
+  }, [finishStep]);
 
   const finishRecallItStepHandler = useCallback(() => {
-    openStep(Step.TYPE_IT);
-  }, [openStep]);
+    finishStep(Step.RECALL_IT);
+  }, [finishStep]);
 
   const finishTypeItStepHandler = useCallback(async () => {
     await finishLearningDeckSession({

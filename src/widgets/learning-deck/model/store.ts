@@ -24,7 +24,7 @@ type State = {
 };
 
 type Actions = {
-  openStep(step: Step): void;
+  finishStep(step: Step): void;
   startLearningSession(cards: ICard[]): void;
   stopSession(): void;
   startReviewSession(type: GameType, cards: ICard[]): void;
@@ -43,6 +43,70 @@ export const useLearningDeckStore = create<Store>((set) => ({
   cards: [],
   isVisibleModalRepeatGameType: false,
   isVisibleModalRepeatAllGameType: false,
+  finishStep(step: Step) {
+    set((store) => {
+      if (step !== store.activeStep) {
+        return store;
+      }
+
+      switch (store.mode) {
+        case "repeat": {
+          return {
+            ...store,
+            activeStep: DEFAULT_STEP,
+            stepAnimation: "backward",
+            isPlaying: false,
+            mode: undefined,
+            cards: [],
+          };
+        }
+
+        case "learning": {
+          switch (store.activeStep) {
+            case Step.TYPE_IT: {
+              return {
+                ...store,
+                activeStep: Step.START,
+                stepAnimation: "backward",
+                isPlaying: false,
+                mode: undefined,
+              };
+            }
+
+            case Step.START:
+            case Step.PREVIEW:
+            case Step.PAIR_IT:
+            case Step.GUESS_IT:
+            case Step.RECALL_IT: {
+              const nextStepMap = {
+                [Step.START]: Step.PREVIEW,
+                [Step.PREVIEW]: Step.PAIR_IT,
+                [Step.PAIR_IT]: Step.GUESS_IT,
+                [Step.GUESS_IT]: Step.RECALL_IT,
+                [Step.RECALL_IT]: Step.TYPE_IT,
+              };
+              return {
+                ...store,
+                activeStep: nextStepMap[store.activeStep],
+                stepAnimation: "forward",
+                isPlaying: true,
+                mode: "learning",
+              };
+            }
+
+            default: {
+              const _check: never = store.activeStep;
+              throw new Error(`Unhandled activeStep type: ${_check}`);
+            }
+          }
+        }
+
+        default: {
+          return store;
+        }
+      }
+    });
+  },
   startLearningSession(cards: ICard[]) {
     set({
       cards: cards,
@@ -68,19 +132,6 @@ export const useLearningDeckStore = create<Store>((set) => ({
         default:
           return prev;
       }
-    });
-  },
-  openStep(step: Step) {
-    set((prev) => {
-      if (prev.activeStep === Step.START && step !== Step.PREVIEW) {
-        return prev;
-      }
-
-      return {
-        activeStep: step,
-        isPlaying: step === Step.START ? false : true,
-        stepAnimation: step === Step.START ? "backward" : "forward",
-      };
     });
   },
   startReviewSession(type: GameType, cards: ICard[]) {

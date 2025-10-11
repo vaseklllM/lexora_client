@@ -29,6 +29,12 @@ export interface LanguageSelectProps {
 export const LanguageSelect = (props: LanguageSelectProps): ReactElement => {
   const classes = classesSlots();
 
+  const activeLanguage = useMemo<Language>(() => {
+    return props.languagesList.find(
+      (language) => language.code === props.activeLanguageCode,
+    )!;
+  }, [props.languagesList, props.activeLanguageCode]);
+
   const options = useMemo<SelectOption[]>(() => {
     return props.languagesList
       .filter((language) =>
@@ -56,7 +62,7 @@ export const LanguageSelect = (props: LanguageSelectProps): ReactElement => {
       return (
         <IconSelect
           options={options}
-          activeLanguageCode={props.activeLanguageCode}
+          activeLanguage={activeLanguage}
           onChangeLanguage={props.onChangeLanguage}
           className={classes.iconSelect({ className: props.className })}
           dropdownPosition={props.dropdownPosition}

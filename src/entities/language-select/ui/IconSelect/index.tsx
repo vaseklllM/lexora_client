@@ -1,3 +1,4 @@
+import { Language } from "@/api/schemas/language.schema";
 import { Arrow2Icon } from "@/shared/icons/Arrow2";
 import { GlobeIcon } from "@/shared/icons/Globe";
 import { SelectOption } from "@/shared/ui/Select";
@@ -29,11 +30,11 @@ const classesSlots = tv({
 
 export type DropdownPosition = "bottom-start" | "bottom-end";
 
-interface Props
-  extends Pick<LanguageSelectProps, "onChangeLanguage" | "activeLanguageCode"> {
+interface Props extends Pick<LanguageSelectProps, "onChangeLanguage"> {
   className?: string;
   dropdownPosition?: DropdownPosition;
   options: SelectOption[];
+  activeLanguage: Language;
 }
 
 export const IconSelect = (props: Props): ReactElement => {
@@ -54,10 +55,10 @@ export const IconSelect = (props: Props): ReactElement => {
             key={option.value}
             className={classes.item({
               className:
-                props.activeLanguageCode === option.value &&
+                props.activeLanguage.code === option.value &&
                 classes.itemActive(),
             })}
-            disabled={props.activeLanguageCode === option.value}
+            disabled={props.activeLanguage.code === option.value}
             onClick={() => props.onChangeLanguage?.(option.value)}
           >
             <span>{option.label}</span>

@@ -17,7 +17,7 @@ export default async function RootLayout(props: Props) {
     <div className="dark:bg-base-300 flex h-screen justify-center">
       <AppLanguageSelect
         allLanguages={allLanguages.data}
-        className="fixed top-4 left-4 w-max"
+        className="fixed top-2 left-2 w-max"
         type="icon_button"
         activeLanguageCode={languageEnumToCode(appLanguage)}
         dropdownPosition="bottom-start"

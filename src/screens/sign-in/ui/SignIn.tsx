@@ -128,8 +128,10 @@ export function SignIn() {
         </form>
 
         <p className="text-base-content/70 mt-6 text-center text-sm/6">
-          Don&apos;t have an account?{" "}
-          <Link href={routes.signUp.url()}>Sign up</Link>
+          {t("sign_in.dont_have_account.title")}{" "}
+          <Link href={routes.signUp.url()}>
+            {t("sign_in.dont_have_account.link")}
+          </Link>
         </p>
         <OAuth />
       </div>

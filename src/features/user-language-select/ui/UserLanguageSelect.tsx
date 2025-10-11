@@ -29,7 +29,7 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
 
   return (
     <Select
-      className="select-sm hidden sm:block"
+      className={props.className}
       options={options}
       value={props.userLanguage.code}
       onChangeValue={changedLanguage}

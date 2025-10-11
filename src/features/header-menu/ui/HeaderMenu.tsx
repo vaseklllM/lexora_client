@@ -1,17 +1,21 @@
 "use client";
 
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 import { tv } from "tailwind-variants";
+import styles from "./style.module.scss";
 
 const classesSlots = tv({
   slots: {
-    base: "",
+    base: "dropdown dropdown-end dropdown-bottom group",
+    button: "",
+    menu: "dropdown-content menu bg-base-100 rounded-box z-1 mt-2 w-52 p-2 shadow-sm",
   },
 });
 
 interface Props {
   className?: string;
+  children: ReactNode;
 }
 
 export const HeaderMenu = (props: Props): ReactElement => {
@@ -31,7 +35,12 @@ export const HeaderMenu = (props: Props): ReactElement => {
         color="primary"
         isActive={isActive}
         onClick={toggleMenu}
+        tabIndex={0}
+        className={classes.button({ className: styles.button })}
       />
+      <div tabIndex={0} className={classes.menu()}>
+        {props.children}
+      </div>
     </div>
   );
 };

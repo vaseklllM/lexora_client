@@ -11,6 +11,7 @@ const classesSlots = tv({
     user: "flex items-center gap-2",
     right: "flex items-center gap-4",
     headerMenu: "flex sm:hidden",
+    menu: "flex flex-col items-center justify-center gap-2",
   },
 });
 
@@ -34,9 +35,19 @@ export const Header = (props: Props) => {
         <UserLanguageSelect
           allLanguages={props.allLanguages}
           userLanguage={props.userLanguage}
+          className="select-sm hidden sm:block"
         />
-        <ButtonLogout />
-        <HeaderMenu className={classes.headerMenu()} />
+        <ButtonLogout className="hidden sm:block" />
+        <HeaderMenu className={classes.headerMenu()}>
+          <div className={classes.menu()}>
+            <UserLanguageSelect
+              allLanguages={props.allLanguages}
+              userLanguage={props.userLanguage}
+            />
+            <div className="divider m-0 h-0.5 w-full" />
+            <ButtonLogout className="w-full" />
+          </div>
+        </HeaderMenu>
       </div>
     </div>
   );

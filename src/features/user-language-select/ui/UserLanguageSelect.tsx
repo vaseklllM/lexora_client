@@ -4,6 +4,8 @@ import { revalidateGetMe } from "@/api/auth/get-me";
 import { Language } from "@/api/schemas/language.schema";
 import { setUserLanguage } from "@/api/settings/set-user-language";
 import { LanguageSelect, LanguageSelectType } from "@/entities/language-select";
+import { codeToLanguageEnum } from "@/shared/enums/Language";
+import { setAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import { ReactElement, useCallback } from "react";
 
 interface Props {
@@ -18,10 +20,10 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
     await setUserLanguage({
       languageCode,
     });
-    // const languageEnum = codeToLanguageEnum(languageCode);
-    // if (languageEnum) {
-    //   await setAppLanguageCookie(languageEnum);
-    // }
+    const languageEnum = codeToLanguageEnum(languageCode);
+    if (languageEnum) {
+      await setAppLanguageCookie(languageEnum);
+    }
     await revalidateGetMe();
   }, []);
 

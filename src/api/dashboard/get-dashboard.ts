@@ -1,7 +1,6 @@
 "use server";
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
-import { stackQueryKeys } from "@/shared/api-core/stackQueryKeys";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { deckSchema } from "../schemas/deck.schema";
@@ -14,7 +13,7 @@ const resultSchema = v.object({
 
 type Result = v.InferOutput<typeof resultSchema>;
 
-const tag = `dashboard__${stackQueryKeys.next()}`;
+const tag = "dashboard";
 
 export async function getDashboard(): Promise<Result> {
   const result = await fetchCustom("dashboard", {

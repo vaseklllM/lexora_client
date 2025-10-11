@@ -1,12 +1,11 @@
 "use server";
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
-import { stackQueryKeys } from "@/shared/api-core/stackQueryKeys";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { userSchema } from "../schemas/user.schema";
 
-const tag = `auth-me__${stackQueryKeys.next()}`;
+const tag = "auth-me";
 
 const responseSchema = userSchema();
 

@@ -1,7 +1,6 @@
 "use server";
 
 import { fetchCustom } from "@/shared/api-core/fetchCustom";
-import { stackQueryKeys } from "@/shared/api-core/stackQueryKeys";
 import { revalidateTag } from "next/cache";
 import * as v from "valibot";
 import { cardSchema } from "../schemas/card.schema";
@@ -14,7 +13,7 @@ const resultSchema = v.object({
   foldersBreadcrumbs: v.array(folderBreadcrumbSchema),
 });
 
-const tag = `deck__${stackQueryKeys.next()}`;
+const tag = "deck";
 
 const getTag = (deckId: string) => `${tag}__${deckId}`;
 

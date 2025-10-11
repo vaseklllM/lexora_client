@@ -1,5 +1,6 @@
 import { Language } from "@/api/schemas/language.schema";
 import { UserIcon } from "@/entities/user-icon";
+import { HeaderMenu } from "@/features/header-menu";
 import { UserLanguageSelect } from "@/features/user-language-select";
 import { tv } from "tailwind-variants";
 import { ButtonLogout } from "./ButtonLogout";
@@ -9,6 +10,7 @@ const classesSlots = tv({
     header: "flex items-center justify-between p-4",
     user: "flex items-center gap-2",
     right: "flex items-center gap-4",
+    headerMenu: "flex sm:hidden",
   },
 });
 
@@ -34,6 +36,7 @@ export const Header = (props: Props) => {
           userLanguage={props.userLanguage}
         />
         <ButtonLogout />
+        <HeaderMenu className={classes.headerMenu()} />
       </div>
     </div>
   );

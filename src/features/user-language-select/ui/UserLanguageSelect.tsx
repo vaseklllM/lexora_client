@@ -33,6 +33,7 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
       options={options}
       value={props.userLanguage.code}
       onChangeValue={changedLanguage}
+      name="userLanguage"
     />
   );
 };

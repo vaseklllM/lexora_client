@@ -5,6 +5,7 @@ import { ArrowIcon } from "../icons/Arrow";
 import { CheckIcon } from "../icons/Check";
 import { DeleteIcon } from "../icons/Delete";
 import { EditIcon } from "../icons/Edit";
+import { MenuIcon } from "../icons/Menu";
 import { PlayIcon } from "../icons/Play";
 import { PlusIcon } from "../icons/Plus";
 import { RepeatIcon } from "../icons/Repeat";
@@ -119,13 +120,15 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "arrow_right"
     | "play"
     | "stop"
-    | "repeat";
+    | "repeat"
+    | "menu";
   variant?: "ghost" | "dash" | "soft" | "outline";
   color?: "neutral" | Color;
   textColor?: Color;
   tooltip?: string;
   iconWidth?: string;
   iconHeight?: string;
+  isActive?: boolean;
 }
 
 export const ButtonIcon = (props: Props): ReactElement => {
@@ -141,6 +144,7 @@ export const ButtonIcon = (props: Props): ReactElement => {
     tooltip,
     iconWidth,
     iconHeight,
+    isActive,
     ...buttonProps
   } = props;
   const classes = classesSlots({ disabled, variant, color, textColor });
@@ -153,7 +157,12 @@ export const ButtonIcon = (props: Props): ReactElement => {
       type={type}
     >
       {children}
-      <Icon icon={icon} iconWidth={iconWidth} iconHeight={iconHeight} />
+      <Icon
+        icon={icon}
+        iconWidth={iconWidth}
+        iconHeight={iconHeight}
+        isActive={isActive}
+      />
     </button>
   );
 
@@ -178,7 +187,9 @@ const iconClasses = tv({
   },
 });
 
-function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
+function Icon(
+  props: Pick<Props, "icon" | "iconWidth" | "iconHeight" | "isActive">,
+) {
   const classes = iconClasses();
 
   switch (props.icon) {
@@ -234,5 +245,8 @@ function Icon(props: Pick<Props, "icon" | "iconWidth" | "iconHeight">) {
 
     case "repeat":
       return <RepeatIcon width={props.iconWidth} height={props.iconHeight} />;
+
+    case "menu":
+      return <MenuIcon isActive={props.isActive} />;
   }
 }

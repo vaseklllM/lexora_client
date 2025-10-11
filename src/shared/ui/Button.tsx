@@ -11,7 +11,8 @@ import { tv } from "tailwind-variants";
 const classesSlots = tv({
   slots: {
     button: "btn relative rounded-md",
-    loader: "loading loading-spinner absolute",
+    loader:
+      "loading loading-spinner absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
   },
   variants: {
     disabled: {
@@ -64,6 +65,7 @@ const classesSlots = tv({
       },
       sm: {
         button: "btn-sm",
+        loader: "",
       },
       md: {
         button: "btn-md",
@@ -73,6 +75,12 @@ const classesSlots = tv({
       },
       xl: {
         button: "btn-xl",
+      },
+    },
+    visibleLoadingSpinner: {
+      true: {
+        button: "btn-disabled",
+        loader: "",
       },
     },
   },
@@ -102,10 +110,13 @@ export const Button = (props: ButtonProps) => {
 
   const [isLoadingState, setIsLoadingState] = useState(false);
 
+  const visibleLoadingSpinner = isLoading || isLoadingState;
+
   const classes = classesSlots({
     color,
     variant,
     size,
+    visibleLoadingSpinner,
   });
 
   const clickHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
@@ -128,9 +139,7 @@ export const Button = (props: ButtonProps) => {
       onClick={clickHandler}
     >
       {children}
-      {(isLoading || isLoadingState) && (
-        <span className={classes.loader()}></span>
-      )}
+      {visibleLoadingSpinner && <span className={classes.loader()}></span>}
     </button>
   );
 };

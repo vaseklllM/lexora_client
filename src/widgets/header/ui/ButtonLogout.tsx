@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 const classesSlots = tv({
   slots: {
-    button: "btn-sm btn-soft",
+    button: "",
   },
 });
 
@@ -24,6 +24,8 @@ export const ButtonLogout = (props: Props): ReactElement => {
       onClick={async () => {
         await logout();
       }}
+      size="sm"
+      variant="soft"
       className={classes.button({ className: props.className })}
     >
       Logout

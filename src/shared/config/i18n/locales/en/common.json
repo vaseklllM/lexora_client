@@ -1,12 +1,7 @@
 {
   "You can create a new folder or deck by clicking the plus button.": "You can create a new folder or deck by clicking the plus button.",
   "You don't have any folders or decks.": "You don't have any folders or decks.",
-  "logout": "Log out",
-  "save": "Save",
-  "cancel": "Cancel",
-  "loading": "Loading...",
-  "language": "Language",
-  "selectLanguage": "Select your language",
+  "Sign in": "Sign in",
   "profile": {
     "title": "Profile",
     "edit": "Edit profile",

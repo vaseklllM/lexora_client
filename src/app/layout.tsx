@@ -1,8 +1,9 @@
 import { getMe } from "@/api/auth/get-me";
 import { checkIsAuth } from "@/shared/api-core/checkIsAuth";
-import { LIST_OF_LANGUAGES } from "@/shared/config/config";
 import { LanguageProvider } from "@/shared/config/i18n";
+import { codeToLanguageEnum, LanguageEnum } from "@/shared/enums/Language";
 import { AudioProvider } from "@/shared/hooks/usePlayer";
+import { getAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -40,26 +41,27 @@ export default async function RootLayout(
   const { children } = props;
   const isAuth = await checkIsAuth();
 
-  let lng: string = "en";
+  let language: LanguageEnum = LanguageEnum.EN;
 
   if (isAuth) {
     const me = await getMe();
 
-    const language = LIST_OF_LANGUAGES.find(
-      (language) => language.code === me.language.code,
-    );
+    const userLanguage = codeToLanguageEnum(me.language.code);
+    if (userLanguage) language = userLanguage;
+  } else {
+    const appLanguage = await getAppLanguageCookie();
 
-    if (language) {
-      lng = language.i18n;
+    if (appLanguage) {
+      language = appLanguage;
     }
   }
 
   return (
-    <html lang={lng}>
+    <html lang={language}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider lng={lng}>
+        <LanguageProvider lng={language}>
           <NextAuthProvider>{children}</NextAuthProvider>
           <ToastContainer position="bottom-left" />
           <AudioProvider />

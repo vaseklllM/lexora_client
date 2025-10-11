@@ -1,5 +1,7 @@
 import { getAllLanguages } from "@/api/languages/get-all-languages";
 import { AppLanguageSelect } from "@/features/app-language-select";
+import { languageEnumToCode } from "@/shared/enums/Language";
+import { getAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import Image from "next/image";
 import { ReactNode } from "react";
 
@@ -9,6 +11,7 @@ interface Props {
 
 export default async function RootLayout(props: Props) {
   const allLanguages = await getAllLanguages();
+  const appLanguage = await getAppLanguageCookie();
 
   return (
     <div className="flex h-screen justify-center">
@@ -16,6 +19,7 @@ export default async function RootLayout(props: Props) {
         allLanguages={allLanguages.data}
         className="fixed top-4 left-4 w-max"
         type="icon_button"
+        activeLanguageCode={languageEnumToCode(appLanguage)}
       />
       <div className="w-full overflow-y-auto lg:w-3/7 xl:w-2/5">
         <div className="flex min-h-full flex-col items-center p-4 md:justify-center md:p-6">

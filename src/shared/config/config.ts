@@ -1,3 +1,5 @@
+import { LanguageEnum, languageEnumToCode } from "../enums/Language";
+
 /**
  * The maximum length of a folder name
  */
@@ -21,13 +23,10 @@ export const MAX_CARD_DESCRIPTION_LENGTH = 100;
 /**
  * The list of supported languages
  */
-export const LIST_OF_LANGUAGES: { i18n: string; code: string }[] = [
-  {
-    i18n: "en",
-    code: "en-US",
-  },
-  {
-    i18n: "uk",
-    code: "uk-UA",
-  },
-];
+export const LIST_OF_LANGUAGES: { i18n: LanguageEnum; code: string }[] = [
+  LanguageEnum.EN,
+  LanguageEnum.UK,
+].map((language) => ({
+  i18n: language,
+  code: languageEnumToCode(language),
+}));

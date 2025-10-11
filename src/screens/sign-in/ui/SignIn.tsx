@@ -2,6 +2,7 @@
 
 import { InputLabeled } from "@/entities/input-labeled";
 import { OAuth } from "@/features/oauth";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { routes } from "@/shared/routes";
 import { emailSchema } from "@/shared/schemas/email.schema";
 import { passwordSchema } from "@/shared/schemas/password.schema";
@@ -51,6 +52,7 @@ export function SignIn() {
     },
     resolver: valibotResolver(schema),
   });
+  const { t } = useTranslation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setErrorMessage(undefined);
@@ -81,7 +83,7 @@ export function SignIn() {
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-4 text-center text-2xl/9 font-bold tracking-tight lg:mt-10">
-          Sign in
+          {t("Sign in")}
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">
           Enter your email and password to sign in

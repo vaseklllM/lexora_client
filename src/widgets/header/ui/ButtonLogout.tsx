@@ -12,7 +12,7 @@ export const ButtonLogout = (): ReactElement => {
       onClick={async () => {
         await logout();
       }}
-      className="btn-sm btn-soft"
+      className="btn-sm btn-soft hidden sm:block"
     >
       Logout
     </Button>

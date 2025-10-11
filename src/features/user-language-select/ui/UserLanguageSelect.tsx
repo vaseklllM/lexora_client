@@ -13,7 +13,7 @@ interface Props {
 export const UserLanguageSelect = (props: Props): ReactElement => {
   const options = useMemo<SelectOption[]>(() => {
     return props.allLanguages.map((language) => ({
-      label: `${language.iconSymbol} ${language.nativeName}`,
+      label: `${language.iconSymbol} ${language.nativeName} (${language.code})`,
       value: language.code,
     }));
   }, [props.allLanguages]);

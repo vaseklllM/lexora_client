@@ -1,7 +1,9 @@
 "use server";
 
-import { LanguageEnum } from "@/shared/enums/Language";
-import { cookies } from "next/headers";
+import { LIST_OF_LANGUAGES } from "@/shared/config/config";
+import { codeToLanguageEnum, LanguageEnum } from "@/shared/enums/Language";
+import Negotiator from "negotiator";
+import { cookies, headers } from "next/headers";
 
 const LANGUAGE_COOKIE_NAME = "app_language";
 
@@ -22,5 +24,34 @@ export async function getAppLanguageCookie(): Promise<LanguageEnum> {
     | LanguageEnum
     | undefined;
 
-  return appLanguage ?? LanguageEnum.EN;
+  if (appLanguage) return appLanguage;
+
+  const headersList = await headers();
+  const acceptLanguage = headersList.get("accept-language");
+
+  if (acceptLanguage) {
+    const negotiator = new Negotiator({
+      headers: { "accept-language": acceptLanguage },
+    });
+
+    const bestMatchEnum = negotiator.language(
+      LIST_OF_LANGUAGES.map(({ i18n }) => i18n),
+    ) as LanguageEnum | undefined;
+
+    if (bestMatchEnum) {
+      return bestMatchEnum;
+    }
+
+    const bestMatchCode = negotiator.language(
+      LIST_OF_LANGUAGES.map(({ code }) => code),
+    );
+
+    if (bestMatchCode) {
+      const bestMatchLanguageEnum = codeToLanguageEnum(bestMatchCode);
+
+      if (bestMatchLanguageEnum) return bestMatchLanguageEnum;
+    }
+  }
+
+  return LanguageEnum.EN;
 }

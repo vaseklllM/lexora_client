@@ -5,16 +5,18 @@ import { LIST_OF_LANGUAGES } from "@/shared/config/config";
 import { Select, SelectOption } from "@/shared/ui/Select";
 import { ReactElement, useMemo } from "react";
 import { tv } from "tailwind-variants";
+import { IconSelect } from "./IconSelect";
 
 const classesSlots = tv({
   slots: {
-    base: "min-w-50",
+    select: "min-w-50",
+    iconSelect: "",
   },
 });
 
 export type LanguageSelectType = "select" | "icon_button";
 
-interface LanguageSelectProps {
+export interface LanguageSelectProps {
   className?: string;
   languagesList: Language[];
   activeLanguageCode: string;
@@ -37,13 +39,26 @@ export const LanguageSelect = (props: LanguageSelectProps): ReactElement => {
       }));
   }, [props.languagesList]);
 
-  return (
-    <Select
-      className={classes.base({ className: props.className })}
-      options={options}
-      value={props.activeLanguageCode}
-      onChangeValue={props.onChangeLanguage}
-      name={props.name}
-    />
-  );
+  switch (props.type) {
+    case "select":
+      return (
+        <Select
+          className={classes.select({ className: props.className })}
+          options={options}
+          value={props.activeLanguageCode}
+          onChangeValue={props.onChangeLanguage}
+          name={props.name}
+        />
+      );
+
+    case "icon_button":
+      return (
+        <IconSelect
+          languagesList={props.languagesList}
+          activeLanguageCode={props.activeLanguageCode}
+          onChangeLanguage={props.onChangeLanguage}
+          className={classes.iconSelect({ className: props.className })}
+        />
+      );
+  }
 };

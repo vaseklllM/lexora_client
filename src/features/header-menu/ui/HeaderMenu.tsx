@@ -9,7 +9,7 @@ const classesSlots = tv({
   slots: {
     base: "dropdown dropdown-end dropdown-bottom group",
     button: "",
-    menu: "dropdown-content menu bg-base-100 rounded-box z-1 mt-2 w-52 p-2 shadow-sm",
+    menu: "dropdown-content menu bg-base-100 rounded-box z-1 mt-2 p-2 shadow-sm",
   },
 });
 

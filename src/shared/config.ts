@@ -17,3 +17,8 @@ export const MAX_CARD_WORD_LENGTH = 100;
  * The maximum length of a description in a card
  */
 export const MAX_CARD_DESCRIPTION_LENGTH = 100;
+
+/**
+ * The list of supported languages
+ */
+export const LIST_OF_LANGUAGES = ["en-US", "uk-UA"];

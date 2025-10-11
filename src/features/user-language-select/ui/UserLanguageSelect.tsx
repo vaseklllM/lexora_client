@@ -1,6 +1,8 @@
 "use client";
 
+import { revalidateGetMe } from "@/api/auth/get-me";
 import { Language } from "@/api/schemas/language.schema";
+import { setUserLanguage } from "@/api/settings/set-user-language";
 import { Select, SelectOption } from "@/shared/ui/Select";
 import { ReactElement, useCallback, useMemo } from "react";
 
@@ -18,8 +20,11 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
     }));
   }, [props.allLanguages]);
 
-  const changedLanguage = useCallback(() => {
-    // console.log(value);
+  const changedLanguage = useCallback(async (languageCode: string) => {
+    await setUserLanguage({
+      languageCode,
+    });
+    await revalidateGetMe();
   }, []);
 
   return (

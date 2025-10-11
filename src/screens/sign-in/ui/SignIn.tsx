@@ -8,6 +8,7 @@ import { passwordSchema } from "@/shared/schemas/password.schema";
 import { Alert } from "@/shared/ui/Alert";
 import { Button } from "@/shared/ui/Button";
 import { Link } from "@/shared/ui/Link";
+import { revalidateHomePath } from "@/shared/utils/revalidateHomePath";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -62,6 +63,7 @@ export function SignIn() {
     });
 
     if (result?.ok) {
+      await revalidateHomePath();
       router.push(routes.dashboard.url());
     } else if (typeof result?.error === "string") {
       const error = JSON.parse(result.error);

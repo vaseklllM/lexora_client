@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { OAuth } from "@/features/oauth";
 import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
+import { revalidateHomePath } from "@/shared/utils/revalidateHomePath";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -61,6 +62,7 @@ export function SignUp() {
     });
 
     if (result?.ok) {
+      await revalidateHomePath();
       router.push(routes.dashboard.url());
     } else if (typeof result?.error === "string") {
       const error = JSON.parse(result.error);

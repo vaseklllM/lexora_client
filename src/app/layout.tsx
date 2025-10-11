@@ -1,4 +1,5 @@
 import { getMe } from "@/api/auth/get-me";
+import { checkIsAuth } from "@/shared/api-core/checkIsAuth";
 import { LanguageProvider } from "@/shared/config/i18n";
 import { AudioProvider } from "@/shared/hooks/usePlayer";
 import type { Metadata } from "next";
@@ -36,9 +37,14 @@ export default async function RootLayout(
   }>,
 ) {
   const { children } = props;
-  const me = await getMe();
+  const isAuth = await checkIsAuth();
 
-  const lng = me.language.code;
+  let lng: string = "en";
+
+  if (isAuth) {
+    const me = await getMe();
+    lng = me.language.code;
+  }
 
   return (
     <html lang={lng}>

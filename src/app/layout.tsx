@@ -1,3 +1,5 @@
+import { getMe } from "@/api/auth/get-me";
+import { LanguageProvider } from "@/shared/config/i18n";
 import { AudioProvider } from "@/shared/hooks/usePlayer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -28,21 +30,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout(
+export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
   }>,
 ) {
   const { children } = props;
+  const me = await getMe();
+
+  const lng = me.language.code;
 
   return (
-    <html lang="en">
+    <html lang={lng}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextAuthProvider>{children}</NextAuthProvider>
-        <ToastContainer position="bottom-left" />
-        <AudioProvider />
+        <LanguageProvider lng={lng}>
+          <NextAuthProvider>{children}</NextAuthProvider>
+          <ToastContainer position="bottom-left" />
+          <AudioProvider />
+        </LanguageProvider>
       </body>
     </html>
   );

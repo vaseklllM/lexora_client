@@ -3,7 +3,7 @@ import { renameFolder } from "@/api/folder/rename-folder";
 import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
-import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config";
+import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config/config";
 import { ReactElement, useCallback } from "react";
 
 interface Props {

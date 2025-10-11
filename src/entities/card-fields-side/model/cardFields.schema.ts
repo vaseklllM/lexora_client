@@ -2,7 +2,7 @@ import { CefrEnum } from "@/api/schemas/card.schema";
 import {
   MAX_CARD_DESCRIPTION_LENGTH,
   MAX_CARD_WORD_LENGTH,
-} from "@/shared/config";
+} from "@/shared/config/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import * as v from "valibot";
 

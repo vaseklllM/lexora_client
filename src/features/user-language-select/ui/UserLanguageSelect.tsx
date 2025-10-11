@@ -3,7 +3,7 @@
 import { revalidateGetMe } from "@/api/auth/get-me";
 import { Language } from "@/api/schemas/language.schema";
 import { setUserLanguage } from "@/api/settings/set-user-language";
-import { LIST_OF_LANGUAGES } from "@/shared/config";
+import { LIST_OF_LANGUAGES } from "@/shared/config/config";
 import { Select, SelectOption } from "@/shared/ui/Select";
 import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
@@ -25,7 +25,9 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
 
   const options = useMemo<SelectOption[]>(() => {
     return props.allLanguages
-      .filter((language) => LIST_OF_LANGUAGES.includes(language.code))
+      .filter((language) =>
+        LIST_OF_LANGUAGES.map((lng) => lng.code).includes(language.code),
+      )
       .map((language) => ({
         label: `${language.iconSymbol} ${language.nativeName} (${language.code})`,
         value: language.code,

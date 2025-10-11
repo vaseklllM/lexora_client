@@ -1,0 +1,20 @@
+{
+  "You can create a new folder or deck by clicking the plus button.": "Ви можете створити нову папку або колоду, натиснувши кнопку плюс.",
+  "You don't have any folders or decks.": "У вас немає жодної папки або колоди.",
+  "welcome": "Ласкаво просимо!",
+  "logout": "Вийти",
+  "save": "Зберегти",
+  "cancel": "Скасувати",
+  "loading": "Завантаження...",
+  "language": "Мова",
+  "selectLanguage": "Оберіть вашу мову",
+  "profile": {
+    "title": "Профіль",
+    "edit": "Редагувати профіль",
+    "email": "Електронна адреса"
+  },
+  "errors": {
+    "network": "Помилка мережі. Спробуйте ще раз.",
+    "notFound": "Сторінку не знайдено."
+  }
+}

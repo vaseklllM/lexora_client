@@ -21,4 +21,13 @@ export const MAX_CARD_DESCRIPTION_LENGTH = 100;
 /**
  * The list of supported languages
  */
-export const LIST_OF_LANGUAGES = ["en-US", "uk-UA"];
+export const LIST_OF_LANGUAGES: { i18n: string; code: string }[] = [
+  {
+    i18n: "en",
+    code: "en-US",
+  },
+  {
+    i18n: "uk",
+    code: "uk-UA",
+  },
+];

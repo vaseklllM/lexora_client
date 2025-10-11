@@ -7,6 +7,7 @@ import { Language } from "@/api/schemas/language.schema";
 import { FolderBreadcrumbs } from "@/entities/folder-breadcrumbs";
 import { DecksProvider, DraggableDeck } from "@/features/deck";
 import { Folder, FoldersProvider } from "@/features/folder";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { ButtonBack } from "@/shared/ui/ButtonBack";
@@ -52,6 +53,8 @@ export const Section = withDndKitProvider(
     const draggingDeckId = useSectionStore((store) => store.draggingDeckId);
     const movedDeckIds = useSectionStore((store) => store.movedDeckIds);
     const isFolders = props.folders && props.folders.length > 0;
+
+    const { t } = useTranslation();
 
     const isFolder = !!props.folder?.id;
 
@@ -135,8 +138,10 @@ export const Section = withDndKitProvider(
             )}
             {isEmpty && (
               <p className={classes.emptyText()}>
-                You don&apos;t have any folders or decks. <br />
-                You can create a new folder or deck by clicking the plus button.
+                {t("You don't have any folders or decks.")} <br />
+                {t(
+                  "You can create a new folder or deck by clicking the plus button.",
+                )}
               </p>
             )}
           </div>

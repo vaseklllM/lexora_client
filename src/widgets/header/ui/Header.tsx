@@ -37,6 +37,7 @@ export const Header = (props: Props) => {
           userLanguage={props.userLanguage}
           className="select-sm hidden sm:block"
           type="icon_button"
+          dropdownPosition="bottom-end"
         />
         <ButtonLogout className="hidden sm:block" />
         <HeaderMenu className={classes.headerMenu()}>

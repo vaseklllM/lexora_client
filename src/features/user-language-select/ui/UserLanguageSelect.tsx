@@ -3,7 +3,11 @@
 import { revalidateGetMe } from "@/api/auth/get-me";
 import { Language } from "@/api/schemas/language.schema";
 import { setUserLanguage } from "@/api/settings/set-user-language";
-import { LanguageSelect, LanguageSelectType } from "@/entities/language-select";
+import {
+  DropdownPosition,
+  LanguageSelect,
+  LanguageSelectType,
+} from "@/entities/language-select";
 import { codeToLanguageEnum } from "@/shared/enums/Language";
 import { setAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import { ReactElement, useCallback } from "react";
@@ -13,6 +17,7 @@ interface Props {
   allLanguages: Language[];
   userLanguage: Language;
   type: LanguageSelectType;
+  dropdownPosition?: DropdownPosition;
 }
 
 export const UserLanguageSelect = (props: Props): ReactElement => {
@@ -35,6 +40,7 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
       onChangeLanguage={changedLanguage}
       name="userLanguage"
       type={props.type}
+      dropdownPosition={props.dropdownPosition}
     />
   );
 };

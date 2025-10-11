@@ -5,7 +5,7 @@ import { LIST_OF_LANGUAGES } from "@/shared/config/config";
 import { Select, SelectOption } from "@/shared/ui/Select";
 import { ReactElement, useMemo } from "react";
 import { tv } from "tailwind-variants";
-import { IconSelect } from "./IconSelect";
+import { DropdownPosition, IconSelect } from "./IconSelect";
 
 const classesSlots = tv({
   slots: {
@@ -23,6 +23,7 @@ export interface LanguageSelectProps {
   onChangeLanguage?: (language: string) => void;
   name?: string;
   type: LanguageSelectType;
+  dropdownPosition?: DropdownPosition;
 }
 
 export const LanguageSelect = (props: LanguageSelectProps): ReactElement => {
@@ -54,10 +55,11 @@ export const LanguageSelect = (props: LanguageSelectProps): ReactElement => {
     case "icon_button":
       return (
         <IconSelect
-          languagesList={props.languagesList}
+          options={options}
           activeLanguageCode={props.activeLanguageCode}
           onChangeLanguage={props.onChangeLanguage}
           className={classes.iconSelect({ className: props.className })}
+          dropdownPosition={props.dropdownPosition}
         />
       );
   }

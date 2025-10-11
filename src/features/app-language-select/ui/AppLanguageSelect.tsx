@@ -1,7 +1,11 @@
 "use client";
 
 import { Language } from "@/api/schemas/language.schema";
-import { LanguageSelect, LanguageSelectType } from "@/entities/language-select";
+import {
+  DropdownPosition,
+  LanguageSelect,
+  LanguageSelectType,
+} from "@/entities/language-select";
 import { codeToLanguageEnum } from "@/shared/enums/Language";
 import { setAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import { useRouter } from "next/navigation";
@@ -12,6 +16,7 @@ interface Props {
   allLanguages: Language[];
   type: LanguageSelectType;
   activeLanguageCode: string;
+  dropdownPosition?: DropdownPosition;
 }
 
 export const AppLanguageSelect = (props: Props): ReactElement => {
@@ -32,6 +37,7 @@ export const AppLanguageSelect = (props: Props): ReactElement => {
       onChangeLanguage={changedLanguage}
       name="userLanguage"
       type={props.type}
+      dropdownPosition={props.dropdownPosition}
     />
   );
 };

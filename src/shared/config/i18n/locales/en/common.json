@@ -1,6 +1,7 @@
 {
   "sign_in": {
-    "title": "Sign in"
+    "title": "Sign in",
+    "subtitle": "Enter your email and password to sign in"
   },
   "empty": {
     "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."

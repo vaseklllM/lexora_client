@@ -86,7 +86,7 @@ export function SignIn() {
           {t("sign_in.title")}
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">
-          Enter your email and password to sign in
+          {t("sign_in.subtitle")}
         </p>
       </div>
 

@@ -26,7 +26,8 @@ const classesSlots = tv({
     buttonBack: "",
     breadcrumbs: "",
     title: "text-base-content/70 text-xl font-bold",
-    emptyText: "text-base-content/50 text-md mt-16 mb-20 text-center",
+    emptyText:
+      "text-base-content/50 text-md mt-16 mb-20 text-center whitespace-pre-line",
     dropdownMenu: "absolute right-3 bottom-3 z-10",
     folders:
       "mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",
@@ -137,12 +138,7 @@ export const Section = withDndKitProvider(
               </>
             )}
             {isEmpty && (
-              <p className={classes.emptyText()}>
-                {t("You don't have any folders or decks.")} <br />
-                {t(
-                  "You can create a new folder or deck by clicking the plus button.",
-                )}
-              </p>
+              <p className={classes.emptyText()}>{t("empty.dashboard")}</p>
             )}
           </div>
           <DeckDraggableOverlay

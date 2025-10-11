@@ -1,14 +1,8 @@
 {
-  "You can create a new folder or deck by clicking the plus button.": "You can create a new folder or deck by clicking the plus button.",
-  "You don't have any folders or decks.": "You don't have any folders or decks.",
-  "Sign in": "Sign in",
-  "profile": {
-    "title": "Profile",
-    "edit": "Edit profile",
-    "email": "Email address"
+  "sign_in": {
+    "title": "Sign in"
   },
-  "errors": {
-    "network": "Network error. Please try again.",
-    "notFound": "Page not found."
+  "empty": {
+    "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."
   }
 }

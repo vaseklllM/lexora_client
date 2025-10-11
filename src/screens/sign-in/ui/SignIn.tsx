@@ -83,7 +83,7 @@ export function SignIn() {
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-4 text-center text-2xl/9 font-bold tracking-tight lg:mt-10">
-          {t("Sign in")}
+          {t("sign_in.title")}
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">
           Enter your email and password to sign in

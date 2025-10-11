@@ -105,7 +105,7 @@ export function SignIn() {
             error={errors.email?.message}
             type="email"
             autoComplete="email"
-            label="Email address"
+            label={t("sign_in.email.label")}
           />
           <InputLabeled
             {...register("password", {
@@ -116,14 +116,14 @@ export function SignIn() {
             error={errors.password?.message}
             type="password"
             autoComplete="current-password"
-            label="Password"
+            label={t("sign_in.password.label")}
           />
           <Button
             className="btn-primary mt-2 w-full"
             type="submit"
             isLoading={isSubmitting}
           >
-            Sign in
+            {t("sign_in.button_sign_in")}
           </Button>
         </form>
 

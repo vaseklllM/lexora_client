@@ -1,7 +1,14 @@
 {
   "sign_in": {
     "title": "Sign in",
-    "subtitle": "Enter your email and password to sign in"
+    "subtitle": "Enter your email and password to sign in",
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "button_sign_in": "Sign in"
   },
   "empty": {
     "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."

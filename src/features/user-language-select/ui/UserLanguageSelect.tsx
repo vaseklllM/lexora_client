@@ -18,6 +18,10 @@ export const UserLanguageSelect = (props: Props): ReactElement => {
     await setUserLanguage({
       languageCode,
     });
+    // const languageEnum = codeToLanguageEnum(languageCode);
+    // if (languageEnum) {
+    //   await setAppLanguageCookie(languageEnum);
+    // }
     await revalidateGetMe();
   }, []);
 

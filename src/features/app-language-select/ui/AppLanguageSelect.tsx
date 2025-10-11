@@ -17,15 +17,12 @@ interface Props {
 export const AppLanguageSelect = (props: Props): ReactElement => {
   const router = useRouter();
 
-  const changedLanguage = useCallback(
-    async (languageCode: string) => {
-      const language = codeToLanguageEnum(languageCode);
-      if (!language) return;
-      await setAppLanguageCookie(language);
-      router.refresh();
-    },
-    [router],
-  );
+  const changedLanguage = useCallback(async (languageCode: string) => {
+    const language = codeToLanguageEnum(languageCode);
+    if (!language) return;
+    await setAppLanguageCookie(language);
+    router.refresh();
+  }, []);
 
   return (
     <LanguageSelect

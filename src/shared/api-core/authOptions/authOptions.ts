@@ -1,6 +1,11 @@
 import { googleAuth } from "@/api/auth/google-auth";
 import { login } from "@/api/auth/login";
 import { register } from "@/api/auth/register";
+import { codeToLanguageEnum } from "@/shared/enums/Language";
+import {
+  getAppLanguageCookie,
+  setAppLanguageCookie,
+} from "@/shared/utils/setAppLanguageCookie";
 import { jwtDecode } from "jwt-decode";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -35,6 +40,8 @@ export const authOptions: AuthOptions = {
 
             const decodedToken = jwtDecode(data.token);
 
+            await initUserLanguageToAppLanguage(data.user.language.code);
+
             return {
               id: data.user.id,
               name: data.user.name,
@@ -52,6 +59,8 @@ export const authOptions: AuthOptions = {
             });
 
             const decodedToken = jwtDecode(data.token);
+
+            await initUserLanguageToAppLanguage(data.user.language.code);
 
             return {
               id: data.user.id,
@@ -147,3 +156,12 @@ export const authOptions: AuthOptions = {
   },
   // debug: process.env.NODE_ENV === "development",
 };
+
+async function initUserLanguageToAppLanguage(userLanguageCode: string) {
+  const userLanguageEnum = codeToLanguageEnum(userLanguageCode);
+  const appLanguage = await getAppLanguageCookie();
+
+  if (userLanguageEnum && appLanguage && userLanguageEnum !== appLanguage) {
+    setAppLanguageCookie(userLanguageEnum);
+  }
+}

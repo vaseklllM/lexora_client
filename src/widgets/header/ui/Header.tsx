@@ -36,6 +36,7 @@ export const Header = (props: Props) => {
           allLanguages={props.allLanguages}
           userLanguage={props.userLanguage}
           className="select-sm hidden sm:block"
+          type="icon_button"
         />
         <ButtonLogout className="hidden sm:block" />
         <HeaderMenu className={classes.headerMenu()}>
@@ -43,6 +44,7 @@ export const Header = (props: Props) => {
             <UserLanguageSelect
               allLanguages={props.allLanguages}
               userLanguage={props.userLanguage}
+              type="select"
             />
             <div className="divider m-0 h-0.5 w-full" />
             <ButtonLogout className="w-full" />

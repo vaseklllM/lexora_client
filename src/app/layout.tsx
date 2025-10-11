@@ -1,5 +1,6 @@
 import { getMe } from "@/api/auth/get-me";
 import { checkIsAuth } from "@/shared/api-core/checkIsAuth";
+import { LIST_OF_LANGUAGES } from "@/shared/config/config";
 import { LanguageProvider } from "@/shared/config/i18n";
 import { AudioProvider } from "@/shared/hooks/usePlayer";
 import type { Metadata } from "next";
@@ -43,7 +44,14 @@ export default async function RootLayout(
 
   if (isAuth) {
     const me = await getMe();
-    lng = me.language.code;
+
+    const language = LIST_OF_LANGUAGES.find(
+      (language) => language.code === me.language.code,
+    );
+
+    if (language) {
+      lng = language.i18n;
+    }
   }
 
   return (

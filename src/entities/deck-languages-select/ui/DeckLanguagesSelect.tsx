@@ -14,7 +14,7 @@ interface Props extends Omit<SelectProps, "options"> {
   actualLanguages?: Language[];
 }
 
-export const LanguagesSelect = (props: Props): ReactElement => {
+export const DeckLanguagesSelect = (props: Props): ReactElement => {
   const { languages, disabledLanguages, actualLanguages, ...selectProps } =
     props;
 

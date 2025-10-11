@@ -1,12 +1,22 @@
+import { getAllLanguages } from "@/api/languages/get-all-languages";
+import { AppLanguageSelect } from "@/features/app-language-select";
 import Image from "next/image";
+import { ReactNode } from "react";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+interface Props {
+  children: ReactNode;
+}
+
+export default async function RootLayout(props: Props) {
+  const allLanguages = await getAllLanguages();
+
   return (
     <div className="flex h-screen justify-center">
+      <AppLanguageSelect
+        allLanguages={allLanguages.data}
+        className="fixed top-4 left-4 w-max"
+        type="icon_button"
+      />
       <div className="w-full overflow-y-auto lg:w-3/7 xl:w-2/5">
         <div className="flex min-h-full flex-col items-center p-4 md:justify-center md:p-6">
           <Image
@@ -16,7 +26,7 @@ export default function RootLayout({
             width={100}
             height={100}
           />
-          <div className="w-full max-w-sm flex-shrink-0">{children}</div>
+          <div className="w-full max-w-sm flex-shrink-0">{props.children}</div>
         </div>
       </div>
       <div className="bg-primary hidden flex-col items-center justify-center lg:flex lg:w-4/7 xl:w-3/5">

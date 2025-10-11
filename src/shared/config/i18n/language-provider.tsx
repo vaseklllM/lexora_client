@@ -3,11 +3,7 @@
 import { createContext, ReactNode, useContext, useEffect } from "react";
 import i18next from "./i18n-init";
 
-type LanguageContextType = {
-  lng: string;
-};
-
-const LanguageContext = createContext<LanguageContextType>({ lng: "en" });
+const LanguageContext = createContext<string>("en");
 
 export function LanguageProvider({
   children,
@@ -23,9 +19,7 @@ export function LanguageProvider({
   }, [lng]);
 
   return (
-    <LanguageContext.Provider value={{ lng }}>
-      {children}
-    </LanguageContext.Provider>
+    <LanguageContext.Provider value={lng}>{children}</LanguageContext.Provider>
   );
 }
 

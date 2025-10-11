@@ -1,8 +1,8 @@
 import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { createDeck } from "@/api/deck/create-deck";
 import { Language } from "@/api/schemas/language.schema";
+import { DeckLanguagesSelect } from "@/entities/deck-languages-select";
 import { InputLabeled } from "@/entities/input-labeled";
-import { LanguagesSelect } from "@/entities/languages-select";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config/config";
@@ -161,7 +161,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             autoComplete="off"
           />
 
-          <LanguagesSelect
+          <DeckLanguagesSelect
             {...register("languageWhatIKnowCode")}
             label="Language I know"
             languages={props.allLanguages}
@@ -170,7 +170,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             disabledLanguages={disabledLanguagesWhatIKnow}
           />
 
-          <LanguagesSelect
+          <DeckLanguagesSelect
             {...register("languageWhatILearnCode")}
             languages={props.allLanguages}
             className="w-full"

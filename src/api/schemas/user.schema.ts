@@ -1,6 +1,7 @@
 import { dateSchema } from "@/shared/schemas/date.schema";
 import { idSchema } from "@/shared/schemas/id.schema";
 import * as v from "valibot";
+import { languageSchema } from "./language.schema";
 
 export const userSchema = () =>
   v.object({
@@ -10,4 +11,5 @@ export const userSchema = () =>
     avatar: v.optional(v.pipe(v.string(), v.url())),
     createdAt: dateSchema(),
     updatedAt: dateSchema(),
+    language: languageSchema,
   });

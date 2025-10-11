@@ -1,4 +1,6 @@
+import { Language } from "@/api/schemas/language.schema";
 import { UserIcon } from "@/entities/user-icon";
+import { UserLanguageSelect } from "@/features/user-language-select";
 import { tv } from "tailwind-variants";
 import { ButtonLogout } from "./ButtonLogout";
 
@@ -13,6 +15,8 @@ const classesSlots = tv({
 interface Props {
   userName: string;
   avatarUrl?: string;
+  allLanguages: Language[];
+  userLanguage: Language;
 }
 
 export const Header = (props: Props) => {
@@ -25,6 +29,10 @@ export const Header = (props: Props) => {
         <p className="text-base-content/90">{props.userName}</p>
       </div>
       <div className={classes.right()}>
+        <UserLanguageSelect
+          allLanguages={props.allLanguages}
+          userLanguage={props.userLanguage}
+        />
         <ButtonLogout />
       </div>
     </div>

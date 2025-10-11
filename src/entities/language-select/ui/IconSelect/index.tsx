@@ -11,8 +11,9 @@ const classesSlots = tv({
     button: "btn btn-ghost btn-sm btn-primary m-1 gap-0.5 rounded-xl",
     icon: "dark:text-base-content/70",
     content:
-      "dropdown-content bg-base-200 dark:bg-base-100 rounded-box z-1 flex max-h-[calc(100vh-100px)] w-max flex-col overflow-y-scroll p-2 shadow-sm",
-    item: "hover:bg-base-300 dark:hover:bg-base-200 flex w-full cursor-pointer items-center gap-2 p-2 text-left text-sm font-medium",
+      "dropdown-content bg-base-200 dark:bg-base-100 rounded-box z-1 flex max-h-[calc(100vh-100px)] w-max flex-col gap-1 overflow-y-scroll p-2 shadow-sm",
+    item: "hover:bg-base-300 dark:hover:bg-base-200 flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-left text-sm font-medium",
+    itemActive: "bg-base-300 dark:bg-base-200 cursor-default",
   },
   variants: {
     dropdownPosition: {
@@ -48,7 +49,17 @@ export const IconSelect = (props: Props): ReactElement => {
       </div>
       <div tabIndex={-1} className={classes.content()}>
         {props.options.map((option) => (
-          <button type="button" key={option.value} className={classes.item()}>
+          <button
+            type="button"
+            key={option.value}
+            className={classes.item({
+              className:
+                props.activeLanguageCode === option.value &&
+                classes.itemActive(),
+            })}
+            disabled={props.activeLanguageCode === option.value}
+            onClick={() => props.onChangeLanguage?.(option.value)}
+          >
             <span>{option.label}</span>
           </button>
         ))}

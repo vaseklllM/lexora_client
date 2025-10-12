@@ -1,21 +1,12 @@
 "use server";
 
+import { getAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import { createInstance } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
+import { getLocales } from "./getLocales";
 import { getOptions } from "./settings";
 
-import { getAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
-import enCommon from "./locales/en/common.json";
-import ukCommon from "./locales/uk/common.json";
-
-const resources = {
-  en: {
-    common: enCommon,
-  },
-  uk: {
-    common: ukCommon,
-  },
-};
+const resources = getLocales();
 
 async function initI18next(lng: string) {
   const i18nInstance = createInstance();

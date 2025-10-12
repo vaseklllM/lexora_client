@@ -2,19 +2,11 @@
 
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import { getOptions } from "./settings";
 import { LIST_OF_LANGUAGES } from "../config";
-import enCommon from "./locales/en/common.json";
-import ukCommon from "./locales/uk/common.json";
+import { getLocales } from "./getLocales";
+import { getOptions } from "./settings";
 
-const resources = {
-  en: {
-    common: enCommon,
-  },
-  uk: {
-    common: ukCommon,
-  },
-};
+const resources = getLocales();
 
 let isInitialized = false;
 

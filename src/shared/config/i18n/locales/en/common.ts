@@ -156,6 +156,16 @@ export const en = {
     rename_deck: {
       title: "Rename deck '{{deckName}}'",
     },
+    choose_game: {
+      title: "Choose type of game",
+      description: "Choose the type of game you want to play.",
+      buttons: {
+        pair_it: "Pair it",
+        guess_it: "Guess it",
+        recall_it: "Recall it",
+        type_it: "Type it",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Most used languages",

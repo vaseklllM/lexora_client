@@ -1,5 +1,5 @@
 import { ICard } from "@/api/schemas/card.schema";
-import { ModalRepeatCardsType } from "@/entities/modal-repeat-cards-type";
+import { ModalChooseGame } from "@/entities/modal-choose-game";
 import { GameType } from "@/shared/types/Game";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement, useCallback } from "react";
@@ -29,7 +29,7 @@ export const ModalRepeatGameType = (props: Props): ReactElement => {
   );
 
   return (
-    <ModalRepeatCardsType
+    <ModalChooseGame
       isOpen={isOpen}
       onClose={closeModalRepeatAllGameType}
       onChooseGameType={onChooseGameTypeHandler}

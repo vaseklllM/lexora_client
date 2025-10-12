@@ -158,6 +158,16 @@ export const uk: CommonType = {
     rename_deck: {
       title: "Перейменувати колоду '{{deckName}}'",
     },
+    choose_game: {
+      title: "Виберіть тип гри",
+      description: "Виберіть тип гри, який ви хочете грати.",
+      buttons: {
+        pair_it: "Знайти пару",
+        guess_it: "Вибрати один із",
+        recall_it: "Згадати",
+        type_it: "Написати",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Часто використовувані мови",

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { GameType } from "@/shared/types/Game";
 import { Button } from "@/shared/ui/Button";
 import { ReactElement, useCallback } from "react";
@@ -20,7 +21,7 @@ interface Props {
   onChooseGameType?: (gameType: GameType) => void;
 }
 
-export const ModalRepeatCardsType = (props: Props): ReactElement => {
+export const ModalChooseGame = (props: Props): ReactElement => {
   const classes = classesSlots();
   const chooseGameHandler = useCallback(
     (gameType: GameType) => () => {
@@ -29,6 +30,7 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
     },
     [props.onChooseGameType, props.onClose],
   );
+  const { t } = useTranslation();
 
   return (
     <dialog
@@ -45,9 +47,11 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
             ✕
           </button>
         </form>
-        <h3 className="text-center text-lg font-bold">Choose type of game</h3>
+        <h3 className="text-center text-lg font-bold">
+          {t("modal.choose_game.title")}
+        </h3>
         <p className="text-base-content/70 mt-2 text-center text-sm">
-          Choose the type of game you want to play.
+          {t("modal.choose_game.description")}
         </p>
         <div className="mt-6 mb-4 flex flex-col items-center gap-4">
           <Button
@@ -56,7 +60,7 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
             className={classes.button()}
             onClick={chooseGameHandler("pairIt")}
           >
-            Pair it
+            {t("modal.choose_game.buttons.pair_it")}
           </Button>
           <Button
             variant={btnVariant}
@@ -64,7 +68,7 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
             className={classes.button()}
             onClick={chooseGameHandler("guessIt")}
           >
-            Guess it
+            {t("modal.choose_game.buttons.guess_it")}
           </Button>
           <Button
             variant={btnVariant}
@@ -72,7 +76,7 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
             className={classes.button()}
             onClick={chooseGameHandler("recallIt")}
           >
-            Recall it
+            {t("modal.choose_game.buttons.recall_it")}
           </Button>
           <Button
             variant={btnVariant}
@@ -80,7 +84,7 @@ export const ModalRepeatCardsType = (props: Props): ReactElement => {
             className={classes.button()}
             onClick={chooseGameHandler("typeIt")}
           >
-            Type it
+            {t("modal.choose_game.buttons.type_it")}
           </Button>
         </div>
       </div>

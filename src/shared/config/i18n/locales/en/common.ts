@@ -181,6 +181,16 @@ export const en = {
       delete: "Delete",
     },
   },
+  learning_deck: {
+    step: {
+      start: {
+        button_start: {
+          title: "Learn",
+          no_words_to_learn: "no words to learn",
+        },
+      },
+    },
+  },
 };
 
 export type CommonType = typeof en;

@@ -183,4 +183,14 @@ export const uk: CommonType = {
       delete: "Видалити",
     },
   },
+  learning_deck: {
+    step: {
+      start: {
+        button_start: {
+          title: "Вивчити",
+          no_words_to_learn: "немає слів для вивчення",
+        },
+      },
+    },
+  },
 };

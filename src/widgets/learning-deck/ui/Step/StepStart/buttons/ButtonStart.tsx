@@ -5,6 +5,7 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement, useCallback } from "react";
 import { buttonClassesSlots } from "./classes";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 interface Props {
   className?: string;
@@ -18,6 +19,7 @@ export const ButtonStart = (props: Props): ReactElement => {
   const startLearningSession = useLearningDeckStore(
     (state) => state.startLearningSession,
   );
+  const { t } = useTranslation();
 
   const startHandler = useCallback(async () => {
     const result = await startLearningDeckSession({
@@ -41,7 +43,10 @@ export const ButtonStart = (props: Props): ReactElement => {
         disabled={!isCardsToLearn}
       />
       <p className={classes.title()}>
-        Learn{isCardsToLearn ? "" : " (no words to learn)"}
+        {t("learning_deck.step.start.button_start.title")}
+        {isCardsToLearn
+          ? ""
+          : ` (${t("learning_deck.step.start.button_start.no_words_to_learn")})`}
       </p>
     </div>
   );

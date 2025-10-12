@@ -89,6 +89,10 @@ export const en = {
       },
     },
   },
+  deck_languages_select: {
+    most_used_languages: "Most used languages",
+    other_languages: "Other languages",
+  },
   header: {
     buttons: {
       logout: "Logout",

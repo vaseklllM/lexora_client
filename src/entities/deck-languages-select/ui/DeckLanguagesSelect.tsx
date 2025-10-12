@@ -1,4 +1,5 @@
 import { Language } from "@/api/schemas/language.schema";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import {
   Select,
   SelectOptgroup,
@@ -15,6 +16,7 @@ interface Props extends Omit<SelectProps, "options"> {
 }
 
 export const DeckLanguagesSelect = (props: Props): ReactElement => {
+  const { t } = useTranslation();
   const { languages, disabledLanguages, actualLanguages, ...selectProps } =
     props;
 
@@ -27,14 +29,14 @@ export const DeckLanguagesSelect = (props: Props): ReactElement => {
         optgroups: [
           {
             id: "actual-languages",
-            label: "Most used languages",
+            label: t("deck_languages_select.most_used_languages"),
             options: actualLanguages.map((language) =>
               convertLanguageToOption(language, { disabledLanguages }),
             ),
           },
           {
             id: "other-languages",
-            label: "Other languages",
+            label: t("deck_languages_select.other_languages"),
             options: languages
               .filter(
                 (language) =>

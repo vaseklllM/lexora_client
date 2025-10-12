@@ -91,6 +91,10 @@ export const uk: CommonType = {
       },
     },
   },
+  deck_languages_select: {
+    most_used_languages: "Часто використовувані мови",
+    other_languages: "Інші мови",
+  },
   header: {
     buttons: {
       logout: "Вийти",

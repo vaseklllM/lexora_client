@@ -101,6 +101,12 @@ export const en = {
   folder_breadcrumbs: {
     home: "Home",
   },
+  folder: {
+    buttons: {
+      rename: "Rename",
+      delete: "Delete",
+    },
+  },
 };
 
 export type CommonType = typeof en;

@@ -103,4 +103,10 @@ export const uk: CommonType = {
   folder_breadcrumbs: {
     home: "Головна",
   },
+  folder: {
+    buttons: {
+      rename: "Перейменувати",
+      delete: "Видалити",
+    },
+  },
 };

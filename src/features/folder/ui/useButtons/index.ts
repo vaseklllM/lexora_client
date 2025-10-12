@@ -2,6 +2,7 @@ import { DropdownItem } from "@/entities/dropdown-menu";
 import { useMemo } from "react";
 import { useFolderStore } from "../../model/store";
 import { FolderProps } from "../Folder";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const enum Button {
   RENAME,
@@ -15,13 +16,14 @@ export function useButtons(props: FolderProps): DropdownItem[] {
   const openModalRenameFolder = useFolderStore(
     (state) => state.openModalRenameFolder,
   );
+  const { t } = useTranslation();
 
   return useMemo((): DropdownItem[] => {
     return [
       {
         id: Button.RENAME,
         type: "button",
-        label: "Rename",
+        label: t("folder.buttons.rename"),
         icon: "edit",
         onClick: ({ closePopover }) => {
           closePopover();
@@ -34,7 +36,7 @@ export function useButtons(props: FolderProps): DropdownItem[] {
       {
         id: Button.DELETE,
         type: "button",
-        label: "Delete",
+        label: t("folder.buttons.delete"),
         icon: "delete",
         onClick: ({ closePopover }) => {
           closePopover();

@@ -55,6 +55,25 @@ export const en = {
         button: "Add Card",
       },
     },
+    card_fields_side: {
+      word: {
+        label: "Word",
+        generate: {
+          tooltip: "Generate card",
+        },
+      },
+      translation: {
+        label: "Translation",
+      },
+      example: {
+        label: "Example or description",
+        placeholder: "{{languageName}} example",
+      },
+      example_translation: {
+        label: "Example or description translation",
+        placeholder: "{{languageName}} example",
+      },
+    },
   },
   empty: {
     dashboard:

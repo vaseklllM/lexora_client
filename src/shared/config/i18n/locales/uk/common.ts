@@ -57,6 +57,25 @@ export const uk: CommonType = {
         button: "Додати картку",
       },
     },
+    card_fields_side: {
+      word: {
+        label: "Слово",
+        generate: {
+          tooltip: "Згенерувати картку",
+        },
+      },
+      translation: {
+        label: "Переклад",
+      },
+      example: {
+        label: "Приклад або опис",
+        placeholder: "{{languageName}} приклад",
+      },
+      example_translation: {
+        label: "Приклад або опис в перекладі",
+        placeholder: "{{languageName}} приклад",
+      },
+    },
   },
   empty: {
     dashboard:

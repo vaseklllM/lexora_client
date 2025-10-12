@@ -4,6 +4,7 @@ import { fillCardData } from "@/api/ai/fill-card-data";
 import { CefrEnum } from "@/api/schemas/card.schema";
 import { Language } from "@/api/schemas/language.schema";
 import { InputLabeled } from "@/entities/input-labeled";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { ReactElement, useCallback, useState } from "react";
@@ -57,6 +58,7 @@ export interface CardFieldsSideProps {
 
 export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const {
     handleSubmit,
@@ -121,7 +123,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
         <InputLabeled
           {...register("word")}
           error={errors.word?.message}
-          label="Word"
+          label={t("deck_section.card_fields_side.word.label")}
           labelClassName={classes.backContentLabel()}
           placeholder={`${props.languageWhatILearn.name}`}
           inputWrapperClassName={classes.backContentInputWrapper()}
@@ -138,7 +140,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
                 isLoading
               }
               textColor="primary"
-              tooltip="Generate card"
+              tooltip={t("deck_section.card_fields_side.word.generate.tooltip")}
               onClick={aiWordHandler}
             />
           }
@@ -147,7 +149,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
         <InputLabeled
           {...register("translation")}
           error={errors.translation?.message}
-          label="Translation"
+          label={t("deck_section.card_fields_side.translation.label")}
           labelClassName={classes.backContentLabel()}
           placeholder={`${props.languageWhatIKnow.name}`}
           inputWrapperClassName={classes.backContentInputWrapper()}
@@ -159,11 +161,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
           <legend className="fieldset-legend text-base-content/70 p-0 pb-1 text-left text-xs font-medium">
             CEFR
           </legend>
-          <select
-            {...register("cefr")}
-            defaultValue="Pick a CEFR"
-            className="select"
-          >
+          <select {...register("cefr")} className="select">
             <option>{CefrEnum.A1}</option>
             <option>{CefrEnum.A2}</option>
             <option>{CefrEnum.B1}</option>
@@ -175,9 +173,11 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
         <InputLabeled
           {...register("example")}
           error={errors.example?.message}
-          label="Example or description"
+          label={t("deck_section.card_fields_side.example.label")}
           labelClassName={classes.backContentLabel()}
-          placeholder={`${props.languageWhatILearn.name} example`}
+          placeholder={t("deck_section.card_fields_side.example.placeholder", {
+            languageName: props.languageWhatILearn.name,
+          })}
           inputWrapperClassName={classes.backContentInputWrapper()}
           inputClassName={classes.backContentInput()}
           disabled={!props.isActiveThisSide || isSubmitting || isLoading}
@@ -185,9 +185,14 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
         <InputLabeled
           {...register("exampleTranslation")}
           error={errors.exampleTranslation?.message}
-          label="Example or description translation"
+          label={t("deck_section.card_fields_side.example_translation.label")}
           labelClassName={classes.backContentLabel()}
-          placeholder={`${props.languageWhatIKnow.name} example`}
+          placeholder={t(
+            "deck_section.card_fields_side.example_translation.placeholder",
+            {
+              languageName: props.languageWhatIKnow.name,
+            },
+          )}
           inputWrapperClassName={classes.backContentInputWrapper()}
           inputClassName={classes.backContentInput()}
           disabled={!props.isActiveThisSide || isSubmitting || isLoading}

@@ -188,6 +188,12 @@ export const en = {
           title: "Learn",
           no_words_to_learn: "no words to learn",
         },
+        button_repeat: {
+          title: "Repeat ({{numberOfCardsNeedToReview}})",
+        },
+        button_repeat_all: {
+          title: "Repeat All ({{numberOfCardsInProgress}})",
+        },
       },
     },
   },

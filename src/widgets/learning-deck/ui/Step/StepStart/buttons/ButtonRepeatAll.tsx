@@ -4,6 +4,7 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { ReactElement } from "react";
 import { buttonClassesSlots } from "./classes";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 interface Props {
   className?: string;
@@ -14,6 +15,7 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
   const classes = buttonClassesSlots({
     type: "repeatAll",
   });
+  const { t } = useTranslation();
 
   const openModalRepeatAllGameType = useLearningDeckStore(
     (state) => state.openModalRepeatAllGameType,
@@ -30,7 +32,9 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
         onClick={openModalRepeatAllGameType}
       />
       <p className={classes.title()}>
-        Repeat All ({props.numberOfCardsInProgress})
+        {t("learning_deck.step.start.button_repeat_all.title", {
+          numberOfCardsInProgress: props.numberOfCardsInProgress,
+        })}
       </p>
     </div>
   );

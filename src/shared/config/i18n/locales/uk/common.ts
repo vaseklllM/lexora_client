@@ -190,6 +190,12 @@ export const uk: CommonType = {
           title: "Вивчити",
           no_words_to_learn: "немає слів для вивчення",
         },
+        button_repeat: {
+          title: "Повторити ({{numberOfCardsNeedToReview}})",
+        },
+        button_repeat_all: {
+          title: "Повторити всі ({{numberOfCardsInProgress}})",
+        },
       },
     },
   },

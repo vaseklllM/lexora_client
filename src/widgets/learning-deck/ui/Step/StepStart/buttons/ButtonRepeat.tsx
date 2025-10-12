@@ -4,6 +4,7 @@ import { ButtonIcon } from "@/shared/ui/ButtonIcon";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
 import { ReactElement } from "react";
 import { buttonClassesSlots } from "./classes";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 interface Props {
   className?: string;
@@ -14,7 +15,7 @@ export const ButtonRepeat = (props: Props): ReactElement => {
   const openModalChooseReviewType = useLearningDeckStore(
     (state) => state.openModalRepeatGameType,
   );
-
+  const { t } = useTranslation();
   const classes = buttonClassesSlots({
     type: "repeat",
   });
@@ -32,7 +33,9 @@ export const ButtonRepeat = (props: Props): ReactElement => {
         }}
       />
       <p className={classes.title()}>
-        Repeat ({props.numberOfCardsNeedToReview})
+        {t("learning_deck.step.start.button_repeat.title", {
+          numberOfCardsNeedToReview: props.numberOfCardsNeedToReview,
+        })}
       </p>
     </div>
   );

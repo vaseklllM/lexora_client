@@ -6,6 +6,7 @@ import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_DECK_NAME_LENGTH } from "@/shared/config/config";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ReactElement, useCallback } from "react";
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const ModalRenameDeck = (props: Props): ReactElement => {
+  const { t } = useTranslation();
   const saveHandler = useCallback<ModalRenameSaveHandler>(
     async ({ name, close, setNameError }) => {
       if (!props.deckId) return;
@@ -61,7 +63,7 @@ export const ModalRenameDeck = (props: Props): ReactElement => {
       onClose={props.onClose}
       onSave={saveHandler}
       name={props.deckName}
-      title="Rename Deck"
+      title={t("modal.rename_deck.title", { deckName: props.deckName })}
       maxNameLength={MAX_DECK_NAME_LENGTH}
     />
   );

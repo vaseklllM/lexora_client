@@ -96,8 +96,7 @@ export const en = {
         delete: "Delete",
       },
     },
-    rename_folder: {
-      title: "Rename folder '{{folderName}}'",
+    rename: {
       fields: {
         name: {
           label: "Name",
@@ -113,6 +112,9 @@ export const en = {
         save: "Save",
       },
     },
+    rename_folder: {
+      title: "Rename folder '{{folderName}}'",
+    },
     delete_deck: {
       title: "Delete deck '{{deckName}}'",
       description: "Are you sure you want to delete this deck?",
@@ -120,6 +122,9 @@ export const en = {
         cancel: "Cancel",
         delete: "Delete",
       },
+    },
+    rename_deck: {
+      title: "Rename deck '{{deckName}}'",
     },
   },
   deck_languages_select: {

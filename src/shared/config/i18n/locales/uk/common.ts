@@ -98,8 +98,7 @@ export const uk: CommonType = {
         delete: "Видалити",
       },
     },
-    rename_folder: {
-      title: "Перейменувати папку '{{folderName}}'",
+    rename: {
       fields: {
         name: {
           label: "Назва",
@@ -115,6 +114,9 @@ export const uk: CommonType = {
         save: "Зберегти",
       },
     },
+    rename_folder: {
+      title: "Перейменувати папку '{{folderName}}'",
+    },
     delete_deck: {
       title: "Видалити колоду '{{deckName}}'",
       description: "Ви впевнені, що хочете видалити цю колоду?",
@@ -122,6 +124,9 @@ export const uk: CommonType = {
         cancel: "Скасувати",
         delete: "Видалити",
       },
+    },
+    rename_deck: {
+      title: "Перейменувати колоду '{{deckName}}'",
     },
   },
   deck_languages_select: {

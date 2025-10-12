@@ -45,13 +45,13 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
       name: v.pipe(
         v.string(),
         v.transform((input) => input.trim()),
-        v.nonEmpty(t("modal.rename_folder.fields.name.errors.required")),
+        v.nonEmpty(t("modal.rename.fields.name.errors.required")),
         noOnlySpacesStringSchema(
-          t("modal.rename_folder.fields.name.errors.noOnlySpaces"),
+          t("modal.rename.fields.name.errors.noOnlySpaces"),
         ),
         v.maxLength(
           maxNameLength,
-          t("modal.rename_folder.fields.name.errors.maxLength", {
+          t("modal.rename.fields.name.errors.maxLength", {
             maxLength: maxNameLength,
           }),
         ),
@@ -147,11 +147,10 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
             type="text"
             autoFocus={props.isOpen}
             tabIndex={-1}
-            label={t("modal.rename_folder.fields.name.label")}
+            label={t("modal.rename.fields.name.label")}
             data-1p-ignore="true"
             autoComplete="off"
           />
-
           <div className="mt-4 flex w-full justify-end gap-4">
             <Button
               className="btn-soft"
@@ -159,14 +158,14 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
               disabled={isSubmitting}
               onClick={cancelHandler}
             >
-              {t("modal.rename_folder.buttons.cancel")}
+              {t("modal.rename.buttons.cancel")}
             </Button>
             <Button
               className="btn-primary"
               isLoading={isSubmitting}
               disabled={!isNameChanged}
             >
-              {t("modal.rename_folder.buttons.save")}
+              {t("modal.rename.buttons.save")}
             </Button>
           </div>
         </form>

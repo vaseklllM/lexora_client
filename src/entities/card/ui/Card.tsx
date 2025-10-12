@@ -11,7 +11,7 @@ const classesSlots = tv({
     front: `${classes.front}`,
     back: `${classes.back}`,
     inner: `${classes.inner} absolute top-[50%] left-0 z-2 h-full w-full p-2`,
-    card: "bg-base-100 min-h-120 rounded-xl shadow-lg",
+    card: "bg-base-100 min-h-130 rounded-xl shadow-lg",
   },
   variants: {
     activeSide: {

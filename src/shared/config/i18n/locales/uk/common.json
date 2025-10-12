@@ -39,6 +39,12 @@
   "dashboard_section": {
     "title": "Головна"
   },
+  "section": {
+    "plus_dropdown_menu": {
+      "create_folder": "Папка",
+      "create_deck": "Колода"
+    }
+  },
   "empty": {
     "dashboard": "У вас немає жодної папки або колоди.\nВи можете створити нову папку або колоду, натиснувши кнопку плюс."
   }

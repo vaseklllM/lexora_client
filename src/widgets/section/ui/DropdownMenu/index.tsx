@@ -7,6 +7,7 @@ import {
 } from "@/entities/dropdown-menu";
 import { ModalCreateDeck } from "@/features/modal-create-deck";
 import { ModalCreateFolder } from "@/features/modal-create-folder";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ReactElement, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 
@@ -33,13 +34,14 @@ export const DropdownMenu = (props: Props): ReactElement => {
   const classes = classesSlots();
   const [isOpenModalCreateFolder, setIsOpenModalCreateFolder] = useState(false);
   const [isOpenModalCreateDesc, setIsOpenModalCreateDesc] = useState(false);
+  const { t } = useTranslation();
 
   const buttons = useMemo((): DropdownItem[] => {
     return [
       {
         id: Button.CREATE_FOLDER,
         type: "button",
-        label: "Folder",
+        label: t("section.plus_dropdown_menu.create_folder"),
         icon: "folder",
         onClick: ({ closePopover }) => {
           setIsOpenModalCreateFolder(true);
@@ -49,7 +51,7 @@ export const DropdownMenu = (props: Props): ReactElement => {
       {
         id: Button.CREATE_DECK,
         type: "button",
-        label: "Deck",
+        label: t("section.plus_dropdown_menu.create_deck"),
         icon: "deck",
         onClick: ({ closePopover }) => {
           setIsOpenModalCreateDesc(true);

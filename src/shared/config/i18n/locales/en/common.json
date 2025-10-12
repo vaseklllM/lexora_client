@@ -39,6 +39,12 @@
   "dashboard_section": {
     "title": "Home"
   },
+  "section": {
+    "plus_dropdown_menu": {
+      "create_folder": "Folder",
+      "create_deck": "Deck"
+    }
+  },
   "empty": {
     "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."
   }

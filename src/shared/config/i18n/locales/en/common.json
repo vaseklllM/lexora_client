@@ -47,5 +47,11 @@
   },
   "empty": {
     "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."
+  },
+  "modal": {
+    "create_folder": {
+      "title": "Create folder",
+      "description": "A folder is used to group decks of cards and other folders."
+    }
   }
 }

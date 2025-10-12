@@ -141,7 +141,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       onClose={closeHandler}
     >
       <div className="modal-box">
-        <h3 className="text-lg font-bold">Create Deck</h3>
+        <h3 className="text-center text-lg font-bold">Create Deck</h3>
         <p className="text-base-content/70 mt-4">
           A deck is used to store word cards and study them
         </p>

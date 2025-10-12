@@ -4,6 +4,7 @@ import { InputLabeled } from "@/entities/input-labeled";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config/config";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
@@ -45,6 +46,7 @@ interface Props {
 export const ModalCreateFolder = (props: Props): ReactElement => {
   const classes = classesSlots();
   const nameFieldRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const {
     handleSubmit,
@@ -112,9 +114,11 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
       onClose={() => props.setIsOpen(false)}
     >
       <div className="modal-box">
-        <h3 className="text-lg font-bold">Create Folder</h3>
+        <h3 className="text-center text-lg font-bold">
+          {t("modal.create_folder.title")}
+        </h3>
         <p className="text-base-content/70 mt-4">
-          A folder is used to group decks of cards and other folders.
+          {t("modal.create_folder.description")}
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}

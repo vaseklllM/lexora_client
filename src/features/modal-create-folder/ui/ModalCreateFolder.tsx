@@ -10,7 +10,7 @@ import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
 import { sleep } from "@/shared/utils/sleep";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
@@ -20,21 +20,6 @@ const classesSlots = tv({
     base: "modal",
   },
 });
-
-const schema = v.object({
-  new_folder_name: v.pipe(
-    v.string(),
-    v.transform((input) => input.trim()),
-    v.nonEmpty("Name is required"),
-    noOnlySpacesStringSchema("Name cannot be only spaces"),
-    v.maxLength(
-      MAX_FOLDER_NAME_LENGTH,
-      `Name cannot be longer than ${MAX_FOLDER_NAME_LENGTH} characters`,
-    ),
-  ),
-});
-
-type Inputs = v.InferOutput<typeof schema>;
 
 interface Props {
   className?: string;
@@ -47,6 +32,27 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
   const classes = classesSlots();
   const nameFieldRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
+
+  const schema = useMemo(() => {
+    return v.object({
+      new_folder_name: v.pipe(
+        v.string(),
+        v.transform((input) => input.trim()),
+        v.nonEmpty(t("modal.create_folder.fields.name.errors.required")),
+        noOnlySpacesStringSchema(
+          t("modal.create_folder.fields.name.errors.noOnlySpaces"),
+        ),
+        v.maxLength(
+          MAX_FOLDER_NAME_LENGTH,
+          t("modal.create_folder.fields.name.errors.maxLength", {
+            maxLength: MAX_FOLDER_NAME_LENGTH,
+          }),
+        ),
+      ),
+    });
+  }, []);
+
+  type Inputs = v.InferOutput<typeof schema>;
 
   const {
     handleSubmit,
@@ -131,7 +137,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
             type="text"
             autoFocus={props.isOpen}
             tabIndex={-1}
-            label="Name"
+            label={t("modal.create_folder.fields.name.label")}
             data-1p-ignore="true"
             autoComplete="off"
           />
@@ -146,10 +152,10 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
                 props.setIsOpen(false);
               }}
             >
-              Cancel
+              {t("modal.create_folder.buttons.cancel")}
             </Button>
             <Button className="btn-primary" isLoading={isSubmitting}>
-              Create
+              {t("modal.create_folder.buttons.create")}
             </Button>
           </div>
         </form>

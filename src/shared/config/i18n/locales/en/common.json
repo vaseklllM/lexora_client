@@ -51,7 +51,21 @@
   "modal": {
     "create_folder": {
       "title": "Create folder",
-      "description": "A folder is used to group decks of cards and other folders."
+      "description": "A folder is used to group decks of cards and other folders.",
+      "fields": {
+        "name": {
+          "label": "Name",
+          "errors": {
+            "required": "Name is required",
+            "noOnlySpaces": "Name cannot be only spaces",
+            "maxLength": "Name cannot be longer than {{maxLength}} characters"
+          }
+        }
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "create": "Create"
+      }
     }
   }
 }

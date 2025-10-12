@@ -12,5 +12,23 @@ export function getLocales(): Result {
     uk: {
       common: locales.uk,
     },
+    es: {
+      common: locales.es,
+    },
+    fr: {
+      common: locales.fr,
+    },
+    it: {
+      common: locales.it,
+    },
+    de: {
+      common: locales.de,
+    },
+    nl: {
+      common: locales.nl,
+    },
+    pl: {
+      common: locales.pl,
+    },
   };
 }

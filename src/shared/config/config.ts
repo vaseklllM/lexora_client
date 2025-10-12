@@ -26,6 +26,12 @@ export const MAX_CARD_DESCRIPTION_LENGTH = 100;
 export const LIST_OF_LANGUAGES: { i18n: LanguageEnum; code: string }[] = [
   LanguageEnum.EN,
   LanguageEnum.UK,
+  LanguageEnum.ES,
+  LanguageEnum.FR,
+  LanguageEnum.IT,
+  LanguageEnum.DE,
+  LanguageEnum.NL,
+  LanguageEnum.PL,
 ].map((language) => ({
   i18n: language,
   code: languageEnumToCode(language),

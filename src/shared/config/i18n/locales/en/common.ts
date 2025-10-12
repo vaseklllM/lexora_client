@@ -58,20 +58,38 @@ export const en = {
     card_fields_side: {
       word: {
         label: "Word",
+        errors: {
+          required: "Word is required",
+          tooShort: "Word is too short",
+          maxLength: "Word cannot be longer than {{maxLength}} characters",
+        },
         generate: {
           tooltip: "Generate card",
         },
       },
       translation: {
         label: "Translation",
+        errors: {
+          required: "Translation is required",
+          tooShort: "Translation is too short",
+          maxLength:
+            "Translation cannot be longer than {{maxLength}} characters",
+        },
       },
       example: {
         label: "Example or description",
         placeholder: "{{languageName}} example",
+        errors: {
+          maxLength: "Example cannot be longer than {{maxLength}} characters",
+        },
       },
       example_translation: {
         label: "Example or description translation",
         placeholder: "{{languageName}} example",
+        errors: {
+          maxLength:
+            "Example translation cannot be longer than {{maxLength}} characters",
+        },
       },
     },
   },

@@ -76,7 +76,7 @@ export const CardFieldsSide = (props: CardFieldsSideProps): ReactElement => {
       exampleTranslation: props.defaultValues?.exampleTranslation || "",
       cefr: props.defaultValues?.cefr || CefrEnum.A1,
     },
-    resolver: valibotResolver(cardFieldsSchema),
+    resolver: valibotResolver(cardFieldsSchema(t)),
   });
 
   const classes = classesSlots({

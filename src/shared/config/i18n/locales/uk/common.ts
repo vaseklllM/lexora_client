@@ -60,20 +60,37 @@ export const uk: CommonType = {
     card_fields_side: {
       word: {
         label: "Слово",
+        errors: {
+          required: "Слово є обов'язковим",
+          tooShort: "Слово є надто коротким",
+          maxLength: "Слово не може бути довше ніж {{maxLength}} символів",
+        },
         generate: {
           tooltip: "Згенерувати картку",
         },
       },
       translation: {
         label: "Переклад",
+        errors: {
+          required: "Переклад є обов'язковим",
+          tooShort: "Переклад є надто коротким",
+          maxLength: "Переклад не може бути довше ніж {{maxLength}} символів",
+        },
       },
       example: {
         label: "Приклад або опис",
         placeholder: "{{languageName}} приклад",
+        errors: {
+          maxLength: "Приклад не може бути довше ніж {{maxLength}} символів",
+        },
       },
       example_translation: {
         label: "Приклад або опис в перекладі",
         placeholder: "{{languageName}} приклад",
+        errors: {
+          maxLength:
+            "Приклад в перекладі не може бути довше ніж {{maxLength}} символів",
+        },
       },
     },
   },

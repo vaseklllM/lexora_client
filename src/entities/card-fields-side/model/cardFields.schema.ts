@@ -4,50 +4,67 @@ import {
   MAX_CARD_WORD_LENGTH,
 } from "@/shared/config/config";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
+import { TFunction } from "i18next";
 import * as v from "valibot";
 
-export const cardFieldsSchema = v.object({
-  word: v.pipe(
-    v.string(),
-    noOnlySpacesStringSchema("Word is required"),
-    v.custom(
-      (value): value is string =>
-        typeof value === "string" && value.trim().length >= 1,
-      "Word is too short",
+export const cardFieldsSchema = (t: TFunction) =>
+  v.object({
+    word: v.pipe(
+      v.string(),
+      noOnlySpacesStringSchema(
+        t("deck_section.card_fields_side.word.errors.required"),
+      ),
+      v.custom(
+        (value): value is string =>
+          typeof value === "string" && value.trim().length >= 1,
+        t("deck_section.card_fields_side.word.errors.tooShort"),
+      ),
+      v.maxLength(
+        MAX_CARD_WORD_LENGTH,
+        t("deck_section.card_fields_side.word.errors.maxLength", {
+          maxLength: MAX_CARD_WORD_LENGTH,
+        }),
+      ),
     ),
-    v.maxLength(
-      MAX_CARD_WORD_LENGTH,
-      `Word cannot be longer than ${MAX_CARD_WORD_LENGTH} characters`,
+    translation: v.pipe(
+      v.string(),
+      noOnlySpacesStringSchema(
+        t("deck_section.card_fields_side.translation.errors.required"),
+      ),
+      v.custom(
+        (value): value is string =>
+          typeof value === "string" && value.trim().length >= 1,
+        t("deck_section.card_fields_side.translation.errors.tooShort"),
+      ),
+      v.maxLength(
+        MAX_CARD_WORD_LENGTH,
+        t("deck_section.card_fields_side.translation.errors.maxLength", {
+          maxLength: MAX_CARD_WORD_LENGTH,
+        }),
+      ),
     ),
-  ),
-  translation: v.pipe(
-    v.string(),
-    noOnlySpacesStringSchema("Translation is required"),
-    v.custom(
-      (value): value is string =>
-        typeof value === "string" && value.trim().length >= 1,
-      "Translation is too short",
+    example: v.pipe(
+      v.string(),
+      v.maxLength(
+        MAX_CARD_DESCRIPTION_LENGTH,
+        t("deck_section.card_fields_side.example.errors.maxLength", {
+          maxLength: MAX_CARD_DESCRIPTION_LENGTH,
+        }),
+      ),
     ),
-    v.maxLength(
-      MAX_CARD_WORD_LENGTH,
-      `Translation cannot be longer than ${MAX_CARD_WORD_LENGTH} characters`,
+    exampleTranslation: v.pipe(
+      v.string(),
+      v.maxLength(
+        MAX_CARD_DESCRIPTION_LENGTH,
+        t(
+          "deck_section.card_fields_side.example_translation.errors.maxLength",
+          {
+            maxLength: MAX_CARD_DESCRIPTION_LENGTH,
+          },
+        ),
+      ),
     ),
-  ),
-  example: v.pipe(
-    v.string(),
-    v.maxLength(
-      MAX_CARD_DESCRIPTION_LENGTH,
-      `Example cannot be longer than ${MAX_CARD_DESCRIPTION_LENGTH} characters`,
-    ),
-  ),
-  exampleTranslation: v.pipe(
-    v.string(),
-    v.maxLength(
-      MAX_CARD_DESCRIPTION_LENGTH,
-      `Example translation cannot be longer than ${MAX_CARD_DESCRIPTION_LENGTH} characters`,
-    ),
-  ),
-  cefr: v.enum(CefrEnum),
-});
+    cefr: v.enum(CefrEnum),
+  });
 
-export type CardFields = v.InferOutput<typeof cardFieldsSchema>;
+export type CardFields = v.InferOutput<ReturnType<typeof cardFieldsSchema>>;

@@ -2,6 +2,7 @@ import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useTypeItGameStore } from "../../../../model/store";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
@@ -15,7 +16,7 @@ interface Props {
 
 export const ButtonTryAgain = (props: Props): ReactElement => {
   const classes = classesSlots();
-
+  const { t } = useTranslation();
   const isDisabled = useTypeItGameStore(
     (state) => state.isDisabledButtonTryAgain,
   );
@@ -33,7 +34,7 @@ export const ButtonTryAgain = (props: Props): ReactElement => {
       disabled={isDisabled}
       type="button"
     >
-      Try again
+      {t("games.type_it.buttons.try_again")}
     </Button>
   );
 };

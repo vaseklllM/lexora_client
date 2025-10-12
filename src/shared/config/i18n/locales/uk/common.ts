@@ -230,5 +230,13 @@ export const uk: CommonType = {
         show: "Показати",
       },
     },
+    type_it: {
+      buttons: {
+        help: "Допомога",
+        check: "Перевірити",
+        try_again: "Спробувати знову",
+        right: "Правильно",
+      },
+    },
   },
 };

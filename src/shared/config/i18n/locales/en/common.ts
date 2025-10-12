@@ -228,6 +228,14 @@ export const en = {
         show: "Show",
       },
     },
+    type_it: {
+      buttons: {
+        help: "Help",
+        check: "Check",
+        try_again: "Try again",
+        right: "Right",
+      },
+    },
   },
 };
 

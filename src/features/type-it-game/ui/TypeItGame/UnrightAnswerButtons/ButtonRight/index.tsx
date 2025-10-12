@@ -3,6 +3,7 @@ import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useTypeItGameStore } from "../../../../model/store";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
@@ -16,7 +17,7 @@ interface Props {
 
 export const ButtonRight = (props: Props): ReactElement => {
   const classes = classesSlots();
-
+  const { t } = useTranslation();
   const isGuessed = useTypeItGameStore((state) => state.isGuessed);
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonRight);
   const nextCardHandler = useNextCardHandler();
@@ -33,7 +34,7 @@ export const ButtonRight = (props: Props): ReactElement => {
       disabled={isDisabled}
       type="button"
     >
-      Right
+      {t("games.type_it.buttons.right")}
     </Button>
   );
 };

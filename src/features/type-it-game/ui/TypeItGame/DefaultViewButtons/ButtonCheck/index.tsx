@@ -2,6 +2,7 @@ import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useTypeItGameStore } from "../../../../model/store";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
@@ -20,6 +21,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
   );
   const isDisabled = useTypeItGameStore((state) => state.isDisabledButtonCheck);
   const viewVariant = useTypeItGameStore((state) => state.viewVariant);
+  const { t } = useTranslation();
 
   return (
     <Button
@@ -32,7 +34,7 @@ export const ButtonCheck = (props: Props): ReactElement => {
       disabled={isDisabled || viewVariant !== "default"}
       type="button"
     >
-      Check
+      {t("games.type_it.buttons.check")}
     </Button>
   );
 };

@@ -219,6 +219,16 @@ export const en = {
       },
     },
   },
+  games: {
+    recall_it: {
+      buttons: {
+        forgot: "Forgot",
+        recalled: "Recalled",
+        next: "Next",
+        show: "Show",
+      },
+    },
+  },
 };
 
 export type CommonType = typeof en;

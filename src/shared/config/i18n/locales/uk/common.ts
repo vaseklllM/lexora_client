@@ -221,4 +221,14 @@ export const uk: CommonType = {
       },
     },
   },
+  games: {
+    recall_it: {
+      buttons: {
+        forgot: "Забув",
+        recalled: "Згадав",
+        next: "Далі",
+        show: "Показати",
+      },
+    },
+  },
 };

@@ -12,6 +12,7 @@ import { tv } from "tailwind-variants";
 import { CardItem } from "./CardItem";
 import { useActiveCard } from "./useActiveCard";
 import { useBlurWordDescription } from "./useBlurWordDescription";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
@@ -52,6 +53,7 @@ export const RecallItGame = (props: Props): ReactElement => {
   const [isUserShowedTranslation, setIsUserShowedTranslation] =
     useState<boolean>(false);
   const [isBlurTranslation, setIsBlurTranslation] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   const blurWordDescription = useBlurWordDescription();
 
@@ -121,14 +123,14 @@ export const RecallItGame = (props: Props): ReactElement => {
                 color="error"
                 className={classes.buttonForgot()}
               >
-                Forgot
+                {t("games.recall_it.buttons.forgot")}
               </Button>
               <Button
                 onClick={activeCard.recalledCard}
                 color="accent"
                 className={classes.buttonRecalled()}
               >
-                Recalled
+                {t("games.recall_it.buttons.recalled")}
               </Button>
             </>
           ) : (
@@ -137,7 +139,7 @@ export const RecallItGame = (props: Props): ReactElement => {
               color="accent"
               className={classes.timerExpiredButton()}
             >
-              Next
+              {t("games.recall_it.buttons.next")}
             </Button>
           )
         ) : (
@@ -147,7 +149,7 @@ export const RecallItGame = (props: Props): ReactElement => {
             onTimerExpire={handleTimerExpire}
             onClick={showHandler}
           >
-            Show
+            {t("games.recall_it.buttons.show")}
           </TimerButton>
         )}
       </div>

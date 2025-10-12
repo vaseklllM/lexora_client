@@ -1,3 +1,4 @@
+import { TFunction } from "i18next";
 import * as v from "valibot";
 
 const passwordRegexes = {
@@ -6,24 +7,15 @@ const passwordRegexes = {
   lowercase: /[a-z]/,
   number: /[0-9]/,
 };
-export const passwordSchema = () =>
+export const passwordSchema = (t: TFunction) =>
   v.pipe(
     v.string(),
-    v.nonEmpty("Please enter your Password."),
+    v.nonEmpty(t("schemas.password.required")),
     v.minLength(
       passwordRegexes.minLength,
-      `Password must be at least ${passwordRegexes.minLength} characters`,
+      t("schemas.password.minLength", { minLength: passwordRegexes.minLength }),
     ),
-    v.regex(
-      passwordRegexes.uppercase,
-      "Password must contain at least one uppercase letter",
-    ),
-    v.regex(
-      passwordRegexes.lowercase,
-      "Password must contain at least one lowercase letter",
-    ),
-    v.regex(
-      passwordRegexes.number,
-      "Password must contain at least one number",
-    ),
+    v.regex(passwordRegexes.uppercase, t("schemas.password.uppercase")),
+    v.regex(passwordRegexes.lowercase, t("schemas.password.lowercase")),
+    v.regex(passwordRegexes.number, t("schemas.password.number")),
   );

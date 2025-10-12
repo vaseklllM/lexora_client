@@ -1,24 +1,22 @@
+import { TFunction } from "i18next";
 import * as v from "valibot";
 
-export const fullNameSchema = () =>
+export const fullNameSchema = (t: TFunction) =>
   v.pipe(
     v.string(),
-    v.nonEmpty("Please enter your Full Name."),
-    v.minLength(3, "Full Name is too short."),
+    v.nonEmpty(t("schemas.fullName.required")),
+    v.minLength(3, t("schemas.fullName.minLength")),
     v.check(
       (input) => input === input.trim(),
-      "Full Name cannot have spaces at the beginning or end.",
+      t("schemas.fullName.noOnlySpaces"),
     ),
     v.check(
       (input) => !/[!@#$%^&*()_+=[\]{};':"\\|,.<>?~]/.test(input),
-      "Full Name cannot contain special characters.",
+      t("schemas.fullName.specialCharacters"),
     ),
     v.check(
       (input) => !/-{2,}/.test(input),
-      "Full Name cannot contain multiple consecutive hyphens.",
+      t("schemas.fullName.multipleConsecutiveHyphens"),
     ),
-    v.check(
-      (input) => !/[0-9]/.test(input),
-      "Full Name cannot contain numbers.",
-    ),
+    v.check((input) => !/[0-9]/.test(input), t("schemas.fullName.numbers")),
   );

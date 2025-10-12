@@ -237,6 +237,32 @@ export const en = {
       },
     },
   },
+  schemas: {
+    email: {
+      required: "Please enter your email.",
+      invalid: "Invalid email format.",
+    },
+    password: {
+      required: "Please enter your password.",
+      minLength: "Password must be at least {{minLength}} characters",
+      uppercase: "Password must contain at least one uppercase letter",
+      lowercase: "Password must contain at least one lowercase letter",
+      number: "Password must contain at least one number",
+    },
+    passwordRepeat: {
+      required: "Please enter your password repeat.",
+      notMatch: "The two passwords do not match.",
+    },
+    fullName: {
+      required: "Please enter your full name.",
+      minLength: "Full Name is too short.",
+      noOnlySpaces: "Full name cannot have spaces at the beginning or end.",
+      specialCharacters: "Full name cannot contain special characters.",
+      multipleConsecutiveHyphens:
+        "Full name cannot contain multiple consecutive hyphens",
+      numbers: "Full name cannot contain numbers",
+    },
+  },
 };
 
 export type CommonType = typeof en;

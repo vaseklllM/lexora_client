@@ -1,9 +1,10 @@
+import { TFunction } from "i18next";
 import * as v from "valibot";
 
-export const emailSchema = () =>
+export const emailSchema = (t: TFunction) =>
   v.pipe(
     v.string(),
-    v.nonEmpty("Please enter your email."),
-    v.email("Invalid email format."),
+    v.nonEmpty(t("schemas.email.required")),
+    v.email(t("schemas.email.invalid")),
     v.pipe(v.string(), v.toLowerCase()),
   );

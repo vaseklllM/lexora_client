@@ -13,7 +13,7 @@ import { revalidateHomePath } from "@/shared/utils/revalidateHomePath";
 import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
@@ -31,16 +31,21 @@ const classesSlots = tv({
   },
 });
 
-const schema = v.object({
-  email: emailSchema(),
-  password: passwordSchema(),
-});
-
-type Inputs = v.InferOutput<typeof schema>;
-
 export function SignIn() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const { t } = useTranslation();
+
+  const schema = useMemo(() => {
+    return v.object({
+      email: emailSchema(t),
+      password: passwordSchema(t),
+    });
+  }, []);
+
+  type Inputs = v.InferOutput<typeof schema>;
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -52,7 +57,6 @@ export function SignIn() {
     },
     resolver: valibotResolver(schema),
   });
-  const { t } = useTranslation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setErrorMessage(undefined);

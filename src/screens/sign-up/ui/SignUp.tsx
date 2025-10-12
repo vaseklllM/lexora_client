@@ -1,20 +1,19 @@
 "use client";
 
 import { InputLabeled } from "@/entities/input-labeled";
-import { routes } from "@/shared/routes";
-import { Button } from "@/shared/ui/Button";
-import { Link } from "@/shared/ui/Link";
-import { valibotResolver } from "@/shared/utils/valibot-resolver";
-import { SubmitHandler, useForm } from "react-hook-form";
-// import { signUp } from "../api/sign-up";
 import { OAuth } from "@/features/oauth";
 import { useTranslation } from "@/shared/hooks/useTranslation";
+import { routes } from "@/shared/routes";
 import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
+import { Button } from "@/shared/ui/Button";
+import { Link } from "@/shared/ui/Link";
 import { revalidateHomePath } from "@/shared/utils/revalidateHomePath";
+import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import { Fields, fieldsSchema } from "../model/fields-schema";
 
@@ -42,7 +41,7 @@ export function SignUp() {
     register,
     setError,
   } = useForm<Fields>({
-    resolver: valibotResolver(fieldsSchema),
+    resolver: valibotResolver(fieldsSchema(t)),
     defaultValues: {
       email: "",
       fullName: "",

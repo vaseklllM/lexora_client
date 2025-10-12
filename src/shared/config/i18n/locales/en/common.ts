@@ -70,6 +70,11 @@ export const en = {
       },
     },
   },
+  header: {
+    buttons: {
+      logout: "Logout",
+    },
+  },
 };
 
 export type CommonType = typeof en;

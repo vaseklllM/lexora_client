@@ -72,4 +72,9 @@ export const uk: CommonType = {
       },
     },
   },
+  header: {
+    buttons: {
+      logout: "Вийти",
+    },
+  },
 };

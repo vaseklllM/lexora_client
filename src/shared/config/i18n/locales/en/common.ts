@@ -96,6 +96,23 @@ export const en = {
         delete: "Delete",
       },
     },
+    rename_folder: {
+      title: "Rename folder '{{folderName}}'",
+      fields: {
+        name: {
+          label: "Name",
+          errors: {
+            required: "Name is required",
+            noOnlySpaces: "Name cannot be only spaces",
+            maxLength: "Name cannot be longer than {{maxLength}} characters",
+          },
+        },
+      },
+      buttons: {
+        cancel: "Cancel",
+        save: "Save",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Most used languages",

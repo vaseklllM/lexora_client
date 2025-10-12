@@ -1,6 +1,7 @@
 "use client";
 
 import { InputLabeled } from "@/entities/input-labeled";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { noOnlySpacesStringSchema } from "@/shared/schemas/noOnlySpacesString.schema";
 import { Button } from "@/shared/ui/Button";
 import { assignRef } from "@/shared/utils/assign-ref";
@@ -37,17 +38,22 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
   const { maxNameLength = 50 } = props;
   const classes = classesSlots();
   const nameFieldRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const schema = useMemo(() => {
     return v.object({
       name: v.pipe(
         v.string(),
         v.transform((input) => input.trim()),
-        v.nonEmpty("Name is required"),
-        noOnlySpacesStringSchema("Name cannot be only spaces"),
+        v.nonEmpty(t("modal.rename_folder.fields.name.errors.required")),
+        noOnlySpacesStringSchema(
+          t("modal.rename_folder.fields.name.errors.noOnlySpaces"),
+        ),
         v.maxLength(
           maxNameLength,
-          `Name cannot be longer than ${maxNameLength} characters`,
+          t("modal.rename_folder.fields.name.errors.maxLength", {
+            maxLength: maxNameLength,
+          }),
         ),
       ),
     });
@@ -141,7 +147,7 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
             type="text"
             autoFocus={props.isOpen}
             tabIndex={-1}
-            label="Name"
+            label={t("modal.rename_folder.fields.name.label")}
             data-1p-ignore="true"
             autoComplete="off"
           />
@@ -153,14 +159,14 @@ export const ModalRename = (props: ModalRenameProps): ReactElement => {
               disabled={isSubmitting}
               onClick={cancelHandler}
             >
-              Cancel
+              {t("modal.rename_folder.buttons.cancel")}
             </Button>
             <Button
               className="btn-primary"
               isLoading={isSubmitting}
               disabled={!isNameChanged}
             >
-              Save
+              {t("modal.rename_folder.buttons.save")}
             </Button>
           </div>
         </form>

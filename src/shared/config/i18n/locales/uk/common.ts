@@ -98,6 +98,23 @@ export const uk: CommonType = {
         delete: "Видалити",
       },
     },
+    rename_folder: {
+      title: "Перейменувати папку '{{folderName}}'",
+      fields: {
+        name: {
+          label: "Назва",
+          errors: {
+            required: "Назва є обов'язковою",
+            noOnlySpaces: "Назва не може бути лише пробілами",
+            maxLength: "Назва не може бути довше ніж {{maxLength}} символів",
+          },
+        },
+      },
+      buttons: {
+        cancel: "Скасувати",
+        save: "Зберегти",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Часто використовувані мови",

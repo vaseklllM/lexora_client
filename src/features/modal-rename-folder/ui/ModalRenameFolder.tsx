@@ -4,6 +4,7 @@ import { ModalRename, ModalRenameSaveHandler } from "@/entities/modal-rename";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
 import { MAX_FOLDER_NAME_LENGTH } from "@/shared/config/config";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ReactElement, useCallback } from "react";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const ModalRenameFolder = (props: Props): ReactElement => {
+  const { t } = useTranslation();
   const saveHandler = useCallback<ModalRenameSaveHandler>(
     async ({ name, close, setNameError }) => {
       if (!props.folderId) return;
@@ -60,7 +62,7 @@ export const ModalRenameFolder = (props: Props): ReactElement => {
       onClose={props.onClose}
       onSave={saveHandler}
       name={props.folderName}
-      title="Rename Folder"
+      title={t("modal.rename_folder.title", { folderName: props.folderName })}
       maxNameLength={MAX_FOLDER_NAME_LENGTH}
     />
   );

@@ -194,6 +194,15 @@ export const uk: CommonType = {
     },
   },
   learning_deck: {
+    header: {
+      steps: {
+        review: "Перегляд",
+        pair_it: "Знайти пару",
+        guess_it: "Вибрати один із",
+        recall_it: "Згадати",
+        type_it: "Написати",
+      },
+    },
     step: {
       start: {
         button_start: {

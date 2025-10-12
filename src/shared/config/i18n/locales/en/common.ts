@@ -192,6 +192,15 @@ export const en = {
     },
   },
   learning_deck: {
+    header: {
+      steps: {
+        review: "Review",
+        pair_it: "Pair it",
+        guess_it: "Guess it",
+        recall_it: "Recall it",
+        type_it: "Type it",
+      },
+    },
     step: {
       start: {
         button_start: {

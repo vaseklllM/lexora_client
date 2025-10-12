@@ -1,3 +1,4 @@
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useLearningDeckStore } from "../../../model/store";
@@ -7,7 +8,6 @@ const classesSlots = tv({
     base: "flex justify-center pb-6",
     steps: "steps w-full text-[10px] sm:text-xs md:text-base",
     step: "step after:bg-primary min-w-max! before:h-1! after:h-6! after:w-6! md:after:h-[2rem]! md:after:w-[2rem]!",
-    stepStart: "",
     stepPreview: "",
     stepPairIt: "",
     stepGuessIt: "",
@@ -16,33 +16,26 @@ const classesSlots = tv({
   },
   variants: {
     activeStep: {
-      start: {
-        stepStart: "step-primary",
-      },
+      start: {},
       preview: {
-        stepStart: "step-primary",
         stepPreview: "step-primary",
       },
       pairIt: {
-        stepStart: "step-primary",
         stepPreview: "step-primary",
         stepPairIt: "step-primary",
       },
       guessIt: {
-        stepStart: "step-primary",
         stepPreview: "step-primary",
         stepPairIt: "step-primary",
         stepGuessIt: "step-primary",
       },
       recallIt: {
-        stepStart: "step-primary",
         stepPreview: "step-primary",
         stepPairIt: "step-primary",
         stepGuessIt: "step-primary",
         stepRecallIt: "step-primary",
       },
       typeIt: {
-        stepStart: "step-primary",
         stepPreview: "step-primary",
         stepPairIt: "step-primary",
         stepGuessIt: "step-primary",
@@ -59,7 +52,7 @@ interface Props {
 
 export const StepsHeader = (props: Props): ReactElement => {
   const step = useLearningDeckStore((state) => state.activeStep);
-
+  const { t } = useTranslation();
   const classes = classesSlots({
     activeStep: step,
   });
@@ -69,45 +62,38 @@ export const StepsHeader = (props: Props): ReactElement => {
       <ul className={classes.steps()}>
         <li
           className={classes.step({
-            className: classes.stepStart(),
-          })}
-        >
-          Start
-        </li>
-        <li
-          className={classes.step({
             className: classes.stepPreview(),
           })}
         >
-          Review
+          {t("learning_deck.header.steps.review")}
         </li>
         <li
           className={classes.step({
             className: classes.stepPairIt(),
           })}
         >
-          Pair it
+          {t("learning_deck.header.steps.pair_it")}
         </li>
         <li
           className={classes.step({
             className: classes.stepGuessIt(),
           })}
         >
-          Guess it
+          {t("learning_deck.header.steps.guess_it")}
         </li>
         <li
           className={classes.step({
             className: classes.stepRecallIt(),
           })}
         >
-          Recall it
+          {t("learning_deck.header.steps.recall_it")}
         </li>
         <li
           className={classes.step({
             className: classes.stepTypeIt(),
           })}
         >
-          Type it
+          {t("learning_deck.header.steps.type_it")}
         </li>
       </ul>
     </div>

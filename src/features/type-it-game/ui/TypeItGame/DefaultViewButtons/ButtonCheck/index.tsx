@@ -6,7 +6,7 @@ import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
-    button: "rounded-xl",
+    button: "rounded-xl text-sm md:text-base",
   },
 });
 

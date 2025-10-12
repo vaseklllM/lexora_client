@@ -1,12 +1,12 @@
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { Button } from "@/shared/ui/Button";
 import { ReactElement } from "react";
 import { tv } from "tailwind-variants";
 import { useTypeItGameStore } from "../../../../model/store";
-import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const classesSlots = tv({
   slots: {
-    button: "rounded-xl",
+    button: "rounded-xl text-sm md:text-base",
   },
 });
 

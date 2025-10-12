@@ -9,6 +9,7 @@ import { useTranslation } from "@/shared/hooks/useTranslation";
 interface Props {
   className?: string;
   numberOfCardsInProgress: number;
+  numberOfCardsLearned: number;
 }
 
 export const ButtonRepeatAll = (props: Props): ReactElement => {
@@ -33,7 +34,8 @@ export const ButtonRepeatAll = (props: Props): ReactElement => {
       />
       <p className={classes.title()}>
         {t("learning_deck.step.start.button_repeat_all.title", {
-          numberOfCardsInProgress: props.numberOfCardsInProgress,
+          numberOfCardsInProgress:
+            props.numberOfCardsInProgress + props.numberOfCardsLearned,
         })}
       </p>
     </div>

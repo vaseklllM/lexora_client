@@ -1,4 +1,4 @@
-import { ICard } from "@/api/schemas/card.schema";
+import { startReviewDeckSession } from "@/api/deck/start-review-deck-session";
 import { ModalChooseGame } from "@/entities/modal-choose-game";
 import { GameType } from "@/shared/types/Game";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
@@ -6,16 +6,15 @@ import { ReactElement, useCallback } from "react";
 
 interface Props {
   deckId: string;
-  deckCards: ICard[];
 }
 
 export const ModalRepeatGameType = (props: Props): ReactElement => {
   const isOpen = useLearningDeckStore(
-    (state) => state.isVisibleModalRepeatAllGameType,
+    (state) => state.isVisibleModalRepeatGameType,
   );
 
-  const closeModalRepeatAllGameType = useLearningDeckStore(
-    (state) => state.closeModalRepeatAllGameType,
+  const closeModalRepeatGameType = useLearningDeckStore(
+    (state) => state.closeModalRepeatGameType,
   );
   const startReviewSession = useLearningDeckStore(
     (state) => state.startReviewSession,
@@ -23,15 +22,20 @@ export const ModalRepeatGameType = (props: Props): ReactElement => {
 
   const onChooseGameTypeHandler = useCallback(
     async (gameType: GameType) => {
-      startReviewSession(gameType, props.deckCards);
+      const result = await startReviewDeckSession({
+        deckId: props.deckId,
+      });
+      if (result.ok) {
+        startReviewSession(gameType, result.data.cards);
+      }
     },
-    [props.deckCards, startReviewSession],
+    [props.deckId, startReviewSession],
   );
 
   return (
     <ModalChooseGame
       isOpen={isOpen}
-      onClose={closeModalRepeatAllGameType}
+      onClose={closeModalRepeatGameType}
       onChooseGameType={onChooseGameTypeHandler}
     />
   );

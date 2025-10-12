@@ -97,7 +97,9 @@ export const StepComponent = (
   const classes = classesSlots();
 
   const isCardsToRepeat = props.deck.numberOfCardsNeedToReview > 0;
-  const isCardsToRepeatAll = props.deck.numberOfCardsInProgress > 0;
+  const isCardsToRepeatAll =
+    props.deck.numberOfCardsInProgress > 0 ||
+    props.deck.numberOfCardsLearned > 0;
 
   const finishReviewCard = useFinishReviewCard(props);
 
@@ -133,6 +135,7 @@ export const StepComponent = (
               {isCardsToRepeatAll && (
                 <ButtonRepeatAll
                   numberOfCardsInProgress={props.deck.numberOfCardsInProgress}
+                  numberOfCardsLearned={props.deck.numberOfCardsLearned}
                 />
               )}
             </motion.div>
@@ -225,7 +228,7 @@ export const StepComponent = (
           )}
         </AnimatePresence>
       </div>
-      <ModalRepeatGameType deckId={props.deck.id} deckCards={props.deckCards} />
+      <ModalRepeatGameType deckId={props.deck.id} />
       <ModalRepeatAllGameType deckId={props.deck.id} />
     </div>
   );

@@ -2,6 +2,7 @@ import { DropdownItem } from "@/entities/dropdown-menu";
 import { useMemo } from "react";
 import { useDeckStore } from "../../model/store";
 import { DeckProps } from "../Deck";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const enum Button {
   RENAME,
@@ -15,13 +16,14 @@ export function useButtons(props: DeckProps): DropdownItem[] {
   const openModalDeleteDeck = useDeckStore(
     (state) => state.openModalDeleteDeck,
   );
+  const { t } = useTranslation();
 
   return useMemo((): DropdownItem[] => {
     return [
       {
         id: Button.RENAME,
         type: "button",
-        label: "Rename",
+        label: t("deck.buttons.rename"),
         icon: "edit",
         onClick: ({ closePopover }) => {
           closePopover();
@@ -34,7 +36,7 @@ export function useButtons(props: DeckProps): DropdownItem[] {
       {
         id: Button.DELETE,
         type: "button",
-        label: "Delete",
+        label: t("deck.buttons.delete"),
         icon: "delete",
         onClick: ({ closePopover }) => {
           closePopover();

@@ -132,6 +132,12 @@ export const en = {
       delete: "Delete",
     },
   },
+  deck: {
+    buttons: {
+      rename: "Rename",
+      delete: "Delete",
+    },
+  },
 };
 
 export type CommonType = typeof en;

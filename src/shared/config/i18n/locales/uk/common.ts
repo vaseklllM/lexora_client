@@ -134,4 +134,10 @@ export const uk: CommonType = {
       delete: "Видалити",
     },
   },
+  deck: {
+    buttons: {
+      rename: "Перейменувати",
+      delete: "Видалити",
+    },
+  },
 };

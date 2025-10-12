@@ -17,7 +17,24 @@
   },
   "sign_up": {
     "title": "Sign up",
-    "subtitle": "Fill in the form to sign up"
+    "subtitle": "Fill in the form to sign up",
+    "full_name": {
+      "label": "Full name"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "password_repeat": {
+      "label": "Password repeat"
+    },
+    "button_sign_up": "Sign up",
+    "already_have_account": {
+      "title": "Already have an account?",
+      "link": "Sign in"
+    }
   },
   "dashboard_section": {
     "title": "Home"

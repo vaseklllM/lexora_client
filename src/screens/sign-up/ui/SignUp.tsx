@@ -44,10 +44,10 @@ export function SignUp() {
   } = useForm<Fields>({
     resolver: valibotResolver(fieldsSchema),
     defaultValues: {
-      email: "user@example.com",
-      fullName: "John Doe",
-      password: "Password123!",
-      passwordRepeat: "Password123!",
+      email: "",
+      fullName: "",
+      password: "",
+      passwordRepeat: "",
     },
   });
 
@@ -134,7 +134,7 @@ export function SignUp() {
             error={errors.fullName?.message}
             type="text"
             autoComplete="fullName"
-            label="Full name"
+            label={t("sign_up.full_name.label")}
           />
           <InputLabeled
             {...register("email", {
@@ -145,7 +145,7 @@ export function SignUp() {
             error={errors.email?.message}
             type="email"
             autoComplete="email"
-            label="Email address"
+            label={t("sign_up.email.label")}
           />
           <InputLabeled
             {...register("password", {
@@ -156,7 +156,7 @@ export function SignUp() {
             error={errors.password?.message}
             type="password"
             autoComplete="current-password"
-            label="Password"
+            label={t("sign_up.password.label")}
           />
           <InputLabeled
             {...register("passwordRepeat", {
@@ -167,20 +167,22 @@ export function SignUp() {
             error={errors.passwordRepeat?.message}
             type="password"
             autoComplete="current-password"
-            label="Password repeat"
+            label={t("sign_up.password_repeat.label")}
           />
           <Button
             isLoading={isSubmitting}
             className="btn-primary mt-2 w-full"
             type="submit"
           >
-            Sign up
+            {t("sign_up.button_sign_up")}
           </Button>
         </form>
 
         <p className="text-base-content/70 mt-5 text-center text-sm/6">
-          Already have an account?{" "}
-          <Link href={routes.signIn.url()}>Sign in</Link>
+          {t("sign_up.already_have_account.title")}{" "}
+          <Link href={routes.signIn.url()}>
+            {t("sign_up.already_have_account.link")}
+          </Link>
         </p>
         <OAuth />
       </div>

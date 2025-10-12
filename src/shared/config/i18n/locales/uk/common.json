@@ -17,7 +17,24 @@
   },
   "sign_up": {
     "title": "Реєстрація",
-    "subtitle": "Заповніть форму для реєстрації"
+    "subtitle": "Заповніть форму для реєстрації",
+    "full_name": {
+      "label": "Повне ім'я"
+    },
+    "email": {
+      "label": "Електронна адреса"
+    },
+    "password": {
+      "label": "Пароль"
+    },
+    "password_repeat": {
+      "label": "Повторіть пароль"
+    },
+    "button_sign_up": "Зареєструватися",
+    "already_have_account": {
+      "title": "Уже є аккаунт?",
+      "link": "Увійти"
+    }
   },
   "dashboard_section": {
     "title": "Головна"

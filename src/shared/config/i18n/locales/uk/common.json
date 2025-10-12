@@ -15,6 +15,10 @@
     },
     "or_continue_with": "Або продовжити з"
   },
+  "sign_up": {
+    "title": "Реєстрація",
+    "subtitle": "Заповніть форму для реєстрації"
+  },
   "dashboard_section": {
     "title": "Головна"
   },

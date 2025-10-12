@@ -8,6 +8,7 @@ import { valibotResolver } from "@/shared/utils/valibot-resolver";
 import { SubmitHandler, useForm } from "react-hook-form";
 // import { signUp } from "../api/sign-up";
 import { OAuth } from "@/features/oauth";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ErrorsType } from "@/shared/types/ErrorsType";
 import { Alert } from "@/shared/ui/Alert";
 import { revalidateHomePath } from "@/shared/utils/revalidateHomePath";
@@ -33,6 +34,7 @@ const classesSlots = tv({
 export function SignUp() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const {
     handleSubmit,
@@ -110,10 +112,10 @@ export function SignUp() {
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-4 text-center text-2xl/9 font-bold tracking-tight sm:mt-5">
-          Sign up
+          {t("sign_up.title")}
         </h2>
         <p className="text-base-content/70 mt-2 text-center text-sm/6">
-          Enter your email and password to sign up
+          {t("sign_up.subtitle")}
         </p>
       </div>
 

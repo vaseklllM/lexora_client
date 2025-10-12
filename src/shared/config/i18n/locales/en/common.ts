@@ -98,6 +98,9 @@ export const en = {
       logout: "Logout",
     },
   },
+  folder_breadcrumbs: {
+    home: "Home",
+  },
 };
 
 export type CommonType = typeof en;

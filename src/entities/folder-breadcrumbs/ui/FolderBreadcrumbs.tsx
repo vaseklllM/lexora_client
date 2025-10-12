@@ -1,4 +1,5 @@
 import { IFolderBreadcrumb } from "@/api/schemas/folder-breadcrumb.schema";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { routes } from "@/shared/routes";
 import { Breadcrumb, Breadcrumbs } from "@/shared/ui/Breadcrumbs";
 import { ReactElement, useMemo } from "react";
@@ -10,10 +11,12 @@ interface Props {
 }
 
 export const FolderBreadcrumbs = (props: Props): ReactElement => {
+  const { t } = useTranslation();
+
   const breadcrumbs = useMemo<Breadcrumb[]>((): Breadcrumb[] => {
     const crumbs: Breadcrumb[] = [
       {
-        title: "Home",
+        title: t("folder_breadcrumbs.home"),
         url: routes.dashboard.url(),
       },
     ];

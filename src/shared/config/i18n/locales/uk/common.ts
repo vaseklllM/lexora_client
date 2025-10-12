@@ -100,4 +100,7 @@ export const uk: CommonType = {
       logout: "Вийти",
     },
   },
+  folder_breadcrumbs: {
+    home: "Головна",
+  },
 };

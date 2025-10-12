@@ -47,6 +47,17 @@ export const uk: CommonType = {
       create_deck: "Колода",
     },
   },
+  deck_section: {
+    language: {
+      iLearn: "Я вивчаю",
+      iKnow: "Я знаю",
+    },
+    add_card: {
+      front: {
+        button: "Додати картку",
+      },
+    },
+  },
   empty: {
     dashboard:
       "У вас немає жодної папки або колоди.\nВи можете створити нову папку або колоду, натиснувши кнопку плюс.",

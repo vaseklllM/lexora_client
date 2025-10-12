@@ -9,6 +9,7 @@ import {
 } from "@/entities/card-fields-side";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { PlusIcon } from "@/shared/icons/Plus";
 import { sleep } from "@/shared/utils/sleep";
 import { memo, ReactElement, useCallback, useState } from "react";
@@ -32,7 +33,7 @@ interface Props {
 export const AddCard = memo((props: Props): ReactElement => {
   const [activeSide, setActiveSide] = useState<CardSide>("front");
   const [isVisibleEditSide, setIsVisibleEditSide] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const classes = classesSlots();
 
   const onSubmit: CardFieldsSideSubmitHandler = useCallback(
@@ -110,7 +111,7 @@ export const AddCard = memo((props: Props): ReactElement => {
             }}
             disabled={activeSide === "back"}
           >
-            Add Card
+            {t("deck_section.add_card.front.button")}
             <PlusIcon height="22px" width="22px" />
           </button>
         </div>

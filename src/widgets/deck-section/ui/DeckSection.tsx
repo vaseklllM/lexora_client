@@ -17,6 +17,8 @@ import { ButtonBack } from "@/features/button-back";
 import { ViewCard } from "@/features/view-card";
 import { ErrorStatus } from "@/shared/api-core/errorStatus";
 import { parseBadRequestErrors } from "@/shared/api-core/parseBadRequestErrors";
+import { useLanguage } from "@/shared/config/i18n";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { Chip } from "@/shared/ui/chip";
@@ -24,7 +26,6 @@ import { countOf } from "@/shared/utils/count-of";
 import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
 import { ButtonPlay } from "./ButtonPlay";
-import { useLanguage } from "@/shared/config/i18n";
 
 const classesSlots = tv({
   slots: {
@@ -54,6 +55,7 @@ interface Props {
 export const DeckSection = (props: Props): ReactElement => {
   const classes = classesSlots();
   const language = useLanguage();
+  const { t } = useTranslation();
 
   const lastBreadcrumb = useMemo<Breadcrumb>(() => {
     return {
@@ -112,14 +114,18 @@ export const DeckSection = (props: Props): ReactElement => {
         />
         <div className={classes.languagesList()}>
           <p className={classes.language()}>
-            <span className="text-base-content/70">I learn:</span>{" "}
+            <span className="text-base-content/70">
+              {t("deck_section.language.iLearn")}:
+            </span>{" "}
             <Chip>
               {props.deck.languageWhatILearn.name}{" "}
               {props.deck.languageWhatILearn.iconSymbol}
             </Chip>
           </p>
           <p className={classes.language()}>
-            <span className="text-base-content/70">I know:</span>{" "}
+            <span className="text-base-content/70">
+              {t("deck_section.language.iKnow")}:
+            </span>{" "}
             <Chip>
               {props.deck.languageWhatIKnow.name}{" "}
               {props.deck.languageWhatIKnow.iconSymbol}

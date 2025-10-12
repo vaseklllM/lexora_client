@@ -45,6 +45,17 @@ export const en = {
       create_deck: "Deck",
     },
   },
+  deck_section: {
+    language: {
+      iLearn: "I learn",
+      iKnow: "I know",
+    },
+    add_card: {
+      front: {
+        button: "Add Card",
+      },
+    },
+  },
   empty: {
     dashboard:
       "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button.",

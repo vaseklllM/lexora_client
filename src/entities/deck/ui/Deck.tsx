@@ -1,6 +1,9 @@
+"use client";
+
 import { IDeck } from "@/api/schemas/deck.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
 import { Progress } from "@/entities/progress";
+import { useLanguage } from "@/shared/config/i18n";
 import { ButtonPlay } from "@/shared/ui/ButtonPlay";
 import { countOf } from "@/shared/utils/count-of";
 import { HTMLAttributes, ReactElement, Ref } from "react";
@@ -44,6 +47,8 @@ export const Deck = (props: Props): ReactElement => {
     ...lastProps
   } = props;
 
+  const language = useLanguage();
+
   const classes = classesSlots({
     hover,
   });
@@ -66,7 +71,7 @@ export const Deck = (props: Props): ReactElement => {
       <div className={classes.content()}>
         <Progress
           percent={props.deck.masteryScore}
-          progressOf={countOf(deck.numberOfCards, "card")}
+          progressOf={countOf(deck.numberOfCards, "card", language)}
           disabled={deck.numberOfCards <= 0}
         />
         <ButtonPlay disabled={deck.numberOfCards === 0} onClick={onPlay} />

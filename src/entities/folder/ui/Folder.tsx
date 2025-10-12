@@ -1,5 +1,8 @@
+"use client";
+
 import { IFolder } from "@/api/schemas/folder.schema";
 import { DropdownItem, DropdownMenu } from "@/entities/dropdown-menu";
+import { useLanguage } from "@/shared/config/i18n";
 import { ArrowBack } from "@/shared/icons/ArrowBack";
 import { FolderIcon } from "@/shared/icons/Folder";
 import { countOf } from "@/shared/utils/count-of";
@@ -54,6 +57,7 @@ interface Props {
 
 export const Folder = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const language = useLanguage();
 
   return (
     <div
@@ -91,7 +95,7 @@ export const Folder = (props: Props): ReactElement => {
               isNumberOfCards: props.folder.numberOfCards > 0,
             })}
           >
-            {countOf(props.folder.numberOfCards, "card")}
+            {countOf(props.folder.numberOfCards, "card", language)}
           </p>
           {/* <p className={classes.numberOfCardsProgress()}>45%</p> */}
         </div>

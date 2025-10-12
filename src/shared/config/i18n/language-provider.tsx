@@ -1,16 +1,17 @@
 "use client";
 
+import { LanguageEnum } from "@/shared/enums/Language";
 import { createContext, ReactNode, useContext, useEffect } from "react";
 import i18next from "./i18n-init";
 
-const LanguageContext = createContext<string>("en");
+const LanguageContext = createContext<LanguageEnum>(LanguageEnum.EN);
 
 export function LanguageProvider({
   children,
   lng,
 }: {
   children: ReactNode;
-  lng: string;
+  lng: LanguageEnum;
 }) {
   useEffect(() => {
     if (i18next.language !== lng) {

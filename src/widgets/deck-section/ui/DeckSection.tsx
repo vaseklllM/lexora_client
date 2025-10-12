@@ -24,6 +24,7 @@ import { countOf } from "@/shared/utils/count-of";
 import { ReactElement, useCallback, useMemo } from "react";
 import { tv } from "tailwind-variants";
 import { ButtonPlay } from "./ButtonPlay";
+import { useLanguage } from "@/shared/config/i18n";
 
 const classesSlots = tv({
   slots: {
@@ -52,6 +53,7 @@ interface Props {
 
 export const DeckSection = (props: Props): ReactElement => {
   const classes = classesSlots();
+  const language = useLanguage();
 
   const lastBreadcrumb = useMemo<Breadcrumb>(() => {
     return {
@@ -127,7 +129,7 @@ export const DeckSection = (props: Props): ReactElement => {
         <div className={classes.progressWrapper()}>
           <Progress
             percent={props.deck.masteryScore}
-            progressOf={countOf(props.deck.numberOfCards, "card")}
+            progressOf={countOf(props.deck.numberOfCards, "card", language)}
             disabled={props.deck.numberOfCards <= 0}
           />
           <ButtonPlay deckId={props.deck.id} />

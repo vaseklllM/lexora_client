@@ -113,6 +113,14 @@ export const en = {
         save: "Save",
       },
     },
+    delete_deck: {
+      title: "Delete deck '{{deckName}}'",
+      description: "Are you sure you want to delete this deck?",
+      buttons: {
+        cancel: "Cancel",
+        delete: "Delete",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Most used languages",

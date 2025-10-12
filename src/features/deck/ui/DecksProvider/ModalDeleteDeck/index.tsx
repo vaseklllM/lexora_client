@@ -4,12 +4,14 @@ import { revalidateGetDashboard } from "@/api/dashboard/get-dashboard";
 import { deleteDeck } from "@/api/deck/delete-deck";
 import { ModalAgree, ModalAgreeOnAgree } from "@/entities/modal-agree";
 import { useDeckStore } from "@/features/deck/model/store";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 import { ReactElement, useCallback } from "react";
 
 export const ModalDeleteDeck = (): ReactElement => {
   const isOpen = useDeckStore((state) => state.modalDeleteDeck.isOpen);
   const closeHandler = useDeckStore((state) => state.closeModalDeleteDeck);
-  const folderName = useDeckStore((state) => state.modalDeleteDeck.deck?.name);
+  const deckName = useDeckStore((state) => state.modalDeleteDeck.deck?.name);
+  const { t } = useTranslation();
 
   const onDelete = useCallback<ModalAgreeOnAgree>(async ({ closeModal }) => {
     const store = useDeckStore.getState();
@@ -26,10 +28,10 @@ export const ModalDeleteDeck = (): ReactElement => {
     <ModalAgree
       isOpen={isOpen}
       onCloseModal={closeHandler}
-      title={`Delete deck '${folderName}'`}
-      description="Are you sure you want to delete this folder?"
-      cancelButtonText="Cancel"
-      agreeButtonText="Delete"
+      title={t("modal.delete_deck.title", { deckName })}
+      description={t("modal.delete_deck.description")}
+      cancelButtonText={t("modal.delete_deck.buttons.cancel")}
+      agreeButtonText={t("modal.delete_deck.buttons.delete")}
       onAgree={onDelete}
     />
   );

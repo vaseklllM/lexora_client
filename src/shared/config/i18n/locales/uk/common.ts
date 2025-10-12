@@ -115,6 +115,14 @@ export const uk: CommonType = {
         save: "Зберегти",
       },
     },
+    delete_deck: {
+      title: "Видалити колоду '{{deckName}}'",
+      description: "Ви впевнені, що хочете видалити цю колоду?",
+      buttons: {
+        cancel: "Скасувати",
+        delete: "Видалити",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Часто використовувані мови",

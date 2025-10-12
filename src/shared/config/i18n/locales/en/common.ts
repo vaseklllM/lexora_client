@@ -69,6 +69,25 @@ export const en = {
         create: "Create",
       },
     },
+    create_deck: {
+      title: "Create deck",
+      description: "A deck is used to store word cards and study them",
+      fields: {
+        name: {
+          label: "Name",
+        },
+        languageWhatIKnow: {
+          label: "Language I know",
+        },
+        languageWhatILearn: {
+          label: "Language I learn",
+        },
+      },
+      buttons: {
+        cancel: "Cancel",
+        create: "Create",
+      },
+    },
   },
   header: {
     buttons: {

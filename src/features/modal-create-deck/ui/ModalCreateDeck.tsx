@@ -16,6 +16,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { tv } from "tailwind-variants";
 import * as v from "valibot";
 import { getDifferentLanguages } from "../model/getDifferentLanguages";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 const schema = v.object({
   name: v.pipe(
@@ -53,6 +54,7 @@ interface Props {
 export const ModalCreateDeck = (props: Props): ReactElement => {
   const classes = classesSlots();
   const nameFieldRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const {
     handleSubmit,
@@ -141,9 +143,11 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
       onClose={closeHandler}
     >
       <div className="modal-box">
-        <h3 className="text-center text-lg font-bold">Create Deck</h3>
-        <p className="text-base-content/70 mt-4">
-          A deck is used to store word cards and study them
+        <h3 className="text-center text-lg font-bold">
+          {t("modal.create_deck.title")}
+        </h3>
+        <p className="text-base-content/70 mt-4 text-center">
+          {t("modal.create_deck.description")}
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -156,14 +160,14 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             type="text"
             autoFocus={props.isOpen}
             tabIndex={-1}
-            label="Name"
+            label={t("modal.create_deck.fields.name.label")}
             data-1p-ignore="true"
             autoComplete="off"
           />
 
           <DeckLanguagesSelect
             {...register("languageWhatIKnowCode")}
-            label="Language I know"
+            label={t("modal.create_deck.fields.languageWhatIKnow.label")}
             languages={props.allLanguages}
             className="w-full"
             actualLanguages={props.languagesWhatIKnow}
@@ -174,7 +178,7 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
             {...register("languageWhatILearnCode")}
             languages={props.allLanguages}
             className="w-full"
-            label="Language I learn"
+            label={t("modal.create_deck.fields.languageWhatILearn.label")}
             actualLanguages={props.languagesWhatILearn}
             disabledLanguages={disabledLanguagesWhatILearn}
           />
@@ -189,10 +193,10 @@ export const ModalCreateDeck = (props: Props): ReactElement => {
                 props.setIsOpen(false);
               }}
             >
-              Cancel
+              {t("modal.create_deck.buttons.cancel")}
             </Button>
             <Button className="btn-primary" isLoading={isSubmitting}>
-              Create
+              {t("modal.create_deck.buttons.create")}
             </Button>
           </div>
         </form>

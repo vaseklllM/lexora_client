@@ -71,6 +71,25 @@ export const uk: CommonType = {
         create: "Створити",
       },
     },
+    create_deck: {
+      title: "Створити колоду",
+      description: "Колода використовується для зберігання карт та вивчення їх",
+      fields: {
+        name: {
+          label: "Назва",
+        },
+        languageWhatIKnow: {
+          label: "Мова, яку я знаю",
+        },
+        languageWhatILearn: {
+          label: "Мова, яку я вивчаю",
+        },
+      },
+      buttons: {
+        cancel: "Скасувати",
+        create: "Створити",
+      },
+    },
   },
   header: {
     buttons: {

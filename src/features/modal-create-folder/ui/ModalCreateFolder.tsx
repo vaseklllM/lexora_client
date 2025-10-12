@@ -123,7 +123,7 @@ export const ModalCreateFolder = (props: Props): ReactElement => {
         <h3 className="text-center text-lg font-bold">
           {t("modal.create_folder.title")}
         </h3>
-        <p className="text-base-content/70 mt-4">
+        <p className="text-base-content/70 mt-4 text-center">
           {t("modal.create_folder.description")}
         </p>
         <form

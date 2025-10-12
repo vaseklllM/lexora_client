@@ -90,6 +90,14 @@ export const uk: CommonType = {
         create: "Створити",
       },
     },
+    delete_folder: {
+      title: "Видалити папку '{{folderName}}'",
+      description: "Ви впевнені, що хочете вилучити цю папку?",
+      buttons: {
+        cancel: "Скасувати",
+        delete: "Видалити",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Часто використовувані мови",

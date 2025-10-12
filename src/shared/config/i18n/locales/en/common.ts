@@ -88,6 +88,14 @@ export const en = {
         create: "Create",
       },
     },
+    delete_folder: {
+      title: "Delete folder '{{folderName}}'",
+      description: "Are you sure you want to delete this folder?",
+      buttons: {
+        cancel: "Cancel",
+        delete: "Delete",
+      },
+    },
   },
   deck_languages_select: {
     most_used_languages: "Most used languages",

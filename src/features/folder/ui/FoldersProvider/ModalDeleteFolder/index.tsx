@@ -4,6 +4,7 @@ import { ModalAgree } from "@/entities/modal-agree";
 import { ReactElement } from "react";
 import { useFolderStore } from "../../../model/store";
 import { useDeleteFolder } from "./useDeleteFolder";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 export const ModalDeleteFolder = (): ReactElement => {
   const isOpen = useFolderStore((state) => state.modalDeleteFolder.isOpen);
@@ -11,6 +12,7 @@ export const ModalDeleteFolder = (): ReactElement => {
   const folderName = useFolderStore(
     (state) => state.modalDeleteFolder.folder?.name,
   );
+  const { t } = useTranslation();
 
   const onDelete = useDeleteFolder();
 
@@ -18,10 +20,10 @@ export const ModalDeleteFolder = (): ReactElement => {
     <ModalAgree
       isOpen={isOpen}
       onCloseModal={closeHandler}
-      title={`Delete folder '${folderName}'`}
-      description="Are you sure you want to delete this folder?"
-      cancelButtonText="Cancel"
-      agreeButtonText="Delete"
+      title={t("modal.delete_folder.title", { folderName })}
+      description={t("modal.delete_folder.description")}
+      cancelButtonText={t("modal.delete_folder.buttons.cancel")}
+      agreeButtonText={t("modal.delete_folder.buttons.delete")}
       onAgree={onDelete}
     />
   );

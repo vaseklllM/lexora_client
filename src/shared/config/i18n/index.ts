@@ -1,2 +1,2 @@
-// export { getTranslation } from "./server";
+export { getTranslation } from "./server";
 export { LanguageProvider, useLanguage } from "./language-provider";

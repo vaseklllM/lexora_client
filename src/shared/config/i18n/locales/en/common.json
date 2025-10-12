@@ -15,6 +15,9 @@
     },
     "or_continue_with": "Or continue with"
   },
+  "dashboard_section": {
+    "title": "Home"
+  },
   "empty": {
     "dashboard": "You don't have any folders or decks.\nYou can create a new folder or deck by clicking the plus button."
   }

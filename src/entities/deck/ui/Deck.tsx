@@ -74,7 +74,11 @@ export const Deck = (props: Props): ReactElement => {
           progressOf={countOf(deck.numberOfCards, "card", language)}
           disabled={deck.numberOfCards <= 0}
         />
-        <ButtonPlay disabled={deck.numberOfCards === 0} onClick={onPlay} />
+        <ButtonPlay
+          disabled={deck.numberOfCards === 0}
+          onClick={onPlay}
+          isFinished={deck.masteryScore >= 100}
+        />
       </div>
     </div>
   );

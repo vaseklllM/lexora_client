@@ -1,5 +1,5 @@
 import { routes } from "@/shared/routes";
-import { ButtonIcon } from "@/shared/ui/ButtonIcon";
+import { ButtonPlay as ButtonPlayShared } from "@/shared/ui/ButtonPlay";
 import { useRouter } from "next/navigation";
 import { ReactElement, useCallback } from "react";
 import { tv } from "tailwind-variants";
@@ -13,6 +13,8 @@ const classesSlots = tv({
 interface Props {
   className?: string;
   deckId: string;
+  isFinished?: boolean;
+  isDisabled?: boolean;
 }
 
 export const ButtonPlay = (props: Props): ReactElement => {
@@ -24,13 +26,13 @@ export const ButtonPlay = (props: Props): ReactElement => {
   }, [props.deckId, router]);
 
   return (
-    <ButtonIcon
-      icon="play"
-      color="primary"
-      iconWidth="22px"
-      iconHeight="22px"
+    <ButtonPlayShared
       className={classes.button({ className: props.className })}
       onClick={clickHandler}
+      iconWidth="22px"
+      iconHeight="22px"
+      disabled={props.isDisabled}
+      isFinished={props.isFinished}
     />
   );
 };

@@ -17,6 +17,11 @@ const classesSlots = tv({
         progress: "bg-base-content/10",
       },
     },
+    status: {
+      finished: {
+        progress: "progress-success",
+      },
+    },
   },
 });
 
@@ -30,6 +35,7 @@ interface Props {
 export const Progress = (props: Props): ReactElement => {
   const classes = classesSlots({
     disabled: props.disabled,
+    status: props.percent >= 100 ? "finished" : undefined,
   });
 
   return (

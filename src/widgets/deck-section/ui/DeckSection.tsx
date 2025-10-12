@@ -138,7 +138,11 @@ export const DeckSection = (props: Props): ReactElement => {
             progressOf={countOf(props.deck.numberOfCards, "card", language)}
             disabled={props.deck.numberOfCards <= 0}
           />
-          <ButtonPlay deckId={props.deck.id} />
+          <ButtonPlay
+            deckId={props.deck.id}
+            isFinished={props.deck.masteryScore >= 100}
+            isDisabled={props.deck.numberOfCards <= 0}
+          />
         </div>
       </div>
       <div className={classes.cards()}>

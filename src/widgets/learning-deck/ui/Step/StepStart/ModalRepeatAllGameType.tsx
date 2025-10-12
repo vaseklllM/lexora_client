@@ -1,3 +1,4 @@
+import { startReviewAllCardsDeckSession } from "@/api/deck/start-review-all-cards-deck-session";
 import { ModalChooseGame } from "@/entities/modal-choose-game";
 import { GameType } from "@/shared/types/Game";
 import { useLearningDeckStore } from "@/widgets/learning-deck/model/store";
@@ -21,8 +22,12 @@ export const ModalRepeatAllGameType = (props: Props): ReactElement => {
 
   const onChooseGameTypeHandler = useCallback(
     async (gameType: GameType) => {
-      // console.log(props.deckId);
-      startReviewSession(gameType, []);
+      const result = await startReviewAllCardsDeckSession({
+        deckId: props.deckId,
+      });
+      if (result.ok) {
+        startReviewSession(gameType, result.data.cards);
+      }
     },
     [startReviewSession, props.deckId],
   );

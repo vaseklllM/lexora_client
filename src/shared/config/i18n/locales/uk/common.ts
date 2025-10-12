@@ -194,6 +194,9 @@ export const uk: CommonType = {
     },
   },
   learning_deck: {
+    breadcrumbs: {
+      learning_deck: "Вивчення колоди",
+    },
     header: {
       steps: {
         review: "Перегляд",

@@ -192,6 +192,9 @@ export const en = {
     },
   },
   learning_deck: {
+    breadcrumbs: {
+      learning_deck: "Learning deck",
+    },
     header: {
       steps: {
         review: "Review",

@@ -2,8 +2,11 @@ import { routes } from "@/shared/routes";
 import { Breadcrumb } from "@/shared/ui/Breadcrumbs";
 import { useMemo } from "react";
 import { LearningDeckProps } from "./LearningDeck";
+import { useTranslation } from "@/shared/hooks/useTranslation";
 
 export function useLastBreadcrumbs(props: LearningDeckProps) {
+  const { t } = useTranslation();
+
   return useMemo<Breadcrumb[]>(() => {
     return [
       {
@@ -12,7 +15,7 @@ export function useLastBreadcrumbs(props: LearningDeckProps) {
         url: routes.dashboard.deck.url(props.deck.id),
       },
       {
-        title: "Learning deck",
+        title: t("learning_deck.breadcrumbs.learning_deck"),
         url: routes.dashboard.learningDeck.url(props.deck.id),
       },
     ];

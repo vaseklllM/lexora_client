@@ -2,238 +2,238 @@ import { CommonType } from "../en/common";
 
 export const pl: CommonType = {
   sign_in: {
-    title: "Вхід",
-    subtitle: "Введіть вашу електронну адресу та пароль для входу",
+    title: "Zaloguj się",
+    subtitle: "Wprowadź swój adres e-mail i hasło, aby się zalogować",
     email: {
-      label: "Email",
+      label: "E-mail",
     },
     password: {
-      label: "Пароль",
+      label: "Hasło",
     },
-    button_sign_in: "Увійти",
+    button_sign_in: "Zaloguj się",
     dont_have_account: {
-      title: "Немає аккаунта?",
-      link: "Зареєструватися",
+      title: "Nie masz konta?",
+      link: "Zarejestruj się",
     },
-    or_continue_with: "Або продовжити з",
+    or_continue_with: "Lub kontynuuj z",
   },
   sign_up: {
-    title: "Реєстрація",
-    subtitle: "Заповніть форму для реєстрації",
+    title: "Zarejestruj się",
+    subtitle: "Wypełnij formularz, aby się zarejestrować",
     full_name: {
-      label: "Повне ім'я",
+      label: "Pełne imię i nazwisko",
     },
     email: {
-      label: "Електронна адреса",
+      label: "E-mail",
     },
     password: {
-      label: "Пароль",
+      label: "Hasło",
     },
     password_repeat: {
-      label: "Повторіть пароль",
+      label: "Powtórz hasło",
     },
-    button_sign_up: "Зареєструватися",
+    button_sign_up: "Zarejestruj się",
     already_have_account: {
-      title: "Уже є аккаунт?",
-      link: "Увійти",
+      title: "Masz już konto?",
+      link: "Zaloguj się",
     },
   },
   dashboard_section: {
-    title: "Головна",
+    title: "Strona główna",
   },
   section: {
     plus_dropdown_menu: {
-      create_folder: "Папка",
-      create_deck: "Колода",
+      create_folder: "Folder",
+      create_deck: "Talia",
     },
   },
   deck_section: {
     language: {
-      iLearn: "Я вивчаю",
-      iKnow: "Я знаю",
+      iLearn: "Uczę się",
+      iKnow: "Znam",
     },
     add_card: {
       front: {
-        button: "Додати картку",
+        button: "Dodaj kartę",
       },
     },
     card_fields_side: {
       word: {
-        label: "Слово",
+        label: "Słowo",
         errors: {
-          required: "Слово є обов'язковим",
-          tooShort: "Слово є надто коротким",
-          maxLength: "Слово не може бути довше ніж {{maxLength}} символів",
+          required: "Słowo jest wymagane",
+          tooShort: "Słowo jest za krótkie",
+          maxLength: "Słowo nie może być dłuższe niż {{maxLength}} znaków",
         },
         generate: {
-          tooltip: "Згенерувати картку",
+          tooltip: "Wygeneruj kartę",
         },
       },
       translation: {
-        label: "Переклад",
+        label: "Tłumaczenie",
         errors: {
-          required: "Переклад є обов'язковим",
-          tooShort: "Переклад є надто коротким",
-          maxLength: "Переклад не може бути довше ніж {{maxLength}} символів",
+          required: "Tłumaczenie jest wymagane",
+          tooShort: "Tłumaczenie jest za krótkie",
+          maxLength:
+            "Tłumaczenie nie może być dłuższe niż {{maxLength}} znaków",
         },
       },
       example: {
-        label: "Приклад або опис",
-        placeholder: "{{languageName}} приклад",
+        label: "Przykład lub opis",
+        placeholder: "Przykład w języku {{languageName}}",
         errors: {
-          maxLength: "Приклад не може бути довше ніж {{maxLength}} символів",
+          maxLength: "Przykład nie może być dłuższy niż {{maxLength}} znaków",
         },
       },
       example_translation: {
-        label: "Приклад або опис в перекладі",
-        placeholder: "{{languageName}} приклад",
+        label: "Tłumaczenie przykładu lub opisu",
+        placeholder: "Przykład w języku {{languageName}}",
         errors: {
           maxLength:
-            "Приклад в перекладі не може бути довше ніж {{maxLength}} символів",
+            "Tłumaczenie przykładu nie może być dłuższe niż {{maxLength}} znaków",
         },
       },
     },
   },
   empty: {
     dashboard:
-      "У вас немає жодної папки або колоди.\nВи можете створити нову папку або колоду, натиснувши кнопку плюс.",
+      "Nie masz jeszcze żadnych folderów ani talii.\nMożesz utworzyć nowy folder lub talię, klikając przycisk plus.",
   },
   modal: {
     create_folder: {
-      title: "Створити папку",
-      description:
-        "Папка використовується для групування колод карт та інших папок.",
+      title: "Utwórz folder",
+      description: "Folder służy do grupowania talii kart i innych folderów.",
       fields: {
         name: {
-          label: "Назва",
+          label: "Nazwa",
           errors: {
-            required: "Назва є обов'язковою",
-            noOnlySpaces: "Назва не може бути лише пробілами",
-            maxLength: "Назва не може бути довше ніж {{maxLength}} символів",
+            required: "Nazwa jest wymagana",
+            noOnlySpaces: "Nazwa nie może składać się tylko ze spacji",
+            maxLength: "Nazwa nie może być dłuższa niż {{maxLength}} znaków",
           },
         },
       },
       buttons: {
-        cancel: "Скасувати",
-        create: "Створити",
+        cancel: "Anuluj",
+        create: "Utwórz",
       },
     },
     create_deck: {
-      title: "Створити колоду",
-      description: "Колода використовується для зберігання карт та вивчення їх",
+      title: "Utwórz talię",
+      description: "Talia służy do przechowywania kart słownych i nauki ich",
       fields: {
         name: {
-          label: "Назва",
+          label: "Nazwa",
         },
         languageWhatIKnow: {
-          label: "Мова, яку я знаю",
+          label: "Język, który znam",
         },
         languageWhatILearn: {
-          label: "Мова, яку я вивчаю",
+          label: "Język, którego się uczę",
         },
       },
       buttons: {
-        cancel: "Скасувати",
-        create: "Створити",
+        cancel: "Anuluj",
+        create: "Utwórz",
       },
     },
     delete_folder: {
-      title: "Видалити папку '{{folderName}}'",
-      description: "Ви впевнені, що хочете вилучити цю папку?",
+      title: "Usuń folder '{{folderName}}'",
+      description: "Czy na pewno chcesz usunąć ten folder?",
       buttons: {
-        cancel: "Скасувати",
-        delete: "Видалити",
+        cancel: "Anuluj",
+        delete: "Usuń",
       },
     },
     rename: {
       fields: {
         name: {
-          label: "Назва",
+          label: "Nazwa",
           errors: {
-            required: "Назва є обов'язковою",
-            noOnlySpaces: "Назва не може бути лише пробілами",
-            maxLength: "Назва не може бути довше ніж {{maxLength}} символів",
+            required: "Nazwa jest wymagana",
+            noOnlySpaces: "Nazwa nie może składać się tylko ze spacji",
+            maxLength: "Nazwa nie może być dłuższa niż {{maxLength}} znaków",
           },
         },
       },
       buttons: {
-        cancel: "Скасувати",
-        save: "Зберегти",
+        cancel: "Anuluj",
+        save: "Zapisz",
       },
     },
     rename_folder: {
-      title: "Перейменувати папку '{{folderName}}'",
+      title: "Zmień nazwę folderu '{{folderName}}'",
     },
     delete_deck: {
-      title: "Видалити колоду '{{deckName}}'",
-      description: "Ви впевнені, що хочете видалити цю колоду?",
+      title: "Usuń talię '{{deckName}}'",
+      description: "Czy na pewno chcesz usunąć tę talię?",
       buttons: {
-        cancel: "Скасувати",
-        delete: "Видалити",
+        cancel: "Anuluj",
+        delete: "Usuń",
       },
     },
     rename_deck: {
-      title: "Перейменувати колоду '{{deckName}}'",
+      title: "Zmień nazwę talii '{{deckName}}'",
     },
     choose_game: {
-      title: "Виберіть тип гри",
-      description: "Виберіть тип гри, який ви хочете грати.",
+      title: "Wybierz typ gry",
+      description: "Wybierz typ gry, w którą chcesz zagrać.",
       buttons: {
-        pair_it: "Знайти пару",
-        guess_it: "Вибрати один із",
-        recall_it: "Згадати",
-        type_it: "Написати",
+        pair_it: "Dopasuj pary",
+        guess_it: "Zgadnij",
+        recall_it: "Przypomnij sobie",
+        type_it: "Wpisz",
       },
     },
   },
   deck_languages_select: {
-    most_used_languages: "Часто використовувані мови",
-    other_languages: "Інші мови",
+    most_used_languages: "Najczęściej używane języki",
+    other_languages: "Inne języki",
   },
   header: {
     buttons: {
-      logout: "Вийти",
+      logout: "Wyloguj się",
     },
   },
   folder_breadcrumbs: {
-    home: "Головна",
+    home: "Strona główna",
   },
   folder: {
     buttons: {
-      rename: "Перейменувати",
-      delete: "Видалити",
+      rename: "Zmień nazwę",
+      delete: "Usuń",
     },
   },
   deck: {
     buttons: {
-      rename: "Перейменувати",
-      delete: "Видалити",
+      rename: "Zmień nazwę",
+      delete: "Usuń",
     },
   },
   learning_deck: {
     breadcrumbs: {
-      learning_deck: "Вивчення колоди",
+      learning_deck: "Nauka talii",
     },
     header: {
       steps: {
-        review: "Перегляд",
-        pair_it: "Знайти пару",
-        guess_it: "Вибрати один із",
-        recall_it: "Згадати",
-        type_it: "Написати",
+        review: "Przegląd",
+        pair_it: "Dopasuj pary",
+        guess_it: "Zgadnij",
+        recall_it: "Przypomnij sobie",
+        type_it: "Wpisz",
       },
     },
     step: {
       start: {
         button_start: {
-          title: "Вивчити",
-          no_words_to_learn: "немає слів для вивчення",
+          title: "Ucz się",
+          no_words_to_learn: "brak słów do nauki",
         },
         button_repeat: {
-          title: "Повторити ({{numberOfCardsNeedToReview}})",
+          title: "Powtórz ({{numberOfCardsNeedToReview}})",
         },
         button_repeat_all: {
-          title: "Повторити всі ({{numberOfCardsInProgress}})",
+          title: "Powtórz wszystko ({{numberOfCardsInProgress}})",
         },
       },
     },
@@ -241,45 +241,47 @@ export const pl: CommonType = {
   games: {
     recall_it: {
       buttons: {
-        forgot: "Забув",
-        recalled: "Згадав",
-        next: "Далі",
-        show: "Показати",
+        forgot: "Zapomniałem",
+        recalled: "Przypomniałem sobie",
+        next: "Dalej",
+        show: "Pokaż",
       },
     },
     type_it: {
       buttons: {
-        help: "Допомога",
-        check: "Перевірити",
-        try_again: "Спробувати знову",
-        right: "Правильно",
+        help: "Pomoc",
+        check: "Sprawdź",
+        try_again: "Spróbuj ponownie",
+        right: "Dobrze",
       },
     },
   },
   schemas: {
     email: {
-      required: "Будь ласка, введіть вашу електронну адресу.",
-      invalid: "Неправильний формат електронної адреси.",
+      required: "Proszę wprowadzić swój adres e-mail.",
+      invalid: "Nieprawidłowy format adresu e-mail.",
     },
     password: {
-      required: "Будь ласка, введіть ваш пароль.",
-      minLength: "Пароль повинен бути не менше {{minLength}} символів",
-      uppercase: "Пароль повинен містити принаймні одну велику літеру",
-      lowercase: "Пароль повинен містити принаймні одну малу літеру",
-      number: "Пароль повинен містити принаймні одну цифру",
+      required: "Proszę wprowadzić swoje hasło.",
+      minLength: "Hasło musi zawierać co najmniej {{minLength}} znaków",
+      uppercase: "Hasło musi zawierać co najmniej jedną wielką literę",
+      lowercase: "Hasło musi zawierać co najmniej jedną małą literę",
+      number: "Hasło musi zawierać co najmniej jedną cyfrę",
     },
     passwordRepeat: {
-      required: "Будь ласка, введіть ваш пароль повторно.",
-      notMatch: "Паролі не збігаються.",
+      required: "Proszę powtórzyć swoje hasło.",
+      notMatch: "Hasła nie są identyczne.",
     },
     fullName: {
-      required: "Будь ласка, введіть ваше повне ім'я.",
-      minLength: "Повне ім'я є надто коротким.",
-      noOnlySpaces: "Повне ім'я не може мати пробілів на початку або в кінці.",
-      specialCharacters: "Повне ім'я не може містити спеціальні символи.",
+      required: "Proszę wprowadzić swoje pełne imię i nazwisko.",
+      minLength: "Pełne imię i nazwisko jest za krótkie.",
+      noOnlySpaces:
+        "Pełne imię i nazwisko nie może mieć spacji na początku lub na końcu.",
+      specialCharacters:
+        "Pełne imię i nazwisko nie może zawierać znaków specjalnych.",
       multipleConsecutiveHyphens:
-        "Повне ім'я не може містити кілька послідовних тире.",
-      numbers: "Повне ім'я не може містити цифри.",
+        "Pełne imię i nazwisko nie może zawierać wielu kolejnych myślników",
+      numbers: "Pełne imię i nazwisko nie może zawierać cyfr",
     },
   },
 };

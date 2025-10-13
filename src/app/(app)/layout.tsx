@@ -7,7 +7,7 @@ import { getAppLanguageCookie } from "@/shared/utils/setAppLanguageCookie";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
-import { NextAuthProvider } from "../screens/providers/NextAuthProvider";
+import { NextAuthProvider } from "../../screens/providers/NextAuthProvider";
 import "./animations.css";
 import "./globalImports.css";
 import "./globals.scss";

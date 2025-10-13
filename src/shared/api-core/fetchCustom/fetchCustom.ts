@@ -10,7 +10,9 @@ import { Options } from "./types";
 
 export async function fetchCustom<R>(
   url: string,
-  options?: Options,
+  options?: Options & {
+    skipUnauthorizedRedirect?: boolean;
+  },
 ): Promise<{ ok: boolean; data: R }> {
   const useSession = options?.useSession ?? true;
 
@@ -32,7 +34,9 @@ export async function fetchCustom<R>(
       }
 
       case ErrorStatus.UNAUTHORIZED: {
-        redirect(routes.logout.url());
+        if (!options?.skipUnauthorizedRedirect) {
+          redirect(routes.logout.url());
+        }
         break;
       }
     }

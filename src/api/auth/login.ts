@@ -14,6 +14,7 @@ export async function login(args: Args) {
     method: "POST",
     useSession: false,
     body: args,
+    skipUnauthorizedRedirect: true,
   });
 
   if (!result.ok) {

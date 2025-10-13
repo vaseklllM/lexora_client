@@ -16,6 +16,7 @@ export async function register(args: Args) {
     method: "POST",
     useSession: false,
     body: args,
+    skipUnauthorizedRedirect: true,
   });
 
   if (!result.ok) {

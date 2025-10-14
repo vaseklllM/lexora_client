@@ -1,0 +1,46 @@
+services:
+  lexora-client:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    container_name: lexora-client
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NEXTAUTH_URL=http://localhost:3000
+      - SYSTEM_NEXT_API_URL=http://host.docker.internal:4000/
+      - SYSTEM_NEXT_TTS_URL=http://host.docker.internal:4000/public/tts
+    restart: unless-stopped
+    networks:
+      - lexora-network
+    env_file:
+      - .env
+
+  # Додатковий сервіс для розробки (опціонально)
+  # lexora-client-dev:
+  #   image: node:20-alpine
+  #   container_name: lexora-client-dev
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - SYSTEM_NEXT_API_URL=${SYSTEM_NEXT_API_URL:-http://localhost:4000/}
+  #     - SYSTEM_NEXT_TTS_URL=${SYSTEM_NEXT_TTS_URL}
+  #     - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+  #     - SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_ID=${SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_ID}
+  #     - SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_SECRET=${SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_SECRET}
+  #   command: sh -c "npm install && npm run dev"
+  #   restart: unless-stopped
+  #   networks:
+  #     - lexora-network
+  #   profiles:
+  #     - dev
+
+networks:
+  lexora-network:
+    driver: bridge

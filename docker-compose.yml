@@ -10,7 +10,6 @@ services:
       - PORT=3000
       - NEXTAUTH_URL=http://localhost:3000
       - SYSTEM_NEXT_API_URL=http://host.docker.internal:4000/
-      - SYSTEM_NEXT_TTS_URL=http://host.docker.internal:4000/public/tts
     restart: unless-stopped
     networks:
       - lexora-network

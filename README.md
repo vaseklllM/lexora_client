@@ -1,159 +1,159 @@
 # Lexora Client
 
-**Lexora** – це веб-додаток для вивчення мов за допомогою карточок (flashcards). Цей репозиторій містить клієнт на Next.js, який працює як інтерфейс до [Lexora API](https://github.com/vaseklllM/lexora_api) та забезпечує зручну роботу з папками, колодами й AI-генерацією в екосистемі продукту.
+**Lexora** is a web application for learning languages using flashcards. This repository contains the Next.js client, which serves as the interface to the [Lexora API](https://github.com/vaseklllM/lexora_api) and provides convenient workflows with folders, decks, and AI generation across the product ecosystem.
 
-## Основні можливості
+## Key Features
 
-- 🖥️ **Дашборд** – головна сторінка з оглядом папок і колод та швидким доступом до дій
-- 📂 **Ієрархія папок** – навігація між вкладеними папками з breadcrumbs і швидким поверненням назад
-- 🃏 **Управління колодами** – створення, перейменування та видалення колод з вибором мови в інтерфейсі
-- 🗂️ **Управління картками** – створення, редагування та видалення карток з підтримкою опису та аудіо
-- 🖱️ **Drag & Drop** – переміщення колод між папками за допомогою перетягування з підтримкою mouse та touch сенсорів, анімаціями та візуальними ефектами
-- 🎮 **Ігрові режими навчання** – Type It (введення відповіді з підказкою), Guess It (вибір з варіантів), Pair It (знаходження пар, по 5 карток), Recall It (пригадування) з візуальним статус-баром прогресу
-- 📚 **Режими сесій** – окремі режими навчання (learning) та повторення (review) з різними етапами
-- 🎯 **Послідовні етапи навчання** – Start → Preview → Pair It → Guess It → Recall It → Type It з плавними анімаціями переходів
-- 🔄 **Режим повторення** – можливість повторити окремі картки або всі картки в прогресі через обрану гру
-- 📊 **Система прогресу** – відстеження рівня засвоєння (Mastery Score 0-100) для карток та колод, позначення нових карток, карток в прогресі та карток що потребують повторення
-- 🎓 **CEFR рівні** – підтримка європейських рівнів володіння мовою (A1-C2)
-- 🔊 **Text-to-Speech** – інтеграція аудіо вимови для карток з підтримкою звукових файлів
-- 🤖 **AI-генерація** – автоматичне заповнення даних карток за допомогою штучного інтелекту
-- 🔐 **Аутентифікація** – вхід/реєстрація через email + пароль та OAuth (Google) з автоматичним оновленням токенів
-- 🌍 **Підтримка мов** – підвантаження списку мов з API для подальшого використання в формах і модалках
-- 🌐 **Інтернаціоналізація (i18n)** – повна підтримка перекладів з i18next для SSR та клієнтських компонентів (EN, UK, ES, FR, IT, DE, NL, PL)
-- 🎯 **Дві системи мов** – App Language (мова інтерфейсу) та User Language (мова для навчання карток) з окремими селекторами
-- 🍪 **Cookie-based персоналізація** – автоматичне визначення мови браузера через negotiator та збереження налаштувань у cookies
-- ⚙️ **Налаштування користувача** – можливість змінювати мову інтерфейсу через Settings API endpoint
-- 🚦 **Захист від rate limiting** – окрема сторінка `Too Many Requests` з таймером автоповернення
+- 🖥️ **Dashboard** – a main page with an overview of folders and decks and quick access to actions
+- 📂 **Folder hierarchy** – navigate nested folders with breadcrumbs and a quick back navigation
+- 🃏 **Deck management** – create, rename, and delete decks with an in-UI language selector
+- 🗂️ **Card management** – create, edit, and delete cards with support for description and audio
+- 🖱️ **Drag & Drop** – move decks between folders via drag-and-drop with mouse and touch support, animations, and visual effects
+- 🎮 **Learning game modes** – Type It (typed answer with hint), Guess It (multiple choice), Pair It (find pairs, 5 cards at a time), Recall It (recall) with a visual progress status bar
+- 📚 **Session modes** – separate learning and review modes with different stages
+- 🎯 **Sequential learning stages** – Start → Preview → Pair It → Guess It → Recall It → Type It with smooth animated transitions
+- 🔄 **Review mode** – review selected cards or all cards in progress through the chosen game
+- 📊 **Progress system** – track a Mastery Score (0–100) for cards and decks, mark new cards, in‑progress cards, and cards that require review
+- 🎓 **CEFR levels** – support for European proficiency levels (A1–C2)
+- 🔊 **Text‑to‑Speech** – audio pronunciation for cards with audio file support
+- 🤖 **AI generation** – automatically fill in card data using artificial intelligence
+- 🔐 **Authentication** – email/password and OAuth (Google) sign‑in with automatic token refresh
+- 🌍 **Language support** – fetch a list of languages from the API for use in forms and modals
+- 🌐 **Internationalization (i18n)** – full translation support with i18next for SSR and Client Components (EN, UK, ES, FR, IT, DE, NL, PL)
+- 🎯 **Two language systems** – App Language (UI language) and User Language (learning language) with separate selectors
+- 🍪 **Cookie‑based personalization** – automatically detect browser language via `negotiator` and store preferences in cookies
+- ⚙️ **User settings** – change the interface language via the Settings API endpoint
+- 🚦 **Rate limiting protection** – a dedicated `Too Many Requests` page with an auto‑return timer
 
-## Технології проекту
+## Project Technologies
 
 ### Frontend Framework
 
-- **Next.js 15** – App Router, Server Components, server actions для звернень до API, Turbopack для швидкого dev-режиму
-- **Next.js Image** – оптимізація зображень з remote patterns для Google OAuth аватарів
-- **React 19** – сучасний React runtime з підтримкою нових можливостей
-- **TypeScript 5** – типізація компонентів, хуків та API-викликів
+- **Next.js 15** – App Router, Server Components, server actions for API calls, Turbopack for fast development
+- **Next.js Image** – image optimization with remote patterns for Google OAuth avatars
+- **React 19** – modern React runtime with the latest capabilities
+- **TypeScript 5** – type‑safe components, hooks, and API calls
 
-### Стан та робота з даними
+### State and Data Handling
 
-- **NextAuth.js 4** – JWT-сесії, refresh токени та Google OAuth
-- **Zustand** – легковажний стора для локального стану (наприклад, модальні вікна та ігрові стани)
-- **React Hook Form + Valibot** – форми та валідація на клієнті й сервері
-- **@hookform/resolvers** – інтеграція Valibot-схем з React Hook Form
-- **Кастомний valibotResolver** – розширена підтримка `v.forward` для складних валідацій
-- **i18next + react-i18next + next-i18next** – повна інтернаціоналізація з підтримкою SSR та Client Components
-- **negotiator** – автоматичне визначення найкращої мови з Accept-Language заголовку браузера
-- **react-timer-hook** – таймер на сторінці обмежень
-- **jwt-decode** – розбір access-токенів з бекенду
-- **Кастомні хуки** – usePlayer (audio playback з Zustand), useSliceCards (розділення карток на частини), useGameCardsController (контроль ігрового процесу), useMixCards (перемішування карток)
+- **NextAuth.js 4** – JWT sessions, refresh tokens, and Google OAuth
+- **Zustand** – lightweight store for local state (e.g., modals and game state)
+- **React Hook Form + Valibot** – forms and validation on both client and server
+- **@hookform/resolvers** – integration of Valibot schemas with React Hook Form
+- **Custom `valibotResolver`** – extended support for `v.forward` for complex validations
+- **i18next + react-i18next + next-i18next** – full internationalization with SSR and Client Components
+- **negotiator** – automatic best‑fit language detection from the browser’s `Accept-Language` header
+- **react-timer-hook** – timer for the rate‑limit page
+- **jwt-decode** – decode access tokens from the backend
+- **Custom hooks** – `usePlayer` (audio playback with Zustand), `useSliceCards` (split cards into parts), `useGameCardsController` (game flow control), `useMixCards` (shuffle cards)
 
-### UI взаємодія
+### UI Interaction
 
-- **@dnd-kit/core** – drag-and-drop функціональність для переміщення колод між папками
-- **motion** – бібліотека для плавних анімацій та переходів у компонентах
-- **react-toastify** – система сповіщень для відображення помилок та успішних операцій
+- **@dnd-kit/core** – drag‑and‑drop for moving decks between folders
+- **motion** – library for smooth animations and transitions in components
+- **react-toastify** – notification system for errors and success messages
 
-### UI та стилі
+### UI and Styling
 
-- **Tailwind CSS 4** – утилітарна стилізація
-- **daisyUI** – готові теми (light/dark) та компоненти
-- **tailwind-variants** – декларативні стилі з підтримкою варіантів
-- **tailwind-merge** – розумне об'єднання Tailwind класів для уникнення конфліктів
-- **Sass/SCSS** – препроцесор для стилізації toast-сповіщень та кастомних стилів
-- **Власний UI-кит** – набір кнопок, інпутів, breadcrumbs, Alert, CircleProgress, Checkbox, Chip, Cefr тощо (`src/shared/ui`)
+- **Tailwind CSS 4** – utility‑first styling
+- **daisyUI** – ready‑made themes (light/dark) and components
+- **tailwind-variants** – declarative styling with variants
+- **tailwind-merge** – smart merge of Tailwind classes to avoid conflicts
+- **Sass/SCSS** – preprocessor for toast styles and custom styling
+- **Custom UI kit** – a set of buttons, inputs, breadcrumbs, Alert, CircleProgress, Checkbox, Chip, Cefr, etc. (`src/shared/ui`)
 
-### API та архітектура
+### API and Architecture
 
-- **Feature-Sliced Design** – поділ на `app`, `screens`, `widgets`, `features`, `entities`, `shared`
-- **Custom fetch layer** – модуль `fetchCustom` додає токен, обробляє 401/429 та редіректи
-- **Valibot-схеми** – типобезпечний парсинг відповідей API з обробкою помилок (`src/api/schemas`)
-- **Server Actions** – серверні функції для операцій з колодами (створення, переміщення, видалення)
-- **Обробка помилок** – централізована система обробки конфліктів та помилок API
-- **dotenv** – конфігурація через `.env`
+- **Feature‑Sliced Design** – structure split into `app`, `screens`, `widgets`, `features`, `entities`, `shared`
+- **Custom fetch layer** – `fetchCustom` module adds the token, handles 401/429, and redirects
+- **Valibot schemas** – type‑safe parsing of API responses with error handling (`src/api/schemas`)
+- **Server Actions** – server functions for deck operations (create, move, delete)
+- **Error handling** – centralized conflict and API error handling
+- **dotenv** – configuration via `.env`
 
-### Розробка та якість
+### Development and Quality
 
-- **ESLint 9** – статичний аналіз з правилами для TypeScript та React
-- **Prettier 3** – автоформатування з плагінами (prettier-plugin-tailwindcss для сортування Tailwind класів)
-- **Jest + Testing Library** – юніт- та компонентні тести у середовищі JSDOM з підтримкою snapshots
-- **Husky + lint-staged** – pre-commit перевірки (автоформатування Prettier, ESLint з `--max-warnings 0`)
+- **ESLint 9** – static analysis with TypeScript and React rules
+- **Prettier 3** – auto‑formatting with plugins (including `prettier-plugin-tailwindcss` for class sorting)
+- **Jest + Testing Library** – unit and component tests in a JSDOM environment with snapshot support
+- **Husky + lint-staged** – pre‑commit checks (Prettier auto‑formatting, ESLint with `--max-warnings 0`)
 
-## Структура проекту
+## Project Structure
 
 ```
 src/
-  app/            # Next.js App Router, маршрути для гостів та приватних сторінок
+  app/            # Next.js App Router; routes for guests and private pages
                   # - (guest)/(auth): Sign In/Up
                   # - (private)/dashboard: Dashboard, Folder, Deck, Learning Deck
                   # - logout, too-many-request
-  api/            # Серверні екшени та клієнти для звернень до Lexora API
+  api/            # Server actions and clients for Lexora API
                   # - ai, auth, card, dashboard, deck, folder, languages, settings
-                  # - schemas: Valibot схеми для валідації API відповідей
-  entities/       # Базові сутності (Card, Deck, Folder, модалки, іконки)
-  features/       # Взаємодії користувача та бізнес-логіка
+                  # - schemas: Valibot schemas for validating API responses
+  entities/       # Core entities (Card, Deck, Folder, modals, icons)
+  features/       # User interactions and business logic
                   # - add-card, button-back
-                  # - deck/folder: CRUD операції та модалки
-                  # - guess-it/pair-it/recall-it/type-it: ігрові режими
-                  # - app-language-select: перемикач мови інтерфейсу
-                  # - user-language-select: перемикач мови для навчання
+                  # - deck/folder: CRUD operations and modals
+                  # - guess-it/pair-it/recall-it/type-it: game modes
+                  # - app-language-select: UI language switcher
+                  # - user-language-select: learning language switcher
                   # - oauth, view-card
-  screens/        # Композиція сторінок (Sign In/Up, Dashboard)
-  shared/         # Утиліти, UI-кіт, хелпери, роутинг, схеми валідації
-                  # - api-core: fetchCustom, authOptions, обробка помилок
+  screens/        # Page compositions (Sign In/Up, Dashboard)
+  shared/         # Utilities, UI kit, helpers, routing, validation schemas
+                  # - api-core: fetchCustom, authOptions, error handling
                   # - hooks: usePlayer, useLogout, useGameCardsController, useSliceCards, useMixCards
-                  # - icons: SVG іконки
-                  # - ui: UI-кіт (Button, Input, Alert, CircleProgress тощо)
-                  # - utils: valibotResolver (підтримка v.forward), mixArray, sleep, stack-id
-  widgets/        # Великі UI-блоки
-                  # - deck-section: Секції з колодами
-                  # - header: Навігація та хедер
-                  # - learning-deck: Основний віджет навчання з усіма етапами
-                  # - section: Drag-and-drop функціональність
+                  # - icons: SVG icons
+                  # - ui: UI kit (Button, Input, Alert, CircleProgress, etc.)
+                  # - utils: valibotResolver (v.forward support), mixArray, sleep, stack-id
+  widgets/        # Large UI blocks
+                  # - deck-section: Deck sections
+                  # - header: Navigation and header
+                  # - learning-deck: Main learning widget with all stages
+                  # - section: Drag-and-drop functionality
 ```
 
-## Змінні оточення
+## Environment Variables
 
-Створіть файл `.env` у корені проекту з наступними змінними:
+Create a `.env` file in the project root with the following variables:
 
-| Змінна                                   | Опис                                                         |
-| ---------------------------------------- | ------------------------------------------------------------ |
-| `SYSTEM_NEXT_API_URL`                    | Базовий URL Lexora API (наприклад, `http://localhost:4000/`) |
-| `SYSTEM_NEXT_TTS_URL`                    | Базовий URL для Text-to-Speech аудіо файлів                  |
-| `NEXTAUTH_SECRET`                        | Секрет для шифрування сесій NextAuth                         |
-| `SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_ID`     | OAuth Client ID з Google Cloud                               |
-| `SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_SECRET` | OAuth Client Secret з Google Cloud                           |
+| Variable                                 | Description                                                 |
+| ---------------------------------------- | ----------------------------------------------------------- |
+| `SYSTEM_NEXT_API_URL`                    | Base URL of the Lexora API (e.g., `http://localhost:4000/`) |
+| `SYSTEM_NEXT_TTS_URL`                    | Base URL for Text‑to‑Speech audio files                     |
+| `NEXTAUTH_SECRET`                        | Secret for encrypting NextAuth sessions                     |
+| `SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_ID`     | OAuth Client ID from Google Cloud                           |
+| `SYSTEM_NEXT_OAUTH_GOOGLE_CLIENT_SECRET` | OAuth Client Secret from Google Cloud                       |
 
-> ⚠️ Для локальної розробки бекенд має бути запущений та доступний за вказаним `SYSTEM_NEXT_API_URL`.
+> ⚠️ For local development, the backend must be running and accessible at the specified `SYSTEM_NEXT_API_URL`.
 
-## Запуск проекту
+## Run the Project
 
 ```bash
-# 1. Встановити залежності
+# 1. Install dependencies
 npm install
 
-# 2. Створити файл .env та налаштувати змінні оточення
-# (див. розділ "Змінні оточення" вище)
-# Приклад: cp .env.example .env (якщо існує)
+# 2. Create a .env file and configure environment variables
+# (see the "Environment Variables" section above)
+# Example: cp .env.example .env (if present)
 
-# 3. Запустити локальний сервер з Turbopack
+# 3. Start the local server with Turbopack
 npm run dev
 ```
 
-Веб-додаток буде доступний на [http://localhost:3000](http://localhost:3000).
+The web app will be available at [http://localhost:3000](http://localhost:3000).
 
-## Корисні скрипти
+## Useful Scripts
 
 ```bash
-npm run dev           # Режим розробки (Next.js + Turbopack)
-npm run build         # Продукційна збірка
-npm run start         # Запуск зібраної версії (порт 3000)
-npm run lint          # ESLint перевірки
-npm run type-check    # Перевірка типів без компіляції
-npm run test          # Запуск Jest тестів
-npm run test:watch    # Jest у watch-режимі
-npm run prepare       # Ініціалізація Husky hooks
+npm run dev           # Development mode (Next.js + Turbopack)
+npm run build         # Production build
+npm run start         # Start the built app (port 3000)
+npm run lint          # ESLint checks
+npm run type-check    # Type checking without build
+npm run test          # Run Jest tests
+npm run test:watch    # Jest in watch mode
+npm run prepare       # Initialize Husky hooks
 ```
 
-## Доступні сервіси
+## Available Services
 
 - **Web UI**: http://localhost:3000

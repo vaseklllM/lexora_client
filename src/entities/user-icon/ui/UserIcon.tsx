@@ -26,6 +26,7 @@ export const UserIcon = (props: Props): ReactElement => {
             alt={props.userName}
             width={40}
             height={40}
+            unoptimized
           />
         ) : (
           <span className="text-xl">{props.userName.charAt(0)}</span>

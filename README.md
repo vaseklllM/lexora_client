@@ -2,6 +2,9 @@
 
 **Lexora** is a web application for learning languages using flashcards. This repository contains the Next.js client, which serves as the interface to the [Lexora API](https://github.com/vaseklllM/lexora_api) and provides convenient workflows with folders, decks, and AI generation across the product ecosystem.
 
+🌐 **Website**: [https://lexora.co.ua/](https://lexora.co.ua/)  
+📖 **API Documentation**: [https://api.lexora.co.ua/api](https://api.lexora.co.ua/api)
+
 ## Key Features
 
 - 🖥️ **Dashboard** – a main page with an overview of folders and decks and quick access to actions

@@ -5,6 +5,13 @@
 🌐 **Website**: [https://lexora.co.ua/](https://lexora.co.ua/)  
 📖 **API Documentation**: [https://api.lexora.co.ua/api](https://api.lexora.co.ua/api)
 
+### 🎯 Demo Account
+
+```
+📧 Email:    user@example.com
+🔑 Password: Password123!
+```
+
 ## Key Features
 
 - 🖥️ **Dashboard** – a main page with an overview of folders and decks and quick access to actions
